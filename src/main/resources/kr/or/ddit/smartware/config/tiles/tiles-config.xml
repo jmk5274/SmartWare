@@ -21,6 +21,4 @@
 		<put-attribute name="content"	value="/WEB-INF/views/employee/employeeList.jsp"/>
 	</definition>
 	
-	
-	
 </tiles-definitions>
