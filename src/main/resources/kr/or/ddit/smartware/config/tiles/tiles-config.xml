@@ -30,5 +30,4 @@
 	<definition name="tiles.index" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/index.jsp"/>
 	</definition>
-	
 </tiles-definitions>
