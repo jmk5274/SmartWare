@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import kr.or.ddit.smartware.util.encrypt.kisa.sha256.KISA_SHA256;
+
 public class Employee {
 
 	private String emp_id;			//사원 아이디
@@ -109,6 +111,16 @@ public class Employee {
 	}
 	public void setAble(String able) {
 		this.able = able;
+	}
+
+	public boolean checkLoginValidate(String emp_id, String pass) {
+		
+		// 암호화 문장끼리 비교
+//		if(emp_id.equals(this.emp_id) && KISA_SHA256.encrypt(pass).equals(this.pass))
+		if(emp_id.equals(this.emp_id) && pass.equals(this.pass))
+			return true;
+		
+		return false;
 	}
 
 	@Override

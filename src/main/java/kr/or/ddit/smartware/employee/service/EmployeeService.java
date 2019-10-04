@@ -15,6 +15,10 @@ public class EmployeeService implements IEmployeeService{
 	@Resource(name = "employeeDao")
 	private IEmployeeDao employeeDao; 
 	
+	public Employee getEmployee(String emp_id) {
+		return employeeDao.getEmployee(emp_id);
+	}
+	
 	@Override
 	public List<Employee> getEmployeeList() {
 		

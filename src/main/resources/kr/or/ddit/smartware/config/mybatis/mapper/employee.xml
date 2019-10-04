@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="employee">
 
+	<select id="getEmployee" parameterType="String" resultType="employee">
+		select *
+		from employee
+		where emp_id = #{emp_id}	
+	</select>
+	
 	<select id="getEmployeeList" resultType="employee">
 		select * 
 		  from employee
