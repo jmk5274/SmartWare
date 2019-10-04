@@ -21,9 +21,9 @@
  
 	$(document).ready(function(){
 		
-		var employeeId = Cookies.get("employeeId");
-		if(employeeId != undefined){
-			$("#employeeId").val(employeeId);
+		var emp_id = Cookies.get("emp_id");
+		if(emp_id != undefined){
+			$("#emp_id").val(emp_id);
 			//remember me checkbox 체크
 			$("#rememberMe").prop("checked", true);	
 			$("#pass").focus();

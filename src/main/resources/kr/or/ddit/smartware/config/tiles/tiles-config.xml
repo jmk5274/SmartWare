@@ -21,6 +21,14 @@
 		<put-attribute name="content"	value="/WEB-INF/views/employee/employeeList.jsp"/>
 	</definition>
 	
+	<!-- 로그인 -->
+	<definition name="tiles.login" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/login/login.jsp"/>
+	</definition>
 	
+	<!-- 임시 메인 화면 -->
+	<definition name="tiles.index" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/index.jsp"/>
+	</definition>
 	
 </tiles-definitions>

@@ -51,7 +51,7 @@ public class LoginController {
 	public String loginProcess(String emp_id, String pass, String rememberMe,
 								HttpServletResponse response, HttpSession session) {
 		
-		manageUserIdCookie(response, emp_id, rememberMe);
+		manageEmp_IdCookie(response, emp_id, rememberMe);
 		
 		Employee employee = employeeService.getEmployee(emp_id);
 		
@@ -60,15 +60,15 @@ public class LoginController {
 			
 		}else if(employee.checkLoginValidate(emp_id, pass)) {
 				session.setAttribute("S_USERVO", employee);
-				return "main";
+				return "redirect:/index";
 		}
 		else {
 			return "login/login";
 		}
 	}
 		
-	private void manageUserIdCookie(HttpServletResponse response, String emp_id, String rememberMe) {
-		//remeberMe 파라미터가 존재할 경우 userId를 cookie로 생성
+	private void manageEmp_IdCookie(HttpServletResponse response, String emp_id, String rememberMe) {
+		//remeberMe 파라미터가 존재할 경우 emp_id를 emp_id로 생성
 		Cookie cookie = new Cookie("emp_id", emp_id);
 		
 		if(rememberMe != null) {
@@ -80,4 +80,36 @@ public class LoginController {
 		
 		response.addCookie(cookie);
 	}
+	
+	/**
+	 * 
+	* Method : logout
+	* 작성자 : PC-04
+	* 변경이력 :
+	* @param response
+	* @param session
+	* Method 설명 : 로그아웃
+	 */
+	@RequestMapping(path = "logout", method = RequestMethod.GET)
+	private String logout(HttpServletResponse response, HttpSession session) {
+		
+		session.invalidate();	// 세션에 저장된 모든 속성을 제거
+		
+		// 로그인 화면으로 이동
+		return "redirect:/index";
+	}
+	
+	/**
+	 * 
+	* Method : Index
+	* 작성자 : PC-04
+	* 변경이력 :
+	* @return
+	* Method 설명 : 메인창
+	 */
+	@RequestMapping(path = "index")
+	private String Index() {
+		return "index";
+	}
+	
 }
