@@ -37,6 +37,7 @@
         
         <div class="header-right">
             <ul class="clearfix">
+              <c:if test="${sessionScope.S_EMPLOYEE != null}">
             	<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                         <i class="fa fa-bus"></i>
                         <span class="badge badge-pill gradient-1"></span>
@@ -91,6 +92,7 @@
                         </div>
                     </div>
                 </li>
+                
                 <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                         <i class="fa fa-users"></i>
                         <span class="badge badge-pill gradient-1">3</span>
@@ -146,7 +148,7 @@
                         </div>
                     </div>
                 </li>
-                
+                </c:if>
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                         <span class="activity active"></span>
@@ -154,6 +156,7 @@
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
+                       	 <c:if test="${S_EMPLOYEE != null}">
                             <ul>
                                 <li>
                                     <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
@@ -168,8 +171,15 @@
                                 <li>
                                     <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                 </li>
-                                <li><a href="${cp}/login"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                <li><a href="${cp }/logout"><i class="icon-key"></i> <span>Logout</span></a></li>
+<%--                                 <li><a href="${cp}/login"><i class="icon-key"></i> <span>Logout</span></a></li> --%>
                             </ul>
+                            </c:if>
+                            <c:if test="${sessionScope.S_EMPLOYEE == null}">
+	                            <ul>
+		                            <li><a href="${cp }/login"><i class="icon-key"></i> <span>Login</span></a></li>
+		                        </ul>
+                            </c:if>
                         </div>
                     </div>
                 </li>
