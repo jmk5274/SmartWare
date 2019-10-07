@@ -100,7 +100,7 @@
     <script src="${cp }/bootstrap/js/settings.js"></script>
     <script src="${cp }/bootstrap/js/gleek.js"></script>
     <script src="${cp }/bootstrap/js/styleSwitcher.js"></script>
-	<script src="${cp }/bootstrap/js/jquery-3.4.1.min.js"></script>
+	<script src="${cp }/js/jquery-3.4.1.min.js"></script>
 
     <!-- Chartjs -->
     <script src="${cp }/bootstrap/plugins/chart.js/Chart.bundle.min.js"></script>
