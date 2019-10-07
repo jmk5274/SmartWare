@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chat">
 	<select id="getChatList" parameterType="String" resultType="hashmap">
-		select b.chat_id, b.chat_nm, a.MSG_CONT, b.cnt
+		select b.chat_id, b.chat_nm, a.msg_cont, b.cnt, a.send_dt
 	 	  from message a, (select b.chat_id, b.chat_nm, count(*) as cnt
 		                     from chat_emp a, (select a.*
 		                                         from CHAT a, CHAT_EMP b
