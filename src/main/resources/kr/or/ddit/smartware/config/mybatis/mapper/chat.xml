@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chat">
+	<select id="getChatList" parameterType="String" resultType="hashmap">
+		select b.chat_id, b.chat_nm, a.MSG_CONT, b.cnt
+	 	  from message a, (select b.chat_id, b.chat_nm, count(*) as cnt
+		                     from chat_emp a, (select a.*
+		                                         from CHAT a, CHAT_EMP b
+		                                        where a.chat_id = b.chat_id
+		                                          and b.emp_id = #{chat_id}) b
+		                    where a.chat_id = b.chat_id
+		                    group by b.chat_id,b.chat_nm) b
+		 where a.chat_id = b.chat_id
+		   and a.send_dt in (select send_dt
+		                       from (select a.chat_id, max(send_dt) as send_dt 
+		                               from message a, (select a.*
+		                                                  from CHAT a, CHAT_EMP b
+		                                                 where a.chat_id = b.chat_id
+		                                                   and b.emp_id = #{chat_id}) b
+		                              where a.chat_id = b.chat_id
+		                              group by a.chat_id))
+	</select>
+</mapper>

@@ -1,7 +1,11 @@
 package kr.or.ddit.smartware.login.web;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -11,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
+import kr.or.ddit.smartware.messenger.service.IMessengerService;
 
 @Controller
 public class LoginController {
 	
 	@Resource(name = "employeeService")
 	private IEmployeeService employeeService;
+	
+	@Resource(name = "messengerService")
+	private IMessengerService messengerService;
 	
 	/**
 	 * 
@@ -49,7 +57,7 @@ public class LoginController {
 	 */
 	@RequestMapping(path = "login", method = RequestMethod.POST)
 	public String loginProcess(String emp_id, String pass, String rememberMe,
-								HttpServletResponse response, HttpSession session) {
+								HttpServletResponse response, HttpSession session, HttpServletRequest request) {
 		
 		manageEmp_IdCookie(response, emp_id, rememberMe);
 		
@@ -59,6 +67,9 @@ public class LoginController {
 			return "login/login";	// view();
 			
 		}else if(employee.checkLoginValidate(emp_id, pass)) {
+				List<Map> map = messengerService.getChatList(employee.getEmp_id());
+				
+				request.getServletContext().setAttribute("A_CHATLIST", map);
 				session.setAttribute("S_USERVO", employee);
 				return "redirect:/index";
 		}

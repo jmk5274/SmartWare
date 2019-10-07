@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!--**********************************
     Nav header start
@@ -36,15 +37,15 @@
         
         <div class="header-right">
             <ul class="clearfix">
-                <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                        <i class="fa fa-users"></i>
-                        <span class="badge badge-pill gradient-1">3</span>
+            	<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        <i class="fa fa-bus"></i>
+                        <span class="badge badge-pill gradient-1"></span>
                     </a>
                     <div class="drop-down animated fadeIn dropdown-menu">
                         <div class="dropdown-content-heading d-flex justify-content-between">
                             <span class="">3 New Messages</span>  
                             <a href="javascript:void()" class="d-inline-block">
-                                <span class="badge badge-pill gradient-1">3</span>
+                                <span class="badge badge-pill gradient-1"></span>
                             </a>
                         </div>
                         <div class="dropdown-content-body">
@@ -59,6 +60,62 @@
                                         </div>
                                     </a>
                                 </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            	<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        <i class="fa fa-phone"></i>
+                        <span class="badge badge-pill gradient-1"></span>
+                    </a>
+                    <div class="drop-down animated fadeIn dropdown-menu">
+                        <div class="dropdown-content-heading d-flex justify-content-between">
+                            <span class="">3 New Messages</span>  
+                            <a href="javascript:void()" class="d-inline-block">
+                                <span class="badge badge-pill gradient-1"></span>
+                            </a>
+                        </div>
+                        <div class="dropdown-content-body">
+                            <ul>
+                                <li class="notification-unread">
+                                    <a href="javascript:void()">
+                                        <img class="float-left mr-3 avatar-img" src="bootstrap/images/avatar/1.jpg" alt="">
+                                        <div class="notification-content">
+                                            <div class="notification-heading">Saiful Islam</div>
+                                            <div class="notification-timestamp">08 Hours ago</div>
+                                            <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        <i class="fa fa-users"></i>
+                        <span class="badge badge-pill gradient-1">3</span>
+                    </a>
+                    <div class="drop-down animated fadeIn dropdown-menu">
+                        <div class="dropdown-content-heading d-flex justify-content-between">
+                            <span class="">3 New Messages</span>  
+                            <a href="javascript:void()" class="d-inline-block">
+                                <span class="badge badge-pill gradient-1">3</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-content-body">
+                            <ul>
+                            	<c:forEach items="${A_CHATLIST }" var="chat">
+	                                <li class="notification-unread">
+	                                    <a href="javascript:void()">
+	                                        <img class="float-left mr-3 avatar-img" src="bootstrap/images/avatar/1.jpg" alt="">
+	                                        <div class="notification-content">
+	                                            <div class="notification-heading">${chat.CHAT_NM } / ${chat.CNT }명</div>
+<!-- 	                                            <div class="notification-timestamp">08 Hours ago</div> -->
+	                                            <div class="notification-text">${chat.MSG_CONT }</div>
+	                                        </div>
+	                                    </a>
+	                                </li>
+                            	</c:forEach>
                             </ul>
                         </div>
                     </div>
