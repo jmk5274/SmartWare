@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!--**********************************
     Nav header start
@@ -108,13 +109,14 @@
                             <ul>
                             	<c:forEach items="${A_CHATLIST }" var="chat">
 	                                <li class="notification-unread">
-	                                    <a href="javascript:void()">
+	                                    <a href="javascript:void(window.open('${cp }/chatRoom', '채팅방','width=500px, height=650px'))">
 	                                        <img class="float-left mr-3 avatar-img" src="bootstrap/images/avatar/1.jpg" alt="">
 	                                        <div class="notification-content">
 	                                            <div class="notification-heading">${chat.CHAT_NM } / ${chat.CNT }명</div>
 <!-- 	                                            <div class="notification-timestamp">08 Hours ago</div> -->
 	                                            <div class="notification-text">${chat.MSG_CONT }</div>
 	                                        </div>
+	                                        <p><fmt:formatDate value="${chat.SEND_DT }" pattern="yyyy/MM/dd"/></p>
 	                                    </a>
 	                                </li>
                             	</c:forEach>

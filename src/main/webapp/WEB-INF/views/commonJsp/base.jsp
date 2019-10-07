@@ -13,6 +13,8 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>SmartWare</title>
 	
+	<tiles:insertAttribute name="basicLib"/>
+	
 	<!-- Favicon icon -->
 	<link rel="icon" type="image/png" sizes="16x16" href="bootstrap/images/favicon.png">
 	<!-- Pignose Calender -->
@@ -100,7 +102,6 @@
     <script src="${cp }/bootstrap/js/settings.js"></script>
     <script src="${cp }/bootstrap/js/gleek.js"></script>
     <script src="${cp }/bootstrap/js/styleSwitcher.js"></script>
-	<script src="${cp }/js/jquery-3.4.1.min.js"></script>
 
     <!-- Chartjs -->
     <script src="${cp }/bootstrap/plugins/chart.js/Chart.bundle.min.js"></script>
