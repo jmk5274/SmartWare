@@ -39,14 +39,9 @@
                 </ul>
             </li>
             <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                <a href="${cp }/calendar" aria-expanded="false">
                     <i class="fa fa-calendar menu-icon"></i><span class="nav-text">일정관리</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/app-profile.html">일정 조회</a></li>
-                    <li><a href="${cp }/bootstrap/app-calender.html">일정 추가</a></li>
-                    <li><a href="${cp }/bootstrap/app-calender.html">일정 삭제</a></li>
-                </ul>
             </li>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -82,8 +77,8 @@
             </li>
         
             <li>
-                <a class="has-arrow" href="${cp }/useForm" aria-expanded="false">
-                    <i class="icon-grid menu-icon"></i><span class="nav-text">UseForm</span>
+                <a href="${cp }/useForm" aria-expanded="false">
+                    <i class="icon-grid menu-icon"></i><span class="nav-text">양식 예제</span>
                 </a>
             </li>
         </ul>

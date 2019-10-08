@@ -71,7 +71,7 @@ public class LoginController {
 				
 				request.getServletContext().setAttribute("A_CHATLIST", map);
 				session.setAttribute("S_EMPLOYEE", employee);
-				return "redirect:/index";
+				return "redirect:/main";
 		}
 		else {
 			return "login/login";
@@ -118,9 +118,9 @@ public class LoginController {
 	* @return
 	* Method 설명 : 메인창
 	 */
-	@RequestMapping(path = "index")
-	private String Index() {
-		return "index";
+	@RequestMapping(path = "main")
+	private String mainView() {
+		return "tiles.useForm";
 	}
 	
 }
