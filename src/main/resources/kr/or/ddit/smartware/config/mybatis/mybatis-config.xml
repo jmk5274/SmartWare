@@ -6,8 +6,13 @@
 	
 	<typeAliases>
 		<typeAlias alias="employee"  type="kr.or.ddit.smartware.employee.model.Employee"/>
+		<typeAlias alias="chat"  type="kr.or.ddit.smartware.messenger.model.Chat"/>
+		<typeAlias alias="chatEmp"  type="kr.or.ddit.smartware.messenger.model.ChatEmp"/>
+		<typeAlias alias="message"  type="kr.or.ddit.smartware.messenger.model.Message"/>
 		<typeAlias alias="board"  type="kr.or.ddit.smartware.board.model.Board"/>
 		<typeAlias alias="post"  type="kr.or.ddit.smartware.post.model.Post"/>
+		<typeAlias alias="comments"  type="kr.or.ddit.smartware.post.model.Comments"/>
+		<typeAlias alias="postfile"  type="kr.or.ddit.smartware.post.model.PostFile"/>
 		<typeAlias alias="empCalendar"  type="kr.or.ddit.smartware.calendar.model.EmpCalendar"/>
 		<typeAlias alias="depCalendar"  type="kr.or.ddit.smartware.calendar.model.DepCalendar"/>
 		<typeAlias alias="category"  	type="kr.or.ddit.smartware.calendar.model.Category"/>
@@ -18,6 +23,8 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/chat.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/board.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/post.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/comments.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/postfile.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/calendar.xml"/>
 	</mappers>
 	
