@@ -19,11 +19,11 @@
 					<div class="email-center-box">
 						<div class="toolbar" role="toolbar">
 							<div class="btn-group m-b-20">
-								<a href="email-compose.html" class="btn btn-primary btn-block">메일
+								<a href="${cp}/sendEmail " class="btn btn-primary btn-block">메일
 									쓰기</a>
 							</div>
 						</div>
-						<form id="frm" action="${cp}/sendEmail" method="post">
+						<form id="frm" action="${cp}/sendEmail" method="post" enctype="multipart/form-data">
 						<div class="compose-content mt-5">
 								<input type="text" name="reci"
 									class="form-control bg-transparent" placeholder=" To"
@@ -56,7 +56,7 @@
 						<form action="#" class="dropzone">
 							<div class="form-group">
 								<div class="fallback">
-									<input class="l-border-1" name="file" type="file"
+									<input class="l-border-1" name="attatch" type="file"
 										multiple="multiple">
 								</div>
 							</div>
@@ -77,5 +77,4 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>

@@ -1,5 +1,7 @@
 package kr.or.ddit.smartware.email.web;
 
+import java.io.File;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -19,6 +21,8 @@ import javax.mail.internet.MimeMultipart;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class EmailController {
@@ -28,10 +32,11 @@ public class EmailController {
 		
 		return "tiles.writeMail";
 	}
+	//답글 @PostMapping 으로 return "tiles.writeMail"
 	
 	
 	@PostMapping(path = "sendEmail")
-    public String sendEmail(String email, String emailPass, String reci, String subject, String cont) {
+    public String sendEmail(String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) {
 		System.out.println(reci);
 	
 		String[] arr = reci.split(" ");
@@ -69,11 +74,9 @@ public class EmailController {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(
                     Message.RecipientType.TO,
-//                    InternetAddress.parse("jmk5274@gmail.com, gnss1217@naver.com")
                     InternetAddress.parse(rEmail)
             );
             message.setSubject(subject);
-            //message.setText(cont);
             
             
             MimeMultipart multipart = new MimeMultipart("related");
@@ -103,7 +106,11 @@ public class EmailController {
 
             message.setContent(cont, "text/html;charset=UTF-8");
             //setFile, upload 한 파일 읽기 
-            //message.
+            
+//            for(MultipartFile attachedFile : attatch) {
+//            }
+            
+            
             Transport.send(message);
 
             System.out.println("Done");
