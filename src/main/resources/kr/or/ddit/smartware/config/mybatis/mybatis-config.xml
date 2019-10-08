@@ -5,17 +5,16 @@
 <configuration>
 	
 	<typeAliases>
-		<typeAlias alias="employee"  type="kr.or.ddit.smartware.employee.model.Employee"/>
-		<typeAlias alias="chat"  type="kr.or.ddit.smartware.messenger.model.Chat"/>
+		<typeAlias alias="employee" type="kr.or.ddit.smartware.employee.model.Employee"/>
+		<typeAlias alias="chat"  	type="kr.or.ddit.smartware.messenger.model.Chat"/>
 		<typeAlias alias="chatEmp"  type="kr.or.ddit.smartware.messenger.model.ChatEmp"/>
 		<typeAlias alias="message"  type="kr.or.ddit.smartware.messenger.model.Message"/>
-		<typeAlias alias="board"  type="kr.or.ddit.smartware.board.model.Board"/>
-		<typeAlias alias="post"  type="kr.or.ddit.smartware.post.model.Post"/>
-		<typeAlias alias="comments"  type="kr.or.ddit.smartware.post.model.Comments"/>
-		<typeAlias alias="postfile"  type="kr.or.ddit.smartware.post.model.PostFile"/>
-		<typeAlias alias="empCalendar"  type="kr.or.ddit.smartware.calendar.model.EmpCalendar"/>
-		<typeAlias alias="depCalendar"  type="kr.or.ddit.smartware.calendar.model.DepCalendar"/>
-		<typeAlias alias="category"  	type="kr.or.ddit.smartware.calendar.model.Category"/>
+		<typeAlias alias="board"  	type="kr.or.ddit.smartware.board.model.Board"/>
+		<typeAlias alias="post"  	type="kr.or.ddit.smartware.post.model.Post"/>
+		<typeAlias alias="comments" type="kr.or.ddit.smartware.post.model.Comments"/>
+		<typeAlias alias="postfile" type="kr.or.ddit.smartware.post.model.PostFile"/>
+		<typeAlias alias="calendar" type="kr.or.ddit.smartware.calendar.model.Calendar"/>
+		<typeAlias alias="category" type="kr.or.ddit.smartware.calendar.model.Category"/>
 	</typeAliases>
 	
 	<mappers>

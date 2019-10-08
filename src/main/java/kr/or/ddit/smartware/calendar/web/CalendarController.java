@@ -8,19 +8,20 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
-import kr.or.ddit.smartware.calendar.model.DepCalendar;
-import kr.or.ddit.smartware.calendar.model.EmpCalendar;
+import kr.or.ddit.smartware.calendar.model.Calendar;
 import kr.or.ddit.smartware.calendar.service.ICalendarService;
 import kr.or.ddit.smartware.employee.model.Employee;
 
 @Controller
 public class CalendarController {
-
+private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
 	@Resource(name="calendarService")
 	private ICalendarService calendarService;
 	
@@ -32,42 +33,40 @@ public class CalendarController {
 		return "tiles.calendar";
 	}
 	
-	@RequestMapping("getEmpCalendarList")
-	public View getEmpCalendarList(Model model, HttpSession session) {
+	/**
+	* Method : getAllCalendarList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param session
+	* @return
+	* Method 설명 : 현재 로그인한 사원의 부서 일정을 JSON형태로 반환한다.
+	*/
+	@RequestMapping("getAllCalendarList")
+	public View getAllCalendarList(Model model, HttpSession session) {
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
 		String emp_id = employee.getEmp_id();
 		
-		List<EmpCalendar> empCalendarList = calendarService.getEmpCalendarList(emp_id);
+		List<Map<String, Object>> calendarList = new ArrayList<Map<String, Object>>();
 		
-		model.addAttribute("empCalendarList", empCalendarList);
-
-		return jsonView;
-	}
-	
-	@RequestMapping("getDepCalendarList")
-	public View getDepCalendarList(Model model, HttpSession session) {
-		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
-		String emp_id = employee.getEmp_id();
-		
-//		List<DepCalendar> depCalendarList = calendarService.getDepCalendarList(emp_id);
-		
-		List<Map<String, Object>> depCalendarList = new ArrayList<Map<String, Object>>();
-		
-		for(DepCalendar depCalendar : calendarService.getDepCalendarList(emp_id)) {
+		for(Calendar calendar : calendarService.getAllCalendarList(emp_id)) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id", depCalendar.getCal_id());
-			map.put("title", depCalendar.getCal_title());
-			map.put("description", depCalendar.getCal_cont());
+			map.put("id", calendar.getCal_id());
+			map.put("title", calendar.getCal_title());
+			map.put("description", calendar.getCal_cont());
 			
-			map.put("start", depCalendar.getSt_dt());
-			map.put("end", depCalendar.getEnd_dt());
+			map.put("start", calendar.getSt_dt());
+			map.put("end", calendar.getEnd_dt());
 			
-			map.put("backgroundColor", "yellow");
-			map.put("textColor", "black");
+			map.put("backgroundColor", "#" + calendarService.getCategoryColor(calendar.getCategory_id()));
+			map.put("textColor", "white");
+			map.put("borderColor", "white");
 			
-			depCalendarList.add(map);
+			map.put("allDay", calendar.getAllday().equals("T") ? true : false);
+			
+			calendarList.add(map);
 		}
-		model.addAttribute(depCalendarList);
+		model.addAttribute(calendarList);
 		
 		return jsonView;
 	}

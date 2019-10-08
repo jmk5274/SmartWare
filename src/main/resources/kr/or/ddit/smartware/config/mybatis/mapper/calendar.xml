@@ -3,17 +3,34 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="calendar">
-	<select id="getEmpCalendarList" parameterType="String" resultType="empCalendar">
+	<select id="getAllCalendarList" parameterType="String" resultType="calendar">
 		select *
-		  from emp_calendar
-		 where emp_id = #{emp_id}
-	</select>
-	
-	<select id="getDepCalendarList" parameterType="String" resultType="depCalendar">
+		  from calendar
+		 where depart_id is null
+		   and emp_id = #{emp_id}
+          UNION ALL
 		select *
-  		  from dep_calendar
+  		  from calendar
    		 where depart_id = (select depart_id 
          		              from employee
                      		 where emp_id = #{emp_id})
+	</select>
+	
+	<select id="getCategoryColor" parameterType="String" resultType="String">
+		select color
+		  from category
+		 where category_id = #{category_id}
+	</select>
+	
+	<select id="getEmpCategoryList" parameterType="String" resultType="category">
+		select distinct category_id
+  		  from emp_calendar
+ 		 where emp_id = #{emp_id};
+	</select>
+	
+	<select id="getDepCategoryList" parameterType="String" resultType="category">
+		select distinct category_id
+  		  from dep_calendar
+ 		 where emp_id = #{emp_id};
 	</select>
 </mapper>
