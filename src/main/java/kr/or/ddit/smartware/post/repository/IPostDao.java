@@ -3,7 +3,7 @@ package kr.or.ddit.smartware.post.repository;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.smartware.board.model.Comments;
+import kr.or.ddit.smartware.post.model.Comments;
 import kr.or.ddit.smartware.post.model.Post;
 import kr.or.ddit.smartware.post.model.PostFile;
 
@@ -35,25 +35,25 @@ public interface IPostDao {
 	
 	/**
 	 * 
-	* Method : getCmtList
+	* Method : getCommentsList
 	* 작성자 : PC-04
 	* 변경이력 :
 	* @param post_id
 	* @return
 	* Method 설명 : post_id를 파라미터로 보내 일치하는 덧글 리스트를 가져온다.
 	 */
-	public List<Comments> getCmtList(int post_id);
+	public List<Comments> getCommentsList(int post_id);
 	
 	/**
 	 * 
-	* Method : insertCmt
+	* Method : insertComments
 	* 작성자 : PC-04
 	* 변경이력 :
 	* @param comments
 	* @return
 	* Method 설명 : 덧글 저장
 	 */
-	public int insertCmt(Comments comments);
+	public int insertComments(Comments comments);
 	
 	public int getPostSeq();
 	
