@@ -22,4 +22,29 @@
 		                              where a.chat_id = b.chat_id
 		                              group by a.chat_id))
 	</select>
+	
+	<select id="getChatNm" parameterType="String" resultType="String">
+		select chat_nm
+		  from chat
+		 where chat_id = #{chat_id}
+	</select>
+	
+	<select id="getChatEmp" parameterType="map" resultType="employee">
+		select b.*
+		  from chat_emp a, employee b
+		 where a.chat_id = #{chat_id}
+		   and a.emp_id != #{emp_id}
+		   and a.emp_id = b.emp_id
+	</select>
+	
+	<select id="getMessageList" parameterType="String" resultType="hashmap">
+		select *
+		  from message
+		 where chat_id = #{chat_id}
+	</select>
+	
+	<insert id="insertMessage" parameterType="message">
+		INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,3,0), #{chat_id}, #{msg_cont}, #{emp_id}, SYSDATE)
+	</insert>
+	
 </mapper>
