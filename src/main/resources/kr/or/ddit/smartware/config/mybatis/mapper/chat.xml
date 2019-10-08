@@ -38,9 +38,10 @@
 	</select>
 	
 	<select id="getMessageList" parameterType="String" resultType="hashmap">
-		select *
-		  from message
-		 where chat_id = #{chat_id}
+		select a.*, b.emp_nm, b.emp_pic, b.rank
+	  	  from message a, employee b
+		 where a.chat_id = #{chat_id}
+		   and a.emp_id = b.emp_id
 	</select>
 	
 	<insert id="insertMessage" parameterType="message">

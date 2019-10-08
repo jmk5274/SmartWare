@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,8 @@ import kr.or.ddit.smartware.messenger.service.IMessengerService;
 @Controller
 public class MessengerController {
 
+	private static final Logger logger = LoggerFactory.getLogger(MessengerController.class);
+	
 	@Resource(name = "messengerService")
 	private IMessengerService messengerService;
 	
@@ -48,12 +52,14 @@ public class MessengerController {
 		List<Employee> chatEmpList = messengerService.getChatEmp(map);
 		List<Map> messageList = messengerService.getMessageList(chat_id); 
 		
+		logger.debug("map : {}", messageList.get(0));
+		
 		model.addAttribute("chat_id", chat_id);
 		model.addAttribute("chat_nm", chat_nm);
 		model.addAttribute("chatEmpList", chatEmpList);
 		model.addAttribute("messageList", messageList);
 		
-		return "messenger/chat";
+		return "messenger/chatTest";
 	}
 	
 	/**
