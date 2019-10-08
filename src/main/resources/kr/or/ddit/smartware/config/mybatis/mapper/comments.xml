@@ -10,10 +10,10 @@
 	
 	<insert id="insertComments" parameterType="comments">
 		insert into comments (com_id, cont, reg_dt, post_id, emp_id, able)
-   			values(comments_seq.nextval, #{cont}, sysdate, #{post_id}, #{emp_id}, 'N')
+   			values(comments_seq.nextval, #{cont}, sysdate, #{post_id}, #{emp_id}, 'F')
 	</insert>
 	
 	<update id="deleteComments" parameterType="int">
-		update comments set able = 'Y' where com_id=#{com_id}
+		update comments set able = 'T' where com_id=#{com_id}
 	</update>
 </mapper>

@@ -33,7 +33,7 @@ public class BoardService implements IBoardService{
 	}
 
 	@Override
-	public Board getBoard(int board_id) {
+	public Board getBoard(String board_id) {
 		Board board = dao.getBoard(board_id);
 		return board;
 	}
