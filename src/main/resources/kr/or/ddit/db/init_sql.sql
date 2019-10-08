@@ -120,13 +120,13 @@ INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '홍보
 --사원
 
 
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test1', '사장', 'test@mail.com', '1234567', sysdate, 'de001', 'posi001', null, null, 'Y', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test2', '관리자', 'test@mail.com', '1234567', sysdate, 'de002', 'posi002', null, null, 'Y', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de002', 'posi002', null, null, 'Y', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'Y', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'Y', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'Y', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'testhoon1217@gmail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'Y', 'ewqdsa556');
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test1', '사장', 'test@mail.com', '1234567', sysdate, 'de001', 'posi001', null, null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test2', '관리자', 'test@mail.com', '1234567', sysdate, 'de002', 'posi002', null, null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de002', 'posi002', null, null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'testhoon1217@gmail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', 'ewqdsa556');
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,13 +175,13 @@ INSERT INTO APPLICATION VALUES ('appl' || LPAD(APPLICATION_SEQ.NEXTVAL,4,0), '�
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --신청서 결재
 
-INSERT INTO APPL_APPR VALUES('appl001', 'e002', 1, 'Y');
+INSERT INTO APPL_APPR VALUES('appl001', 'e002', 1, 'T');
 INSERT INTO APPL_APPR VALUES('appl002', 'e002', 2, 'F');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --게시판
 
-INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e002', '관리자',SYSDATE, 'Y');
+INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e002', '관리자',SYSDATE, 'T');
 INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e002', '사내게시판',SYSDATE, 'F');
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -238,8 +238,8 @@ INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL,
 --------------------------------------------------------------------------------------------------------------------------------
 --채팅방
  
-INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), 'TESTCHAT1', 'Y');
-INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), 'TESTCHAT2', 'Y');
+INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), 'TESTCHAT1', 'T');
+INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), 'TESTCHAT2', 'T');
 
 ------------------------------------------------------------------------------------------------------------
 --메세지
