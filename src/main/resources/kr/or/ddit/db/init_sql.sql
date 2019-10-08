@@ -1,18 +1,13 @@
 --삭제---------------------------------------------------------------
+-- 일정
+drop sequence CALENDAR_SEQ;
+CREATE SEQUENCE CALENDAR_SEQ START WITH 1 INCREMENT BY 1 nocache;
+delete from calendar;
+
 --카테고리
 DROP sequence CATEGORY_SEQ;
 CREATE SEQUENCE CATEGORY_SEQ START WITH 1 INCREMENT BY 1 nocache;
 delete from category;
-
--- 부서일정
-drop sequence DEP_CALENDAR_SEQ;
-CREATE SEQUENCE DEP_CALENDAR_SEQ START WITH 1 INCREMENT BY 1 nocache;
-delete from dep_calendar;
-
---사원일정
-drop sequence EMP_CALENDAR_SEQ;
-CREATE SEQUENCE EMP_CALENDAR_SEQ START WITH 1 INCREMENT BY 1 nocache;
-delete from emp_calendar;
 
 --직책
 drop sequence POSITION_SEQ;
@@ -110,13 +105,13 @@ drop sequence CHAT_SEQ;
 CREATE SEQUENCE CHAT_SEQ START WITH 1 INCREMENT BY 1 nocache;
 delete from chat;
 
+--추가-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --직책
 insert into position values('posi' || LPAD(POSITION_SEQ.NEXTVAL,4,0), '사장');
 insert into position values('posi' || LPAD(POSITION_SEQ.NEXTVAL,4,0), '사원');
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --부서
-
 INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '사장');
 INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발');
 INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '홍보');
@@ -264,52 +259,70 @@ INSERT INTO CHAT_EMP VALUES ('e004', 'ch002');
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --카테고리
 
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정', '#616264');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정_중요', '#C23352');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1', '#F7B938');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2', '#F7B938');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3', '#F7B938');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_중요', '#F15B5B');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_이벤트', '#00A6A9');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_중요', '#F15B5B');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_이벤트', '#00A6A9');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_생일', '#009770');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_생일', '#009770');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3_생일', '#009770');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정', '616264', null, 'e0003');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정_중요', 'C23352', null, 'e0003');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1', 'F7B938', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2', 'F7B938', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3', 'F7B938', 'de0003', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_중요', 'F15B5B', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_이벤트', '00A6A9', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_중요', 'F15B5B', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_이벤트', '00A6A9', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_생일', '009770', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_생일', '009770', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3_생일', '009770', 'de0003', 'e0001');
 
 ---------------------------------------------------------------------------------------------------------------
---부서일정
-
-INSERT INTO DEP_CALENDAR VALUES ('dep' || LPAD(DEP_CALENDAR_SEQ .NEXTVAL,4,0), '부서일정1', '일정내용', TO_DATE('201909092000', 'YYYYMMDDHH24MI'), TO_DATE('201909092300', 'YYYYMMDDHH24MI'), 'de002', 'cate003', 'F');
-INSERT INTO DEP_CALENDAR VALUES ('dep' || LPAD(DEP_CALENDAR_SEQ .NEXTVAL,4,0), '부서일정2', '일정내용', TO_DATE('201909192000', 'YYYYMMDDHH24MI'), TO_DATE('201909221200', 'YYYYMMDDHH24MI'), 'de002', 'cate003', 'F');
-INSERT INTO DEP_CALENDAR VALUES ('dep' || LPAD(DEP_CALENDAR_SEQ .NEXTVAL,4,0), '부서일정3', '일정내용', TO_DATE('201910012000', 'YYYYMMDDHH24MI'), TO_DATE('201910112000', 'YYYYMMDDHH24MI'), 'de002', 'cate006', 'F');
-INSERT INTO DEP_CALENDAR VALUES ('dep' || LPAD(DEP_CALENDAR_SEQ .NEXTVAL,4,0), '부서일정4', '일정내용', TO_DATE('201910022000', 'YYYYMMDDHH24MI'), TO_DATE('201910022300', 'YYYYMMDDHH24MI'), 'de002', 'cate007', 'F');
-INSERT INTO DEP_CALENDAR VALUES ('dep' || LPAD(DEP_CALENDAR_SEQ .NEXTVAL,4,0), '부서일정5', '일정내용', TO_DATE('201910032000', 'YYYYMMDDHH24MI'), TO_DATE('201910042000', 'YYYYMMDDHH24MI'), 'de002', 'cate006', 'F');
-INSERT INTO DEP_CALENDAR VALUES ('dep' || LPAD(DEP_CALENDAR_SEQ .NEXTVAL,4,0), '부서일정6', '일정내용', TO_DATE('201910152000', 'YYYYMMDDHH24MI'), TO_DATE('201910202000', 'YYYYMMDDHH24MI'), 'de002', 'cate011', 'F');
+--일정
+  -- 개인
+INSERT INTO CALENDAR VALUES 
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '치과 예약', '서울치과병원', TO_DATE('201910101800', 'YYYYMMDDHH24MI'),
+      TO_DATE('201910101800', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0002');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '멜론 만기', null, TO_DATE('20191015', 'YYYYMMDD'), 
+      TO_DATE('20191015', 'YYYYMMDD'), 'T', null, 'e0003', 'cate0001');
+INSERT INTO CALENDAR VALUES 
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '정보처리기사 접수기간', null, TO_DATE('20191014', 'YYYYMMDD'),
+      TO_DATE('20191018', 'YYYYMMDD'), 'T', null, 'e0003', 'cate0002');
+INSERT INTO CALENDAR VALUES 
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '세스코 예약', null, TO_DATE('201910201830', 'YYYYMMDDHH24MI'),
+      TO_DATE('201910201830', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0001');
+INSERT INTO CALENDAR VALUES 
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '900일 데이트', null, TO_DATE('20191112', 'YYYYMMDD'),
+      TO_DATE('20191112', 'YYYYMMDD'), 'F', null, 'e0003', 'cate0002');
+INSERT INTO CALENDAR VALUES 
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '치과 예약', '서울치과병원', TO_DATE('201910171800', 'YYYYMMDDHH24MI'),
+      TO_DATE('201910171800', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0002');  
+INSERT INTO CALENDAR VALUES 
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '세차 예약', null, TO_DATE('201910201500', 'YYYYMMDDHH24MI'),
+      TO_DATE('201910201500', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0001');        
+INSERT INTO CALENDAR VALUES 
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '출장', null, TO_DATE('201910281300', 'YYYYMMDDHH24MI'),
+      TO_DATE('201911011800', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0002');   
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---사원일정
+--일정
+  -- 부서
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 산출물 기간', null, TO_DATE('20190930', 'YYYYMMDD'), 
+      TO_DATE('20191004', 'YYYYMMDD'), 'T', null, 'e0002', 'cate0008');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 코딩 기간', null, TO_DATE('20191007', 'YYYYMMDD'), 
+      TO_DATE('20191018', 'YYYYMMDD'), 'T', null, 'e0002', 'cate0008');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 마무리 기간', null, TO_DATE('20191021', 'YYYYMMDD'), 
+      TO_DATE('20191025', 'YYYYMMDD'), 'T', null, 'e0002', 'cate0008');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 발표', null, TO_DATE('201910281000', 'YYYYMMDDHH24MI'), 
+      TO_DATE('201910281200', 'YYYYMMDDHH24MI'), 'T', null, 'e0002', 'cate0008');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '2팀 회식', '하남돼지', TO_DATE('201910301900', 'YYYYMMDDHH24MI'), 
+      TO_DATE('201910301900', 'YYYYMMDDHH24MI'), 'F', null, 'e0002', 'cate0004');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '전민규 생일', null, TO_DATE('20191001', 'YYYYMMDD'), 
+      TO_DATE('20191001', 'YYYYMMDD'), 'T', null, null, 'cate0010');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '김도훈 생일', null, TO_DATE('20191020', 'YYYYMMDD'), 
+      TO_DATE('20191020', 'YYYYMMDD'), 'T', null, null, 'cate0010');
 
-INSERT INTO EMP_CALENDAR VALUES ('emp' || LPAD(EMP_CALENDAR_SEQ .NEXTVAL,4,0), '일정1', '일정내용', TO_DATE('201910012000', 'YYYYMMDDHH24MI'), TO_DATE('201910112000', 'YYYYMMDDHH24MI'), 'e003', 'cate001', 'F');
-INSERT INTO EMP_CALENDAR VALUES ('emp' || LPAD(EMP_CALENDAR_SEQ .NEXTVAL,4,0), '일정2', '일정내용', TO_DATE('201910022100', 'YYYYMMDDHH24MI'), TO_DATE('201910102000', 'YYYYMMDDHH24MI'), 'e003', 'cate001', 'F');
-INSERT INTO EMP_CALENDAR VALUES ('emp' || LPAD(EMP_CALENDAR_SEQ .NEXTVAL,4,0), '일정3', '일정내용', TO_DATE('201910112200', 'YYYYMMDDHH24MI'), TO_DATE('201910151100', 'YYYYMMDDHH24MI'), 'e003', 'cate002', 'F');
-INSERT INTO EMP_CALENDAR VALUES ('emp' || LPAD(EMP_CALENDAR_SEQ .NEXTVAL,4,0), '일정4', '일정내용', TO_DATE('201910121200', 'YYYYMMDDHH24MI'), TO_DATE('201910191700', 'YYYYMMDDHH24MI'), 'e003', 'cate001', 'F');
-INSERT INTO EMP_CALENDAR VALUES ('emp' || LPAD(EMP_CALENDAR_SEQ .NEXTVAL,4,0), '일정5', '일정내용', TO_DATE('201910151300', 'YYYYMMDDHH24MI'), TO_DATE('201910201800', 'YYYYMMDDHH24MI'), 'e003', 'cate002', 'F');
 COMMIT;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -88,7 +88,7 @@
                                 <form class="mt-5 mb-5 login-input" action="<%=request.getContextPath() %>/login" method="post">
                                     <div class="form-group">
                                         <input type="text" id="emp_id" name="emp_id" class="form-control"
-        	   								placeholder="Id" required autofocus value="e003">
+        	   								placeholder="Id" required autofocus value="e0003">
                                     </div>
                                     <div class="form-group">
                                         <input id="pass" name="pass" type="password" class="form-control" placeholder="Password" value="test1234">
