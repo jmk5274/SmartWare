@@ -1,6 +1,7 @@
 package kr.or.ddit.smartware.email.web;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,12 +18,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+
+import kr.or.ddit.smartware.util.file.FileUtil;
+import kr.or.ddit.smartware.util.file.model.FileInfo;
 
 @Controller
 public class EmailController {
@@ -37,7 +42,6 @@ public class EmailController {
 	
 	@PostMapping(path = "sendEmail")
     public String sendEmail(String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) {
-		System.out.println(reci);
 	
 		String[] arr = reci.split(" ");
 		String rEmail = "";
@@ -50,7 +54,6 @@ public class EmailController {
 		}
 		
 		
-		System.out.println(cont);
 		
         final String username = email;
         final String password = emailPass;
@@ -72,52 +75,60 @@ public class EmailController {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
+            message.setSentDate(new Date());
             message.setRecipients(
                     Message.RecipientType.TO,
                     InternetAddress.parse(rEmail)
             );
             message.setSubject(subject);
+            message.setText(cont);
+            
             
             
             MimeMultipart multipart = new MimeMultipart("related");
-            
             // first part  (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
-            String htmlText = cont;
-            if(!cont.contains("<")) {
-            	message.setText(cont);
-            	 Transport.send(message);
-            	return "redirect:/login";
+            messageBodyPart.setContent(cont, "text/html;charset=UTF-8");
+            
+            // add it
+            multipart.addBodyPart(messageBodyPart);
+            
+            if(attatch.size() > 0) {
+            	
+            	for(MultipartFile attachedFile : attatch) {
+            		
+            		FileInfo fileInfo = FileUtil.getFileInfo(attachedFile.getOriginalFilename());
+            		//첨부된 파일이 있을 경우만 업로드 처리
+            		attachedFile.transferTo(fileInfo.getFile());
+
+    			    if(attachedFile.getSize() > 0) {
+	            		
+	            		messageBodyPart = new MimeBodyPart();
+	            		DataSource fds = new FileDataSource(fileInfo.getFile());
+	            		messageBodyPart.setDataHandler(new DataHandler(fds));
+	            		
+	            		String fileName = fds.getName(); // 한글파일명은 영문으로 인코딩해야 첨부가 된다.
+	            		fileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+//	            		messageBodyPart.setFileName(MimeUtility.encodeText(fds.getName(), "EUC-KR","B"));
+	            		messageBodyPart.setFileName(fileName);
+	            		System.out.println(messageBodyPart.getFileName());
+	            		multipart.addBodyPart(messageBodyPart);
+    			    }
+            	}
             }
-           messageBodyPart.setContent(htmlText, "text/html;charset=UTF-8");
-     
-            // add it
-            multipart.addBodyPart(messageBodyPart);
             
-            // second part (the image)
-            messageBodyPart = new MimeBodyPart();
-            DataSource fds = new FileDataSource("D:\\A_TeachingMaterial\\8.LastProject\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\SmartWare\\images\\james.png");
-            messageBodyPart.setDataHandler(new DataHandler(fds));
-            messageBodyPart.setHeader("Content-ID","<image>");
-     
-            // add it
-            multipart.addBodyPart(messageBodyPart);
-
-
-            message.setContent(cont, "text/html;charset=UTF-8");
-            //setFile, upload 한 파일 읽기 
-            
-//            for(MultipartFile attachedFile : attatch) {
-//            }
-            
+            message.setContent(multipart);
             
             Transport.send(message);
 
-            System.out.println("Done");
 
         } catch (MessagingException e) {
             e.printStackTrace();
-        }
+        } catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         
         return "redirect:/login";
     }
