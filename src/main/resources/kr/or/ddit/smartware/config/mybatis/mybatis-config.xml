@@ -6,11 +6,19 @@
 	
 	<typeAliases>
 		<typeAlias alias="employee"  type="kr.or.ddit.smartware.employee.model.Employee"/>
+		<typeAlias alias="board"  type="kr.or.ddit.smartware.board.model.Board"/>
+		<typeAlias alias="post"  type="kr.or.ddit.smartware.post.model.Post"/>
+		<typeAlias alias="empCalendar"  type="kr.or.ddit.smartware.calendar.model.EmpCalendar"/>
+		<typeAlias alias="depCalendar"  type="kr.or.ddit.smartware.calendar.model.DepCalendar"/>
+		<typeAlias alias="category"  	type="kr.or.ddit.smartware.calendar.model.Category"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/employee.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/chat.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/board.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/post.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/calendar.xml"/>
 	</mappers>
 	
 </configuration>

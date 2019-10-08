@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="nk-sidebar">           
     <div class="nk-nav-scroll">
@@ -33,19 +34,20 @@
                     <i class="fa fa-list-alt menu-icon"></i> <span class="nav-text">사내 게시판</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/email-inbox.html">소통 게시판</a></li>
-                    <li><a href="${cp }/bootstrap/email-compose.html">자료실</a></li>
+                    <li><a href="${cp }/addBoard">메뉴 관리</a></li>
+                    <c:forEach items="${boardList }" var="list">
+			        	<c:if test="${list.able == 'Y' }">
+			 		       	<li class="active"><a href="${cp }/post?board_id=${list.board_id}&board_nm=${list.board_nm}">${list.board_nm} <span class="sr-only">(current)</span></a></li>
+			        	</c:if>
+			        </c:forEach>  
+<%--                     <li><a href="${cp }/bootstrap/email-inbox.html">소통 게시판</a></li> --%>
+<%--                     <li><a href="${cp }/bootstrap/email-compose.html">자료실</a></li> --%>
                 </ul>
             </li>
             <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                <a href="${cp }/calendar" aria-expanded="false">
                     <i class="fa fa-calendar menu-icon"></i><span class="nav-text">일정관리</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/app-profile.html">일정 조회</a></li>
-                    <li><a href="${cp }/bootstrap/app-calender.html">일정 추가</a></li>
-                    <li><a href="${cp }/bootstrap/app-calender.html">일정 삭제</a></li>
-                </ul>
             </li>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -65,9 +67,10 @@
                     <li><a href="${cp }/bootstrap/ui-alert.html">일감 추가</a></li>
                 </ul>
             </li>
+            
             <li>
-                <a class="has-arrow" href="${cp }/useForm" aria-expanded="false">
-                    <i class="icon-grid menu-icon"></i><span class="nav-text">UseForm</span>
+                <a href="${cp }/useForm" aria-expanded="false">
+                    <i class="icon-grid menu-icon"></i><span class="nav-text">양식 예제</span>
                 </a>
             </li>
         </ul>
