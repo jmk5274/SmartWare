@@ -30,4 +30,9 @@
 	<definition name="tiles.index" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/index.jsp"/>
 	</definition>
+	
+	<!-- 메뉴 및 게시판 관리 -->
+	<definition name="tiles.addBoard" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/board/addBoard.jsp"/>
+	</definition>
 </tiles-definitions>

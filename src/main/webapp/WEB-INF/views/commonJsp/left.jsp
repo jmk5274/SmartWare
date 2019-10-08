@@ -34,8 +34,14 @@
                     <i class="fa fa-list-alt menu-icon"></i> <span class="nav-text">사내 게시판</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/email-inbox.html">소통 게시판</a></li>
-                    <li><a href="${cp }/bootstrap/email-compose.html">자료실</a></li>
+                    <li><a href="${cp }/addBoard">메뉴 관리</a></li>
+                    <c:forEach items="${boardList }" var="list">
+			        	<c:if test="${list.able == 'Y' }">
+			 		       	<li class="active"><a href="${cp }/post?board_id=${list.board_id}&board_nm=${list.board_nm}">${list.board_nm} <span class="sr-only">(current)</span></a></li>
+			        	</c:if>
+			        </c:forEach>  
+<%--                     <li><a href="${cp }/bootstrap/email-inbox.html">소통 게시판</a></li> --%>
+<%--                     <li><a href="${cp }/bootstrap/email-compose.html">자료실</a></li> --%>
                 </ul>
             </li>
             <li>
@@ -62,20 +68,6 @@
                 </ul>
             </li>
             
-            <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                <i class="icon-grid menu-icon"></i><span class="nav-text">메뉴 관리</span>
-                </a>
-                <ul aria-expanded="false">
-                	<li><a href="${cp }/addBoard">게시판 및 메뉴 관리</a></li>
-	                <c:forEach items="${boardList }" var="list">
-			        	<c:if test="${list.able == 'Y' }">
-			 		       	<li class="active"><a href="${cp }/post?board_id=${list.board_id}&board_nm=${list.board_nm}">${list.board_nm} <span class="sr-only">(current)</span></a></li>
-			        	</c:if>
-			        </c:forEach>     
-                </ul>
-            </li>
-        
             <li>
                 <a href="${cp }/useForm" aria-expanded="false">
                     <i class="icon-grid menu-icon"></i><span class="nav-text">양식 예제</span>

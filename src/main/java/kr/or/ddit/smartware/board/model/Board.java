@@ -4,20 +4,21 @@ import java.util.Date;
 
 public class Board {
 
-	private Date reg_dt;		// 게시판 아이디
-	private String able;    	// 게시판 이름
-	private String board_id;	// 등록 날짜
-	private String board_nm;	// 사용 여부
-	private String emp_id;  	// 사원 아이디
+	private String board_id;	 //게시판 아이디
+	private String emp_id;  	 //사원 아이디
+	private String board_nm;	 //게시판 이름
+	private Date reg_dt;		 //등록 날짜
+	private String able;    	 //사용 여부
 	
 	public Board() { }
 	
-	public Board(Date reg_dt, String able, String board_id, String board_nm, String emp_id) {
+	public Board(String board_id, String emp_id, String board_nm, Date reg_dt, String able) {
+		super();
+		this.board_id = board_id;
+		this.emp_id = emp_id;
+		this.board_nm = board_nm;
 		this.reg_dt = reg_dt;
 		this.able = able;
-		this.board_id = board_id;
-		this.board_nm = board_nm;
-		this.emp_id = emp_id;
 	}
 
 	public Date getReg_dt() {
@@ -50,11 +51,11 @@ public class Board {
 	public void setEmp_id(String emp_id) {
 		this.emp_id = emp_id;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Board [reg_dt=" + reg_dt + ", able=" + able + ", board_id=" + board_id + ", board_nm=" + board_nm
-				+ ", emp_id=" + emp_id + "]";
+		return "Board [board_id=" + board_id + ", emp_id=" + emp_id + ", board_nm=" + board_nm + ", reg_dt=" + reg_dt
+				+ ", able=" + able + "]";
 	}
 	
 }

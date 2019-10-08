@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+
+	<select id="allPostList" parameterType="int" resultType="post">
+		select * from post where board_id = #{board_id}
+	</select>
+
+	<select id="getPostList" parameterType="map" resultType="post">
+       select  *
+       from   (select rownum rn, a.*
+               from  (select post_id, title, cont, emp_id, reg_dt, sysdate, able, pa_post_id
+                       from post
+                      start with pa_post_id is null
+                    connect by prior post_id = pa_post_id
+                      order siblings by gn desc, post_id)a
+                where board_id = #{board_id})a
+        where a.rn between (#{pagesize} * (#{page} - 1)) + 1 and (#{pagesize} * #{page})
+	</select>
+	
+	<select id="selectPost" parameterType="int" resultType="post">
+		select * from post where post_id = #{data}
+	</select>
+	
+	<select id="getPostSeq" resultType="int">
+		select post_seq.nextval from dual
+	</select>
+	
+	<insert id="insertPost" parameterType="post">
+		insert into post(post_id, title, cont, reg_dt, able, emp_id, board_id, gn)
+   			values(#{post_id}, #{title}, #{cont}, sysdate, 'N', #{emp_id}, #{board_id}, gn_seq.nextval)
+	</insert>
+	
+	<insert id="insertPost2" parameterType="post">
+		insert into post(post_id, board_id, title, cont, emp_id, reg_dt, able, pa_post_id, gn)
+   			values(#{post_id}, #{board_id}, #{title}, #{cont}, #{emp_id}, sysdate, 'N', #{pa_post_id}, #{gn})
+	</insert>
+	
+	<update id="deletePost" parameterType="post">
+		update post set able=#{able} where post_id=#{pa_post_id}
+	</update>
+	
+	<update id="updatePost" parameterType="post">
+		update post set title=#{title}, cont=#{cont}, reg_dt=sysdate where post_id=#{pa_post_id}
+	</update>
+	
+</mapper>
