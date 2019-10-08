@@ -30,4 +30,12 @@
 	<definition name="tiles.index" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/index.jsp"/>
 	</definition>
+	
+	<!-- 메일쓰기  -->
+	<definition name="tiles.writeMail" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/email/writeMail.jsp"/>
+	</definition>
+	
+	
+	
 </tiles-definitions>
