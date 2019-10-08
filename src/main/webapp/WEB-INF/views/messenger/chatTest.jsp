@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -229,19 +228,6 @@
 }
 
 </style></head><body>
-<!-- 
-
-A concept for a chat interface. 
-
-Try writing a new message! :)
-
-
-Follow me here:
-Twitter: https://twitter.com/thatguyemil
-Codepen: https://codepen.io/emilcarlsson/
-Website: http://emilcarlsson.se/
-
--->
 
 <div id="frame">
 	<div class="content">
@@ -284,8 +270,8 @@ Website: http://emilcarlsson.se/
 		<div class="message-input">
 			<div class="wrap">
 				<form id="messageFrm" action="${cp }/insertMessage" method="post">
+					<input id="msg_cont" name="msg_cont" type="text" placeholder="내용을 입력해주세요" />
 					<input name="chat_id" type="hidden" value="${chat_id }"/>
-					<input name="msg_cont" type="text" placeholder="내용을 입력해주세요" />
 					<label>
 						<i id="btn" class="fa fa-paperclip attachment" aria-hidden="true"></i>
 						<input name="file" type="file" style='display: none'/>
@@ -296,48 +282,9 @@ Website: http://emilcarlsson.se/
 		</div>
 	</div>
 </div>
-<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
-<script>
-
-var socket;
-function initSocket(url) {
-	socket = new SockJS(url);
-	
-	socket.onmessage = function(evt) {
-		var d = new Date();
-		
-		var time = d.hours() + ":" d.minutes();
-		
-		var str = evt.data.split(":")
-		
-		$('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + str[1] + '</p></li><span>'+ time +'</span>').appendTo($('.messages ul'));
-		$('.contact.active .preview').html('<span>You: </span>' + message);
-		$(".messages").animate({ scrollTop: $(document).height() }, "fast");
-	};
-	
-	socket.onclose = function(evt) {
-		$("#data").append("연결 종료");
-	}
-	
-	$('.submit').on("click", function() {
-		message = $(".message-input input").val();
-		if($.trim(message) == '') {
-			return false;
-		}
-		
-		var msg = $("#message").val();
-		socket.send(message);
-		
-		$("#messageFrm").submit();
-	});
-}
-
-$(document).ready(function() {
-	initSocket("/ws/chat");	//websocket 연결
-});
-
-$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 $("#profile-img").click(function() {
 	$("#status-options").toggleClass("active");
@@ -369,6 +316,39 @@ $("#status-options ul li").click(function() {
 	};
 	
 	$("#status-options").removeClass("active");
+});
+
+function newMessage() {
+	$("#messageFrm").submit();
+};
+
+var socket;
+function initSocket(url) {
+	socket = new SockJS(url);
+	
+	socket.onmessage = function(evt) {
+		var d = new Date();
+		var time = d.hours() + ":" d.minutes();
+		var str = evt.data.split(":")
+		
+		$(".messages ul").append('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + str[1] + '</p></li><span>'+ time +'</span>');
+	};
+	
+	socket.onclose = function(evt) {
+		$(".messages ul").append("연결 종료");
+	}
+	
+	$(".submit").on("click", function() {
+		message = $(".message-input #msg_cont").val();
+		if($.trim(message) == '') {
+			return false;
+		}
+		socket.send(message);
+		newMessage();
+	});
+}
+$(document).ready(function() {
+	initSocket("/ws/chat");	//websocket 연결
 });
 
 $(window).on('keydown', function(e) {

@@ -18,6 +18,7 @@
 		<param-value>
 			kr.or.ddit.smartware.config.RootConfig
 			kr.or.ddit.smartware.config.DatasourceConfig
+			kr.or.ddit.smartware.config.WebsocketConfig
 		</param-value>
 	</context-param>
 	<context-param>
@@ -48,6 +49,7 @@
 			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 	</servlet>
 
 	<servlet-mapping>
