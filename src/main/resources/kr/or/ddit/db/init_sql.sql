@@ -188,8 +188,8 @@ INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LP
 --게시글
 
 INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board001', 'TEST', 'TEST', 'e004', SYSDATE, 'F', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board002', 'TEST', 'TEST', 'e004', SYSDATE, 'F', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board002', 'TEST', 'TEST', 'e003', SYSDATE, 'F', 'post002');
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board002', 'TEST', 'TEST', 'e004', SYSDATE, 'T', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board002', 'TEST', 'TEST', 'e003', SYSDATE, 'T', 'post002');
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --게시글 파일
