@@ -11,7 +11,7 @@
                     <i class="icon-envelope menu-icon"></i><span class="nav-text">전자메일</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/index.html">메일 작성</a></li>
+                    <li><a href="${cp }/writeMail">메일 작성</a></li>
                     <li><a href="${cp }/bootstrap/index.html">받은 편지함</a></li>
                     <li><a href="${cp }/bootstrap/index.html">보낸 편지함</a></li>
                     <li><a href="${cp }/bootstrap/index.html">중요 편지함</a></li>

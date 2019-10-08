@@ -1,24 +1,18 @@
 package kr.or.ddit.smartware.config;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -64,13 +58,13 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 	
-//	@Bean
-//	public CommonsMultipartResolver multipartResolver() {
-//		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-//		multipartResolver.setMaxUploadSize(26214400);
-//		multipartResolver.setMaxUploadSizePerFile(5242880);
-//		return multipartResolver;
-//	}
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(26214400);
+		multipartResolver.setMaxUploadSizePerFile(5242880);
+		return multipartResolver;
+	}
 
 //	@Bean
 //	public MessageSource messageSource() {

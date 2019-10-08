@@ -108,15 +108,14 @@
                         <div class="dropdown-content-body">
                             <ul>
                             	<c:forEach items="${A_CHATLIST }" var="chat">
-	                                <li class="notification-unread">
-	                                    <a href="javascript:void(window.open('${cp }/chatRoom', '채팅방','width=500px, height=650px'))">
+	                                <li class="notification-unread chatList">
+	                                    <a href="javascript:void(window.open('${cp }/chatRoom?chat_id=${chat.CHAT_ID }', '채팅방','width=500px, height=650px'))">
 	                                        <img class="float-left mr-3 avatar-img" src="bootstrap/images/avatar/1.jpg" alt="">
 	                                        <div class="notification-content">
 	                                            <div class="notification-heading">${chat.CHAT_NM } / ${chat.CNT }명</div>
-<!-- 	                                            <div class="notification-timestamp">08 Hours ago</div> -->
-	                                            <div class="notification-text">${chat.MSG_CONT }</div>
+	                                            <div class="notification-timestamp">${chat.MSG_CONT }<br><fmt:formatDate value="${chat.SEND_DT }" pattern="yyyy/MM/dd"/></div>
+<!-- 	                                            <div class="notification-text"></div> -->
 	                                        </div>
-	                                        <p><fmt:formatDate value="${chat.SEND_DT }" pattern="yyyy/MM/dd"/></p>
 	                                    </a>
 	                                </li>
                             	</c:forEach>
