@@ -6,6 +6,9 @@
 	
 	<typeAliases>
 		<typeAlias alias="employee"  type="kr.or.ddit.smartware.employee.model.Employee"/>
+		<typeAlias alias="chat"  type="kr.or.ddit.smartware.messenger.model.Chat"/>
+		<typeAlias alias="chatEmp"  type="kr.or.ddit.smartware.messenger.model.ChatEmp"/>
+		<typeAlias alias="message"  type="kr.or.ddit.smartware.messenger.model.Message"/>
 	</typeAliases>
 	
 	<mappers>
