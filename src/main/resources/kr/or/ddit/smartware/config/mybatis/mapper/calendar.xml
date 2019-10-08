@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="calendar">
+	<select id="getEmpCalendarList" parameterType="String" resultType="empCalendar">
+		select *
+		  from emp_calendar
+		 where emp_id = #{emp_id}
+	</select>
+	
+	<select id="getDepCalendarList" parameterType="String" resultType="depCalendar">
+		select *
+  		  from dep_calendar
+   		 where depart_id = (select depart_id 
+         		              from employee
+                     		 where emp_id = #{emp_id})
+	</select>
+</mapper>

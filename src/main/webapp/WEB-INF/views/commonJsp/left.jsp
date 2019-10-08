@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="nk-sidebar">           
     <div class="nk-nav-scroll">
@@ -10,7 +11,7 @@
                     <i class="icon-envelope menu-icon"></i><span class="nav-text">전자메일</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/index.html">메일 작성</a></li>
+                    <li><a href="${cp }/writeMail">메일 작성</a></li>
                     <li><a href="${cp }/bootstrap/index.html">받은 편지함</a></li>
                     <li><a href="${cp }/bootstrap/index.html">보낸 편지함</a></li>
                     <li><a href="${cp }/bootstrap/index.html">중요 편지함</a></li>
@@ -33,8 +34,14 @@
                     <i class="fa fa-list-alt menu-icon"></i> <span class="nav-text">사내 게시판</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/email-inbox.html">소통 게시판</a></li>
-                    <li><a href="${cp }/bootstrap/email-compose.html">자료실</a></li>
+                    <li><a href="${cp }/addBoard">메뉴 관리</a></li>
+                    <c:forEach items="${boardList }" var="list">
+			        	<c:if test="${list.able == 'Y' }">
+			 		       	<li class="active"><a href="${cp }/post?board_id=${list.board_id}&board_nm=${list.board_nm}">${list.board_nm} <span class="sr-only">(current)</span></a></li>
+			        	</c:if>
+			        </c:forEach>  
+<%--                     <li><a href="${cp }/bootstrap/email-inbox.html">소통 게시판</a></li> --%>
+<%--                     <li><a href="${cp }/bootstrap/email-compose.html">자료실</a></li> --%>
                 </ul>
             </li>
             <li>
@@ -60,6 +67,7 @@
                     <li><a href="${cp }/bootstrap/ui-alert.html">일감 추가</a></li>
                 </ul>
             </li>
+            
             <li>
                 <a href="${cp }/useForm" aria-expanded="false">
                     <i class="icon-grid menu-icon"></i><span class="nav-text">양식 예제</span>
