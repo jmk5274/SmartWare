@@ -31,7 +31,7 @@ public class BoardDao implements IBoardDao{
 	}
 
 	@Override
-	public Board getBoard(int board_id) {
+	public Board getBoard(String board_id) {
 		return sqlSession.selectOne("board.getBoard", board_id);
 	}
 

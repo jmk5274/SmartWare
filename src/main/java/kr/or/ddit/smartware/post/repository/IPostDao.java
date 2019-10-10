@@ -9,7 +9,7 @@ import kr.or.ddit.smartware.post.model.PostFile;
 
 public interface IPostDao {
 	
-	public List<Post> allPostList(int board_id);
+	public List<Post> allPostList(String board_id);
 	
 	/**
 	 * 
@@ -31,7 +31,7 @@ public interface IPostDao {
 	* @return
 	* Method 설명 : post_id를 파라미터로 보내 일치하는 게시글 정보를 가져온다.
 	 */
-	public Post selectPost(int post_id);
+	public Post selectPost(String post_id);
 	
 	/**
 	 * 
@@ -42,7 +42,7 @@ public interface IPostDao {
 	* @return
 	* Method 설명 : post_id를 파라미터로 보내 일치하는 덧글 리스트를 가져온다.
 	 */
-	public List<Comments> getCommentsList(int post_id);
+	public List<Comments> getCommentsList(String post_id);
 	
 	/**
 	 * 
@@ -67,11 +67,11 @@ public interface IPostDao {
 	
 	public int updatePost(Post post);
 	
-	public List<PostFile> getPostFile(int post_id);
+	public List<PostFile> getPostFile(String post_id);
 	
-	public int deletePostFile(int file_id);
+	public int deletePostFile(String file_id);
 	
-	public int deleteComments(int com_id);
+	public int deleteComments(String com_id);
 	
-	public PostFile selectPostFile(int file_id);
+	public PostFile selectPostFile(String file_id);
 }

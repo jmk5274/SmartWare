@@ -29,7 +29,7 @@ public class BoardController {
 	 */
 	@GetMapping("addBoard")
 	public String addBoard(Model model) {
-		return "board/addBoard";
+		return "tiles.addBoard";
 	}
 	
 	/**
@@ -53,9 +53,9 @@ public class BoardController {
 		board.setEmp_id(employee.getEmp_id());
 		
 		if(board.getAble().equals("사용")) {
-			board.setAble("Y");
+			board.setAble("T");
 		}else {
-			board.setAble("N");
+			board.setAble("F");
 		}
 		
 		if(btnValue.equals("생성")) {
@@ -68,8 +68,8 @@ public class BoardController {
 			
 		}
 		
-		request.getServletContext().setAttribute("boardList", boardService.getBoardList()); 
+		request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList()); 
 		
-		return "board/addBoard";
+		return "tiles.addBoard";
 	}
 }

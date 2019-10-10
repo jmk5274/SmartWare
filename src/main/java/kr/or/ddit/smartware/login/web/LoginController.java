@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.ddit.smartware.board.service.IBoardService;
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
 import kr.or.ddit.smartware.messenger.service.IMessengerService;
@@ -25,6 +26,9 @@ public class LoginController {
 	
 	@Resource(name = "messengerService")
 	private IMessengerService messengerService;
+	
+	@Resource(name = "boardService")
+	private IBoardService boardService;
 	
 	/**
 	 * 
@@ -69,6 +73,7 @@ public class LoginController {
 		}else if(employee.checkLoginValidate(emp_id, pass)) {
 				List<Map> map = messengerService.getChatList(employee.getEmp_id());
 				
+				request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList());
 				request.getServletContext().setAttribute("A_CHATLIST", map);
 				session.setAttribute("S_EMPLOYEE", employee);
 				return "redirect:/main";
@@ -107,7 +112,7 @@ public class LoginController {
 		session.invalidate();	// 세션에 저장된 모든 속성을 제거
 		
 		// 로그인 화면으로 이동
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 	
 	/**

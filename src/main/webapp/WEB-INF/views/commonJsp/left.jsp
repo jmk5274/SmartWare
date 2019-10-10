@@ -35,8 +35,8 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${cp }/addBoard">메뉴 관리</a></li>
-                    <c:forEach items="${boardList }" var="list">
-			        	<c:if test="${list.able == 'Y' }">
+                    <c:forEach items="${A_BOARDLIST }" var="list">
+			        	<c:if test="${list.able == 'T' }">
 			 		       	<li class="active"><a href="${cp }/post?board_id=${list.board_id}&board_nm=${list.board_nm}">${list.board_nm} <span class="sr-only">(current)</span></a></li>
 			        	</c:if>
 			        </c:forEach>  
