@@ -12,6 +12,6 @@ public interface IBoardService {
 	
 	public int updateBoard(Board board);
 	
-	public Board getBoard(int board_id);
+	public Board getBoard(String board_id);
 
 }

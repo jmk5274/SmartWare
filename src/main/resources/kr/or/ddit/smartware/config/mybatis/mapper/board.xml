@@ -10,7 +10,7 @@
   	
   	<insert id="insertBoard" parameterType="board">
   		insert into board(board_id, emp_id, board_nm, reg_dt, able)
-			values(board_seq.nextval, #{emp_id}, #{board_nm}, sysdate, #{able})
+			values('board' || lpad(board_seq.nextval,4,0), #{emp_id}, #{board_nm}, sysdate, #{able})
   	</insert>
   	
   	<update id="updateBoard" parameterType="board">

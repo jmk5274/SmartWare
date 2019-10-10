@@ -258,19 +258,18 @@ INSERT INTO CHAT_EMP VALUES ('e004', 'ch002');
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --카테고리
-
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정', '616264', null, 'e0003');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정_중요', 'C23352', null, 'e0003');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1', 'F7B938', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2', 'F7B938', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3', 'F7B938', 'de0003', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_중요', 'F9D537', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_이벤트', '00A6A9', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_중요', 'F9D537', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_이벤트', '00A6A9', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_생일', '009770', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_생일', '009770', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3_생일', '009770', 'de0003', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정', '#372A50', null, 'e0003');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정_중요', '#C80141', null, 'e0003');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1', '#FFBF00', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2', '#FFBF00', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3', '#FFBF00', 'de0003', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_중요', '#FB2E01', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_이벤트', '#00C0EF', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_중요', '#FB2E01', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_이벤트', '#00C0EF', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_생일', '#0D9A00', 'de0002', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_생일', '#0D9A00', 'de0001', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3_생일', '#0D9A00', 'de0003', 'e0001');
 
 ---------------------------------------------------------------------------------------------------------------
 --일정
