@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.messenger.model.Chat;
+import kr.or.ddit.smartware.messenger.model.ChatEmp;
 import kr.or.ddit.smartware.messenger.model.Message;
 
 public interface IMessengerService {
@@ -58,5 +60,15 @@ public interface IMessengerService {
 	* Method 설명 : 메시지 전송
 	*/
 	int insertMessage(Message message);
+	
+	/**
+	* Method : insertChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_nm
+	* @return
+	* Method 설명 : 채팅방 추가
+	*/
+	String insertChat(Chat chat, ChatEmp chatEmp);
 	
 }

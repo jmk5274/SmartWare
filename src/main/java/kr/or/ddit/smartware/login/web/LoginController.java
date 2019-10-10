@@ -70,6 +70,8 @@ public class LoginController {
 				List<Map> map = messengerService.getChatList(employee.getEmp_id());
 				
 				request.getServletContext().setAttribute("A_CHATLIST", map);
+				
+				employee.setC_use("false");
 				session.setAttribute("S_EMPLOYEE", employee);
 				return "redirect:/main";
 		}

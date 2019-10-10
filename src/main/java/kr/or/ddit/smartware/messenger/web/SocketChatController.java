@@ -18,7 +18,7 @@ public class SocketChatController {
 	// 채팅 화면 요청(파리미터로 userId를 전송) : http://localhost/socketView?userId=brown
 	@RequestMapping("/socket/view")
 	public String socketView(HttpSession session) {		
-		return "messenger/chatView";
+		return "messenger/chat";
 	}
 
 	// 소켓에 연결된 모든 사용자에게 메세지 전달
