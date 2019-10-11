@@ -21,6 +21,7 @@
 		                                                   and b.emp_id = #{chat_id}) b
 		                              where a.chat_id = b.chat_id
 		                              group by a.chat_id))
+		 order by a.send_dt desc
 	</select>
 	
 	<select id="getChatNm" parameterType="String" resultType="String">
@@ -46,11 +47,11 @@
 	</select>
 	
 	<insert id="insertMessage" parameterType="message">
-		INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,3,0), #{chat_id}, #{msg_cont}, #{emp_id}, SYSDATE)
+		INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), #{chat_id}, #{msg_cont}, #{emp_id}, SYSDATE)
 	</insert>
 	
 	<insert id="insertChat" parameterType="chat">
-		insert into chat values('ch' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), #{chat_nm}, 'Y')
+		insert into chat values('ch' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), #{chat_nm}, 'T')
 		<selectKey order="AFTER" resultType="String" keyProperty="chat_id" >
 			select 'ch' || LPAD(CATEGORY_SEQ.currval,4,0) from dual
 		</selectKey>
@@ -60,4 +61,20 @@
 		insert into CHAT_EMP(emp_id, chat_id) values (#{emp_id}, #{chat_id})
 	</insert>
 	
+	<delete id="deleteChat" parameterType="chatEmp">
+		delete from chat_emp where emp_id=#{emp_id} and chat_id=#{chat_id}
+	</delete>
+	
+	<select id="getChatCnt" parameterType="String" resultType="int">
+		select count(b.emp_id) as cnt
+	  	  from chat a
+		  left outer join chat_emp b
+		    on a.chat_id = b.chat_id
+		 where a.chat_id = #{chat_id}
+		 group by a.chat_id
+	</select>
+	
+	<update id="updateChat" parameterType="String">
+		update chat set able='F' where chat_id = #{chat_id}
+	</update>
 </mapper>

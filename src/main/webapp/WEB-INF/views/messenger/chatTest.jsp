@@ -25,9 +25,9 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 
 <script src="https://use.typekit.net/hoy3lrg.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-<tiles:insertAttribute name="footer"/>
 <style class="cp-pen-styles">
 #frame {
   width: 100%;
@@ -296,7 +296,7 @@
 						<i id="btn" class="fa fa-paperclip attachment" aria-hidden="true"></i>
 						<input name="file" type="file" style='display: none'/>
 					</label>
-					<button id="btn1" class="submit" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+					<button id="btn1" class="submit" type="button" data-chat_id="${chat_id }"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 				</form>
 			</div>
 		</div>
@@ -305,6 +305,7 @@
 
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script >
+
 	var msgs = $('.messages')[0];
 	msgs.scrollTo({
 		top: msgs.scrollHeight });
@@ -342,9 +343,34 @@ $("#status-options ul li").click(function() {
 });
 
 function newMessage() {
-	$("#messageFrm").submit();
+	var param={};
+	var chat_id = $("#btn1").data('chat_id');
+	var msg = $(".message-input #msg_cont").val();
+	var d = new Date();
+	var time = d.getHours() + ":" + d.getMinutes();
+	
+	$("#msg_cont").val("");
+	
+	param.chat_id = chat_id;
+	param.msg_cont = msg;
+	
+	$.ajax({
+		url : "${cp}/insertMessage",
+		contentType : "application/json",
+		dataType : "json",
+		method : "post",
+		data : JSON.stringify(param),
+		success : function(data){
+			$(".messages ul").append('<li class="replies"><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+			
+			$('.messages').animate({
+				scrollTop: $('.messages').get(0).scrollHeight}, 1000);
+		}
+	});
 };
 
+	var socket = new SockJS("/ws/chat");
+	
 	socket.onmessage = function(evt) {
 		var d = new Date();
 		var time = d.getHours() + ":" + d.getMinutes();
@@ -355,6 +381,9 @@ function newMessage() {
 		$('.messages').animate({
 			scrollTop: $('.messages').get(0).scrollHeight}, 1000);    
 	};
+	
+	socket.onclose = function(evt) {
+	}
 	
 	$("#btn1").on("click", function() {
 		message = $(".message-input #msg_cont").val();
@@ -379,14 +408,11 @@ function newMessage() {
 	 
 	$(window).bind("beforeunload", function (e){
 		<%session.setAttribute("C_USE", "false"); %>
+	    opener.location.reload();
+	    window.close();
 	});
 
 	 
-// }
-// $(document).ready(function() {
-// 	initSocket("/ws/chat");	//websocket 연결
-// });
-
 //# sourceURL=pen.js
 </script>
 </body></html>

@@ -3,6 +3,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<script>
+	$(function() {
+		$(".chatList").hover(function(){
+			if($(".x", this).css("visibility") == "visible")
+				$(".x", this).css("visibility", "hidden");
+			else
+				$(".x", this).css("visibility", "visible");
+		});
+		
+		$(".x").click(function(event){
+			var param={};
+			var chat_id = $(this).data('chat_id');
+			
+			param.chat_id = chat_id;
+			
+			$.ajax({
+				url : "${cp}/deleteChat",
+				contentType : "application/json",
+				dataType : "json",
+				method : "post",
+				data : JSON.stringify(param),
+				success : function(data){
+					$("#"+data.chat_id).remove();
+				}
+			});
+			
+			event.preventDefault();
+		});
+	});
+	
+	
+</script>
+
 <!--**********************************
     Nav header start
 ***********************************-->
@@ -101,20 +134,21 @@
                     <div class="drop-down animated fadeIn dropdown-menu">
                         <div class="dropdown-content-heading d-flex justify-content-between">
                             <span class="">대화방 개설하기</span>  
-                            <a href="javascript:void(window.open('${cp }/chatAdd', '채팅방','width=500px, height=200px'))" class="d-inline-block">
+                            <a href="javascript:void(window.open('${cp }/chatAdd', '채팅방','width=500px, height=650px'))" class="d-inline-block">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </div>
                         <div class="dropdown-content-body">
                             <ul>
                             	<c:forEach items="${A_CHATLIST }" var="chat">
-	                                <li class="notification-unread chatList">
+	                                <li id="${chat.CHAT_ID }" class="notification-unread chatList">
 	                                    <a href="javascript:void(window.open('${cp }/chatRoom?chat_id=${chat.CHAT_ID }', '채팅방','width=500px, height=650px'))">
 	                                        <img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id=${S_EMPLOYEE.emp_id}" alt="">
 	                                        <div class="notification-content">
-	                                            <div class="notification-heading">${chat.CHAT_NM } / ${chat.CNT }명</div>
+	                                            <span class="notification-heading">${chat.CHAT_NM } / ${chat.CNT }명</span>	
+	                                            <i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="${chat.CHAT_ID }"></i>
 	                                            <div class="notification-timestamp">${chat.MSG_CONT }<br><fmt:formatDate value="${chat.SEND_DT }" pattern="yyyy/MM/dd"/></div>
-<!-- 	                                            <div class="notification-text"></div> -->
+<!-- 	                                            <div class="notification-text">dsfdsfs</div> -->
 	                                        </div>
 	                                    </a>
 	                                </li>

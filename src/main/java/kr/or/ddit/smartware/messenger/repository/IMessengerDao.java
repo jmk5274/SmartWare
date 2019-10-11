@@ -79,4 +79,34 @@ public interface IMessengerDao {
 	* Method 설명 : 채팅방 사원 추가
 	*/
 	int insertChatEmp(ChatEmp chatEmp);
+
+	/**
+	* Method : deleteChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방 나가기
+	*/
+	int deleteChat(ChatEmp chatEmp);
+	
+	/**
+	* Method : getChatCnt
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방 인원수 얻어오기
+	*/
+	int getChatCnt(String chat_id);
+	
+	/**
+	* Method : updateChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방 상태 변경
+	*/
+	int updateChat(String chat_id);
 }

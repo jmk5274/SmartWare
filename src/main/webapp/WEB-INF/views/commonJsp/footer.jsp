@@ -3,9 +3,17 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script>
-	var socket = new SockJS("/ws/chat");
+	var socket = new SockJS("/ws/event");
+	
+	socket.onmessage = function(evt) {
+		var d = new Date();
+		var time = d.getHours() + ":" + d.getMinutes();
+		var str = evt.data.split(":")
+		
+		console.log(str);
+	};
 	
 	socket.onclose = function(evt) {
-		$(".messages ul").append("연결 종료");
 	}
+
 </script>
