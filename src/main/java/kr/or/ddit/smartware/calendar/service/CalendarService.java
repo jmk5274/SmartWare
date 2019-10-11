@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.smartware.calendar.model.Calendar;
+import kr.or.ddit.smartware.calendar.model.Category;
 import kr.or.ddit.smartware.calendar.repository.ICalendarDao;
 
 @Service
@@ -29,16 +30,42 @@ public class CalendarService implements ICalendarService{
 	}
 
 	/**
-	* Method : getCategoryColor
+	* Method : getEmpCategoryList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 사원의 개인 일정을 가져온다.
+	*/
+	@Override
+	public List<Category> getEmpCategoryList(String emp_id) {
+		return calendarDao.getEmpCategoryList(emp_id);
+	}
+
+	/**
+	* Method : getDepCategoryList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 사원의 부서 일정을 가져온다.
+	*/
+	@Override
+	public List<Category> getDepCategoryList(String emp_id) {
+		return calendarDao.getDepCategoryList(emp_id);
+	}
+	
+	/**
+	* Method : getCategory
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param category_id
 	* @return
-	* Method 설명 : 카테고리의 색상을 가져온다.
+	* Method 설명 : 카테고리를 가져온다.
 	*/
 	@Override
-	public String getCategoryColor(String category_id) {
-		return calendarDao.getCategoryColor(category_id);
+	public Category getCategory(String category_id) {
+		return calendarDao.getCategory(category_id);
 	}
 
 }

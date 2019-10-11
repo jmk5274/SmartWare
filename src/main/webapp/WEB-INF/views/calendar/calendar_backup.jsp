@@ -132,9 +132,9 @@
  
 <script>
 	var calendarList = []; // 일정이 저장될 공간
-	
 	document.addEventListener('DOMContentLoaded', function() {
-		var calendarEl = document.getElementById('calendar');
+	    var calendarEl = document.getElementById('calendar');
+
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
 	    	plugins : [ "dayGrid", "timeGrid", "list", "interaction" ],
 			header : {
@@ -147,20 +147,10 @@
 			navLinks : true, // can click day/week names to navigate views
 			editable : true,
 			eventLimit : true, // allow "more" link when too many events
-			eventSources: [{
-				events: function(info, successCallback, failureCallback) {
-					$.ajax({
-						url: "${cp}/getAllCalendarList",
-						type: "GET",
-						dataType: "json",
-						success: function(data) {
-							console.log("성공");
-							console.log(data.calendarList);
-							successCallback(data.calendarList);
-						}
-					});
-				}
-			}],
+// 			events : calendarList,
+			events : {
+				url: "${cp}/getAllCalendarList"
+			},
 			eventRender: function(info) { // 일정 hover
 				var event = info.event;
 				var element = info.el;
@@ -189,12 +179,16 @@
 			      	container: 'body'
 				});
 			}
-	    });
-	    
+		});
+
 	    calendar.render();
 	});
 	
 	$(function() {
+		// 모든 일정 불러오기
+		$.getJSON("${cp}/getAllCalendarList").done(function(data) { calendarList = data.calendarList;  });
+		console.log("calist:" + calendarList);
+		
 		// 개인 일정 불러오기
 		$.getJSON("${cp}/getEmpCategoryList")
 			.done(function(data) {
@@ -218,6 +212,54 @@
 			console.log($(event.target).data("id"));
 			$(event.target).attr("class", "fa fa-check-square-o fa-lg");
 		});
+		
+// 		var calendar = new FullCalendar.Calendar($("#calendar"), {
+// 			plugins : [ "dayGrid", "timeGrid", "list", "interaction" ],
+// 			header : {
+// 				left : "prev,next today",
+// 				center : "title", 
+// 				right : "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+// 			},
+// 			locale: 'ko',
+// 			height: "auto",
+// 			navLinks : true, // can click day/week names to navigate views
+// 			editable : true,
+// 			eventLimit : true, // allow "more" link when too many events
+// // 			events : calendarList,
+// 			events : {
+// 				url: "${cp}/getAllCalendarList",
+// 			},
+// 			eventRender: function(info) { // 일정 hover
+// 				var event = info.event;
+// 				var element = info.el;
+// 				var view = info.view;
+// 				$(element).popover({
+// 					title: $('<div />', {
+// 						'class': 'popoverTitleCalendar',
+// 						'text': event.title
+// 					}).css({
+// 						'background': event.backgroundColor,
+// 						'color': event.textColor
+// 					}),
+// 					content: $('<div />', {
+// 						'class': 'popoverInfoCalendar'
+// 			        }).append('<p><strong>카테고리:</strong> ' + event.extendedProps.category_nm + '</p>')
+// 			          .append('<p><strong>등록자:</strong> ' + event.extendedProps.emp_nm + '</p>')
+// 			          .append('<p><strong>시간:</strong> ' + getDisplayDate(event) + '</p>')
+// 			          .append(getDisplayContent(event)),
+// 			          delay: {
+// 						show: "800",
+// 						hide: "50"
+// 			      	},
+// 			      	trigger: 'hover',
+// 			      	placement: 'top',
+// 			      	html: true,
+// 			      	container: 'body'
+// 				});
+// 			}
+// 		});
+		
+// 		calendar.render();
 	});
 	
 	function getDisplayCategory(data, loc) {

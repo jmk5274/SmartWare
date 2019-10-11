@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.smartware.calendar.model.Calendar;
+import kr.or.ddit.smartware.calendar.model.Category;
 
 @Repository
 public class CalendarDao implements ICalendarDao{
@@ -29,16 +30,42 @@ public class CalendarDao implements ICalendarDao{
 	}
 
 	/**
-	* Method : getCategoryColor
+	* Method : getCategory
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param category_id
 	* @return
-	* Method 설명 : 카테고리의 색상을 가져온다.
+	* Method 설명 : 카테고리를 가져온다.
 	*/
 	@Override
-	public String getCategoryColor(String category_id) {
-		return sqlSession.selectOne("calendar.getCategoryColor", category_id);
+	public Category getCategory(String category_id) {
+		return sqlSession.selectOne("calendar.getCategory", category_id);
+	}
+
+	/**
+	* Method : getEmpCategoryList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 사원의 개인 일정을 가져온다.
+	*/
+	@Override
+	public List<Category> getEmpCategoryList(String emp_id) {
+		return sqlSession.selectList("calendar.getEmpCategoryList", emp_id);
+	}
+
+	/**
+	* Method : getDepCategoryList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 사원의 부서 일정을 가져온다.
+	*/
+	@Override
+	public List<Category> getDepCategoryList(String emp_id) {
+		return sqlSession.selectList("calendar.getDepCategoryList", emp_id);
 	}
 
 }
