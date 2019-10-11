@@ -21,6 +21,7 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
 		localeChangeInterceptor.setParamName("language");
 		registry.addInterceptor(localeChangeInterceptor)
 				.addPathPatterns("/**")
+				.addPathPatterns("/ws/chat")
 				.excludePathPatterns("/login")
 				.excludePathPatterns("/css/**")
 				.excludePathPatterns("/js/**")

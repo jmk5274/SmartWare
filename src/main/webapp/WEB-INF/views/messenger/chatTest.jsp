@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -12,7 +13,6 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
 
 <!DOCTYPE html><html class=''>
 <head>
@@ -27,8 +27,8 @@
 <script src="https://use.typekit.net/hoy3lrg.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+<tiles:insertAttribute name="footer"/>
 <style class="cp-pen-styles">
-
 #frame {
   width: 100%;
   min-width: 360px;
@@ -232,39 +232,59 @@
 <div id="frame">
 	<div class="content">
 		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-			<p>${chat_nm } </p>
+			<c:choose>
+				<c:when test="${chat_nm == null || chat_nm == '' }">
+				</c:when>
+				<c:otherwise>
+					<img src="${cp }/empPicture?emp_id=${S_EMPLOYEE.emp_id}" alt="" />
+					<p>${chat_nm } </p>
+				</c:otherwise>
+			</c:choose>
 			<div class="social-media">
 				<c:choose>
-					<c:when test="${chatEmpList.size()==1 }">
-						<span>${chatEmpList.get(0).emp_nm } &nbsp; <i class="fa fa-plus" aria-hidden="true"></i></span>
+					<c:when test="${chatEmpList == null || chatEmpList.size() == 0 }">
+						<span>&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></span>
 					</c:when>
 					<c:otherwise>
-						<span>${chatEmpList.get(0).emp_nm } 외 ${chatEmpList.size()-1 }명 &nbsp; <i class="fa fa-plus" aria-hidden="true"></i></span>
+						<c:choose>
+							<c:when test="${chatEmpList.size()==1 }">
+								<span>${chatEmpList.get(0).emp_nm } &nbsp; <i class="fa fa-plus" aria-hidden="true"></i></span>
+							</c:when>
+							<c:otherwise>
+								<span>${chatEmpList.get(0).emp_nm } 외 ${chatEmpList.size()-1 }명 &nbsp; <i class="fa fa-plus" aria-hidden="true"></i></span>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
 		<div class="messages">
 			<ul>
-				<c:forEach items="${messageList }" var="message">
-					<c:choose>
-						<c:when test="${message.EMP_ID != S_EMPLOYEE.emp_id}">
-							<li class="sent">
-								<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-								<p>${message.MSG_CONT }</p>
-								<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/></span>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li class="replies">
-								<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-								<p>${message.MSG_CONT }</p>
-								<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/> </span>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${messageList == null || messageList.size() == 0 }">
+						
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${messageList }" var="message">
+							<c:choose>
+								<c:when test="${message.EMP_ID != S_EMPLOYEE.emp_id}">
+									<li class="sent">
+										<img src="${cp }/empPicture?emp_id=${message.EMP_ID}" alt="" />
+										<p>${message.MSG_CONT }</p>
+										<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/></span>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="replies">
+										<img src="${cp }/empPicture?emp_id=${message.EMP_ID}" alt="" />
+										<p>${message.MSG_CONT }</p>
+										<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/> </span>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 		<div class="message-input">
@@ -282,9 +302,12 @@
 		</div>
 	</div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-<script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+<script >
+	var msgs = $('.messages')[0];
+	msgs.scrollTo({
+		top: msgs.scrollHeight });
 
 $("#profile-img").click(function() {
 	$("#status-options").toggleClass("active");
@@ -322,41 +345,48 @@ function newMessage() {
 	$("#messageFrm").submit();
 };
 
-var socket;
-function initSocket(url) {
-	socket = new SockJS(url);
-	
 	socket.onmessage = function(evt) {
 		var d = new Date();
-		var time = d.hours() + ":" d.minutes();
+		var time = d.getHours() + ":" + d.getMinutes();
 		var str = evt.data.split(":")
 		
-		$(".messages ul").append('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + str[1] + '</p></li><span>'+ time +'</span>');
+		$(".messages ul").append('<li class="sent"><img src="${cp }/empPicture?emp_id='+ str[0] +'" alt="" /><p>' + str[1] + '</p> <span>'+ time +'</span></li>');
+		
+		$('.messages').animate({
+			scrollTop: $('.messages').get(0).scrollHeight}, 1000);    
 	};
 	
-	socket.onclose = function(evt) {
-		$(".messages ul").append("연결 종료");
-	}
-	
-	$(".submit").on("click", function() {
+	$("#btn1").on("click", function() {
 		message = $(".message-input #msg_cont").val();
 		if($.trim(message) == '') {
 			return false;
 		}
 		socket.send(message);
 		newMessage();
+	})
+	
+	$(window).on('keydown', function(e) {
+		  if (e.which == 13) {
+			message = $(".message-input #msg_cont").val();
+			if($.trim(message) == '') {
+				return false;
+			}
+			socket.send(message);
+		    newMessage();
+		    return false;
+		  }
+	 })
+	 
+	$(window).bind("beforeunload", function (e){
+		<%session.setAttribute("C_USE", "false"); %>
 	});
-}
-$(document).ready(function() {
-	initSocket("/ws/chat");	//websocket 연결
-});
 
-$(window).on('keydown', function(e) {
-  if (e.which == 13) {
-    newMessage();
-    return false;
-  }
-});
+	 
+// }
+// $(document).ready(function() {
+// 	initSocket("/ws/chat");	//websocket 연결
+// });
+
 //# sourceURL=pen.js
 </script>
 </body></html>

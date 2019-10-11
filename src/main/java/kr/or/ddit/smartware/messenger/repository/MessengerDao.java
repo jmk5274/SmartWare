@@ -9,6 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.messenger.model.Chat;
+import kr.or.ddit.smartware.messenger.model.ChatEmp;
 import kr.or.ddit.smartware.messenger.model.Message;
 
 @Repository
@@ -82,4 +84,30 @@ public class MessengerDao implements IMessengerDao{
 		return sqlSession.insert("chat.insertMessage", message);
 	}
 
+	/**
+	* Method : insertChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_nm
+	* @return
+	* Method 설명 : 채팅방 추가
+	*/
+	@Override
+	public String insertChat(Chat chat) {
+		return sqlSession.insert("chat.insertChat", chat) + "";
+	}
+
+	/**
+	* Method : insertChatEmp
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chatEmp
+	* @return
+	* Method 설명 : 채팅방 사원 추가
+	*/
+	@Override
+	public int insertChatEmp(ChatEmp chatEmp) {
+		return sqlSession.insert("chat.insertChatEmp", chatEmp);
+	}
+	
 }

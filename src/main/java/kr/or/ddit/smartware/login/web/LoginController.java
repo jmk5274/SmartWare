@@ -75,6 +75,8 @@ public class LoginController {
 				
 				request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList());
 				request.getServletContext().setAttribute("A_CHATLIST", map);
+				
+				employee.setC_use("false");
 				session.setAttribute("S_EMPLOYEE", employee);
 				return "redirect:/main";
 		}

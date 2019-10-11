@@ -42,10 +42,22 @@
 	  	  from message a, employee b
 		 where a.chat_id = #{chat_id}
 		   and a.emp_id = b.emp_id
+		   order by send_dt
 	</select>
 	
 	<insert id="insertMessage" parameterType="message">
 		INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,3,0), #{chat_id}, #{msg_cont}, #{emp_id}, SYSDATE)
+	</insert>
+	
+	<insert id="insertChat" parameterType="chat">
+		insert into chat values('ch' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), #{chat_nm}, 'Y')
+		<selectKey order="AFTER" resultType="String" keyProperty="chat_id" >
+			select 'ch' || LPAD(CATEGORY_SEQ.currval,4,0) from dual
+		</selectKey>
+	</insert>
+	
+	<insert id="insertChatEmp" parameterType="chatEmp">
+		insert into CHAT_EMP(emp_id, chat_id) values (#{emp_id}, #{chat_id})
 	</insert>
 	
 </mapper>

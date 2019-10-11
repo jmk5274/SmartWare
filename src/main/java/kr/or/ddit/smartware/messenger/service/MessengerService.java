@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.messenger.model.Chat;
+import kr.or.ddit.smartware.messenger.model.ChatEmp;
 import kr.or.ddit.smartware.messenger.model.Message;
 import kr.or.ddit.smartware.messenger.repository.IMessengerDao;
 
@@ -80,6 +82,31 @@ public class MessengerService implements IMessengerService{
 	@Override
 	public int insertMessage(Message message) {
 		return messengerDao.insertMessage(message);
+	}
+
+	/**
+	* Method : insertChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_nm
+	* @param chatEmp
+	* @return
+	* Method 설명 : 채팅방 추가
+	*/
+	@Override
+	public String insertChat(Chat chat, ChatEmp chatEmp) {
+		String chat_id = messengerDao.insertChat(chat);
+		
+		chatEmp.setChat_id(chat.getChat_id());
+		
+		int cnt = 0;
+		if(chat_id==null || chat_id.equals("")) {
+			cnt = 0;
+		}else {
+			cnt = messengerDao.insertChatEmp(chatEmp);
+		}
+		
+		return chat.getChat_id();
 	}
 
 }

@@ -100,9 +100,9 @@
                     </a>
                     <div class="drop-down animated fadeIn dropdown-menu">
                         <div class="dropdown-content-heading d-flex justify-content-between">
-                            <span class="">3 New Messages</span>  
-                            <a href="javascript:void()" class="d-inline-block">
-                                <span class="badge badge-pill gradient-1">3</span>
+                            <span class="">대화방 개설하기</span>  
+                            <a href="javascript:void(window.open('${cp }/chatAdd', '채팅방','width=500px, height=200px'))" class="d-inline-block">
+                                <i class="fa fa-plus"></i>
                             </a>
                         </div>
                         <div class="dropdown-content-body">
@@ -110,7 +110,7 @@
                             	<c:forEach items="${A_CHATLIST }" var="chat">
 	                                <li class="notification-unread chatList">
 	                                    <a href="javascript:void(window.open('${cp }/chatRoom?chat_id=${chat.CHAT_ID }', '채팅방','width=500px, height=650px'))">
-	                                        <img class="float-left mr-3 avatar-img" src="bootstrap/images/avatar/1.jpg" alt="">
+	                                        <img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id=${S_EMPLOYEE.emp_id}" alt="">
 	                                        <div class="notification-content">
 	                                            <div class="notification-heading">${chat.CHAT_NM } / ${chat.CNT }명</div>
 	                                            <div class="notification-timestamp">${chat.MSG_CONT }<br><fmt:formatDate value="${chat.SEND_DT }" pattern="yyyy/MM/dd"/></div>
@@ -153,7 +153,7 @@
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                         <span class="activity active"></span>
-                        <img src="bootstrap/images/user/1.png" height="40" width="40" alt="">
+                        <img src="${cp }/empPicture?emp_id=${S_EMPLOYEE.emp_id}" height="40" width="40" alt="">
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">

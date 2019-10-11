@@ -22,12 +22,13 @@ public class Employee {
 	private String sign;            //서명
 	private String able;            //사용 여부
 	private String email_pass; 		//이메일 비밀번호
+	private String c_use;
 	
 	public Employee() { }
 
 	public Employee(String emp_id, String pass, String emp_nm, String rank, String email, String tel, Date join_dt,
-			String depart_id, String posi_id, String emp_pic, String sign, String able, String email_pass) {
-		super();
+			String depart_id, String posi_id, String emp_pic, String sign, String able, String email_pass,
+			String c_use) {
 		this.emp_id = emp_id;
 		this.pass = pass;
 		this.emp_nm = emp_nm;
@@ -41,7 +42,10 @@ public class Employee {
 		this.sign = sign;
 		this.able = able;
 		this.email_pass = email_pass;
+		this.c_use = c_use;
 	}
+
+
 
 
 
@@ -239,9 +243,15 @@ public class Employee {
 		this.email_pass = email_pass;
 	}
 
+	public String getC_use() {
+		return c_use;
+	}
+	
+	public void setC_use(String c_use) {
+		this.c_use = c_use;
+	}
 
-
-
+	
 	public boolean checkLoginValidate(String emp_id, String pass) {
 		
 		// 암호화 문장끼리 비교
@@ -251,6 +261,7 @@ public class Employee {
 		
 		return false;
 	}
+
 
 
 }
