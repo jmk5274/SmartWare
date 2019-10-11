@@ -16,21 +16,24 @@
                      		 where emp_id = #{emp_id})
 	</select>
 	
-	<select id="getCategoryColor" parameterType="String" resultType="String">
-		select color
+	<select id="getCategory" parameterType="String" resultType="category">
+		select *
 		  from category
 		 where category_id = #{category_id}
 	</select>
 	
 	<select id="getEmpCategoryList" parameterType="String" resultType="category">
-		select distinct category_id
-  		  from emp_calendar
- 		 where emp_id = #{emp_id};
+		select *
+		  from category
+		 where emp_id = #{emp_id}
+		   and depart_id is null
 	</select>
 	
 	<select id="getDepCategoryList" parameterType="String" resultType="category">
-		select distinct category_id
-  		  from dep_calendar
- 		 where emp_id = #{emp_id};
+		select *
+		  from category
+		 where depart_id = (select depart_id
+		                      from employee
+		                     where emp_id = #{emp_id})
 	</select>
 </mapper>

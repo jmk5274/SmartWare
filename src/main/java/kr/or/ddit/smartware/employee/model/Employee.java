@@ -46,24 +46,15 @@ public class Employee {
 	}
 
 
-
-
-
-
-
-
 	@Override
 	public String toString() {
 		return "Employee [emp_id=" + emp_id + ", pass=" + pass + ", emp_nm=" + emp_nm + ", rank=" + rank + ", email="
 				+ email + ", tel=" + tel + ", join_dt=" + join_dt + ", depart_id=" + depart_id + ", posi_id=" + posi_id
-				+ ", emp_pic=" + emp_pic + ", sign=" + sign + ", able=" + able + ", email_pass=" + email_pass + "]";
+				+ ", emp_pic=" + emp_pic + ", sign=" + sign + ", able=" + able + ", email_pass=" + email_pass
+				+ ", c_use=" + c_use + "]";
 	}
 
-
-
-
-
-
+	
 	public String getEmp_id() {
 		return emp_id;
 	}

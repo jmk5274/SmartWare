@@ -3,37 +3,75 @@ package kr.or.ddit.smartware.email.web;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
+import javax.annotation.Resource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.smartware.email.model.Email;
+import kr.or.ddit.smartware.email.service.IEmailService;
+import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.employee.service.IEmployeeService;
 import kr.or.ddit.smartware.util.file.FileUtil;
 import kr.or.ddit.smartware.util.file.model.FileInfo;
 
 @Controller
 public class EmailController {
+	private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
+	
+	@Resource(name = "emailService")
+	private IEmailService emailService;
+	
+	@Resource(name = "employeeService")
+	private IEmployeeService employeeService;
+	
 	
 	@GetMapping(path = "writeMail")
-	public String writeMail() {
+	public String writeMail(Model model) {
+		List<Map> departList = emailService.getDepartMentList();
+		
+//		String[] value = null;
+////		for(Map depart : departList) {
+//		for(int i = 0; i < departList.size(); i++) {
+//			logger.debug("depart.get(\"DEPART_ID\") - {}", departList.get(i).get("DEPART_ID"));
+//			value[i] = (String) departList.get(i).get("DEPART_ID");
+//			
+//		}
+		
+		List<Employee> employeeList = employeeService.getEmployeeList();
+		List<Map> positionList = emailService.getPositionList();
+		
+		logger.debug("departList - {}", departList);
+		model.addAttribute("departList", departList);
+		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("positionList", positionList);
 		
 		return "tiles.writeMail";
 	}
@@ -41,7 +79,7 @@ public class EmailController {
 	
 	
 	@PostMapping(path = "sendEmail")
-    public String sendEmail(String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) {
+    public String sendEmail(Model model, String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) {
 	
 		String[] arr = reci.split(" ");
 		String rEmail = "";
@@ -54,9 +92,9 @@ public class EmailController {
 		}
 		
 		
-		
         final String username = email;
         final String password = emailPass;
+        boolean flag = false;
 
         Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -120,18 +158,58 @@ public class EmailController {
             message.setContent(multipart);
             
             Transport.send(message);
+            flag = true;
 
 
         } catch (MessagingException e) {
-            e.printStackTrace();
+        	flag = false;
+        	e.printStackTrace();
         } catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
         
-        return "redirect:/login";
+        model.addAttribute("flag", flag);
+        
+        return "redirect:/writeMail";
     }
+	
+
+	
+	@RequestMapping(path = "validator")
+	public String validator(Model model, Email email, BindingResult result) {
+		// form객체(command, vo)의 검증 결과를 담는 BindingResult객체는
+		// 반드시 메소드 인자 순서에서 form객체 바로 뒤에 위치해야 된다.
+		List<Map> departList = emailService.getDepartMentList();
+		List<Employee> employeeList = employeeService.getEmployeeList();
+		List<Map> positionList = emailService.getPositionList();
+		
+		model.addAttribute("departList", departList);
+		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("positionList", positionList);
+		
+		// validator 실행
+		new EmailValidator().validate(email, result);
+
+		if(result.hasErrors()) logger.debug("has Error");
+		else logger.debug("no Error");
+
+		return "tiles.writeMail";
+	}
+	
+	@RequestMapping(path = "test")
+	public String test() {
+		return "tiles.test";
+	}
+	
+	@GetMapping(path = "addressbook")
+	public String addressbook(Model model) {
+		
+	
+		
+		return "tiles.writeMail";
+	}
 	
 	
 	

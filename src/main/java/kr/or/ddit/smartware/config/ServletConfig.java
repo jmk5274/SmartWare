@@ -1,10 +1,12 @@
 package kr.or.ddit.smartware.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -68,13 +70,12 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 		return multipartResolver;
 	}
 
-//	@Bean
-//	public MessageSource messageSource() {
-//		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-//		messageSource.setBasenames("classpath:kr/or/ddit/config/msg/error",
-//									"classpath:kr/or/ddit/config/msg/message");
-//		return messageSource;
-//	}
+	@Bean
+	public MessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasenames("classpath:kr/or/ddit/config/error/error");
+		return messageSource;
+	}
 	
 //	@Bean
 //	public LocaleResolver localeResolver() {

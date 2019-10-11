@@ -109,5 +109,44 @@ public class MessengerDao implements IMessengerDao{
 	public int insertChatEmp(ChatEmp chatEmp) {
 		return sqlSession.insert("chat.insertChatEmp", chatEmp);
 	}
-	
+
+	/**
+	* Method : deleteChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chatEmp
+	* @return
+	* Method 설명 : 채티방 나가기
+	*/
+	@Override
+	public int deleteChat(ChatEmp chatEmp) {
+		return sqlSession.delete("chat.deleteChat", chatEmp);
+	}
+
+	/**
+	* Method : getChatCnt
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방 인원수 얻어오기
+	*/
+	@Override
+	public int getChatCnt(String chat_id) {
+		return sqlSession.selectOne("chat.getChatCnt", chat_id);
+	}
+
+	/**
+	* Method : updateChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방 상태 변경
+	*/
+	@Override
+	public int updateChat(String chat_id) {
+		return sqlSession.update("chat.updateChat", chat_id);
+	}
+
 }

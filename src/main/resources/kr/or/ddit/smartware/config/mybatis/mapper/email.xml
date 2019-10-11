@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="email">
+	<select id="getAddressbookList" parameterType="String" resultType="hashMap">
+		 select a.DEPART_NM, b.EMP_NM, B.EMAIL, c.POSI_NM
+		  from DEPARTMENT a, EMPLOYEE b, POSITION c
+		 where b.DEPART_ID = a.DEPART_ID
+		  and b.POSI_ID = c.POSI_ID
+		  and b.DEPART_ID = #{DEPART_ID}
+		  order by c.POSI_ID
+	</select>
+	
+	<select id="getDepartMentList" resultType="hashMap">
+		select * from DEPARTMENT
+	</select>
+	
+	<select id="getPositionList" resultType="hashMap">
+		select * from POSITION
+	</select>
+	
+	<select id="getEmpSearchList" parameterType="String" resultType="hashMap">
+		select a.depart_nm, b.emp_nm, b.email, c.posi_nm
+		  from department a, employee b, position c
+		 where b.depart_ID = a.DEPART_ID
+		  and b.POSI_ID = c.POSI_ID
+		  and b.emp_nm like '%'||#searchKeyword#||'%' 
+	</select>
+	
+	<select id="getDepSearchList" parameterType="String" resultType="hashMap">
+		select a.depart_nm, b.emp_nm, b.email, c.posi_nm
+		  from department a, employee b, position c
+		 where b.depart_ID = a.DEPART_ID
+		  and b.POSI_ID = c.POSI_ID
+		  and a.depart_nm like '%'||#searchKeyword#||'%' 
+	</select>
+	
+</mapper>

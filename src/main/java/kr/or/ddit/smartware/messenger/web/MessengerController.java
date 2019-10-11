@@ -19,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.EmployeeService;
@@ -71,7 +73,7 @@ public class MessengerController {
 		employee.setC_use("true");
 		session.setAttribute("S_EMPLOYEE", employee);
 		
-		return "tiles.chatRoom";
+		return "messenger/chatTest";
 	}
 	
 	/**
@@ -85,7 +87,8 @@ public class MessengerController {
 	* Method 설명 : 메시지 전송
 	*/
 	@PostMapping("insertMessage")
-	public String insertMessage(Model model, Message message, HttpSession session, HttpServletRequest request) {
+	@ResponseBody
+	public Map<String, Object> insertMessage(@RequestBody Message message, HttpSession session, HttpServletRequest request) {
 		Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
 		
 		message.setEmp_id(employee.getEmp_id());
@@ -95,15 +98,16 @@ public class MessengerController {
 		
 		//채팅방 리스트 업데이트
 		List<Map> map = messengerService.getChatList(employee.getEmp_id());
-		
 		request.getServletContext().setAttribute("A_CHATLIST", map);
 		
-		model.addAttribute("chat_id", message.getChat_id());
-		
-		employee.setC_use("false");
 		session.setAttribute("S_EMPLOYEE", employee);
 		
-		return "redirect:/chatRoom";
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("chat_id", message.getChat_id());
+		resultMap.put("msg_cont", message.getMsg_cont());
+		resultMap.put("emp_id", message.getEmp_id());
+		
+		return resultMap;
 	}
 	
 	/**
@@ -174,5 +178,39 @@ public class MessengerController {
 			sos.write(buff,0,len);
 		}
 		fis.close();
+	}
+	
+	/**
+	* Method : deleteChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chatEmp
+	* @param session
+	* Method 설명 : 채팅방 나가기
+	*/
+	@PostMapping("deleteChat")
+	@ResponseBody
+	public Map<String, Object> deleteChat(@RequestBody ChatEmp chatEmp, HttpSession session, HttpServletRequest request) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		chatEmp.setEmp_id(employee.getEmp_id());
+		
+		messengerService.deleteChat(chatEmp);
+		
+		List<Map> map = messengerService.getChatList(employee.getEmp_id());
+		request.getServletContext().setAttribute("A_CHATLIST", map);
+		
+		//chat_id에 해당하는 채팅방 인원수 가져오기(select)
+		int cnt = messengerService.getChatCnt(chatEmp.getChat_id());
+		
+		if(cnt==0)
+			//conut==0일 때 해당 채팅방 상태 F로 변경(update)
+			messengerService.updateChat(chatEmp.getChat_id());
+		
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap.put("chat_id", chatEmp.getChat_id());
+		
+		return resultMap;
 	}
 }

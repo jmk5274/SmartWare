@@ -109,4 +109,27 @@ public class MessengerService implements IMessengerService{
 		return chat.getChat_id();
 	}
 
+	/**
+	* Method : deleteChat
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chatEmp
+	* @return
+	* Method 설명 : 채팅방 나가기
+	*/
+	@Override
+	public int deleteChat(ChatEmp chatEmp) {
+		return messengerDao.deleteChat(chatEmp);
+	}
+
+	@Override
+	public int getChatCnt(String chat_id) {
+		return messengerDao.getChatCnt(chat_id);
+	}
+
+	@Override
+	public int updateChat(String chat_id) {
+		return messengerDao.updateChat(chat_id);
+	}
+
 }
