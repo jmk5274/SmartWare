@@ -3,17 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comments">
-	<select id="getCommentsList" parameterType="int" resultType="comments">
-		select * from comments where postNum = #{data}
-		order by cmtnum
+	<select id="getCommentsList" parameterType="string" resultType="comments">
+		select * from comments where post_id = #{data}
+		order by com_id
 	</select>
 	
 	<insert id="insertComments" parameterType="comments">
 		insert into comments (com_id, cont, reg_dt, post_id, emp_id, able)
-   			values(comments_seq.nextval, #{cont}, sysdate, #{post_id}, #{emp_id}, 'N')
+   			values(comments_seq.nextval, #{cont}, sysdate, #{post_id}, #{emp_id}, 'F')
 	</insert>
 	
-	<update id="deleteComments" parameterType="int">
-		update comments set able = 'Y' where com_id=#{com_id}
+	<update id="deleteComments" parameterType="string">
+		update comments set able = 'T' where com_id=#{com_id}
 	</update>
 </mapper>

@@ -4,14 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="post">
 
-	<select id="allPostList" parameterType="int" resultType="post">
+	<select id="allPostList" parameterType="string" resultType="post">
 		select * from post where board_id = #{board_id}
 	</select>
 
 	<select id="getPostList" parameterType="map" resultType="post">
        select  *
        from   (select rownum rn, a.*
-               from  (select post_id, title, cont, emp_id, reg_dt, sysdate, able, pa_post_id
+               from  (select post_id, board_id, title, level, cont, emp_id, reg_dt, able, pa_post_id, gn
                        from post
                       start with pa_post_id is null
                     connect by prior post_id = pa_post_id
@@ -20,22 +20,22 @@
         where a.rn between (#{pagesize} * (#{page} - 1)) + 1 and (#{pagesize} * #{page})
 	</select>
 	
-	<select id="selectPost" parameterType="int" resultType="post">
-		select * from post where post_id = #{data}
+	<select id="selectPost" parameterType="string" resultType="post">
+		select * from post where post_id = #{post_id}
 	</select>
 	
-	<select id="getPostSeq" resultType="int">
-		select post_seq.nextval from dual
+	<select id="getPostSeq" resultType="String">
+		select 'post' || LPAD(POST_SEQ.NEXTVAL,4,0) from dual
 	</select>
 	
 	<insert id="insertPost" parameterType="post">
 		insert into post(post_id, title, cont, reg_dt, able, emp_id, board_id, gn)
-   			values(#{post_id}, #{title}, #{cont}, sysdate, 'N', #{emp_id}, #{board_id}, gn_seq.nextval)
+   			values(#{post_id}, #{title}, #{cont}, sysdate, 'F', #{emp_id}, #{board_id}, #{gn})
 	</insert>
 	
 	<insert id="insertPost2" parameterType="post">
 		insert into post(post_id, board_id, title, cont, emp_id, reg_dt, able, pa_post_id, gn)
-   			values(#{post_id}, #{board_id}, #{title}, #{cont}, #{emp_id}, sysdate, 'N', #{pa_post_id}, #{gn})
+   			values(#{post_id}, #{board_id}, #{title}, #{cont}, #{emp_id}, sysdate, 'F', #{pa_post_id}, #{gn})
 	</insert>
 	
 	<update id="deletePost" parameterType="post">

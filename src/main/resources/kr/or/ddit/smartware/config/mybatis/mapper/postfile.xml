@@ -4,21 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="postfile">
 	<insert id="insertPostFile" parameterType="postfile">
-		insert into postfile(file_id, file_nm, realfilepath, post_id)
+		insert into post_file(file_id, file_nm, realfilepath, post_id)
     		values(post_file_seq.nextval, #{file_nm}, #{realfilepath}, #{post_id})
 	</insert>
 
-	<select id="getPostFile" parameterType="int" resultType="postfile">
+	<select id="getPostFile" parameterType="string" resultType="postfile">
 		select *
-		  from postfile
+		  from post_file
 		 where post_id = #{post_id}
 	</select>
 	
-	<delete id="deletePostFile" parameterType="int">
-		delete from postfile where file_id=#{file_id}
+	<delete id="deletePostFile" parameterType="string">
+		delete from post_file where file_id=#{file_id}
 	</delete>
 	
-	<select id="selectPostFile" parameterType="int" resultType="postfile">
-		select * from postfile where file_id=#{file_id} 
+	<select id="selectPostFile" parameterType="string" resultType="postfile">
+		select * from post_file where file_id=#{file_id} 
 	</select>
 </mapper>
