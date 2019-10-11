@@ -1,6 +1,7 @@
 package kr.or.ddit.smartware.employee.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -8,12 +9,18 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.post.model.Post;
 
 @Repository
 public class EmployeeDao implements IEmployeeDao {
 
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
+	
+	@Override
+	public List<Employee> allEmployeeList(String emp_id) {
+		return sqlSession.selectList("employee.allEmployeeList", emp_id);
+	}
 	
 	/**
 	 * 
@@ -29,8 +36,25 @@ public class EmployeeDao implements IEmployeeDao {
 	}
 	
 	@Override
-	public List<Employee> getEmployeeList() {
-		return sqlSession.selectList("employee.getEmployeeList");
+	public List<Employee> getEmployeeList(Map map) {
+		return sqlSession.selectList("employee.getEmployeeList", map);
 	}
+
+	@Override
+	public int insertEmployee(Employee employee) {
+		return sqlSession.insert("employee.insertEmployee", employee);
+	}
+
+	@Override
+	public int deleteEmployee(String emp_id) {
+		return sqlSession.delete("employee.deleteEmployee", emp_id);
+	}
+
+	@Override
+	public int updateEmployee(Employee employee) {
+		return sqlSession.update("employee.updateEmployee", employee);
+	}
+	
+	
 
 }

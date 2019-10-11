@@ -27,7 +27,7 @@
 		<put-attribute name="content"	value="/WEB-INF/views/form/useForm.jsp"/>
 	</definition>
 	
-	<!-- 테스트 페이지 -->
+	<!-- 사원 리스트 출력 페이지 -->
 	<definition name="tiles.employeeList" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/employee/employeeList.jsp"/>
 	</definition>

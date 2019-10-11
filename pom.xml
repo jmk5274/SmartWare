@@ -56,6 +56,11 @@
 	
 	
 	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.4.3.Final</version>
+		</dependency>
 	
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
@@ -260,12 +265,5 @@
             <version>4.3.25.RELEASE</version>
 		</dependency>
 
-		<!-- Jackson API -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.8.4</version>
-		</dependency>
-		
 	</dependencies>
 </project>
