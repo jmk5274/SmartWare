@@ -12,6 +12,16 @@
 		<put-attribute name="footer" 	value="/WEB-INF/views/commonJsp/footer.jsp"/>
 	</definition>
 	
+	<!-- 채팅방 타일즈 설정 -->
+	<definition name="chatRoom" template="/WEB-INF/views/messenger/chatTest.jsp">
+		<put-attribute name="content" 	value=""/>
+		<put-attribute name="footer" 	value="/WEB-INF/views/commonJsp/footer.jsp"/>
+	</definition>
+	
+	<!-- 임시 메인 페이지(form/useForm) -->
+	<definition name="tiles.chatRoom" extends="chatRoom">
+	</definition>
+	
 	<!-- 임시 메인 페이지(form/useForm) -->
 	<definition name="tiles.useForm" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/form/useForm.jsp"/>
@@ -60,6 +70,15 @@
 	<!-- 게시글 상세보기 -->
 	<definition name="tiles.selectPost" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/post/selectPost.jsp"/>
+	</definition>
+	
+	<!-- 게시글 수정 -->
+	<definition name="tiles.modifyPost" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/post/modifyPost.jsp"/>
+	</definition>
+	
+	<definition name="tiles.modifyPost" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/post/modifyPost.jsp"/>
 	</definition>
 	
 </tiles-definitions>

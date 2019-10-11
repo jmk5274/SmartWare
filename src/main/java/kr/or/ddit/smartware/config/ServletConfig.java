@@ -20,6 +20,8 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
+import kr.or.ddit.smartware.view.FileDownloadView;
+
 @Configuration
 @ComponentScan(basePackages = "kr.or.ddit", useDefaultFilters = false,
 				includeFilters = @Filter(type = FilterType.ANNOTATION,
@@ -44,10 +46,10 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 		return new MappingJackson2JsonView();
 	}
 	
-//	@Bean
-//	public View fileDownloadView() {
-//		return new FileDownloadView();
-//	}
+	@Bean
+	public View fileDownloadView() {
+		return new FileDownloadView();
+	}
 	
 	@Bean
 	public ViewResolver internalResourceViewResolver() {
