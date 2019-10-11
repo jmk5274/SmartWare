@@ -19,17 +19,11 @@
 			$("#validator").submit();
 		});
 		
-		
 		$(document).on('click', '.select', function() {
 			 res = "";
 			 $(':checkbox:checked').each(function(i, a){
 				 res += $(this).val() +  " ";
 			 })
-// 			var valueArr = new Array();
-// 			valueArr = $(this).data(value).value
-			
-// 			if($("#confirmbtn").on('click', f))
-// 			 $("#reci").val(res);
 		});
 		
 		$("#confirmbtn").on('click', function(){
@@ -85,11 +79,11 @@ function checkEmail(){
                                                     <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">Modal body text goes here.
+                                                <div class="modal-body">
 							<div class="col-lg-12">
 				                        <div class="card">
 				                            <div class="card-body">
-				                                <h4 class="card-title">Nestedable</h4>
+				                                <h3 class="card-title">SmartWare</h3>
 				                                <div class="card-content">
 				                                    <div class="nestable">
 				                                        <div class="dd" id="nestable2">
@@ -135,9 +129,9 @@ function checkEmail(){
 									placeholder=" To"
 									style="width: 400px; height: 43px;"> &nbsp;&nbsp;
 								<a id="validator" href="javascript:checkEmail();">
-									<button type="button" id="emailCheck" class="btn mb-1 btn-outline-dark">유효성 검사</button>
+									<button type="button" id="emailCheck" class="btn btn-outline-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10">유효성 검사</button>
 								</a> <font color="red"> &nbsp;&nbsp;
-								<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#basicModal">주소록</button><br>
+								<button type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button><br>
 								<form:errors path="email.email"/></font>
 								<br>
 									<input type="hidden" name="email"
