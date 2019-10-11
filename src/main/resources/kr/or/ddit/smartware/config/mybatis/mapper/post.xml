@@ -20,17 +20,17 @@
         where a.rn between (#{pagesize} * (#{page} - 1)) + 1 and (#{pagesize} * #{page})
 	</select>
 	
-	<select id="selectPost" parameterType="int" resultType="post">
-		select * from post where post_id = #{data}
+	<select id="selectPost" parameterType="string" resultType="post">
+		select * from post where post_id = #{post_id}
 	</select>
 	
-	<select id="getPostSeq" resultType="int">
-		select post_seq.nextval from dual
+	<select id="getPostSeq" resultType="String">
+		select 'post' || LPAD(POST_SEQ.NEXTVAL,4,0) from dual
 	</select>
 	
 	<insert id="insertPost" parameterType="post">
 		insert into post(post_id, title, cont, reg_dt, able, emp_id, board_id, gn)
-   			values(#{post_id}, #{title}, #{cont}, sysdate, 'F', #{emp_id}, #{board_id}, gn_seq.nextval)
+   			values(#{post_id}, #{title}, #{cont}, sysdate, 'F', #{emp_id}, #{board_id}, #{gn})
 	</insert>
 	
 	<insert id="insertPost2" parameterType="post">
@@ -39,11 +39,11 @@
 	</insert>
 	
 	<update id="deletePost" parameterType="post">
-		update post set able=#{able} where post_id=#{pa_post_id}
+		update post set able=#{able} where post_id=#{post_id}
 	</update>
 	
 	<update id="updatePost" parameterType="post">
-		update post set title=#{title}, cont=#{cont}, reg_dt=sysdate where post_id=#{pa_post_id}
+		update post set title=#{title}, cont=#{cont}, reg_dt=sysdate where post_id=#{post_id}
 	</update>
 	
 </mapper>

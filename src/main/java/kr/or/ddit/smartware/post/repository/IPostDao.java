@@ -55,7 +55,7 @@ public interface IPostDao {
 	 */
 	public int insertComments(Comments comments);
 	
-	public int getPostSeq();
+	public String getPostSeq();
 	
 	public int insertPost(Post post);
 	

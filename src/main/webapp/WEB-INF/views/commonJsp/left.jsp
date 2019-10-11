@@ -34,7 +34,9 @@
                     <i class="fa fa-list-alt menu-icon"></i> <span class="nav-text">사내 게시판</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/addBoard">메뉴 관리</a></li>
+                <c:if test="${S_EMPLOYEE.emp_id == 'e0002'}">
+                    <li><a href="${cp }/addBoard">메뉴 관리</a></li>                    
+                </c:if>
                     <c:forEach items="${A_BOARDLIST }" var="list">
 			        	<c:if test="${list.able == 'T' }">
 			 		       	<li class="active"><a href="${cp }/post?board_id=${list.board_id}&board_nm=${list.board_nm}">${list.board_nm} <span class="sr-only">(current)</span></a></li>

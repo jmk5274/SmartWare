@@ -62,4 +62,13 @@
 		<put-attribute name="content"	value="/WEB-INF/views/post/selectPost.jsp"/>
 	</definition>
 	
+	<!-- 게시글 수정 -->
+	<definition name="tiles.modifyPost" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/post/modifyPost.jsp"/>
+	</definition>
+	
+	<definition name="tiles.modifyPost" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/post/modifyPost.jsp"/>
+	</definition>
+	
 </tiles-definitions>

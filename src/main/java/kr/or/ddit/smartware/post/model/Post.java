@@ -14,13 +14,13 @@ public class Post {
 	private Date reg_dt;          //등록 날짜
 	private String able;          //삭제 여부
 	private String pa_post_id;    //부모 게시글 아이디
-	private int gn; 			  //그룹넘버
+	private String gn; 			  //그룹넘버
 	private int level;
 	
 	public Post() {}
 
 	public Post(String post_id, String board_id, String title, String cont, String emp_id, Date reg_dt, String able,
-			String pa_post_id, int gn, int level) {
+			String pa_post_id, String gn, int level) {
 		super();
 		this.post_id = post_id;
 		this.board_id = board_id;
@@ -98,11 +98,11 @@ public class Post {
 		this.pa_post_id = pa_post_id;
 	}
 
-	public int getGn() {
+	public String getGn() {
 		return gn;
 	}
 
-	public void setGn(int gn) {
+	public void setGn(String gn) {
 		this.gn = gn;
 	}
 
