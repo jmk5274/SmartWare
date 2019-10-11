@@ -168,13 +168,13 @@ public class PostController {
 	@GetMapping(path = "modifyPost")
 	public String modifyPostView(String board_id, Post post, String btnValue, HttpSession session, Model model) {
 
-		Map<String, Object> map = postService.selectPost(post.getPa_post_id());
+		Map<String, Object> map = postService.selectPost(post.getPost_id());
 
 		Post post1 = (Post) map.get("post");
 		model.addAttribute("board_id", board_id);
 
 		if (btnValue.equals("답글")) {
-			model.addAttribute("pa_post_id", post.getPa_post_id());
+			model.addAttribute("pa_post_id", post.getPost_id());
 			model.addAttribute("gn", post.getGn());
 			return "tiles.writePost";
 		} else if (btnValue.equals("삭제")) {
@@ -185,9 +185,9 @@ public class PostController {
 			return "redirect:/post";
 		} else if (btnValue.equals("수정")) {
 
-			List<PostFile> postfileList = postService.getPostFile(post.getPa_post_id());
+			List<PostFile> postfileList = postService.getPostFile(post.getPost_id());
 
-			model.addAttribute("post_id", post.getPa_post_id());
+			model.addAttribute("post_id", post.getPost_id());
 			model.addAttribute("post", post1);
 			model.addAttribute("postfileList", postfileList);
 
@@ -197,35 +197,43 @@ public class PostController {
 	}
 
 	@PostMapping("modifyPost")
-	public String modifyPost(PostFile postfile1, Post post, String board_id, Integer[] files, Model model,
+	public String modifyPost(PostFile postfile1, Post post, String board_id, String[] files, Model model,
 			@RequestPart("postFile") List<MultipartFile> postFiles) {
 
 		int cnt = postService.updatePost(post);
 
-		List<PostFile> postfileList = postService.getPostFile(post.getPa_post_id());
+		// 해당 게시물의 파일 리스트
+		List<PostFile> postfileList = postService.getPostFile(post.getPost_id());
 
 		List<String> file_idList = new ArrayList<String>();
 
+		// 수정된 게시물의 파일 개수 0개 또는 null
 		if (files == null || files.length == 0) {
 			for (PostFile postfile : postfileList) {
+				// 첨부파일 개수가 0이거나 없으면 해당 게시물의 파일 모두 삭제
 				postService.deletePostFile(postfile.getPost_id());
 			}
-		} else {
-
+		} 
+		// 수정된 게시물의 파일 개수 1개 이상일 시
+		else {
+			// 수정되기 전의 게시물이 가지고 있는 파일 리스트의 아이디 리스트
 			for (PostFile postfile : postfileList) {
 				file_idList.add(postfile.getFile_id());
 			}
 
+			// 플래그를 통해서 수정되 파일 아이디와 수정되기 전 파일 아이디가 같을 시 false
+			// 수정된 게시물에서 삭제되어 서로 매칭이 되지 않으면 true
 			for (String file_id : file_idList) {
 				boolean flag = true;
-				for (Integer filenum : files) {
+				for (String filenum : files) {
 					if (file_id.equals(filenum)) {
 						flag = false;
 						break;
 					}
 				}
+				// true일 시 해당 게시글 파일 삭제
 				if (flag) {
-					postService.deletePostFile(postfile1.getFile_id());
+					postService.deletePostFile(file_id);
 				}
 			}
 		}
@@ -238,7 +246,7 @@ public class PostController {
 				PostFile postfile = new PostFile();
 				try {
 					postFile.transferTo(fileInfo.getFile());
-					postfile.setPost_id(post.getPa_post_id());
+					postfile.setPost_id(post.getPost_id());
 					postfile.setFile_nm(fileInfo.getOriginalFileName()); // originalFileName
 					postfile.setRealfilepath(fileInfo.getFile().getPath());
 
@@ -251,7 +259,7 @@ public class PostController {
 		}
 
 		model.addAttribute("board_id", board_id);
-		model.addAttribute("post_id", post.getPa_post_id());
+		model.addAttribute("post_id", post.getPost_id());
 
 		return "redirect:/selectPost";
 	}

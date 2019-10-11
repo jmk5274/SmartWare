@@ -77,9 +77,9 @@
 								</c:forEach>
 							</table>
 						</div>
-
+						<c:if test="${S_EMPLOYEE.emp_id == 'e0002' || board_id != 'board0003'}">
 						<a href="${cp }/writePost?board_id=${board_id}" class="btn mb-1 btn-outline-dark pull-right">글 작성</a>
-
+						</c:if>
 				
 						<div class="bootstrap-pagination">
 							<nav>
