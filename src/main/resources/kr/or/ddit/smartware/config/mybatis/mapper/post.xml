@@ -39,11 +39,11 @@
 	</insert>
 	
 	<update id="deletePost" parameterType="post">
-		update post set able=#{able} where post_id=#{pa_post_id}
+		update post set able=#{able} where post_id=#{post_id}
 	</update>
 	
 	<update id="updatePost" parameterType="post">
-		update post set title=#{title}, cont=#{cont}, reg_dt=sysdate where post_id=#{pa_post_id}
+		update post set title=#{title}, cont=#{cont}, reg_dt=sysdate where post_id=#{post_id}
 	</update>
 	
 </mapper>

@@ -16,6 +16,11 @@ $(document).ready(function() {
 		}
 	})
 	
+// 	$("#cancelBtn").click(function(){
+// 		if(confirm("취소하시겠습니까?")) 
+// 			location.href = "${cp }/post";
+// 	});
+	
 	$(".x").click(function(){
 		$(this).closest('.postfiles').remove();
 // 		$(this).prev().prev().remove();
@@ -43,7 +48,7 @@ $(document).ready(function() {
 
 // 필수값 Check
 function validation(){
-	var contents = $.trim("#cont");
+	var contents = $.trim(oEditors[0].getContents());
 	if(contents === '<p>&nbsp;</p>' || contents === ''){ // 기본적으로 아무것도 입력하지 않아도 <p>&nbsp;</p> 값이 입력되어 있음. 
 		alert("내용을 입력하세요.");
 		return false;
@@ -75,6 +80,7 @@ function validation(){
 					method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<input type="hidden" name="board_id" value="${board_id }"/>
+						<input type="hidden" name="post_id" value="${post_id }"/>
 						<input type="hidden" name="pa_post_id" value="${pa_post_id }"/>
 						<input type="hidden" name="gn" value="${post.gn }"/>
 						<label for="title" class="col-sm-2 control-label">제목</label>
@@ -91,7 +97,7 @@ function validation(){
 					                  CKEDITOR.replace('cont', {height: 500, width: 900
 					                	  
 					                                                  });
-					                  </script>
+					        </script>
 						</div>
 					</div>
 					
@@ -100,7 +106,7 @@ function validation(){
 						<div class="col-sm-6">
 							<c:forEach items="${postfileList }" var="postfile">
 							<div class="postfiles">
-								<input type="hidden" name="files" value="${postfile.file_nm }"/>
+								<input type="hidden" name="files" value="${postfile.file_id }"/>
 								<label class="control-label cmt"> ${postfile.file_nm } </label>&nbsp;<span class="x">&times;</span><br>
 							</div>
 							</c:forEach>
@@ -118,6 +124,7 @@ function validation(){
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<button type="button" id="savebutton" class="btn btn-default">저장</button>
+<!-- 							<button type="button" id="cancelBtn" class="btn btn-default">취소</button>  -->
 						</div>
 					</div>
 				</form>

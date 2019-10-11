@@ -5,7 +5,7 @@
 <mapper namespace="postfile">
 	<insert id="insertPostFile" parameterType="postfile">
 		insert into post_file(file_id, file_nm, realfilepath, post_id)
-    		values(post_file_seq.nextval, #{file_nm}, #{realfilepath}, #{post_id})
+    		values('f' || LPAD(post_file_seq.nextval,4,0), #{file_nm}, #{realfilepath}, #{post_id})
 	</insert>
 
 	<select id="getPostFile" parameterType="string" resultType="postfile">

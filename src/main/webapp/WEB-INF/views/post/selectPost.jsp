@@ -23,8 +23,19 @@
 			$("#com_id").val(com_id);
 
 			$("#hiddenFrm").submit();
-		});
+		})
+			
+		$("#save").on("click", function(){
+			var cont = $("#cont").val();
+			if(cont == '' || cont.length == 0){
+				alert("내용을 입력해주세요.");
+				return;
+			}
+			
+			$("#cmtFrm").submit();
+		})
 	});
+	
 </script>
 <% 
 	HttpSession session1 = request.getSession();
@@ -45,7 +56,7 @@
 					<div class="form-group">
 						<input type="hidden" name="board_id" value="${board_id }"/>
 						<input type="hidden" name="board_nm" value="${board_nm }"/>
-						<input type="hidden" name="pa_post_id" value="${post.post_id }"/>
+						<input type="hidden" name="post_id" value="${post.post_id }"/>
 						<input type="hidden" name="gn" value="${post.gn }"/>
 						<input type="hidden" name="title" value="${post.title }"/>
 						<input type="hidden" name="emp_id" value="${post.emp_id }"/>
@@ -78,13 +89,16 @@
 							<input type="submit" class="btn mb-1 btn-outline-dark" id="btnUpdqtePost" name="btnValue" value="수정"/>
 							<input type="submit" class="btn mb-1 btn-outline-dark" id="btnDelPost" name="btnValue" value="삭제"/>
 						</c:if>
+							<c:if test="${S_EMPLOYEE.emp_id == 'e0002' || board_id != 'board0003'}">
 							<input type="submit" class="btn mb-1 btn-outline-dark" id="btnAnsPost" name="btnValue" value="답글"/>
+							</c:if>
 						</div>
 					</div>
 				</form>
 					
 				<form id="cmtFrm" class="form-horizontal" role="form" action="${cp }/insertComments"
 					method="post">
+					<c:if test="${S_EMPLOYEE.emp_id == 'e0002' || board_id != 'board0003'}">
 					<div class="form-group">
 						<label class="col-sm-2 control-label">댓글</label>
 						<div class="col-sm-6">
@@ -100,7 +114,7 @@
 										</c:otherwise>
 									</c:choose>
 									<c:if test="${S_EMPLOYEE.emp_id == comments.emp_id && comments.able=='F'}">
-										&nbsp;<span id="deleteComments" class="delCmt glyphicon glyphicon-trash" data-com_id="${comments.com_id }"></span>
+										&nbsp;<span id="deleteComments" class="delCmt glyphicon glyphicon-trash" data-com_id="${comments.com_id }"><i class="fa fa-times" aria-hidden="true"></i></span>
 									</c:if>
 									</span>
 								</div>
@@ -108,6 +122,7 @@
 							</c:forEach>
 						</div>
 					</div>
+					
 				
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
@@ -118,10 +133,11 @@
 							</div>
 							<br><br>
 							<div class="col-sm-2">
-								<input type="submit" class="btn mb-1 btn-outline-dark" value="댓글저장"/>
+								<input id="save" type="button" class="btn mb-1 btn-outline-dark" value="댓글저장"/>
 							</div>
 						</div>
 					</div>
+					</c:if>
 				</form>
 			</div>
 		</div>
