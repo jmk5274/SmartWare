@@ -275,13 +275,6 @@ public class EmailController {
    public String addressbook(Model model) {
       return "tiles.writeMail";
    }
-   
-   
-   
-   
-   
-   
-   
-   
+ 
    
 }

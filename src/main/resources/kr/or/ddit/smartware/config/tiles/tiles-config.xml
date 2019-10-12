@@ -71,4 +71,8 @@
 		<put-attribute name="content"	value="/WEB-INF/views/post/modifyPost.jsp"/>
 	</definition>
 	
+	<definition name="tiles.test" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/email/test.jsp"/>
+	</definition>
+	
 </tiles-definitions>
