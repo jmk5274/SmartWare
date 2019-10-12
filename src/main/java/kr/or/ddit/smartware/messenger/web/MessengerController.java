@@ -213,4 +213,9 @@ public class MessengerController {
 		
 		return resultMap;
 	}
+	
+	@RequestMapping("inviteList")
+	public String inviteList(String chat_id) {
+		return "messenger/inviteList";
+	}
 }

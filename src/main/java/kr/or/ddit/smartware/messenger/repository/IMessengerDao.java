@@ -109,4 +109,13 @@ public interface IMessengerDao {
 	* Method 설명 : 채팅방 상태 변경
 	*/
 	int updateChat(String chat_id);
+	
+	/**
+	* Method : getEmpList
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @return
+	* Method 설명 : 사원리스트 조회
+	*/
+	List<Map> getEmpList();
 }

@@ -132,4 +132,9 @@ public class MessengerService implements IMessengerService{
 		return messengerDao.updateChat(chat_id);
 	}
 
+	@Override
+	public List<Map> getEmpList() {
+		return messengerDao.getEmpList();
+	}
+
 }

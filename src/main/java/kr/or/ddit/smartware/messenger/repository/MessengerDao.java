@@ -149,4 +149,16 @@ public class MessengerDao implements IMessengerDao{
 		return sqlSession.update("chat.updateChat", chat_id);
 	}
 
+	/**
+	* Method : getEmpList
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @return
+	* Method 설명 : 초대 사원리스트 조회
+	*/
+	@Override
+	public List<Map> getEmpList() {
+		return sqlSession.selectList("chat.getEmpList");
+	}
+
 }
