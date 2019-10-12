@@ -97,7 +97,7 @@ function checkEmail(){
 											                                            		<c:forEach items="${positionList }" var="position">
 											                                            				<c:if test="${depart.DEPART_ID == employee.depart_id && position.POSI_ID == employee.posi_id}">
 														                                                        <li class="dd-item select" data-id="${depart.DEPART_ID }">
-														                                                            <div class="dd-handle"><input value="${employee.email }" type="checkbox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm }/${employee.email }/${position.POSI_NM }</div>
+														                                                            <div class="dd-handle"><input value="${employee.email }" type="checkbox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.POSI_NM }&nbsp;</div>
 														                                                        </li>
 														                                                </c:if>
 														                                         </c:forEach>

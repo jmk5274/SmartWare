@@ -11,10 +11,16 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.annotation.Resource;
 import javax.mail.BodyPart;
+import javax.mail.Flags;
+import javax.mail.Flags.Flag;
+import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.NoSuchProviderException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -22,6 +28,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+import javax.mail.search.FlagTerm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +41,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.sun.mail.imap.IMAPFolder;
 
 import kr.or.ddit.smartware.email.model.Email;
 import kr.or.ddit.smartware.email.service.IEmailService;
@@ -198,18 +207,79 @@ public class EmailController {
 		return "tiles.writeMail";
 	}
 	
+//	@RequestMapping(path = "test")
+//	public String test() {
+//		return "tiles.test";
+//	}
+	
 	@RequestMapping(path = "test")
-	public String test() {
-		return "tiles.test";
-	}
+	public String receiveMail() throws MessagingException, IOException {
+		 IMAPFolder folder = null;
+	        Store store = null;
+	        String subject = null;
+	        Flag flag = null;
+	        try 
+	        {
+	          Properties props = System.getProperties();
+	          props.setProperty("mail.store.protocol", "imaps");
+
+	          Session session = Session.getDefaultInstance(props, null);
+
+	          store = session.getStore("imaps");
+	          store.connect("imap.googlemail.com","testhoon1217@gmail.com", "ewqdsa556");
+
+	          folder = (IMAPFolder) store.getFolder("inbox"); // This doesn't work for other email account
+	          //folder = (IMAPFolder) store.getFolder("inbox"); This works for both email account
+
+
+	          if(!folder.isOpen())
+	          folder.open(Folder.READ_WRITE);
+	          Message[] messages = folder.getMessages();
+	          System.out.println("No of Messages : " + folder.getMessageCount());
+	          System.out.println("No of Unread Messages : " + folder.getUnreadMessageCount());
+	          System.out.println(messages.length);
+	          for (int i=0; i < messages.length;i++) 
+	          {
+
+	            System.out.println("*****************************************************************************");
+	            System.out.println("MESSAGE " + (i + 1) + ":");
+	            Message msg =  messages[i];
+	            //System.out.println(msg.getMessageNumber());
+	            //Object String;
+	            //System.out.println(folder.getUID(msg)
+
+	            subject = msg.getSubject();
+
+	            System.out.println("Subject: " + subject);
+	            System.out.println("From: " + msg.getFrom()[0]);
+	           System.out.println("To: "+msg.getAllRecipients()[0]);
+	            System.out.println("Date: "+msg.getReceivedDate());
+	            System.out.println("Size: "+msg.getSize());
+	            System.out.println(msg.getFlags());
+	            System.out.println("Body: \n"+ msg.getContent());
+	            System.out.println(msg.getContentType());
+	            System.out.println("NUMBER : " +msg.getMessageNumber());
+
+	          }
+	        }
+	        finally 
+	        {
+	          if (folder != null && folder.isOpen()) { folder.close(true); }
+	          if (store != null) { store.close(); }
+	        }
+	        return "tiles.test";
+
+	    }
 	
 	@GetMapping(path = "addressbook")
 	public String addressbook(Model model) {
-		
-	
-		
 		return "tiles.writeMail";
 	}
+	
+	
+	
+	
+	
 	
 	
 	
