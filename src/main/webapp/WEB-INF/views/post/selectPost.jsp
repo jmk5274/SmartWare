@@ -48,6 +48,11 @@
 	<input type="hidden" id="board_id" name="board_id" value="${board_id }" />
 	<input type="hidden" id="post_id" name="post_id" value="${post.post_id }" />
 </form>
+		<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h2 class="sub-header">${board_nm }</h2>
 				<form id="frm" class="form-horizontal" role="form" action="${cp }/modifyPost"
@@ -86,11 +91,11 @@
 						<label for="postFile" class="col-sm-2 control-label"></label>
 						<div class="col-sm-6">
 						<c:if test="${employee.emp_id == post.emp_id}">
-							<input type="submit" class="btn mb-1 btn-outline-dark" id="btnUpdqtePost" name="btnValue" value="수정"/>
+							<input type="submit" class="btn mb-1 btn-outline-success" id="btnUpdqtePost" name="btnValue" value="수정"/>
 							<input type="submit" class="btn mb-1 btn-outline-dark" id="btnDelPost" name="btnValue" value="삭제"/>
 						</c:if>
 							<c:if test="${S_EMPLOYEE.emp_id == 'e0002' || board_id != 'board0003'}">
-							<input type="submit" class="btn mb-1 btn-outline-dark" id="btnAnsPost" name="btnValue" value="답글"/>
+							<input type="submit" class="btn mb-1 btn-outline-primary" id="btnAnsPost" name="btnValue" value="답글"/>
 							</c:if>
 						</div>
 					</div>
@@ -133,7 +138,7 @@
 							</div>
 							<br><br>
 							<div class="col-sm-2">
-								<input id="save" type="button" class="btn mb-1 btn-outline-dark" value="댓글저장"/>
+								<input id="save" type="button" class="btn mb-1 btn-outline-primary" value="댓글저장"/>
 							</div>
 						</div>
 					</div>
@@ -141,4 +146,7 @@
 				</form>
 			</div>
 		</div>
+	</div>
+	</div>
+	</div>
 	</div>

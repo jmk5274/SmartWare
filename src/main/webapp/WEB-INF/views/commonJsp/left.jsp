@@ -58,6 +58,9 @@
                 <ul aria-expanded="false">
                     <li><a href="${cp }/bootstrap/chart-flot.html">조직도 조회</a></li>
                     <li><a href="${cp }/bootstrap/chart-morris.html">사원 검색</a></li>
+                    <c:if test="${S_EMPLOYEE.emp_id == 'e0002'}">
+                    <li><a href="${cp }/employeeList">사원 관리</a></li>
+                    </c:if>
                 </ul>
             </li>
             <li>

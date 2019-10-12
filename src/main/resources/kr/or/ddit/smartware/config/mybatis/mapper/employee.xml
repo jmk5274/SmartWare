@@ -4,15 +4,64 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="employee">
 
-	<select id="getEmployee" parameterType="String" resultType="employee">
+	<select id="allEmployeeList" parameterType="string" resultType="employee">
+		select * from employee where emp_id = #{emp_id}
+	</select>
+
+	<select id="getEmployee" parameterType="map" resultType="employee">
 		select *
 		from employee
 		where emp_id = #{emp_id}	
 	</select>
 	
-	<select id="getEmployeeList" resultType="employee">
-		select * 
-		  from employee
+	<!-- 사원 페이징 리스트 -->
+	<select id="getEmployeeList" resultType="map" parameterType="employee">
+		select a.*
+		from 
+		    (select rownum rn, a.*
+		     from 
+		        (select a.*
+		        from employee a
+		        order by emp_id) a) a
+		where rn between #{pagesize}*(#{page} - 1) + 1 and #{pagesize}*#{page}
 	</select>
+	
+	<!-- 사원 등록 -->
+	<insert id="insertEmployee" parameterType="employee">
+		insert into employee (emp_id, pass, emp_nm, rank, email, tel, join_dt, depart_id, posi_id, emp_pic, sign, able, email_pass)
+			values(#{emp_id}, 
+				   #{pass}, 
+				   #{emp_nm}, 
+				   #{rank}, 
+				   #{email}, 
+				   #{tel}, 
+				   #{join_dt}, 
+				   #{depart_id}, 
+				   #{posi_id}, 
+				   #{emp_pic}, 
+				   #{sign}, 
+				   #{able}, 
+				   #{email_pass})
+	</insert>
+	
+	<!-- 사원 삭제 -->
+	<delete id="deleteEmployee" parameterType="String">
+		delete employee where emp_id = #{emp_id}
+	</delete>
+	
+	<!-- 사원 수정 -->
+	<update id="updateEmployee" parameterType="employee">
+		update employee set emp_id = #{emp_id}, 
+							  pass = #{pass}, 
+							  rank = #{rank},   
+							 email = #{email},
+							   tel = #{tel}, 
+						   join_dt = #{join_dt},
+						   emp_pic = #{emp_pic}, 
+							  sign = #{sign},
+							  able = #{able},
+						email_pass = #{email_pass}
+		 where emp_id = #{emp_id}
+	</update>
 	
 </mapper>
