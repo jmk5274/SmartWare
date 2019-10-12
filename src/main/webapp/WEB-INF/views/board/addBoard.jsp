@@ -9,6 +9,12 @@
 		}
 	});
 </script>
+<style>
+	td {
+		text-align : center;
+		padding : 20px;
+	}
+</style>
 	<div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12">
@@ -18,39 +24,50 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			
 				<div class="blog-header">
-					<h1 class="blog-title">메뉴 관리</h1>
+					<h1 class="blog-title">게시판 관리</h1>
 				</div>
 				<hr>
 				<br><br>
 				
 				<form class="form-horizontal" role="form" action="${cp }/addBoard" method="post">
 					<div class="form-group">
-						<label for="board" class="col-sm-2 control-label">게시판 이름</label>
-						<div class="col-sm-2">
+						<table class="table table-bordered">
+							<tr>
+						<td><label for="board" class="col-sm-6 control-label">게시판 이름</label></td>
+						<td>
+<!-- 						<div class="col-sm-2"> -->
 							<input type="text" name="board_nm" class="form-control"/>
-						</div>
-						<div class="col-sm-1">
+<!-- 						</div> -->
+						</td>
+						<td>
+<!-- 						<div class="col-sm-1"> -->
 							<select name="able" class="form-control">
 								<option>사용</option>
 								<option>미사용</option>
 							</select>
-						</div>
+							</td>
+<!-- 						</div> -->
 						
-						<div class="col-sm-2">
-							<input type="submit" name="btnValue" class="btn mb-1 btn-outline-info" value="생성">
-						</div>
+<!-- 						<div class="col-sm-2"> -->
+							<td><input type="submit" name="btnValue" class="btn mb-1 btn-outline-primary" value="생성"></td>
+							</tr>
+<!-- 						</div> -->
 					</div>
 				</form>
-
+				
 				<c:forEach items="${A_BOARDLIST }" var="list">
 					<form class="form-horizontal" role="form" action="${cp }/addBoard" method="post">
 						<div class="form-group">
 							<input type="hidden" name=board_id value="${list.board_id}"/>
-							<label for="board" class="col-sm-2 control-label">게시판 이름</label>
-							<div class="col-sm-2">
+							<tr>
+							<td><label for="board" class="col-sm-6 control-label">게시판 이름</label></td>
+<!-- 							<div class="col-sm-2"> -->
+							<td>
 								<input type="text" name="board_nm" class="form-control" value="${list.board_nm }"/>
+							</td>
 							</div>
-							<div class="col-sm-1">
+							<td>
+<!-- 							<div class="col-sm-1"> -->
 								<select name="able" class="form-control">
 									<c:choose>
 										<c:when test="${list.able == 'T' }">
@@ -63,14 +80,19 @@
 										</c:when>
 									</c:choose>
 								</select>
-							</div>
+<!-- 							</div> -->
+							</td>
 							
-							<div class="col-sm-2">
+							<td>
+<!-- 							<div class="col-sm-2"> -->
 								<input type="submit" name="btnValue" class="btn mb-1 btn-outline-success" value="수정">
-							</div>
-						</div>
+<!-- 							</div> -->
+							</td>
+ 						</div>
+						</tr>
 					</form>
 				</c:forEach>
+				</table>
 						<div class="row">
 						<div class="col-sm-8 blog-main">
 						</div>
@@ -80,4 +102,4 @@
 		</div>
 	</div>
 </div>
-</div>
+<!-- </div> -->

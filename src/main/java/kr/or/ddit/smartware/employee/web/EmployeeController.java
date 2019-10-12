@@ -45,7 +45,7 @@ public class EmployeeController {
 		List<Employee> employeeList = employeeService.getEmployeeList(map);
 		logger.debug("employeeList : {}", employeeList);
 		
-		List<Employee> pageList = employeeService.allEmployeeList(employee.getEmp_id());
+		List<Employee> pageList = employeeService.getEmployeeList(map);
 
 		int paginationSize = (int) Math.ceil((double) pageList.size() / pagesize);
 
@@ -81,7 +81,20 @@ public class EmployeeController {
 		return "redirect:/employeeList";
 	}
 	
-	
+	/**
+	 * 
+	* Method : updateEmployee
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param map
+	* @param btnValue
+	* @param model
+	* @param employee
+	* @param emp_id
+	* @param request
+	* @return
+	* Method 설명 : 사원 수정
+	 */
 	@RequestMapping(path = "updateEmployee")
 	public String updateEmployee(Map map, String btnValue, Model model, Employee employee, String emp_id, HttpServletRequest request) {
 		
@@ -108,6 +121,51 @@ public class EmployeeController {
 	return "tiles.employeeList";
 }
 	
+//	/**
+//	 * 
+//	* Method : userFormView
+//	* 작성자 : Hong Da Eun
+//	* 변경이력 :
+//	* @return
+//	* Method 설명 :
+//	 */
+//	@RequestMapping(path = "userForm", method = RequestMethod.GET)
+//	public String userFormView() {
+//		return "user/userForm";
+//	}
+//	
+//	// 사용자 등록 요청
+//	@RequestMapping(path = "userForm", method = RequestMethod.POST)
+//	public String userForm(User user, BindingResult result,
+//							@RequestPart("picture") MultipartFile picture) {
+//		new UserValidator().validate(user, result);
+//		if(result.hasErrors()) // 잘못 되면 사용자 등록 화면으로 이동
+//			return "user/userForm";
+//		else {
+//			FileInfo fileInfo = FileUtil.getFileInfo(picture.getOriginalFilename());
+//			
+//		// 첨부된 파일이 있을 경우만 업로드 처리
+//		if(picture.getSize() > 0) {
+//			try {
+//				picture.transferTo(fileInfo.getFile());
+//				user.setFilename(fileInfo.getOrginalFileName());		// originalFilename
+//				user.setRealfilename(fileInfo.getFile().getPath());
+//				
+//			} catch (IllegalStateException | IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		int insertCnt = userService.insertUser(user);
+//				
+//		if(insertCnt == 1)
+//			return "redirect:/user/user?userId=" + user.getUserId();
+//		else
+//			return "user/userForm";
+//				
+//		}
+//	}
+//	
 	@RequestMapping("useForm")
 	public String getEmployeeList() {
 		
