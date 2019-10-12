@@ -74,7 +74,7 @@ public class EmailController {
 //			
 //		}
 		
-		List<Employee> employeeList = employeeService.getEmployeeList();
+		List<Employee> employeeList = employeeService.allEmployeeList();
 		List<Map> positionList = emailService.getPositionList();
 		
 		logger.debug("departList - {}", departList);
@@ -191,7 +191,7 @@ public class EmailController {
 		// form객체(command, vo)의 검증 결과를 담는 BindingResult객체는
 		// 반드시 메소드 인자 순서에서 form객체 바로 뒤에 위치해야 된다.
 		List<Map> departList = emailService.getDepartMentList();
-		List<Employee> employeeList = employeeService.getEmployeeList();
+		List<Employee> employeeList = employeeService.allEmployeeList();
 		List<Map> positionList = emailService.getPositionList();
 		
 		model.addAttribute("departList", departList);
