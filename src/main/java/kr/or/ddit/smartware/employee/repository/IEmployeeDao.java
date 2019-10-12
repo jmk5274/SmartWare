@@ -8,7 +8,7 @@ import kr.or.ddit.smartware.post.model.Post;
 
 public interface IEmployeeDao {
 	
-	public List<Employee> allEmployeeList(String emp_id);
+	public List<Employee> allEmployeeList();
 
 	/**
 	 * 

@@ -22,8 +22,8 @@ public class EmployeeService implements IEmployeeService{
 	}
 	
 	@Override
-	public List<Employee> allEmployeeList(String emp_id) {
-		List<Employee> list = employeeDao.allEmployeeList(emp_id);
+	public List<Employee> allEmployeeList() {
+		List<Employee> list = employeeDao.allEmployeeList();
 		return list;
 	}
 	

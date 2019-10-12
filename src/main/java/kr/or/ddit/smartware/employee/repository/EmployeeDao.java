@@ -18,8 +18,8 @@ public class EmployeeDao implements IEmployeeDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<Employee> allEmployeeList(String emp_id) {
-		return sqlSession.selectList("employee.allEmployeeList", emp_id);
+	public List<Employee> allEmployeeList() {
+		return sqlSession.selectList("employee.allEmployeeList");
 	}
 	
 	/**

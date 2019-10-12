@@ -7,7 +7,7 @@ import kr.or.ddit.smartware.employee.model.Employee;
 
 public interface IEmployeeService {
 	
-	public List<Employee> allEmployeeList(String emp_id);
+	public List<Employee> allEmployeeList();
 
 	/**
 	 * 
