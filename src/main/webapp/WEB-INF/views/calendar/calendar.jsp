@@ -286,11 +286,13 @@
 	$('.colorselector').colorselector();
 	
 	function filtering(event) {
-		var username = $(".on").map(function () {
-			return $(this).data("id"); // 선택된 필터의 id를 반환
+		// 선택되어 있는 필터의 카테고리아이디들을 맵객체로 저장
+		var checkedCategory = $(".on").map(function () {
+			return $(this).data("id");
 		}).get();
 		
-		return username.indexOf(event.extendedProps.category_id) >= 0;
+		// 맵객체에서 이벤트의 카테고리아이디가 일치하는지를 반환
+		return checkedCategory.indexOf(event.extendedProps.category_id) >= 0;
 	}
 	
 </script>
