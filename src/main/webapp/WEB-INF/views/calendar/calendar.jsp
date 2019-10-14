@@ -20,8 +20,6 @@
 
 <script src="${cp }/js/moment.js"></script>
 
-
-
 <style>
 
 .popoverTitleCalendar {
@@ -101,27 +99,49 @@
 .popover.bottom .arrow:after {
   border-bottom-color: #fff;
 }
-.fa-check-square-o:hover {
+
+.categoryList, #addEmpCategory, #addDepCategory, 
+#empCategoryOn, #empCategoryOff, #depCategoryOn, #depCategoryOff {
 	cursor: pointer;
 }
+
+.filter > h3 {
+	display: inline;
+}
+
+.filter .categoryAll {
+	float: right;
+	margin-left: 10px;
+}
+
 </style>
+
+
 <div class="card">
 	<div class="card-body">
 		<div id="calendar"></div>
 	</div>
 </div>
-<div class="row">
+<div class="row" style='user-select:none;'>
 	<div class="col">
 		<div class="card">
-			<div class="card-body" id="empCategory" class="filter">
-				<p>개인 일정</p>
+			<div class="card-body filter" id="empCategory">
+				<i class="fa fa-calendar-check-o fa-2x" style="color: black;"> </i>
+				<h3>개인 일정</h3>
+				<span id="empCategoryOff" class="categoryAll">전체 해제</span>
+				<span class="categoryAll"> / </span>
+				<span id="empCategoryOn" class="categoryAll">전체 선택</span>
 			</div>
 		</div>
 	</div>
 	<div class="col">
 		<div class="card">
-			<div class="card-body" id="depCategory" class="filter">
-				<p>부서 일정</p>
+			<div class="card-body filter" id="depCategory">
+				<i class="fa fa-calendar-check-o fa-2x" style="color: black;"> </i>
+				<h3>부서 일정</h3>
+				<span id="depCategoryOff" class="categoryAll">전체 해제</span>
+				<span class="categoryAll"> / </span>
+				<span id="depCategoryOn" class="categoryAll">전체 선택</span>
 			</div>
 		</div>
 	</div>
@@ -179,7 +199,7 @@
 			          .append('<p><strong>시간:</strong> ' + getDisplayDate(event) + '</p>')
 			          .append(getDisplayContent(event)),
 			          delay: {
-						show: "800",
+						show: "300",
 						hide: "50"
 			      	},
 			      	trigger: 'hover',
@@ -194,46 +214,78 @@
 	});
 	
 	$(function() {
-		// 개인 일정 불러오기
+		// 개인 일정 카테고리 불러오기
 		$.getJSON("${cp}/getEmpCategoryList")
 			.done(function(data) {
 				getDisplayCategory(data.categoryList, $("#empCategory"));
 			});
 		
-		// 부서 일정 불러오기
+		// 부서 일정 카테고리 불러오기
 		$.getJSON("${cp}/getDepCategoryList")
 			.done(function(data) {
 				getDisplayCategory(data.categoryList, $("#depCategory"));
 			});
 		
-		// 체크박스 클릭(체크된 상태)
-		$(document).delegate(".on", "click", function(event) {
-			console.log($(event.target).data("id"));
-			$(event.target).addClass("fa-square-o off");
-			$(event.target).removeClass("fa-check-square-o on");
+		// 카테고리 체크박스 클릭
+		$(document).delegate(".categoryList", "click", function() {
+			var iTag = $(this).children("i");
+			
+			if(iTag.hasClass("on")) { // 체크되어 있을 때
+				$(this).children("i").removeClass("fa-check-square-o on");
+				$(this).children("i").addClass("fa-square-o off");	
+			} else if(iTag.hasClass("off")) { // 체크되지 않았을 때
+				$(this).children("i").removeClass("fa-square-o off");
+				$(this).children("i").addClass("fa-check-square-o on");
+			}
+			
 			calendar.rerenderEvents();
 		});
 		
-		// 체크박스 클릭(체크풀린 상태)
-		$(document).delegate(".off", "click", function(event) {
-			console.log($(event.target).data("id"));
-			$(event.target).addClass("fa-check-square-o on");
-			$(event.target).removeClass("fa-square-o off");
+		// 카테고리 체크박스 전체 선택
+		$(".categoryAll").on("click", function() {
+			var selectedId = $(this).attr("id")
+			
+			if(selectedId === "empCategoryOn") {			// 개인 일정 전체 선택
+				$("#empCategory span.categoryList i").addClass("fa-check-square-o on");
+				$("#empCategory span.categoryList i").removeClass("fa-square-o off");
+			} else if(selectedId  === "empCategoryOff") {	// 개인 일정 전체 해제
+				$("#empCategory span.categoryList i").addClass("fa-square-o off");
+				$("#empCategory span.categoryList i").removeClass("fa-check-square-o on");
+			} else if(selectedId  === "depCategoryOn") {		// 부서 일정 전체 선택
+				$("#depCategory span.categoryList i").addClass("fa-check-square-o on");
+				$("#depCategory span.categoryList i").removeClass("fa-square-o off");
+			} else if(selectedId  === "depCategoryOff") {	// 부서 일정 전체 해제
+				$("#depCategory span.categoryList i").addClass("fa-square-o off");
+				$("#depCategory span.categoryList i").removeClass("fa-check-square-o on");
+			}
+			
 			calendar.rerenderEvents();
 		});
 	});
 	
 	function getDisplayCategory(data, loc) {
+		var res = "";
+		
+		// 카테고리 리스트 출력
 		$.each(data, function(index, entry) {
-// 			loc.append("<i class='fa fa-square-o fa-lg' style='color: " + entry.color + "'></i>");
-			loc.append("<hr>");
-			loc.append("<i class='fa fa-check-square-o fa-lg on' style='color: " + entry.color + "; width: 20px;' data-id=" + entry.category_id + "></i>");
-			loc.append("<span style='user-select:none;'> " + entry.category_nm + "</span>");
-// 			loc.append("<p>ID: " + entry.category_id + "</p>");
-// 			loc.append("<p>색상: <span style='background: " + entry.color + "; border-radius: 50%; width: 15px; height: 15px;'>　</span></p>");
-// 			loc.append("<p>부서명: " + entry.depart_id + "</p>");
-// 			loc.append("<p>등록자: " + entry.emp_id + "</p>");
+			res += "<hr>";
+			res += "<span id=" + entry.category_id + " class='categoryList'>"
+			res += "<i class='fa fa-lg fa-check-square-o on' style='color: " + entry.color + "; width: 20px;'></i>";
+			res += "<span> " + entry.category_nm + "</span>";
+			res += "</span>"
 		});
+		console.log(loc.attr("id"));
+		// 카테고리 추가 버튼 출력
+		res += "<hr>";
+		if(loc.attr("id") === "empCategory")
+			res += "<span id='addEmpCategory'>";
+		else if(loc.attr("id") === "depCategory")
+			res += "<span id='addDepCategory'>";
+		res += "<i class='fa fa-lg fa-plus-circle' style='width: 20px;'></i>";
+		res += "<span> 새로운 카테고리</span>";
+		
+		// 위에서 저장한 HTML태그를 document에 출력
+		loc.append(res);
 	}
 	
 	// 받아온 시간을 moment.js를 이용하여 포맷에 정의된 형태로 반환
@@ -288,7 +340,7 @@
 	function filtering(event) {
 		// 선택되어 있는 필터의 카테고리아이디들을 맵객체로 저장
 		var checkedCategory = $(".on").map(function () {
-			return $(this).data("id");
+			return $(this).parent().attr("id");
 		}).get();
 		
 		// 맵객체에서 이벤트의 카테고리아이디가 일치하는지를 반환
