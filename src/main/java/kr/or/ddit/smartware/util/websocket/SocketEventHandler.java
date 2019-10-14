@@ -41,7 +41,7 @@ public class SocketEventHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 			Employee employee = getEmployee(session);
 				
-			sessionMap.remove(employee.getEmp_id());
+//			sessionMap.remove(employee.getEmp_id());
 			
 			logger.debug("연결 끊김 : {}", employee);
 	}

@@ -3,6 +3,7 @@ package kr.or.ddit.smartware.messenger.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.smartware.employee.model.Employee;
-import kr.or.ddit.smartware.employee.service.EmployeeService;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
 import kr.or.ddit.smartware.messenger.model.Chat;
 import kr.or.ddit.smartware.messenger.model.ChatEmp;
@@ -61,19 +61,37 @@ public class MessengerController {
 		map.put("chat_id", chat_id);		
 		map.put("emp_id", employee.getEmp_id());		
 		
+		String emp_nm = "";
 		String chat_nm = messengerService.getChatNm(chat_id);
 		List<Employee> chatEmpList = messengerService.getChatEmp(map);
 		List<Map> messageList = messengerService.getMessageList(chat_id); 
+		List<Map> empList1 = messengerService.getEmpList(emp_nm);
+		List<Employee> chatList = messengerService.getChatInfo(chat_id);
+		
+		List<Map> empList = new ArrayList<Map>();
+		for(Map emp : empList1) {
+			boolean flag = false;
+			for(Employee chat : chatList) {
+				String emp_id=(String) emp.get("EMP_ID");
+				if(emp_id.equals(chat.getEmp_id()))
+				flag = true;
+			}
+			if(flag == false) {
+				empList.add(emp);
+			}
+		}
 		
 		model.addAttribute("chat_id", chat_id);
 		model.addAttribute("chat_nm", chat_nm);
 		model.addAttribute("chatEmpList", chatEmpList);
 		model.addAttribute("messageList", messageList);
+		model.addAttribute("empList", empList);
+		model.addAttribute("chatList", chatList);
 		
 		employee.setC_use("true");
 		session.setAttribute("S_EMPLOYEE", employee);
 		
-		return "messenger/chatTest";
+		return "messenger/chatView";
 	}
 	
 	/**
@@ -94,7 +112,7 @@ public class MessengerController {
 		message.setEmp_id(employee.getEmp_id());
 		
 		//메시지 저장
-		messengerService.insertMessage(message);
+		String msg_id = messengerService.insertMessage(message);
 		
 		//채팅방 리스트 업데이트
 		List<Map> map = messengerService.getChatList(employee.getEmp_id());
@@ -105,6 +123,7 @@ public class MessengerController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("chat_id", message.getChat_id());
 		resultMap.put("msg_cont", message.getMsg_cont());
+		resultMap.put("msg_id", msg_id);
 		resultMap.put("emp_id", message.getEmp_id());
 		
 		return resultMap;
@@ -214,8 +233,97 @@ public class MessengerController {
 		return resultMap;
 	}
 	
-	@RequestMapping("inviteList")
-	public String inviteList(String chat_id) {
-		return "messenger/inviteList";
+	@PostMapping("updateLastMsg")
+	@ResponseBody
+	public Map<String, Object> updateLastMsg(@RequestBody Message message, HttpSession session, HttpServletRequest request) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		message.setEmp_id(employee.getEmp_id());
+		
+		int cnt = messengerService.updateLastMsg(message);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("cnt", cnt);
+		
+		return resultMap;
 	}
+	
+	/**
+	* Method : searchList
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_nm
+	* @param chat_id
+	* @param model
+	* @return
+	* Method 설명 : 초대리스트 검색
+	*/
+	@GetMapping("searchInviteList")
+	public String searchList(String emp_nm, String chat_id, Model model) {
+		
+		List<Employee> chatList = messengerService.getChatInfo(chat_id);
+		List<Map> empList = messengerService.getEmpList(emp_nm);
+			
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("empList", empList);
+		
+		return "jsonView";
+	}
+	
+	/**
+	* Method : insertCahtEmp
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @param emp_id
+	* @param model
+	* @param session
+	* @return
+	* Method 설명 : 메신저 사원 초대
+	*/
+	@GetMapping("insertChatEmp")
+	public String insertCahtEmp(String chat_id, String[] emp_id, Model model, HttpSession session){
+		
+		ChatEmp chatEmp = new ChatEmp();
+		chatEmp.setChat_id(chat_id);
+		
+		for(String e : emp_id) {
+			chatEmp.setEmp_id(e);
+			messengerService.insertChatEmp(chatEmp);
+		}
+		
+		String emp_nm = "";
+		List<Map> empList1 = messengerService.getEmpList(emp_nm);
+		List<Employee> chatList = messengerService.getChatInfo(chat_id);
+		
+		List<Map> empList = new ArrayList<Map>();
+		for(Map emp : empList1) {
+			boolean flag = false;
+			for(Employee chat : chatList) {
+				String emp_id1=(String) emp.get("EMP_ID");
+				if(emp_id1.equals(chat.getEmp_id()))
+				flag = true;
+			}
+			if(flag == false) {
+				empList.add(emp);
+			}
+		}
+		
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		List<Employee> countList = new ArrayList<Employee>();
+		for(Employee chat : chatList) {
+			if(chat.getEmp_id().equals(employee.getEmp_id())) {
+				continue;
+			}
+			countList.add(chat);
+		}
+		int cnt = countList.size()-1;
+			
+		model.addAttribute("countList", countList);
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("chatList", chatList);
+		model.addAttribute("empList", empList);
+		
+		return "jsonView";
+	}
+	
 }

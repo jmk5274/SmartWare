@@ -227,6 +227,10 @@
 /*     right: 0; */
 }
 
+td {
+	vertical-align: middle;
+}
+
 </style></head><body>
 
 <div id="frame">
@@ -256,12 +260,24 @@
 										            <div class="card-body">
 										            	<p class="card-text d-inline"><small class="text-muted">사원 검색</small></p><br>
 										                <div class="input-group input-group-sm" style="width : 200px;">
-										                    <input type="text" class="form-control" style="display : inline-block;">
-										                	<a href="#" class="btn btn-primary float-right">Go somewhere</a>
+										                	<table>
+										                		<tr>
+										                			<td style="width: 500px;">
+										                				<div>
+										                    				<input id="emp_nm" type="text" class="form-control"/>
+										                				</div>
+										                    		</td>
+										                    		<td>
+										                    			<div>
+										                					<a href="#" class="btn btn-primary float-right" style="margin-left: 5px;">검색</a>
+										                    			</div>
+										                			</td>
+										                    	</tr>
+										                	</table>
 										                </div>
 										            </div>
 										            <div class="card-footer">
-										                <p class="card-text d-inline"><small class="text-muted">사원 정보</small></p>
+										                <p class="card-text d-inline"><small class="text-muted empInfo">사원 정보</small></p>
 										                <p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
 										            </div>
 										        </div>
@@ -282,7 +298,7 @@
 								<span>${chatEmpList.get(0).emp_nm } &nbsp; 
 									<div class="bootstrap-modal" style="display : inline-block;">
 		                                 <!-- Button trigger modal -->
-		                                 <a data-toggle="modal" href="#basicModal"><i class="fa fa-plus"></i></a>
+		                                 <a id="modalStart" data-toggle="modal" href="#basicModal"><i class="fa fa-plus"></i></a>
 		                                 <!-- Modal -->
 		                                 <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
 		                                     <div class="modal-dialog" role="document">
@@ -290,13 +306,26 @@
 													<div class="col-md-6 col-lg-3">
 												        <div class="card">
 												            <div class="card-body">
-												                <div class="input-group input-group-sm mb-2">
-												                    <input type="text" class="form-control">
+												            	<p class="card-text d-inline"><small class="text-muted">사원 검색</small></p><br>
+												                <div class="input-group input-group-sm" style="width : 200px;">
+												                	<table>
+												                		<tr>
+												                			<td style="width: 500px;">
+												                				<div>
+												                    				<input id="emp_nm" type="text" class="form-control"/>
+												                				</div>
+												                    		</td>
+												                    		<td>
+												                    			<div>
+												                					<a href="#" class="btn btn-primary float-right" style="margin-left: 5px;">검색</a>
+												                    			</div>
+												                			</td>
+												                    	</tr>
+												                	</table>
 												                </div>
-												                <a href="#" class="btn btn-primary float-right">Go somewhere</a>
 												            </div>
 												            <div class="card-footer">
-												                <p class="card-text d-inline"><small class="text-muted">사원 정보</small></p>
+												                <p class="card-text d-inline"><small class="text-muted empInfo">사원 정보</small></p>
 												                <p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
 												            </div>
 												        </div>
@@ -323,21 +352,34 @@
 													<div class="col-md-6 col-lg-3">
 												        <div class="card">
 												            <div class="card-body">
-												                <div class="input-group input-group-sm mb-2">
-												                    <input type="text" class="form-control">
+												            	<p class="card-text d-inline"><small class="text-muted">사원 검색</small></p><br>
+												                <div class="input-group input-group-sm" style="width : 200px;">
+												                	<table>
+												                		<tr>
+												                			<td style="width: 500px;">
+												                				<div>
+												                    				<input id="emp_nm" type="text" class="form-control"/>
+												                				</div>
+												                    		</td>
+												                    		<td>
+												                    			<div>
+												                					<a href="#" class="btn btn-primary float-right" style="margin-left: 5px;">검색</a>
+												                    			</div>
+												                			</td>
+												                    	</tr>
+												                	</table>
 												                </div>
-												                <a href="#" class="btn btn-primary float-right">Go somewhere</a>
 												            </div>
 												            <div class="card-footer">
-												                <p class="card-text d-inline"><small class="text-muted">사원 정보</small></p>
+												                <p class="card-text d-inline"><small class="text-muted empInfo">사원 정보</small></p>
 												                <p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
 												            </div>
 												        </div>
 													</div>
-		                                            <div class="modal-footer">
-		                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		                                                <button type="button" class="btn btn-primary">Save changes</button>
-		                                            </div>
+		                                             <div class="modal-footer">
+		                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		                                                 <button type="button" class="btn btn-primary">Save changes</button>
+		                                             </div>
 		                                         </div>
 		                                     </div>
 		                                 </div>
@@ -395,8 +437,7 @@
 </div>
 
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-<script >
-
+<script>
 var msgs = $('.messages')[0];
 
 msgs.scrollTo({
@@ -504,7 +545,32 @@ function newMessage() {
 	    window.close();
 	});
 
-	 
+	//ajax call을 통해 page, pagesize 해당하는 사용자 데이터를 가져온다.
+// 	$("#modalStart").click(function(){
+		
+// 		var emp_nm = $("#emp_nm").val().trim();
+// 		var html = "";
+		
+// 		$.ajax({
+// 			url : "${cp}/searchInviteList",
+// 			data : "emp_nm="+emp_nm,
+// 			success : function(data){
+// 				html += "<table>"
+// 				data.empList.forEach(function(empidxdx){
+// 					html += "<tr class='empList' data-emp_id = " + emp.EMP_id + ">";
+// 					html += 	"<td>" + emp.EMP_NM + "</td>";
+// 					html += 	"<td>" + emp.DEPART_NM + "</td>";
+// 					html += 	"<td>" + emp.POSI_NM + "</td>";
+// 					html += "</tr>";
+// 				});
+// 				html += "</table>"
+// 			}
+// 		});
+		
+// 		$(".empInfo").html(html)
+		
+// 	});
+	
 //# sourceURL=pen.js
 </script>
 </body></html>

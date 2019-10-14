@@ -80,8 +80,11 @@ public class MessengerService implements IMessengerService{
 	* Method 설명 : 메시지 전송
 	*/
 	@Override
-	public int insertMessage(Message message) {
-		return messengerDao.insertMessage(message);
+	public String insertMessage(Message message) {
+		
+		messengerDao.insertMessage(message);
+		
+		return message.getMsg_id();
 	}
 
 	/**
@@ -133,8 +136,27 @@ public class MessengerService implements IMessengerService{
 	}
 
 	@Override
-	public List<Map> getEmpList() {
-		return messengerDao.getEmpList();
+	public List<Map> getEmpList(String emp_nm) {
+		return messengerDao.getEmpList(emp_nm);
 	}
 
+	public int insertChatEmp(ChatEmp chatEmp) {
+		return messengerDao.insertChatEmp(chatEmp);
+	}
+
+	@Override
+	public List<Employee> getChatInfo(String chat_id) {
+		return messengerDao.getChatInfo(chat_id);
+	}
+
+	@Override
+	public int updateLastMsg(Message message) {
+		return messengerDao.updateLastMsg(message);
+	}
+
+	@Override
+	public int getChatListCount(Message message) {
+		return messengerDao.getChatListCount(message);
+	}
+	
 }

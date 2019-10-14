@@ -59,7 +59,7 @@ public interface IMessengerService {
 	* @return
 	* Method 설명 : 메시지 전송
 	*/
-	int insertMessage(Message message);
+	String insertMessage(Message message);
 	
 	/**
 	* Method : insertChat
@@ -108,5 +108,37 @@ public interface IMessengerService {
 	* @return
 	* Method 설명 : 사원리스트 조회
 	*/
-	List<Map> getEmpList();
+	List<Map> getEmpList(String emp_nm);
+	
+	int insertChatEmp(ChatEmp chatEmp);
+	
+	/**
+	* Method : getChatInfo
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방에 접속 인원 불러오기
+	*/
+	List<Employee> getChatInfo(String chat_id);
+	
+	/**
+	* Method : updateLastMsg
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param last_msg
+	* @return
+	* Method 설명 : 마지막 읽은 메시지 수정
+	*/
+	int updateLastMsg(Message message);
+	
+	/**
+	* Method : getChatListCount
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param message
+	* @return
+	* Method 설명 : 안읽은 메시지 갯수
+	*/
+	int getChatListCount(Message message);
 }

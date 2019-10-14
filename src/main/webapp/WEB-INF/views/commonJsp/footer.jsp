@@ -3,7 +3,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script>
-	var socket = new SockJS("/ws/event");
+	var socket = new SockJS("/ws/chat");
 	
 	socket.onmessage = function(evt) {
 		var d = new Date();
@@ -16,4 +16,12 @@
 	socket.onclose = function(evt) {
 	}
 
+	socket.onmessage = function(evt) {
+		var d = new Date();
+		var time = d.getHours() + ":" + d.getMinutes();
+		var str = evt.data.split(":")
+		
+		console.log(str)
+		
+	};
 </script>

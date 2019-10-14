@@ -80,8 +80,8 @@ public class MessengerDao implements IMessengerDao{
 	* Method 설명 : 메시지 전송
 	*/
 	@Override
-	public int insertMessage(Message message) {
-		return sqlSession.insert("chat.insertMessage", message);
+	public String insertMessage(Message message) {
+		return sqlSession.insert("chat.insertMessage", message) + "";
 	}
 
 	/**
@@ -157,8 +157,47 @@ public class MessengerDao implements IMessengerDao{
 	* Method 설명 : 초대 사원리스트 조회
 	*/
 	@Override
-	public List<Map> getEmpList() {
-		return sqlSession.selectList("chat.getEmpList");
+	public List<Map> getEmpList(String emp_nm) {
+		return sqlSession.selectList("chat.getEmpList", emp_nm);
+	}
+
+	/**
+	* Method : getChatInfo
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방에 접속 인원 불러오기
+	*/
+	@Override
+	public List<Employee> getChatInfo(String chat_id) {
+		return sqlSession.selectList("chat.getChatInfo", chat_id);
+	}
+
+	/**
+	* Method : updateLastMsg
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param message
+	* @return
+	* Method 설명 : 마지막 읽은 메시지 수정
+	*/
+	@Override
+	public int updateLastMsg(Message message) {
+		return sqlSession.update("chat.updateLastMsg", message);
+	}
+
+	/**
+	* Method : getChatListCount
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param message
+	* @return
+	* Method 설명 : 안읽은 메시지 갯수
+	*/
+	@Override
+	public int getChatListCount(Message message) {
+		return sqlSession.selectOne("chat.getChatListCount",message);
 	}
 
 }

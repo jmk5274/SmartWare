@@ -46,6 +46,8 @@ public class SocketChatHandler extends TextWebSocketHandler {
 			logger.debug("map : {}", employeee.getC_use());
 			if(employeee != employee && employeee.getC_use().equals("true")) {
 				currentSession.sendMessage(new TextMessage(employee.getEmp_id() + ":" + message.getPayload()));
+			}else if(employeee != employee && employeee.getC_use().equals("false")){
+				currentSession.sendMessage(new TextMessage(employee.getEmp_id() + ":" + message.getPayload()));
 			}
 		}
 	}
@@ -54,7 +56,7 @@ public class SocketChatHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 			Employee employee = getEmployee(session);
 				
-			chatMap.remove(employee.getEmp_id());
+//			chatMap.remove(employee.getEmp_id());
 			
 			logger.debug("연결 끊김 : {}", employee);
 	}

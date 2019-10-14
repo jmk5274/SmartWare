@@ -48,6 +48,9 @@
 	
 	<insert id="insertMessage" parameterType="message">
 		INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), #{chat_id}, #{msg_cont}, #{emp_id}, SYSDATE)
+		<selectKey order="AFTER" resultType="String" keyProperty="msg_id" >
+			select 'msg' || LPAD(MESSAGE_SEQ.currval,4,0) from dual
+		</selectKey>
 	</insert>
 	
 	<insert id="insertChat" parameterType="chat">
@@ -78,12 +81,30 @@
 		update chat set able='F' where chat_id = #{chat_id}
 	</update>
 	
-	<select id="getEmpList" resultType="hashmap">
+	<select id="getEmpList" parameterType="String" resultType="hashmap">
 		select emp_id, emp_nm, depart_nm, posi_nm
 		  from employee a, department b, position c
 		 where a.depart_id = b.depart_id
 		   and a.posi_id = c.posi_id
-		 order by emp_nm
+		   and emp_nm like '%'||#{data}||'%'
+		   order by emp_nm
 	</select>
 	
+	<select id="getChatInfo" parameterType="String" resultType="employee">
+		select a.emp_id, b.emp_nm
+		  from chat_emp a, employee b
+		 where chat_id = #{data}
+		   and a.emp_id = b.emp_id
+	</select>
+	
+	<update id="updateLastMsg" parameterType="message">
+		update chat_emp set last_msg = #{msg_id} where emp_id=#{emp_id} and chat_id = #{chat_id} 
+	</update>
+	
+	<select id="getChatListCount" parameterType="message" resultType="int">
+		select distinct count(*)
+		  from message
+		 where TO_NUMBER(substr(msg_id,4,4)) > TO_NUMBER(substr(#{msg_id},4,4))
+		   and chat_id like '%'||#{chat_id}||'%';
+	</select>
 </mapper>

@@ -20,10 +20,10 @@ public class WebsocketConfig implements WebSocketConfigurer{
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 
-		 registry.addHandler(eventSocketHandler(), "/ws/event") // /ws/chat url을 처리해줄 handler 등록
- 			.setAllowedOrigins("*")			 // 어떤 도메인이든 상관없이 처리(cross domain)
-	 			.addInterceptors(new HttpSessionHandshakeInterceptor())	// 다음pt 설명
-	 			.withSockJS();
+//		 registry.addHandler(eventSocketHandler(), "/ws/event") // /ws/chat url을 처리해줄 handler 등록
+// 			.setAllowedOrigins("*")			 // 어떤 도메인이든 상관없이 처리(cross domain)
+//	 			.addInterceptors(new HttpSessionHandshakeInterceptor())	// 다음pt 설명
+//	 			.withSockJS();
 		 
 		 registry.addHandler(chatSocketHandler(), "/ws/chat") // /ws/chat url을 처리해줄 handler 등록
 			.setAllowedOrigins("*")			 // 어떤 도메인이든 상관없이 처리(cross domain)
