@@ -113,14 +113,14 @@
 <div class="row">
 	<div class="col">
 		<div class="card">
-			<div class="card-body" id="empCategory">
+			<div class="card-body" id="empCategory" class="filter">
 				<p>개인 일정</p>
 			</div>
 		</div>
 	</div>
 	<div class="col">
 		<div class="card">
-			<div class="card-body" id="depCategory">
+			<div class="card-body" id="depCategory" class="filter">
 				<p>부서 일정</p>
 			</div>
 		</div>
@@ -131,11 +131,12 @@
 </select>
  
 <script>
+	var calendar;
 	var calendarList = []; // 일정이 저장될 공간
 	
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
-	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	    calendar = new FullCalendar.Calendar(calendarEl, {
 	    	plugins : [ "dayGrid", "timeGrid", "list", "interaction" ],
 			header : {
 				left : "prev,next today",
@@ -147,15 +148,13 @@
 			navLinks : true, // can click day/week names to navigate views
 			editable : true,
 			eventLimit : true, // allow "more" link when too many events
-			eventSources: [{
+			eventSources: [{ // 이벤트(일정) 추가
 				events: function(info, successCallback, failureCallback) {
 					$.ajax({
 						url: "${cp}/getAllCalendarList",
 						type: "GET",
 						dataType: "json",
 						success: function(data) {
-							console.log("성공");
-							console.log(data.calendarList);
 							successCallback(data.calendarList);
 						}
 					});
@@ -188,9 +187,9 @@
 			      	html: true,
 			      	container: 'body'
 				});
+				return filtering(event);
 			}
 	    });
-	    
 	    calendar.render();
 	});
 	
@@ -208,15 +207,19 @@
 			});
 		
 		// 체크박스 클릭(체크된 상태)
-		$(document).delegate(".fa.fa-check-square-o.fa-lg", "click", function(event) {
+		$(document).delegate(".on", "click", function(event) {
 			console.log($(event.target).data("id"));
-			$(event.target).attr("class", "fa fa-square-o fa-lg");
+			$(event.target).addClass("fa-square-o off");
+			$(event.target).removeClass("fa-check-square-o on");
+			calendar.rerenderEvents();
 		});
 		
 		// 체크박스 클릭(체크풀린 상태)
-		$(document).delegate(".fa.fa-square-o.fa-lg", "click", function(event) {
+		$(document).delegate(".off", "click", function(event) {
 			console.log($(event.target).data("id"));
-			$(event.target).attr("class", "fa fa-check-square-o fa-lg");
+			$(event.target).addClass("fa-check-square-o on");
+			$(event.target).removeClass("fa-square-o off");
+			calendar.rerenderEvents();
 		});
 	});
 	
@@ -224,7 +227,7 @@
 		$.each(data, function(index, entry) {
 // 			loc.append("<i class='fa fa-square-o fa-lg' style='color: " + entry.color + "'></i>");
 			loc.append("<hr>");
-			loc.append("<i class='fa fa-check-square-o fa-lg' style='color: " + entry.color + "; width: 20px;' data-id=" + entry.category_id + "></i>");
+			loc.append("<i class='fa fa-check-square-o fa-lg on' style='color: " + entry.color + "; width: 20px;' data-id=" + entry.category_id + "></i>");
 			loc.append("<span style='user-select:none;'> " + entry.category_nm + "</span>");
 // 			loc.append("<p>ID: " + entry.category_id + "</p>");
 // 			loc.append("<p>색상: <span style='background: " + entry.color + "; border-radius: 50%; width: 15px; height: 15px;'>　</span></p>");
@@ -282,26 +285,12 @@
 	   .append('<option value="15" data-color="#C80141">#C80141</option>')
 	$('.colorselector').colorselector();
 	
-// 	function filtering(event) {
-// 		  var show_username = true;
-// 		  var show_type = true;
-
-// 		  var username = $('input:checkbox.filter:checked').map(function () {
-// 		    return $(this).val();
-// 		  }).get();
-// 		  var types = $('#type_filter').val();
-
-// 		  show_username = username.indexOf(event.username) >= 0;
-
-// 		  if (types && types.length > 0) {
-// 		    if (types[0] == "all") {
-// 		      show_type = true;
-// 		    } else {
-// 		      show_type = types.indexOf(event.type) >= 0;
-// 		    }
-// 		  }
-
-// 		  return show_username && show_type;
-// 	}
+	function filtering(event) {
+		var username = $(".on").map(function () {
+			return $(this).data("id"); // 선택된 필터의 id를 반환
+		}).get();
+		
+		return username.indexOf(event.extendedProps.category_id) >= 0;
+	}
 	
 </script>
