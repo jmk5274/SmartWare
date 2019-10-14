@@ -114,6 +114,34 @@
 	margin-left: 10px;
 }
 
+.col-sm-3.col-form-label {
+	text-align: right;
+}
+
+.form-group.row {
+	align-items: center;
+}
+
+.btn-colorselector {
+	width: 50px;
+	height: 35px;
+}
+
+.btnCateModify {
+	background: none;
+	border: none;
+	float: right;
+	vertical-align: middle;
+	text-align: center;
+	width: 40px;
+	cursor: pointer;
+ 	visibility: hidden;
+}
+
+button:focus {
+	outline: 0;
+}
+
 </style>
 
 
@@ -146,9 +174,58 @@
 		</div>
 	</div>
 </div>
-<select class="colorselector">
-    
-</select>
+
+<div class="bootstrap-modal">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Launch demo modal</button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">카테고리 생성</h3>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body basic-form">
+                	<form>
+                		<div class="form-group row">
+		                    <label class="col-sm-3 col-form-label">카테고리 이름</label>
+		                    <div class="col-sm-9">
+		                    	<input type="text" class="form-control">
+		                    </div>
+	                    </div>
+		                    <div class="form-group row">
+		                    <label class="col-sm-3 col-form-label">카테고리 색상</label>
+		                    <div class="col-sm-9">
+		                    	<select class="colorselector"></select>
+		                    </div>
+	                    </div>
+		                    <div class="form-group row">
+		                    <label class="col-sm-3 col-form-label">부서명</label>
+		                    <div class="col-sm-9">
+		                    	<input type="text" class="form-control">
+		                    </div>
+	                    </div>
+		                    <div class="form-group row">
+		                    <label class="col-sm-3 col-form-label">생성자</label>
+		                    <div class="col-sm-9">
+		                    	<input type="text" class="form-control">
+		                    </div>
+	                    </div>
+	                    
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
  
 <script>
 	var calendar;
@@ -246,20 +323,39 @@
 			var selectedId = $(this).attr("id")
 			
 			if(selectedId === "empCategoryOn") {			// 개인 일정 전체 선택
-				$("#empCategory span.categoryList i").addClass("fa-check-square-o on");
-				$("#empCategory span.categoryList i").removeClass("fa-square-o off");
+				$("#empCategory div.categoryList > i").addClass("fa-check-square-o on");
+				$("#empCategory div.categoryList > i").removeClass("fa-square-o off");
 			} else if(selectedId  === "empCategoryOff") {	// 개인 일정 전체 해제
-				$("#empCategory span.categoryList i").addClass("fa-square-o off");
-				$("#empCategory span.categoryList i").removeClass("fa-check-square-o on");
+				$("#empCategory div.categoryList > i").addClass("fa-square-o off");
+				$("#empCategory div.categoryList > i").removeClass("fa-check-square-o on");
 			} else if(selectedId  === "depCategoryOn") {		// 부서 일정 전체 선택
-				$("#depCategory span.categoryList i").addClass("fa-check-square-o on");
-				$("#depCategory span.categoryList i").removeClass("fa-square-o off");
+				$("#depCategory div.categoryList > i").addClass("fa-check-square-o on");
+				$("#depCategory div.categoryList > i").removeClass("fa-square-o off");
 			} else if(selectedId  === "depCategoryOff") {	// 부서 일정 전체 해제
-				$("#depCategory span.categoryList i").addClass("fa-square-o off");
-				$("#depCategory span.categoryList i").removeClass("fa-check-square-o on");
+				$("#depCategory div.categoryList > i").addClass("fa-square-o off");
+				$("#depCategory div.categoryList > i").removeClass("fa-check-square-o on");
 			}
 			
 			calendar.rerenderEvents();
+		});
+		
+		// 카테고리를 호버할 때 delete, modify 버튼 보이기/숨기기
+		$(document).on("mouseenter", ".categoryList", function() {
+			$(".btnCateModify", this).css("visibility", "visible");
+		}).on("mouseleave", ".categoryList", function() {
+			$(".btnCateModify", this).css("visibility", "hidden");
+		});
+		
+		// 카테고리 delete button
+		$("body").on("click", ".btnCateDelete", function(event) {
+			alert("delete");
+			event.stopPropagation();
+		});
+		
+		// 카테고리 update button
+		$("body").on("click", ".btnCateUpdate", function(event) {
+			alert("update");
+			event.stopPropagation();
 		});
 	});
 	
@@ -269,10 +365,16 @@
 		// 카테고리 리스트 출력
 		$.each(data, function(index, entry) {
 			res += "<hr>";
-			res += "<span id=" + entry.category_id + " class='categoryList'>"
+			res += "<div id=" + entry.category_id + " class='categoryList'>"
 			res += "<i class='fa fa-lg fa-check-square-o on' style='color: " + entry.color + "; width: 20px;'></i>";
 			res += "<span> " + entry.category_nm + "</span>";
-			res += "</span>"
+			res += "<button class='btnCateModify btnCateUpdate'>"
+			res += "<i class='fa fa-lg fa-wrench cateModify'></i>";
+			res += "</button>";
+			res += "<button class='btnCateModify btnCateDelete'>"
+			res += "<i class='fa fa-lg fa-times'></i>";
+			res += "</button>";
+			res += "</div>";
 		});
 		console.log(loc.attr("id"));
 		// 카테고리 추가 버튼 출력
