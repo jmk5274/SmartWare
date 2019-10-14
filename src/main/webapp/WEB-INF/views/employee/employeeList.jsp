@@ -10,12 +10,38 @@
 		if("${res }"){
 			alert("${res }");
 		}
-	});
-// 	$(".deleteEmp").on("click", function(){
-// 		alert("${employee.EMP_ID}사원을 삭제하시겠습니까?");
-// 	})
-// 	$(".userTr").on("click", function(){
-//}
+		
+// 		$("#no").on("click", function(){
+// 			$(".employeeTr").attr("disabled", true); 
+// 			$no = $('#no').attr('disabled', false);
+
+// 		});
+	$(".deleteEmp").on("click", function(){
+		alert("해당 사원을 삭제하시겠습니까?");
+	})
+	
+	$(".updateBtn").on("click", function(){
+		
+		$("#selectEmp").val(($(this).parents("tr")).attr("id"));
+		$("#updateBtn").val($(this).attr("value"));
+		var emp_id = ($(this).parents("tr")).attr("id");
+		$("#updateAble").val($("#updateAble"+emp_id + " option:selected").val());
+		console.log($("#updateBtn").val());
+		$("#frm").submit();
+	})
+	
+	$(".updateBtn2").on("click", function(){
+		$("#selectEmp").val(($(this).parents("tr")).attr("id"));
+		$("#updateBtn2").val($(this).attr("value"));
+		var emp_id = ($(this).parents("tr")).attr("id");
+		$("#updateRank").val($("#updateRank"+emp_id + " option:selected").val());
+		console.log($("#updateRank"+emp_id + " option:selected").val());
+		$("#frm").submit();
+	})
+
+});
+	
+
 </script>
 
 <%-- <form id="frm" action="${cp }/user/user" method="get"> --%>
@@ -30,11 +56,19 @@
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-
+				
 				<div class="row">
-					<div class="col-sm-8 blog-main">
+					<div class="col-sm-12 blog-main">
 					<h2 class="sub-header">사원 리스트</h2>
 						<div class="table-responsive">
+				<form id="frm" class="form-horizontal" action="${cp }/updateEmployee" method="post">
+					<input id="selectEmp" name="emp_id" type="hidden"/>
+					<input id="updateBtn" name="updateBtn" type="hidden"/>
+					<input id="updateBtn2" name="updateBtn2" type="hidden"/>
+					<input id="updateRank" name="rank" type="hidden"/>
+					<input id="updateAble" name="able" type="hidden"/>
+					
+					<div class="form-group">
 							<table class="table table-hover">
 								<tr>
 									<th>사원 아이디</th>
@@ -43,22 +77,135 @@
 									<th>직책</th>
 									<th>입사일</th>
 								</tr>
-								
+								<td>
+								<input id="emp_id" type="text" name="emp_id" class="form-control" value="${employee.EMP_ID }"/>
+								</td>
+								<td>
+								<input id="pass" type="text" name="pass" class="form-control" value="${employee.PASS }"/>
+								</td>
+								<td>
+								<input id="emp_nm" type="text" name="emp_nm" class="form-control" value="${employee.EMP_NM }"/>
+								</td>
+								<td>
+								<input id="depart_id" type="text" name="depart_id" class="form-control" value="${employee.DEPART_ID }"/>
+								</td>
+								<td><select id="updateRank${employee.EMP_ID}" name="updaterank" class="form-control">
+												<c:choose>
+													<c:when test="${employee.RANK == '사장' }">
+														<option selected>사장</option>
+														<option>관리자</option>
+														<option>사원</option>
+													</c:when>
+													<c:when test="${employee.RANK == '관리자' }">
+														<option>사장</option>
+														<option selected>관리자</option>
+														<option>사원</option>
+													</c:when>
+													<c:when test="${employee.RANK == '사원' }">
+														<option>사장</option>
+														<option>관리자</option>
+														<option selected>사원</option>
+													</c:when>
+												</c:choose>
+											</select>	
+										</td>
+								<td>
+								<input id="depart_id" type="text" name="depart_id" class="form-control" value="${employee.DEPART_ID }"/>
+								</td>
+								<td><fmt:formatDate value="${employee.JOIN_DT }" pattern="yyyy-MM-dd"/></td>
+								</table>
+								<br>
+								<br>
+								<br>
+								<br>
+								<div class="form-group">
+							<table class="table table-hover">
+								<tr>
+									<th>사원 아이디</th>
+									<th>사원 이름</th>
+									<th>부서</th>
+									<th>직책</th>
+									<th>입사일</th>
+								</tr>
 								<c:forEach items="${employeeList }" var="employee">
-									<tr class="employeeTr" data-emp_id="${employee.EMP_ID}">
-										<input type="hidden" value="${employee.EMP_ID}"/>
+									<tr id="${employee.EMP_ID}" class="employeeTr" data-emp_id="${employee.EMP_ID}">
 										<td>${employee.EMP_ID }</td>
 										<td>${employee.EMP_NM }</td>
 										<td>${employee.DEPART_ID }</td>
-										<td>${employee.POSI_ID }</td>
+										<c:if test="${employee.ABLE == 'T' }">
+										<td><select id="updateRank${employee.EMP_ID}" name="updaterank" class="form-control">
+												<c:choose>
+													<c:when test="${employee.RANK == '사장' }">
+														<option selected>사장</option>
+														<option>관리자</option>
+														<option>사원</option>
+													</c:when>
+													<c:when test="${employee.RANK == '관리자' }">
+														<option>사장</option>
+														<option selected>관리자</option>
+														<option>사원</option>
+													</c:when>
+													<c:when test="${employee.RANK == '사원' }">
+														<option>사장</option>
+														<option>관리자</option>
+														<option selected>사원</option>
+													</c:when>
+												</c:choose>
+											</select>
+											
+										</td>
+										</c:if>
+										
+										<c:if test="${employee.ABLE == 'F' }">
+										<td><select id="updateRank${employee.EMP_ID}" name="updaterank" class="form-control" disabled>
+												<c:choose>
+													<c:when test="${employee.RANK == '사장' }">
+														<option selected>사장</option>
+														<option>관리자</option>
+														<option>사원</option>
+													</c:when>
+													<c:when test="${employee.RANK == '관리자' }">
+														<option>사장</option>
+														<option selected>관리자</option>
+														<option>사원</option>
+													</c:when>
+													<c:when test="${employee.RANK == '사원' }">
+														<option>사장</option>
+														<option>관리자</option>
+														<option selected>사원</option>
+													</c:when>
+												</c:choose>
+											</select>
+											
+										</td>
+										</c:if>
 										<td><fmt:formatDate value="${employee.JOIN_DT }" pattern="yyyy-MM-dd"/></td>
-										<td><a href="${cp }/updateEmployee" class="btn mb-1 btn-outline-success pull-right">비활성화</a>
+										<td>
+										<select id="updateAble${employee.EMP_ID}" name="updateable" class="form-control">
+											<c:choose>
+												<c:when test="${employee.ABLE == 'T' }">
+													<option selected>활성화</option>
+													<option>비활성화</option>
+												</c:when>
+												<c:when test="${employee.ABLE == 'F' }">
+													<option>활성화</option>
+													<option selected>비활성화</option>
+												</c:when>
+											</c:choose>
+										</select>
+										</td>
+										<td>
+										<button id="update${employee.EMP_ID}" type="button" name="updateBtn" class="updateBtn btn mb-1 btn-outline-success" value="modify">수정</button>
 										<a href="${cp }/deleteEmployee?emp_id=${employee.EMP_ID}" id="deleteEmp" class="deleteEmp btn mb-1 btn-outline-dark pull-right">삭제</a>
-										<a href="${cp }/updateEmployee" class="btn mb-1 btn-outline-primary pull-right">직책 변경</a></td>
+										<c:if test="${employee.ABLE == 'T' }">
+										<button id="updateRank${employee.EMP_ID }" type="button" name="updateBtn2" class="updateBtn2 btn mb-1 btn-outline-primary" value="modifyRank">직책변경</button>
+										</c:if>
+										</td>
 									</tr>
 								</c:forEach>
 							</table>
 						</div>
+						</form>
 <!-- 사원 추가 -->				<a href="${cp }/insertEmployee" class="btn mb-1 btn-outline-primary pull-right">사원 추가</a>
 						<div class="bootstrap-pagination">
 							<nav>
@@ -131,6 +278,7 @@
 			</div>
 			</div>
 			</div>
+		</div>
 		</div>
 	</div>
 </div>

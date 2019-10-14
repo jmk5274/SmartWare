@@ -55,6 +55,14 @@ public class EmployeeDao implements IEmployeeDao {
 		return sqlSession.update("employee.updateEmployee", employee);
 	}
 	
+	@Override
+	public int updateEmployeeAble(Employee employee) {
+		return sqlSession.update("employee.updateEmployeeAble", employee);
+	}
 	
+	@Override
+	public int updateEmployeeRank(Employee employee) {
+		return sqlSession.update("employee.updateEmployeeRank", employee);
+	}
 
 }

@@ -12,12 +12,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
+import kr.or.ddit.smartware.util.file.FileUtil;
+import kr.or.ddit.smartware.util.file.model.FileInfo;
 
 @Controller
 public class EmployeeController {
@@ -83,64 +88,76 @@ public class EmployeeController {
 	
 	/**
 	 * 
-	* Method : updateEmployee
+	* Method : updateEmployeeView
 	* 작성자 : Hong Da Eun
 	* 변경이력 :
-	* @param map
-	* @param btnValue
 	* @param model
-	* @param employee
 	* @param emp_id
-	* @param request
 	* @return
 	* Method 설명 : 사원 수정
 	 */
-	@RequestMapping(path = "updateEmployee")
-	public String updateEmployee(Map map, String btnValue, Model model, Employee employee, String emp_id, HttpServletRequest request) {
+	@RequestMapping(path = "updateEmployee", method = RequestMethod.GET )
+	public String updateEmployeeView(Model model, int emp_id) {
+		model.addAttribute("employeeList", employeeService.allEmployeeList());
 		
-	employee.setEmp_id(employee.getEmp_id());
-	
-	if(employee.getAble().equals("활성화")) {
-		employee.setAble("Y");
-	}else {
-		employee.setAble("N");
+		return "tiles.employeeList";
 	}
 	
-	if(btnValue.equals("비활성화")) {
+	@RequestMapping(path = "updateEmployee", method = RequestMethod.POST)
+	public String updateEmployee(String emp_id, String able, String rank, Employee employee, String updateBtn, String updateBtn2, Model model, HttpServletRequest request) {
 		
-		int cnt = employeeService.updateEmployee(employee);
+		employee = new Employee();
+		employee.setEmp_id(emp_id);
 		
-	}else if(btnValue.equals("활성화")) {
+		if(updateBtn.equals("modify")) {
+		
+			if(able.equals("활성화")) {
+				employee.setAble("T");
+			}else {
+				employee.setAble("F");
+			}
+		
+			int cnt = employeeService.updateEmployeeAble(employee);
 			
-		int cnt = employeeService.updateEmployee(employee);
+		} else if(updateBtn2.equals("modifyRank")) {
 		
+			if(rank.equals("사장")) {
+				employee.setRank("사장");
+			}else if(rank.equals("관리자")){
+				employee.setRank("관리자");
+			}else {
+				employee.setRank("사원");
+			}
+			
+			int cnt = employeeService.updateEmployeeRank(employee);
+			
+		}
+		
+		request.getServletContext().setAttribute("A_EMPLOYEELIST", employeeService.allEmployeeList()); 
+		
+		return "redirect:/employeeList";
 	}
 	
-	request.getServletContext().setAttribute("employeeList", employeeService.getEmployeeList(map)); 
+	/**
+	 * 
+	* Method : userFormView
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @return
+	* Method 설명 : 사원 등록 화면 요청
+	 */
+	@RequestMapping(path = "insertEmployee", method = RequestMethod.GET)
+	public String userFormView() {
+		return "tiles.insertEmployee";
+	}
 	
-	return "tiles.employeeList";
-}
-	
-//	/**
-//	 * 
-//	* Method : userFormView
-//	* 작성자 : Hong Da Eun
-//	* 변경이력 :
-//	* @return
-//	* Method 설명 :
-//	 */
-//	@RequestMapping(path = "userForm", method = RequestMethod.GET)
-//	public String userFormView() {
-//		return "user/userForm";
-//	}
-//	
-//	// 사용자 등록 요청
-//	@RequestMapping(path = "userForm", method = RequestMethod.POST)
-//	public String userForm(User user, BindingResult result,
+	// 사용자 등록 요청
+//	@RequestMapping(path = "insertEmployee", method = RequestMethod.POST)
+//	public String insertEmployee(Employee employee, BindingResult result,
 //							@RequestPart("picture") MultipartFile picture) {
-//		new UserValidator().validate(user, result);
+////		new EmployeeValidator().validate(user, result);
 //		if(result.hasErrors()) // 잘못 되면 사용자 등록 화면으로 이동
-//			return "user/userForm";
+//			return "tiles.insertEmployee";
 //		else {
 //			FileInfo fileInfo = FileUtil.getFileInfo(picture.getOriginalFilename());
 //			
@@ -148,24 +165,24 @@ public class EmployeeController {
 //		if(picture.getSize() > 0) {
 //			try {
 //				picture.transferTo(fileInfo.getFile());
-//				user.setFilename(fileInfo.getOrginalFileName());		// originalFilename
-//				user.setRealfilename(fileInfo.getFile().getPath());
+//				employee.setFilename(fileInfo.getOriginalFileName());		// originalFilename
+//				employee.setRealfilename(fileInfo.getFile().getPath());
 //				
 //			} catch (IllegalStateException | IOException e) {
 //				e.printStackTrace();
 //			}
 //		}
 //		
-//		int insertCnt = userService.insertUser(user);
+//		int insertCnt = employeeService.insertEmployee(employee);
 //				
 //		if(insertCnt == 1)
-//			return "redirect:/user/user?userId=" + user.getUserId();
+//			return "redirect:/employee/insertEmployee?emp_id=" + employee.getEmp_id();
 //		else
-//			return "user/userForm";
+//			return "tiles.insertEmployee";
 //				
 //		}
 //	}
-//	
+	
 	@RequestMapping("useForm")
 	public String getEmployeeList() {
 		

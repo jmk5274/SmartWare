@@ -47,5 +47,15 @@ public class EmployeeService implements IEmployeeService{
 	public int updateEmployee(Employee employee) {
 		return employeeDao.updateEmployee(employee);
 	}
+	
+	@Override
+	public int updateEmployeeAble(Employee employee) {
+		return employeeDao.updateEmployeeAble(employee);
+	}
+	
+	@Override
+	public int updateEmployeeRank(Employee employee) {
+		return employeeDao.updateEmployeeRank(employee);
+	}
 
 }

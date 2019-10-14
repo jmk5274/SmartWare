@@ -63,7 +63,7 @@
 							<td><label for="board" class="col-sm-6 control-label">게시판 이름</label></td>
 <!-- 							<div class="col-sm-2"> -->
 							<td>
-								<input type="text" name="board_nm" class="form-control" value="${list.board_nm }"/>
+								<input id="board_nm" type="text" name="board_nm" class="form-control" value="${list.board_nm }"/>
 							</td>
 							</div>
 							<td>

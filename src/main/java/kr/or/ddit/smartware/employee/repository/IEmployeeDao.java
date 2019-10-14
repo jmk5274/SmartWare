@@ -60,8 +60,30 @@ public interface IEmployeeDao {
 	* 변경이력 :
 	* @param employee
 	* @return
-	* Method 설명 : 사원 계정 수정(비활성화, 직책 변경)
+	* Method 설명 : 마이페이지 사원 계정 수정
 	 */
-	int updateEmployee(Employee employee); 
+	int updateEmployee(Employee employee);
 	
+	/**
+	 * 
+	* Method : updateEmployeeList
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param employee
+	* @return
+	* Method 설명 : 사원 계정 리스트 수정(비활성화)
+	 */
+	int updateEmployeeAble(Employee employee);
+	
+	/**
+	 * 
+	* Method : updateEmployeeRank
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param employee
+	* @return
+	* Method 설명 : 사원 계정 리스트 수정(직책 변경)
+	 */
+	int updateEmployeeRank(Employee employee); 
+
 }

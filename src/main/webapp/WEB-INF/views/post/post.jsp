@@ -35,7 +35,7 @@
 
 
 				<div class="row">
-					<div class="col-sm-8 blog-main">
+					<div class="col-sm-12 blog-main">
 						<h2 class="sub-header">${board_nm }</h2>
 						<div class="table-responsive">
 							<table class="table table-hover">
