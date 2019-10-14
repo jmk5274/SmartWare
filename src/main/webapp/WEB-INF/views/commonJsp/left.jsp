@@ -12,11 +12,11 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${cp }/writeMail">메일 작성</a></li>
-                    <li><a href="${cp }/bootstrap/index.html">받은 편지함</a></li>
-                    <li><a href="${cp }/bootstrap/index.html">보낸 편지함</a></li>
-                    <li><a href="${cp }/bootstrap/index.html">중요 편지함</a></li>
-                    <li><a href="${cp }/bootstrap/index.html">휴지통</a></li>
-                    <li><a href="${cp }/bootstrap/index.html">스팸 편지함</a></li>
+                    <li><a href="${cp }/mailbox?emailLabel=INBOX">받은 편지함</a></li>
+                    <li><a href="${cp }/mailbox?emailLabel=[Gmail]/보낸편지함">보낸 편지함</a></li>
+                    <li><a href="${cp }/mailbox?emailLabel=[Gmail]/별표편지함">중요 편지함</a></li>
+                    <li><a href="${cp }/mailbox?emailLabel=[Gmail]/휴지통">휴지통</a></li>
+                    <li><a href="${cp }/mailbox?emailLabel=[Gmail]/스팸함">스팸 편지함</a></li>
                 </ul>
             </li>
             <li class="mega-menu mega-menu-sm">

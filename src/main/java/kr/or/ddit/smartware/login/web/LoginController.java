@@ -2,24 +2,37 @@ package kr.or.ddit.smartware.login.web;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.Flags.Flag;
+import javax.mail.Folder;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sun.mail.imap.IMAPFolder;
+
 import kr.or.ddit.smartware.board.service.IBoardService;
+import kr.or.ddit.smartware.email.model.GmailConnector;
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
 import kr.or.ddit.smartware.messenger.service.IMessengerService;
 
 @Controller
 public class LoginController {
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Resource(name = "employeeService")
 	private IEmployeeService employeeService;
@@ -58,27 +71,49 @@ public class LoginController {
 	* @param session
 	* @return
 	* Method 설명 : 로그인 요청 처리 (post일 때만 이 메서드를 실행하도록 설정)
+	 * @throws MessagingException 
 	 */
 	@RequestMapping(path = "login", method = RequestMethod.POST)
 	public String loginProcess(String emp_id, String pass, String rememberMe,
-								HttpServletResponse response, HttpSession session, HttpServletRequest request) {
+								HttpServletResponse response, HttpSession session, HttpServletRequest request) throws MessagingException {
 		
 		manageEmp_IdCookie(response, emp_id, rememberMe);
 		
 		Employee employee = employeeService.getEmployee(emp_id);
 		
+		
 		if(employee == null) {
 			return "login/login";	// view();
 			
 		}else if(employee.checkLoginValidate(emp_id, pass)) {
-				List<Map> map = messengerService.getChatList(employee.getEmp_id());
+			List<Map> map = messengerService.getChatList(employee.getEmp_id());
+			
+			request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList());
+			request.getServletContext().setAttribute("A_CHATLIST", map);
+			
+			employee.setC_use("false");
+			
+			
+			IMAPFolder folder = null;
+	        Store store = null;
+	        String subject = null;
+	        Flag flag = null;
+		        
+          Properties props = System.getProperties();
+          props.setProperty("mail.store.protocol", "imaps");
+
+          Session mailSession = Session.getDefaultInstance(props, null);
+
+          store = mailSession.getStore("imaps");
+          store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
+          
+          session.setAttribute("store", store);
+//          GmailConnector.setStore(store);
+		        
+		      
 				
-				request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList());
-				request.getServletContext().setAttribute("A_CHATLIST", map);
-				
-				employee.setC_use("false");
-				session.setAttribute("S_EMPLOYEE", employee);
-				return "redirect:/main";
+			session.setAttribute("S_EMPLOYEE", employee);
+			return "redirect:/main";
 		}
 		else {
 			return "login/login";
@@ -107,11 +142,33 @@ public class LoginController {
 	* @param response
 	* @param session
 	* Method 설명 : 로그아웃
+	 * @throws MessagingException 
 	 */
 	@RequestMapping(path = "logout", method = RequestMethod.GET)
-	private String logout(HttpServletResponse response, HttpSession session) {
+	private String logout(HttpServletResponse response, HttpSession session) throws MessagingException {
+		Store store = (Store) session.getAttribute("store");
+		IMAPFolder imapFolder = null;
+		
+		IMAPFolder folder = null;
+	   Folder[] folders1 = store.getDefaultFolder().list("*");
+          for (Folder folder1 : folders1) {
+            imapFolder = (IMAPFolder) folder1;
+            logger.debug("folder1 - {}", folder1);
+            String folderName = (String) imapFolder.getFullName();
+            
+            folder = (IMAPFolder) store.getFolder(folderName);
+            logger.debug("folder - {}", folder);
+          }
+		
+		{
+			if (folder != null && folder.isOpen()) { folder.close(true); }
+			if (store != null) { store.close(); }
+		}
 		
 		session.invalidate();	// 세션에 저장된 모든 속성을 제거
+		
+		GmailConnector.getStore();
+		
 		
 		// 로그인 화면으로 이동
 		return "redirect:/main";
