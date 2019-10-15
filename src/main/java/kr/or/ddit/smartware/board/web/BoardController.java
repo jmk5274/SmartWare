@@ -29,7 +29,7 @@ public class BoardController {
 	 */
 	@GetMapping("addBoard")
 	public String addBoard(Model model) {
-		return "tiles.addBoard";
+		return "tiles/board/addBoard";
 	}
 	
 	/**
@@ -70,6 +70,6 @@ public class BoardController {
 		
 		request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList()); 
 		
-		return "tiles.addBoard";
+		return "tiles/board/addBoard";
 	}
 }

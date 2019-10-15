@@ -12,17 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
+import kr.or.ddit.smartware.employee.model.Department;
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.employee.model.Position;
+import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
-import kr.or.ddit.smartware.util.file.FileUtil;
-import kr.or.ddit.smartware.util.file.model.FileInfo;
+import kr.or.ddit.smartware.employee.service.IPositionService;
 
 @Controller
 public class EmployeeController {
@@ -30,6 +27,12 @@ public class EmployeeController {
 
 	@Resource(name = "employeeService")
 	private IEmployeeService employeeService;
+	
+	@Resource(name = "positionService")
+	private IPositionService positionService;
+	
+	@Resource(name = "departmentService")
+	private IDepartmentService departmentService;
 		
 	@RequestMapping(path = "employeeList", method = RequestMethod.GET)
 	public String getEmployeeList(Employee employee, Integer page, Integer pagesize, HttpSession session, Model model) {
@@ -51,9 +54,15 @@ public class EmployeeController {
 		logger.debug("employeeList : {}", employeeList);
 		
 		List<Employee> pageList = employeeService.getEmployeeList(map);
-
 		int paginationSize = (int) Math.ceil((double) pageList.size() / pagesize);
-
+		
+		// 직책 전체 리스트
+		List<Position> positionList = positionService.getAllPosition();
+		
+		// 부서 전체 리스트
+		List<Department> departmentList = departmentService.getAllDepartment();
+		
+		model.addAttribute("positionList", positionList);
 		model.addAttribute("emp_id", employee.getEmp_id());
 		model.addAttribute("emp_nm", employee.getEmp_nm());
 		model.addAttribute("employee", map.get("employee"));
@@ -62,7 +71,7 @@ public class EmployeeController {
 		model.addAttribute("pagesize", pagesize);
 		model.addAttribute("paginationSize", paginationSize);
 
-		return "tiles.employeeList";
+		return "tiles/employee/employeeList";
 	}
 	
 	/**
@@ -100,15 +109,16 @@ public class EmployeeController {
 	public String updateEmployeeView(Model model, int emp_id) {
 		model.addAttribute("employeeList", employeeService.allEmployeeList());
 		
-		return "tiles.employeeList";
+		return "tiles/employee/employeeList";
 	}
 	
 	@RequestMapping(path = "updateEmployee", method = RequestMethod.POST)
-	public String updateEmployee(String emp_id, String able, String rank, Employee employee, String updateBtn, String updateBtn2, Model model, HttpServletRequest request) {
+	public String updateEmployee(String emp_id, String able, String posi_id, Employee employee, String updateBtn, String updateBtn2, String updateBtn3, Model model, HttpServletRequest request, Position position, Department department, String depart_id) {
 		
 		employee = new Employee();
 		employee.setEmp_id(emp_id);
 		
+		// 활성화 / 비활성화 수정
 		if(updateBtn.equals("modify")) {
 		
 			if(able.equals("활성화")) {
@@ -119,18 +129,23 @@ public class EmployeeController {
 		
 			int cnt = employeeService.updateEmployeeAble(employee);
 			
-		} else if(updateBtn2.equals("modifyRank")) {
+		// 직책 변경
+		} else if(updateBtn2.equals("modifyPosition")) {
 		
-			if(rank.equals("사장")) {
-				employee.setRank("사장");
-			}else if(rank.equals("관리자")){
-				employee.setRank("관리자");
-			}else {
-				employee.setRank("사원");
+			if(posi_id.equals(posi_id)) {
+				employee.setPosi_id(posi_id);
 			}
 			
-			int cnt = employeeService.updateEmployeeRank(employee);
+			int cnt = employeeService.updateEmployeePosition(employee);
 			
+		// 부서 변경
+		} else if(updateBtn3.equals("modifyDepartment")) {
+			
+			if(depart_id.equals(depart_id)) {
+				employee.setDepart_id(depart_id);
+			}
+			
+			int cnt = employeeService.updateEmployeeDepartment(employee);
 		}
 		
 		request.getServletContext().setAttribute("A_EMPLOYEELIST", employeeService.allEmployeeList()); 
@@ -148,7 +163,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping(path = "insertEmployee", method = RequestMethod.GET)
 	public String userFormView() {
-		return "tiles.insertEmployee";
+		return "tiles/employee/insertEmployee";
 	}
 	
 	// 사용자 등록 요청
@@ -186,7 +201,7 @@ public class EmployeeController {
 	@RequestMapping("useForm")
 	public String getEmployeeList() {
 		
-		return "tiles.useForm";
+		return "tiles/form/useForm";
 	}
 	
 }

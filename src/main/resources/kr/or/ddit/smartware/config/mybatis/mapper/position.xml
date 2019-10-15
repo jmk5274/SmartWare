@@ -9,4 +9,8 @@
 		  from position
 		 where posi_id = #{posi_id}
 	</select>
+	
+	<select id="getAllPosition" resultType="position">
+	select * from position
+	</select>
 </mapper>

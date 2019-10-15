@@ -1,9 +1,12 @@
 package kr.or.ddit.smartware.employee.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.smartware.employee.model.Position;
 import kr.or.ddit.smartware.employee.repository.IPositionDao;
 
 @Service
@@ -23,6 +26,11 @@ public class PositionService implements IPositionService {
 	@Override
 	public String getPosiNm(String posi_id) {
 		return positionDao.getPosiNm(posi_id);
+	}
+
+	@Override
+	public List<Position> getAllPosition() {
+		return positionDao.getAllPosition();
 	}
 
 }

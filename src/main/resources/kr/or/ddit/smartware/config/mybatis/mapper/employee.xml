@@ -76,4 +76,16 @@
 		 where emp_id = #{emp_id}
 	</update>
 	
+	<!-- 사원 직책 수정 -->
+	<update id="updateEmployeePosition" parameterType="employee">
+		update employee set posi_id = #{posi_id}
+		 where emp_id = #{emp_id}
+	</update>
+	
+	<!-- 사원 부서 수정 -->
+	<update id="updateEmployeeDepartment" parameterType="employee">
+		update employee set depart_id = #{depart_id}
+		 where emp_id = #{emp_id}
+	</update>
+	
 </mapper>

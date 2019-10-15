@@ -1,5 +1,9 @@
 package kr.or.ddit.smartware.employee.service;
 
+import java.util.List;
+
+import kr.or.ddit.smartware.employee.model.Department;
+
 public interface IDepartmentService {
 
 	/**
@@ -11,4 +15,6 @@ public interface IDepartmentService {
 	* Method 설명 : 부서 아이디에 해당하는 부서 이름을 반환
 	*/
 	String getDepartNm(String depart_id);
+	
+	List<Department> getAllDepartment();
 }

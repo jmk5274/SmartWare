@@ -11,11 +11,6 @@
 			alert("${res }");
 		}
 		
-// 		$("#no").on("click", function(){
-// 			$(".employeeTr").attr("disabled", true); 
-// 			$no = $('#no').attr('disabled', false);
-
-// 		});
 	$(".deleteEmp").on("click", function(){
 		alert("해당 사원을 삭제하시겠습니까?");
 	})
@@ -36,6 +31,15 @@
 		var emp_id = ($(this).parents("tr")).attr("id");
 		$("#updateRank").val($("#updateRank"+emp_id + " option:selected").val());
 		console.log($("#updateRank"+emp_id + " option:selected").val());
+		$("#frm").submit();
+	})
+	
+	$(".updateBtn3").on("click", function(){
+		$("#selectEmp").val(($(this).parents("tr")).attr("id"));
+		$("#updateBtn3").val($(this).attr("value"));
+		var emp_id = ($(this).parents("tr")).attr("id");
+		$("#updateDepart").val($("#updateDepart"+emp_id + " option:selected").val());
+		console.log($("#updateDepart"+emp_id + " option:selected").val());
 		$("#frm").submit();
 	})
 
@@ -65,8 +69,10 @@
 					<input id="selectEmp" name="emp_id" type="hidden"/>
 					<input id="updateBtn" name="updateBtn" type="hidden"/>
 					<input id="updateBtn2" name="updateBtn2" type="hidden"/>
-					<input id="updateRank" name="rank" type="hidden"/>
+					<input id="updateBtn3" name="updateBtn3" type="hidden"/>
+					<input id="updateRank" name="posi_id" type="hidden"/>
 					<input id="updateAble" name="able" type="hidden"/>
+					<input id="updateDepart" name="depart_id" type="hidden"/>
 					
 					<div class="form-group">
 							<table class="table table-hover">
@@ -78,40 +84,19 @@
 									<th>입사일</th>
 								</tr>
 								<td>
-								<input id="emp_id" type="text" name="emp_id" class="form-control" value="${employee.EMP_ID }"/>
+								<input id="emp_id2" type="text" name="emp_id2" class="form-control" value="${employee.EMP_ID }"/>
 								</td>
 								<td>
-								<input id="pass" type="text" name="pass" class="form-control" value="${employee.PASS }"/>
+								<input id="pass2" type="text" name="pass2" class="form-control" value="${employee.PASS }"/>
 								</td>
 								<td>
-								<input id="emp_nm" type="text" name="emp_nm" class="form-control" value="${employee.EMP_NM }"/>
+								<input id="emp_nm2" type="text" name="emp_nm2" class="form-control" value="${employee.EMP_NM }"/>
 								</td>
-								<td>
-								<input id="depart_id" type="text" name="depart_id" class="form-control" value="${employee.DEPART_ID }"/>
-								</td>
-								<td><select id="updateRank${employee.EMP_ID}" name="updaterank" class="form-control">
-												<c:choose>
-													<c:when test="${employee.RANK == '사장' }">
-														<option selected>사장</option>
-														<option>관리자</option>
-														<option>사원</option>
-													</c:when>
-													<c:when test="${employee.RANK == '관리자' }">
-														<option>사장</option>
-														<option selected>관리자</option>
-														<option>사원</option>
-													</c:when>
-													<c:when test="${employee.RANK == '사원' }">
-														<option>사장</option>
-														<option>관리자</option>
-														<option selected>사원</option>
-													</c:when>
-												</c:choose>
-											</select>	
-										</td>
-								<td>
-								<input id="depart_id" type="text" name="depart_id" class="form-control" value="${employee.DEPART_ID }"/>
-								</td>
+<!-- 								<td> -->
+<%-- 								<c:forEach items="${departmentList }" var="department"> --%>
+<%-- 										<td value="${department.depart_id }">${department.depart_nm }</td> --%>
+<%-- 								</c:forEach> --%>
+<!-- 								</td> -->
 								<td><fmt:formatDate value="${employee.JOIN_DT }" pattern="yyyy-MM-dd"/></td>
 								</table>
 								<br>
@@ -131,50 +116,67 @@
 									<tr id="${employee.EMP_ID}" class="employeeTr" data-emp_id="${employee.EMP_ID}">
 										<td>${employee.EMP_ID }</td>
 										<td>${employee.EMP_NM }</td>
-										<td>${employee.DEPART_ID }</td>
+										<c:if test="${employee.ABLE == 'T' }">
+										<td><select id="updateDepart${employee.EMP_ID}" name="updatedepartment" class="form-control">
+										<c:forEach items="${departmentList }" var="department">
+												<c:choose>
+													<c:when test="${employee.DEPART_ID == department.depart_id}">
+														<option value="${employee.DEPART_ID}" selected>${department.depart_nm}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${department.depart_id}">${department.depart_nm}</option>
+													</c:otherwise>
+												</c:choose>
+										</c:forEach>
+											</select>
+										</td>
+										</c:if>
+										
+										<c:if test="${employee.ABLE == 'F' }">
+										<td><select id="updateDepart${employee.EMP_ID}" name="updatedepartment" class="form-control" disabled>
+										<c:forEach items="${departmentList }" var="department">
+												<c:choose>
+													<c:when test="${employee.DEPART_ID == department.depart_id}">
+														<option value="${employee.DEPART_ID}" selected>${department.depart_nm}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${department.depart_id}">${department.depart_nm}</option>
+													</c:otherwise>
+												</c:choose>
+										</c:forEach>
+											</select>
+										</td>
+										</c:if>
+										
+										
 										<c:if test="${employee.ABLE == 'T' }">
 										<td><select id="updateRank${employee.EMP_ID}" name="updaterank" class="form-control">
+										<c:forEach items="${positionList }" var="position">
 												<c:choose>
-													<c:when test="${employee.RANK == '사장' }">
-														<option selected>사장</option>
-														<option>관리자</option>
-														<option>사원</option>
+													<c:when test="${employee.POSI_ID == position.posi_id}">
+														<option value="${employee.POSI_ID}" selected>${position.posi_nm}</option>
 													</c:when>
-													<c:when test="${employee.RANK == '관리자' }">
-														<option>사장</option>
-														<option selected>관리자</option>
-														<option>사원</option>
-													</c:when>
-													<c:when test="${employee.RANK == '사원' }">
-														<option>사장</option>
-														<option>관리자</option>
-														<option selected>사원</option>
-													</c:when>
+													<c:otherwise>
+														<option value="${position.posi_id}">${position.posi_nm}</option>
+													</c:otherwise>
 												</c:choose>
+										</c:forEach>
 											</select>
-											
 										</td>
 										</c:if>
 										
 										<c:if test="${employee.ABLE == 'F' }">
 										<td><select id="updateRank${employee.EMP_ID}" name="updaterank" class="form-control" disabled>
+												<c:forEach items="${positionList }" var="position">
 												<c:choose>
-													<c:when test="${employee.RANK == '사장' }">
-														<option selected>사장</option>
-														<option>관리자</option>
-														<option>사원</option>
+													<c:when test="${employee.POSI_ID == position.posi_id}">
+														<option value="${employee.POSI_ID}" selected>${position.posi_nm}</option>
 													</c:when>
-													<c:when test="${employee.RANK == '관리자' }">
-														<option>사장</option>
-														<option selected>관리자</option>
-														<option>사원</option>
-													</c:when>
-													<c:when test="${employee.RANK == '사원' }">
-														<option>사장</option>
-														<option>관리자</option>
-														<option selected>사원</option>
-													</c:when>
+													<c:otherwise>
+														<option value="${position.posi_id}">${position.posi_nm}</option>
+													</c:otherwise>
 												</c:choose>
+										</c:forEach>
 											</select>
 											
 										</td>
@@ -198,7 +200,16 @@
 										<button id="update${employee.EMP_ID}" type="button" name="updateBtn" class="updateBtn btn mb-1 btn-outline-success" value="modify">수정</button>
 										<a href="${cp }/deleteEmployee?emp_id=${employee.EMP_ID}" id="deleteEmp" class="deleteEmp btn mb-1 btn-outline-dark pull-right">삭제</a>
 										<c:if test="${employee.ABLE == 'T' }">
-										<button id="updateRank${employee.EMP_ID }" type="button" name="updateBtn2" class="updateBtn2 btn mb-1 btn-outline-primary" value="modifyRank">직책변경</button>
+										<button id="updateRank${employee.EMP_ID }" type="button" name="updateBtn2" class="updateBtn2 btn mb-1 btn-outline-primary" value="modifyPosition">직책변경</button>
+										</c:if>
+										<c:if test="${employee.ABLE == 'F' }">
+										<button id="updateRank${employee.EMP_ID }" type="button" name="updateBtn2" class="updateBtn2 btn mb-1 btn-outline-primary" value="modifyPosition" disabled="disabled">직책변경</button>
+										</c:if>
+										<c:if test="${employee.ABLE == 'T' }">
+										<button id="updateDepart${employee.EMP_ID }" type="button" name="updateBtn3" class="updateBtn3 btn mb-1 btn-outline-primary" value="modifyDepartment">부서변경</button>
+										</c:if>
+										<c:if test="${employee.ABLE == 'F' }">
+										<button id="updateDepart${employee.EMP_ID }" type="button" name="updateBtn3" class="updateBtn3 btn mb-1 btn-outline-primary" value="modifyDepartment" disabled="disabled">부서변경</button>
 										</c:if>
 										</td>
 									</tr>

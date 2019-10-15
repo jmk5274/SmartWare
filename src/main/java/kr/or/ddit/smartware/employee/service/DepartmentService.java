@@ -1,9 +1,12 @@
 package kr.or.ddit.smartware.employee.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.smartware.employee.model.Department;
 import kr.or.ddit.smartware.employee.repository.IDepartmentDao;
 
 @Service
@@ -23,6 +26,11 @@ public class DepartmentService implements IDepartmentService {
 	@Override
 	public String getDepartNm(String depart_id) {
 		return departmentDao.getDepartNm(depart_id);
+	}
+
+	@Override
+	public List<Department> getAllDepartment() {
+		return departmentDao.getAllDepartment();
 	}
 
 }
