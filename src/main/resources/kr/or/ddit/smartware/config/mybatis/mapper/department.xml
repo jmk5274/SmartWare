@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="department">
+	<!-- 부서 아이디에 해당하는 부서 이름을 반환 -->
+	<select id="getDepartNm" parameterType="String" resultType="String">
+		select depart_nm
+		  from department
+		 where depart_id = #{depart_id}
+	</select>
+</mapper>

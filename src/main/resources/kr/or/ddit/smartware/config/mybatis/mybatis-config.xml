@@ -20,6 +20,8 @@
 	
 	<mappers>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/employee.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/department.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/position.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/chat.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/board.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/post.xml"/>
