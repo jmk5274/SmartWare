@@ -1,5 +1,8 @@
 package kr.or.ddit.smartware.employee.service;
 
+import java.util.List;
+import java.util.Map;
+
 public interface IPositionService {
 
 	/**
@@ -11,4 +14,14 @@ public interface IPositionService {
 	* Method 설명 : 직책 아이디에 해당하는 직책 이름을 반환
 	*/
 	String getPosiNm(String posi_id);
+	
+	
+	/**
+	 * Method : getPositionList
+	 * 작성자 : KIM DO HOON
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 
+	 */
+	List<Map> getPositionList();
 }

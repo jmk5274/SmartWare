@@ -1,5 +1,8 @@
 package kr.or.ddit.smartware.employee.service;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -24,5 +27,21 @@ public class PositionService implements IPositionService {
 	public String getPosiNm(String posi_id) {
 		return positionDao.getPosiNm(posi_id);
 	}
+
+	/**
+	 * Method : getPositionList
+	 * 작성자 : PC-18
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 직책 리스트 반환
+	 */
+	@Override
+	public List<Map> getPositionList() {
+		return positionDao.getPositionList();
+	}
+	
+	
+	
+	
 
 }

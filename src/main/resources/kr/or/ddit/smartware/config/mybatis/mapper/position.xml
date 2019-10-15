@@ -9,4 +9,9 @@
 		  from position
 		 where posi_id = #{posi_id}
 	</select>
+	
+	<!-- 직책리스트 를 반환 -->
+	<select id="getPositionList" resultType="hashMap">
+		select * from POSITION
+	</select>
 </mapper>

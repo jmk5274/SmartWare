@@ -19,11 +19,6 @@ public class EmailDao implements IEmailDao{
 	}
 
 	@Override
-	public List<Map> getDepartMentList() {
-		return sqlSession.selectList("email.getDepartMentList");
-	}
-
-	@Override
 	public List<Map> getEmpSearchList(String keyword) {
 		return sqlSession.selectList("email.getEmpSearchList", keyword);
 	}
@@ -33,8 +28,5 @@ public class EmailDao implements IEmailDao{
 		return sqlSession.selectList("email.getDepSearchList", keyword);
 	}
 
-	@Override
-	public List<Map> getPositionList() {
-		return sqlSession.selectList("email.getPositionList");
-	}
+
 }

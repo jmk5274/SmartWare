@@ -1,5 +1,8 @@
 package kr.or.ddit.smartware.employee.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,6 +25,11 @@ public class DepartmentDao implements IDepartmentDao {
 	@Override
 	public String getDepartNm(String depart_id) {
 		return sqlSession.selectOne("department.getDepartNm", depart_id);
+	}
+
+	@Override
+	public List<Map> getDepartMentList() {
+		return sqlSession.selectList("department.getDepartMentList");
 	}
 
 }
