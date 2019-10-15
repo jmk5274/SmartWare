@@ -53,5 +53,19 @@ public class CategoryService implements ICategoryService {
 	public Category getCategory(String category_id) {
 		return categoryDao.getCategory(category_id);
 	}
+
+	/**
+	* Method : insertCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category
+	* @return category_id
+	* Method 설명 : 카테고리 생성
+	*/
+	@Override
+	public String insertCategory(Category category) {
+		categoryDao.insertCategory(category);
+		return category.getCategory_id();
+	}
 	
 }

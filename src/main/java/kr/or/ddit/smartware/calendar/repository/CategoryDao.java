@@ -53,5 +53,18 @@ public class CategoryDao implements ICategoryDao {
 	public List<Category> getDepCategoryList(String emp_id) {
 		return sqlSession.selectList("category.getDepCategoryList", emp_id);
 	}
+
+	/**
+	* Method : insertCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category
+	* @return
+	* Method 설명 : 카테고리 생성
+	*/
+	@Override
+	public int insertCategory(Category category) {
+		return sqlSession.insert("category.insertCategory", category);
+	}
 	
 }

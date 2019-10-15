@@ -166,7 +166,7 @@ button:focus {
 		<div class="card">
 			<div class="card-body filter" id="depCategory">
 				<i class="fa fa-calendar-check-o fa-2x" style="color: black;"> </i>
-				<h3>부서 일정</h3>
+				<h3>부서 일정(${depart_nm })</h3>
 				<span id="depCategoryOff" class="categoryAll">전체 해제</span>
 				<span class="categoryAll"> / </span>
 				<span id="depCategoryOn" class="categoryAll">전체 선택</span>
@@ -175,50 +175,47 @@ button:focus {
 	</div>
 </div>
 
+<!-- Modal -->
 <div class="bootstrap-modal">
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Launch demo modal</button>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter">
+    <div class="modal fade" id="categoryModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">카테고리 생성</h3>
-                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                    </button>
+                    <h3 class="modal-title" id="addCategoryTitle">카테고리 생성</h3>
                 </div>
                 <div class="modal-body basic-form">
-                	<form>
+                	<form id="insertCategory">
                 		<div class="form-group row">
 		                    <label class="col-sm-3 col-form-label">카테고리 이름</label>
 		                    <div class="col-sm-9">
-		                    	<input type="text" class="form-control">
+		                    	<input type="text" class="form-control" name="category_nm" id="category_nm">
 		                    </div>
 	                    </div>
-		                    <div class="form-group row">
+	                    <div class="form-group row">
 		                    <label class="col-sm-3 col-form-label">카테고리 색상</label>
 		                    <div class="col-sm-9">
-		                    	<select class="colorselector"></select>
+		                    	<select class="colorselector" name="color" id="color"></select>
 		                    </div>
 	                    </div>
-		                    <div class="form-group row">
+	                    <div class="form-group row" id="divDepartmentNm">
 		                    <label class="col-sm-3 col-form-label">부서명</label>
 		                    <div class="col-sm-9">
-		                    	<input type="text" class="form-control">
+		                    	<input type="hidden" id="depart_id" name="depart_id" value="${S_EMPLOYEE.depart_id }">
+		                    	<input type="text" class="form-control" value="${depart_nm }" readonly>
 		                    </div>
 	                    </div>
-		                    <div class="form-group row">
+	                    <div class="form-group row">
 		                    <label class="col-sm-3 col-form-label">생성자</label>
 		                    <div class="col-sm-9">
-		                    	<input type="text" class="form-control">
+		                    	<input type="hidden" name="emp_id" value="${S_EMPLOYEE.emp_id }">
+		                    	<input type="text" class="form-control" value="${S_EMPLOYEE.emp_nm }" readonly>
 		                    </div>
 	                    </div>
-	                    
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary">생성</button>
+                    <button type="button" class="btn btn-primary" id="btnInsertCategory">생성</button>
                 </div>
             </div>
         </div>
@@ -357,6 +354,55 @@ button:focus {
 			alert("update");
 			event.stopPropagation();
 		});
+		
+		// 카테고리 add button(개인 일정)
+		$("body").on("click", "#addEmpCategory", function() {
+			$("#addCategoryTitle").html("<i class='fa fa-calendar-check-o fa-lg' style='color: black;'> </i> 카테고리 추가 - 개인 일정");
+			$("#category_nm").val("");
+			$("#depart_id").val("");
+			$("#divDepartmentNm").hide();
+		});
+		
+		// 카테고리 add button(부서 일정)
+		$("body").on("click", "#addDepCategory", function() {
+			$("#addCategoryTitle").html("<i class='fa fa-calendar-check-o fa-lg' style='color: black;'> </i> 카테고리 추가 - 부서 일정");
+			$("#category_nm").val("");
+			$("#depart_id").val("${S_EMPLOYEE.depart_id }");
+			$("#divDepartmentNm").show();
+		});
+		
+		$("#btnInsertCategory").on("click", function() {
+			if($("#category_nm").val().trim() === "") {
+				alert("카테고리 이름을 입력하세요.");
+				return;				
+			} 
+			$.ajax({
+				url: "${cp}/insertCategory",
+				data: $("#insertCategory").serializeArray(),
+				type: "post",
+				success: function(data) {
+					res = "<hr>";
+					res += "<div id=" + data.category_id + " class='categoryList'>"
+					res += "<i class='fa fa-lg fa-check-square-o on' style='color: " + $("#color").val() + "; width: 20px;'></i>";
+					res += "<span> " + $("#category_nm").val() + "</span>";
+					res += "<button class='btnCateModify btnCateUpdate'>"
+					res += "<i class='fa fa-lg fa-wrench cateModify'></i>";
+					res += "</button>";
+					res += "<button class='btnCateModify btnCateDelete'>"
+					res += "<i class='fa fa-lg fa-times'></i>";
+					res += "</button>";
+					res += "</div>";
+					
+					if($("#depart_id").val() === "") {
+						$("#addEmpCategory").prev().before(res);
+					} else {
+						$("#addDepCategory").prev().before(res);
+					}
+					
+					$("#categoryModal").modal("hide");
+				}
+			});
+		});
 	});
 	
 	function getDisplayCategory(data, loc) {
@@ -376,7 +422,6 @@ button:focus {
 			res += "</button>";
 			res += "</div>";
 		});
-		console.log(loc.attr("id"));
 		// 카테고리 추가 버튼 출력
 		res += "<hr>";
 		if(loc.attr("id") === "empCategory")
@@ -384,8 +429,7 @@ button:focus {
 		else if(loc.attr("id") === "depCategory")
 			res += "<span id='addDepCategory'>";
 		res += "<i class='fa fa-lg fa-plus-circle' style='width: 20px;'></i>";
-		res += "<span> 새로운 카테고리</span>";
-		
+		res += "<span data-toggle='modal' data-target='#categoryModal'> 새로운 카테고리</span>";
 		// 위에서 저장한 HTML태그를 document에 출력
 		loc.append(res);
 	}
@@ -419,25 +463,24 @@ button:focus {
 		} else {
 			return '';
 		}
-		
 	}
 	
-    $('.colorselector').append('<option value="1" data-color="#000000" selected="selected">#000000</option>')
-	   .append('<option value="2" data-color="#372A50">#372A50</option>')
-	   .append('<option value="3" data-color="#C36A8A">#C36A8A</option>')
-	   .append('<option value="4" data-color="#FC4BFC">#FC4BFC</option>')
-	   .append('<option value="5" data-color="#8D5C83">#8D5C83</option>')
-	   .append('<option value="6" data-color="#9ACDEC">#9ACDEC</option>')
-	   .append('<option value="7" data-color="#00C0EF">#00C0EF</option>')
-	   .append('<option value="8" data-color="#0D9A00">#0D9A00</option>')
-	   .append('<option value="9" data-color="#00EFA7">#00EFA7</option>')
-	   .append('<option value="10" data-color="#FFBF00">#FFBF00</option>')
-	   .append('<option value="11" data-color="#CDA85C">#CDA85C</option>')
-	   .append('<option value="12" data-color="#FFF800">#FFF800</option>')
-	   .append('<option value="13" data-color="#FF7F50">#FF7F50</option>')
-	   .append('<option value="14" data-color="#FB2E01">#FB2E01</option>')
-	   .append('<option value="15" data-color="#C80141">#C80141</option>')
-	$('.colorselector').colorselector();
+    $('.colorselector').append('<option value="#000000" data-color="#000000" selected="selected">#000000</option>')
+					   .append('<option value="#372A50" data-color="#372A50">#372A50</option>')
+					   .append('<option value="#C36A8A" data-color="#C36A8A">#C36A8A</option>')
+					   .append('<option value="#FC4BFC" data-color="#FC4BFC">#FC4BFC</option>')
+					   .append('<option value="#8D5C83" data-color="#8D5C83">#8D5C83</option>')
+					   .append('<option value="#9ACDEC" data-color="#9ACDEC">#9ACDEC</option>')
+					   .append('<option value="#00C0EF" data-color="#00C0EF">#00C0EF</option>')
+					   .append('<option value="#0D9A00" data-color="#0D9A00">#0D9A00</option>')
+					   .append('<option value="#00EFA7" data-color="#00EFA7">#00EFA7</option>')
+					   .append('<option value="#FFBF00" data-color="#FFBF00">#FFBF00</option>')
+					   .append('<option value="#CDA85C" data-color="#CDA85C">#CDA85C</option>')
+					   .append('<option value="#FFF800" data-color="#FFF800">#FFF800</option>')
+					   .append('<option value="#FF7F50" data-color="#FF7F50">#FF7F50</option>')
+					   .append('<option value="#FB2E01" data-color="#FB2E01">#FB2E01</option>')
+					   .append('<option value="#C80141" data-color="#C80141">#C80141</option>')
+					   .colorselector();
 	
 	function filtering(event) {
 		// 선택되어 있는 필터의 카테고리아이디들을 맵객체로 저장

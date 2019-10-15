@@ -3,11 +3,18 @@ package kr.or.ddit.smartware.calendar.web;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
 
+import kr.or.ddit.smartware.calendar.model.Category;
 import kr.or.ddit.smartware.calendar.service.ICategoryService;
 import kr.or.ddit.smartware.employee.model.Employee;
 
@@ -54,6 +61,15 @@ public class CategoryController {
 		String emp_id = employee.getEmp_id();
 		
 		model.addAttribute(categoryService.getDepCategoryList(emp_id));
+		
+		return jsonView;
+	}
+	
+	@PostMapping("insertCategory")
+	public View insertCategory(Category category, Model model) {
+		String category_id = categoryService.insertCategory(category);
+		
+		model.addAttribute("category_id", category_id);
 		
 		return jsonView;
 	}

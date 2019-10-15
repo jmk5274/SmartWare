@@ -35,5 +35,15 @@ public interface ICategoryService {
 	* Method 설명 : 카테고리를 가져온다.
 	*/
 	Category getCategory(String category_id);
+
+	/**
+	* Method : insertCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category
+	* @return category_id
+	* Method 설명 : 카테고리 생성 
+	*/
+	String insertCategory(Category category);
 	
 }
