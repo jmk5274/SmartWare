@@ -1,9 +1,8 @@
 package kr.or.ddit.smartware.employee.repository;
 
 import java.util.List;
-
 import kr.or.ddit.smartware.employee.model.Department;
-import kr.or.ddit.smartware.employee.model.Position;
+import java.util.Map;
 
 public interface IDepartmentDao {
 
@@ -17,6 +16,15 @@ public interface IDepartmentDao {
 	*/
 	String getDepartNm(String depart_id);
 	
-	List<Department> getAllDepartment();
+	List<Department> getAllDepartment();	
+	
+	/**
+	 * Method : getDepartMentList
+	 * 작성자 : KIM DO HOON
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 부서전체목록 출력
+	 */
+	List<Map> getDepartMentList();
 
 }

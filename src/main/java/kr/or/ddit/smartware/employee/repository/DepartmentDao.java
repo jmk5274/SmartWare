@@ -1,6 +1,7 @@
 package kr.or.ddit.smartware.employee.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -32,5 +33,9 @@ public class DepartmentDao implements IDepartmentDao {
 	public List<Department> getAllDepartment() {
 		return sqlSession.selectList("department.getAllDepartment");
 	}
-
+	
+	@Override
+	public List<Map> getDepartMentList() {
+		return sqlSession.selectList("department.getDepartMentList");
+	}
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 public interface IEmailService {
 	/**
 	 * Method : getAddressbookList
-	 * 작성자 : PC-18
+	 * 작성자 : KIM DO HOON
 	 * 변경이력 :
 	 * @param depart_id
 	 * @return
@@ -14,20 +14,10 @@ public interface IEmailService {
 	 */
 	List<Map> getAddressbookList(String depart_id);
 	
-	/**
-	 * Method : getDepartMentList
-	 * 작성자 : PC-18
-	 * 변경이력 :
-	 * @return
-	 * Method 설명 : 부서목록 출력
-	 */
-	List<Map> getDepartMentList();
-	
-	List<Map> getPositionList();
 	
 	/**
 	 * Method : getEmpSearchList
-	 * 작성자 : PC-18
+	 * 작성자 : KIM DO HOON
 	 * 변경이력 :
 	 * @param keyword
 	 * @return
@@ -37,7 +27,7 @@ public interface IEmailService {
 	
 	/**
 	 * Method : getDepSearchList
-	 * 작성자 : PC-18
+	 * 작성자 : KIM DO HOON
 	 * 변경이력 :
 	 * @param keyword
 	 * @return

@@ -14,4 +14,8 @@
 		select * from department
 	</select>
 	
+	<select id="getDepartMentList" resultType="hashMap">
+		select * from DEPARTMENT
+	</select>
+	
 </mapper>

@@ -1,8 +1,8 @@
 package kr.or.ddit.smartware.employee.service;
 
 import java.util.List;
-
 import kr.or.ddit.smartware.employee.model.Position;
+import java.util.Map;
 
 public interface IPositionService {
 
@@ -17,4 +17,13 @@ public interface IPositionService {
 	String getPosiNm(String posi_id);
 	
 	List<Position> getAllPosition();
+	
+	/**
+	 * Method : getPositionList
+	 * 작성자 : KIM DO HOON
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 
+	 */
+	List<Map> getPositionList();
 }

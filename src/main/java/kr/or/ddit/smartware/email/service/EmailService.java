@@ -19,10 +19,6 @@ public class EmailService implements IEmailService{
 		return emailDao.getAddressbookList(depart_id);
 	}
 
-	@Override
-	public List<Map> getDepartMentList() {
-		return emailDao.getDepartMentList();
-	}
 
 	@Override
 	public List<Map> getEmpSearchList(String keyword) {
@@ -35,9 +31,5 @@ public class EmailService implements IEmailService{
 		return emailDao.getDepSearchList(keyword);
 	}
 
-	@Override
-	public List<Map> getPositionList() {
-		return emailDao.getPositionList();
-	}
 
 }
