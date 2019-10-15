@@ -86,10 +86,17 @@ public class LoginController {
 			return "login/login";	// view();
 			
 		}else if(employee.checkLoginValidate(emp_id, pass)) {
-			List<Map> map = messengerService.getChatList(employee.getEmp_id());
+			List<Map> mapList = messengerService.getChatList(employee.getEmp_id());
+			
+			int cnt = 0;
+			for(Map map : mapList) {
+				int num = (int) map.get("MSG_CNT");
+				cnt += num;
+			}
 			
 			request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList());
-			request.getServletContext().setAttribute("A_CHATLIST", map);
+			request.getServletContext().setAttribute("A_CHATLIST", mapList);
+			request.getServletContext().setAttribute("A_CNT", cnt);
 			
 			employee.setC_use("false");
 			
