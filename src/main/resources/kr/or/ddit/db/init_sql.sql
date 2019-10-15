@@ -121,6 +121,7 @@ INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발
 INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발2팀');
 INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발3팀');
 INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '홍보팀');
+INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '인사팀');
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --사원
@@ -134,8 +135,10 @@ insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '
 							TO_DATE(20130101, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '송찬중', 'USER', 'ckdwns@gmail.com', '010-2222-2222',
 							TO_DATE(20130601, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '이영만', 'USER', 'dudaks@gmail.com', '010-2222-3333',
-							TO_DATE(20141101, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
+							
+--인사팀 ADMIN(POSITION 하나더생김)
+insert into employee values('admin', 'test1234', '관리자', 'ADMIN', 'admin@gmail.com', '010-0000-0000',
+							TO_DATE(20000101, 'YYYY/MM/DD'), 'de0006', null, 'C:\picture\cony.png', null, 'T', null);
 	
 	
 															
