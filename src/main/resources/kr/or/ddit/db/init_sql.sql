@@ -108,132 +108,223 @@ delete from chat;
 --추가-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --직책
 insert into position values('posi' || LPAD(POSITION_SEQ.NEXTVAL,4,0), '사장');
+insert into position values('posi' || LPAD(POSITION_SEQ.NEXTVAL,4,0), '이사');
+insert into position values('posi' || LPAD(POSITION_SEQ.NEXTVAL,4,0), '팀장');
+insert into position values('posi' || LPAD(POSITION_SEQ.NEXTVAL,4,0), '과장');
 insert into position values('posi' || LPAD(POSITION_SEQ.NEXTVAL,4,0), '사원');
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --부서
-INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '사장');
-INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발');
-INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '홍보');
+INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '임원');
+INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발1팀');
+INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발2팀');
+INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '개발3팀');
+INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '홍보팀');
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --사원
 
 
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test1', '사장', 'test@mail.com', '1234567', sysdate, 'de001', 'posi001', null, null, 'T', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test2', '관리자', 'test@mail.com', '1234567', sysdate, 'de002', 'posi002', null, null, 'T', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de002', 'posi002', null, null, 'T', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'test@mail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', null);
-insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', 'test3', '사원', 'testhoon1217@gmail.com', '1234567', sysdate, 'de003', 'posi002', null, null, 'T', 'ewqdsa556');
-
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '하재관', 'USER', 'worhks@gmail.com', '010-1111-1111',
+							TO_DATE(20100101, 'YYYY/MM/DD'), 'de0001', 'posi0001', 'C:\picture\cony.png', null, 'T', null);
+							
+							
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '이진우', 'USER', 'wlsdn@gmail.com', '010-2222-1111',
+							TO_DATE(20130101, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '송찬중', 'USER', 'ckdwns@gmail.com', '010-2222-2222',
+							TO_DATE(20130601, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '이영만', 'USER', 'dudaks@gmail.com', '010-2222-3333',
+							TO_DATE(20141101, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
+	
+	
+															
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '배상현', 'USER', 'bshn1234@gmail.com', '010-7277-7285',
+							TO_DATE(20150115, 'YYYY/MM/DD'), 'de0002', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '윤재훈', 'USER', 'wogns@gmail.com', '010-3333-2222',
+							TO_DATE(20150518, 'YYYY/MM/DD'), 'de0003', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박진하', 'USER', 'wlsgk@gmail.com', '010-3333-3333',
+							TO_DATE(20150823, 'YYYY/MM/DD'), 'de0004', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박태순', 'USER', 'xotns@gmail.com', '010-3333-4444',
+							TO_DATE(20160303, 'YYYY/MM/DD'), 'de0005', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+							
+							
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '조민수', 'USER', 'mingsoocode@gmail.com', '010-3092-3837',
+							TO_DATE(20170703, 'YYYY/MM/DD'), 'de0002', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김혜인', 'USER', 'gpdls@gmail.com', '010-4444-1111',
+							TO_DATE(20170802, 'YYYY/MM/DD'), 'de0003', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '윤경주', 'USER', 'rudwn@gmail.com', '010-4444-2222',
+							TO_DATE(20170825, 'YYYY/MM/DD'), 'de0004', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '강승구', 'USER', 'tmdrn@gmail.com', '010-4444-3333',
+							TO_DATE(20170920, 'YYYY/MM/DD'), 'de0005', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+							
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '전민규', 'USER', 'jmk5274@gmail.com', '010-6406-5274',
+							TO_DATE(20170404, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김도훈', 'USER', 'testhoon1217@gmail.com', '010-2566-7607',
+							TO_DATE(20191010, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'C:\picture\cony.png', null, 'T', 'ewqdsa556');
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '홍다은', 'USER', 'testhong@gmail.com', '010-9326-3253',
+							TO_DATE(20181005, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김시우', 'USER', 'tldn@gmail.com', '010-5555-1111',
+							TO_DATE(20170706, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박은지', 'USER', 'dmswl@gmail.com', '010-5555-2222',
+							TO_DATE(20190909, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '차주환', 'USER', 'wnghks@gmail.com', '010-5555-3333',
+							TO_DATE(20180618, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '류우찬', 'USER', 'dncks@gmail.com', '010-5555-4444',
+							TO_DATE(20170203, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박채은', 'USER', 'codms@gmail.com', '010-5555-5555',
+							TO_DATE(20180901, 'YYYY/MM/DD'), 'de0004', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '조하경', 'USER', 'gkrud@gmail.com', '010-5555-6666',
+							TO_DATE(20190806, 'YYYY/MM/DD'), 'de0004', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '강해신', 'USER', 'gotls@gmail.com', '010-5555-7777',
+							TO_DATE(20170403, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '최재영', 'USER', 'wodud@gmail.com', '010-5555-8888',
+							TO_DATE(20170303, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김소리', 'USER', 'thflthfl@gmail.com', '010-5555-9999',
+							TO_DATE(20170406, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'C:\picture\cony.png', null, 'F', null);
+							
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --출퇴근
 
-insert into commute values('e001', sysdate, to_date('201910020900', 'YYYYMMDDHH24MI'), to_date('201910022000', 'YYYYMMDDHH24MI'), '출석', null); 
-insert into commute values('e002', sysdate, to_date('201910020850', 'YYYYMMDDHH24MI'), to_date('201910021900', 'YYYYMMDDHH24MI'), '출석', null); 
-insert into commute values('e003', sysdate, to_date('201910021000', 'YYYYMMDDHH24MI'), to_date('201910021800', 'YYYYMMDDHH24MI'), '출석', null); 
-insert into commute values('e004', sysdate, to_date('201910021030', 'YYYYMMDDHH24MI'), to_date('201910022100', 'YYYYMMDDHH24MI'), '출석', null); 
+insert into commute values('e0001', sysdate, to_date('201910020900', 'YYYYMMDDHH24MI'), to_date('201910022000', 'YYYYMMDDHH24MI'), '출석', null); 
+insert into commute values('e0002', sysdate, to_date('201910020850', 'YYYYMMDDHH24MI'), to_date('201910021900', 'YYYYMMDDHH24MI'), '출석', null); 
+insert into commute values('e0003', sysdate, to_date('201910021000', 'YYYYMMDDHH24MI'), to_date('201910021800', 'YYYYMMDDHH24MI'), '출석', null); 
+insert into commute values('e0004', sysdate, to_date('201910021030', 'YYYYMMDDHH24MI'), to_date('201910022100', 'YYYYMMDDHH24MI'), '출석', null); 
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --결재선
 
-INSERT INTO APPROVAL(APPR_LINE_ID, APPR_LINE_NM) VALUES ('app' || LPAD(APPROVAL_SEQ.NEXTVAL,4,0), 'TEST결제1');
-INSERT INTO APPROVAL(APPR_LINE_ID, APPR_LINE_NM) VALUES ('app' || LPAD(APPROVAL_SEQ.NEXTVAL,4,0), 'TEST결제2');
+INSERT INTO APPROVAL(APPR_LINE_ID, APPR_LINE_NM) VALUES ('app' || LPAD(APPROVAL_SEQ.NEXTVAL,4,0), '그룹웨어 결재사항');
+INSERT INTO APPROVAL(APPR_LINE_ID, APPR_LINE_NM) VALUES ('app' || LPAD(APPROVAL_SEQ.NEXTVAL,4,0), '스터디프로그래밍 결재사항');
+INSERT INTO APPROVAL(APPR_LINE_ID, APPR_LINE_NM) VALUES ('app' || LPAD(APPROVAL_SEQ.NEXTVAL,4,0), '자동보험 프로그램 결재사항');
+INSERT INTO APPROVAL(APPR_LINE_ID, APPR_LINE_NM) VALUES ('app' || LPAD(APPROVAL_SEQ.NEXTVAL,4,0), '부동산 프로그램 결재사항');
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --개별 결재선
 
-INSERT INTO ERD_APPR(APPR_LINE_ID, APPR_LINE_OWNER) VALUES ('app001', 'e003');
-INSERT INTO ERD_APPR(APPR_LINE_ID, APPR_LINE_OWNER) VALUES ('app002', 'e004');
-INSERT INTO ERD_APPR(APPR_LINE_ID, APPR_LINE_OWNER) VALUES ('app002', 'e003');
+INSERT INTO ERD_APPR(APPR_LINE_ID, APPR_LINE_OWNER) VALUES ('app0001', 'e0009');
+INSERT INTO ERD_APPR(APPR_LINE_ID, APPR_LINE_OWNER) VALUES ('app0002', 'e0010');
+INSERT INTO ERD_APPR(APPR_LINE_ID, APPR_LINE_OWNER) VALUES ('app0003', 'e0011');
+INSERT INTO ERD_APPR(APPR_LINE_ID, APPR_LINE_OWNER) VALUES ('app0004', 'e0012');
+
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --결재선 멤버
 
-INSERT INTO APPR_MEMBER(APPR_EMP, APPR_LINE_ID, APPR_LINE_OWNER, AP_ORDER) VALUES('e002', 'app001', 'e003', 1);
-INSERT INTO APPR_MEMBER(APPR_EMP, APPR_LINE_ID, APPR_LINE_OWNER, AP_ORDER) VALUES('e002', 'app002', 'e004', 2);
+INSERT INTO APPR_MEMBER(APPR_EMP, APPR_LINE_ID, APPR_LINE_OWNER, AP_ORDER) VALUES('e0005', 'app0001', 'e0009', 4);
+INSERT INTO APPR_MEMBER(APPR_EMP, APPR_LINE_ID, APPR_LINE_OWNER, AP_ORDER) VALUES('e0006', 'app0002', 'e0010', 3);
+INSERT INTO APPR_MEMBER(APPR_EMP, APPR_LINE_ID, APPR_LINE_OWNER, AP_ORDER) VALUES('e0007', 'app0003', 'e0011', 2);
+INSERT INTO APPR_MEMBER(APPR_EMP, APPR_LINE_ID, APPR_LINE_OWNER, AP_ORDER) VALUES('e0008', 'app0004', 'e0012', 1);
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --신청서 양식
 
-INSERT INTO FORM(FORM_ID, FORM_NM, FORM_CONT, APPR_LINE_ID) VALUES ('form' || LPAD(FORM_SEQ.NEXTVAL,4,0), '휴가신청서', '휴가TEST', 'app001');
-INSERT INTO FORM(FORM_ID, FORM_NM, FORM_CONT, APPR_LINE_ID) VALUES ('form' || LPAD(FORM_SEQ.NEXTVAL,4,0), '반차신청서', '반차TEST', 'app002');
+INSERT INTO FORM(FORM_ID, FORM_NM, FORM_CONT, APPR_LINE_ID) VALUES ('form' || LPAD(FORM_SEQ.NEXTVAL,4,0), '휴가신청서', '휴가TEST', 'app0001');
+INSERT INTO FORM(FORM_ID, FORM_NM, FORM_CONT, APPR_LINE_ID) VALUES ('form' || LPAD(FORM_SEQ.NEXTVAL,4,0), '지원신청서', '지원요청', 'app0002');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --신청서 
 
-INSERT INTO APPLICATION VALUES ('appl' || LPAD(APPLICATION_SEQ.NEXTVAL,4,0), '휴가쓰겟다TEST', '휴가휴가TEST', SYSDATE, 'form001', 'e004');
-INSERT INTO APPLICATION VALUES ('appl' || LPAD(APPLICATION_SEQ.NEXTVAL,4,0), '반차쓰겟다TEST22', '반차반차TEST22', SYSDATE, 'form002', 'e003');
+INSERT INTO APPLICATION VALUES ('appl' || LPAD(APPLICATION_SEQ.NEXTVAL,4,0), '휴가쓰겟다TEST', '휴가휴가TEST', SYSDATE, 'form0001', 'e0009');
+INSERT INTO APPLICATION VALUES ('appl' || LPAD(APPLICATION_SEQ.NEXTVAL,4,0), '반차쓰겟다TEST22', '반차반차TEST22', SYSDATE, 'form0002', 'e0010');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --신청서 결재
 
-INSERT INTO APPL_APPR VALUES('appl001', 'e002', 1, 'T');
-INSERT INTO APPL_APPR VALUES('appl002', 'e002', 2, 'F');
+INSERT INTO APPL_APPR VALUES('appl0001', 'e0005', 1, 'T');
+INSERT INTO APPL_APPR VALUES('appl0002', 'e0006', 2, 'F');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --게시판
 
-INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e002', '관리자',SYSDATE, 'T');
-INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e002', '사내게시판',SYSDATE, 'F');
+INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e0015', '관리자',SYSDATE, 'T');
+INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e0015', '사내게시판',SYSDATE, 'F');
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --게시글
 
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board001', 'TEST', 'TEST', 'e004', SYSDATE, 'F', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board002', 'TEST', 'TEST', 'e004', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board002', 'TEST', 'TEST', 'e003', SYSDATE, 'T', 'post002');
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0001', 'TEST', 'TEST', 'e0004', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', 'TEST', 'TEST', 'e0004', SYSDATE, 'T', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', 'TEST', 'TEST', 'e0015', SYSDATE, 'T', 'post0002');
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --게시글 파일
 
-INSERT INTO POST_FILE(FILE_ID, POST_ID, FILE_NM, REALFILEPATH) VALUES ('f' || LPAD(POST_FILE_SEQ.NEXTVAL,4,0), 'post002', 'TEST01', 'D:\UPLOAD\RANGERS\BROWN.PNG');
-INSERT INTO POST_FILE(FILE_ID, POST_ID, FILE_NM, REALFILEPATH) VALUES ('f' || LPAD(POST_FILE_SEQ.NEXTVAL,4,0), 'post002', 'TEST02', 'D:\UPLOAD\RANGERS\CONY.PNG');
+INSERT INTO POST_FILE(FILE_ID, POST_ID, FILE_NM, REALFILEPATH) VALUES ('f' || LPAD(POST_FILE_SEQ.NEXTVAL,4,0), 'post0002', 'TEST01', 'D:\UPLOAD\RANGERS\BROWN.PNG');
+INSERT INTO POST_FILE(FILE_ID, POST_ID, FILE_NM, REALFILEPATH) VALUES ('f' || LPAD(POST_FILE_SEQ.NEXTVAL,4,0), 'post0003', 'TEST02', 'D:\UPLOAD\RANGERS\CONY.PNG');
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --댓글
 
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post002', 'e003', SYSDATE, 'TEST', 'F', NULL);
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post002', 'e003', SYSDATE, 'TEST', 'F', 'com001');
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0002', 'e0017', SYSDATE, 'TEST', 'F', NULL);
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0002', 'e0018', SYSDATE, 'TEST', 'F', 'com0001');
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---업무
-
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'TEST', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj001', NULL);
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'TESTTEST', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj001', 'task001');
-
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---업무 담당자
-
-INSERT INTO PRO_TASK VALUES('e002', 'task001', 'pj001');
-INSERT INTO PRO_TASK VALUES('e003', 'task002', 'pj001');
-
--------------------------------------------------------------------------------------------------------------------------------------------------
 --프로젝트
 
-INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), 'TESTPROJECT1', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), NULL);
-INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), 'TESTPROJECT2', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj001');
+INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '그룹웨어 개발팀', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), NULL);
+INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '프로그래밍 스터디 개발팀', to_date('20191004', 'YYYYMMDD'), to_date('20191025', 'YYYYMMDD'), NULL);
+INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '자동보험 프로그래밍 개발팀', to_date('20191006', 'YYYYMMDD'), to_date('20191030', 'YYYYMMDD'), NULL);
+INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '부동산 개발팀', to_date('20191008', 'YYYYMMDD'), to_date('20191102', 'YYYYMMDD'), NULL);
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --프로젝트 구성원
 
-INSERT INTO PRO_POSITION VALUES('e003', 'pj001', 'posi001');
-INSERT INTO PRO_POSITION VALUES('e002', 'pj001', 'posi001');
+INSERT INTO PRO_POSITION VALUES('e0005', 'pj0001', 'posi0003');
+INSERT INTO PRO_POSITION VALUES('e0009', 'pj0001', 'posi0004');
+INSERT INTO PRO_POSITION VALUES('e0013', 'pj0001', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0014', 'pj0001', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0015', 'pj0001', 'posi0005');
+
+INSERT INTO PRO_POSITION VALUES('e0006', 'pj0002', 'posi0003');
+INSERT INTO PRO_POSITION VALUES('e0010', 'pj0002', 'posi0004');
+INSERT INTO PRO_POSITION VALUES('e0016', 'pj0002', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0017', 'pj0002', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0018', 'pj0002', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0019', 'pj0002', 'posi0005');
+
+INSERT INTO PRO_POSITION VALUES('e0007', 'pj0003', 'posi0003');
+INSERT INTO PRO_POSITION VALUES('e0011', 'pj0003', 'posi0004');
+INSERT INTO PRO_POSITION VALUES('e0020', 'pj0003', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0021', 'pj0003', 'posi0005');
+
+INSERT INTO PRO_POSITION VALUES('e0008', 'pj0003', 'posi0003');
+INSERT INTO PRO_POSITION VALUES('e0012', 'pj0003', 'posi0004');
+INSERT INTO PRO_POSITION VALUES('e0022', 'pj0003', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0023', 'pj0003', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0024', 'pj0003', 'posi0005');
 
 ------------------------------------------------------------------------------------------------------------------
+--업무
+
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0001', NULL);
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0002', NULL);
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191005', 'YYYYMMDD'), to_date('20191024', 'YYYYMMDD'), 'pj0003', NULL);
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0004', NULL);
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0001', 'task0001');
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191005', 'YYYYMMDD'), to_date('20191024', 'YYYYMMDD'), 'pj0002', 'task0002');
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0003', 'task0003');
+INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0004', 'task0004');
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--업무 담당자
+
+INSERT INTO PRO_TASK VALUES('e0005', 'task0001', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0006', 'task0002', 'pj0002');
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
 --팝업
 
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, NULL, 'TESTTES', 'TESTESTSETSET', SYSDATE, 'e003');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, NULL, 'TESTTES1', 'TESTESTSETSET1', SYSDATE, 'e003');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, NULL, 'TESTTES', 'TESTESTSETSET', SYSDATE, 'e0015');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, NULL, 'TESTTES1', 'TESTESTSETSET1', SYSDATE, 'e0015');
 
 --------------------------------------------------------------------------------------------------------------------------------
 --채팅방
@@ -244,84 +335,90 @@ INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), 'TESTCHAT2', 'T');
 ------------------------------------------------------------------------------------------------------------
 --메세지
 
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch001', 'TESTSET', 'e003', SYSDATE);
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch001', 'TESTSET12', 'e003', SYSDATE);
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch001', 'TESTSET3232', 'e004', SYSDATE);
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch002', 'chat2 TESTSET3232', 'e004', SYSDATE);
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', 'TESTSET', 'e0013', SYSDATE);
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', 'TESTSET12', 'e0016', SYSDATE);
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', 'TESTSET3232', 'e0020', SYSDATE);
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0002', 'chat2 TESTSET3232', 'e0021', SYSDATE);
 
 ---------------------------------------------------------------------------------------------------------
 --참가자
 
-INSERT INTO CHAT_EMP VALUES ('e003', 'ch001');
-INSERT INTO CHAT_EMP VALUES ('e004', 'ch001');
-INSERT INTO CHAT_EMP VALUES ('e004', 'ch002');
+INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0001', null);
+INSERT INTO CHAT_EMP VALUES ('e0010', 'ch0001', null);
+INSERT INTO CHAT_EMP VALUES ('e0011', 'ch0002', null);
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --카테고리
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정', '#372A50', null, 'e0003');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정_중요', '#C80141', null, 'e0003');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1', '#FFBF00', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2', '#FFBF00', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3', '#FFBF00', 'de0003', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_중요', '#FB2E01', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_이벤트', '#00C0EF', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_중요', '#FB2E01', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_이벤트', '#00C0EF', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_생일', '#0D9A00', 'de0002', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_생일', '#0D9A00', 'de0001', 'e0001');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서3_생일', '#0D9A00', 'de0003', 'e0001');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정', '#372A50', null, 'e0009');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '내 일정_중요', '#C80141', null, 'e0009');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1', '#FFBF00', 'de0002', 'e0005');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_중요', '#CDA85C', 'de0002', 'e0005');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_생일', '#0D9A00', 'de0002', 'e0005');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서1_이벤트', '#00C0EF', 'de0002', 'e0005');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2', '#FFBF00', 'de0003', 'e0006');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_중요', '#CDA85C', 'de0003', 'e0006');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_생일', '#0D9A00', 'de0003', 'e0006');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_이벤트', '#00C0EF', 'de0003', 'e0006');
 
 ---------------------------------------------------------------------------------------------------------------
 --일정
   -- 개인
 INSERT INTO CALENDAR VALUES 
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '치과 예약', '서울치과병원', TO_DATE('201910101800', 'YYYYMMDDHH24MI'),
-      TO_DATE('201910101800', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0002');
+      TO_DATE('201910101800', 'YYYYMMDDHH24MI'), 'F', null, 'e0009', 'cate0002');
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '멜론 만기', null, TO_DATE('20191015', 'YYYYMMDD'), 
-      TO_DATE('20191015', 'YYYYMMDD'), 'T', null, 'e0003', 'cate0001');
+      TO_DATE('20191015', 'YYYYMMDD'), 'T', null, 'e0009', 'cate0001');
 INSERT INTO CALENDAR VALUES 
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '정보처리기사 접수기간', null, TO_DATE('20191014', 'YYYYMMDD'),
-      TO_DATE('20191018', 'YYYYMMDD'), 'T', null, 'e0003', 'cate0002');
+      TO_DATE('20191018', 'YYYYMMDD'), 'T', null, 'e0009', 'cate0002');
 INSERT INTO CALENDAR VALUES 
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '세스코 예약', null, TO_DATE('201910201830', 'YYYYMMDDHH24MI'),
-      TO_DATE('201910201830', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0001');
+      TO_DATE('201910201830', 'YYYYMMDDHH24MI'), 'F', null, 'e0009', 'cate0001');
 INSERT INTO CALENDAR VALUES 
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '900일 데이트', null, TO_DATE('20191112', 'YYYYMMDD'),
-      TO_DATE('20191112', 'YYYYMMDD'), 'F', null, 'e0003', 'cate0002');
+      TO_DATE('20191112', 'YYYYMMDD'), 'F', null, 'e0009', 'cate0002');
 INSERT INTO CALENDAR VALUES 
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '치과 예약', '서울치과병원', TO_DATE('201910171800', 'YYYYMMDDHH24MI'),
-      TO_DATE('201910171800', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0002');  
+      TO_DATE('201910171800', 'YYYYMMDDHH24MI'), 'F', null, 'e0009', 'cate0002');  
 INSERT INTO CALENDAR VALUES 
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '세차 예약', null, TO_DATE('201910201500', 'YYYYMMDDHH24MI'),
-      TO_DATE('201910201500', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0001');        
+      TO_DATE('201910201500', 'YYYYMMDDHH24MI'), 'F', null, 'e0009', 'cate0001');        
 INSERT INTO CALENDAR VALUES 
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '출장', null, TO_DATE('201910281300', 'YYYYMMDDHH24MI'),
-      TO_DATE('201911011800', 'YYYYMMDDHH24MI'), 'F', null, 'e0003', 'cate0002');   
+      TO_DATE('201911011800', 'YYYYMMDDHH24MI'), 'F', null, 'e0009', 'cate0002');   
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --일정
   -- 부서
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 산출물 기간', null, TO_DATE('20190930', 'YYYYMMDD'), 
-      TO_DATE('20191004', 'YYYYMMDD'), 'T', 'de0002', 'e0002', 'cate0008');
+      TO_DATE('20191004', 'YYYYMMDD'), 'T', 'de0002', 'e0009', 'cate0003');
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 코딩 기간', null, TO_DATE('20191007', 'YYYYMMDD'), 
-      TO_DATE('20191018', 'YYYYMMDD'), 'T', 'de0002', 'e0002', 'cate0008');
+      TO_DATE('20191018', 'YYYYMMDD'), 'T', 'de0002', 'e0009', 'cate0003');
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 마무리 기간', null, TO_DATE('20191021', 'YYYYMMDD'), 
-      TO_DATE('20191025', 'YYYYMMDD'), 'T', 'de0002', 'e0002', 'cate0008');
+      TO_DATE('20191025', 'YYYYMMDD'), 'T', 'de0002', 'e0009', 'cate0003');
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '웹프로젝트 발표', null, TO_DATE('201910281000', 'YYYYMMDDHH24MI'), 
-      TO_DATE('201910281200', 'YYYYMMDDHH24MI'), 'T', 'de0002', 'e0002', 'cate0008');
+      TO_DATE('201910281200', 'YYYYMMDDHH24MI'), 'T', 'de0002', 'e0009', 'cate0004');
 INSERT INTO CALENDAR VALUES
-     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '2팀 회식', '하남돼지', TO_DATE('201910301900', 'YYYYMMDDHH24MI'), 
-      TO_DATE('201910301900', 'YYYYMMDDHH24MI'), 'F', 'de0002', 'e0002', 'cate0004');
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '1팀 회식', '하남돼지', TO_DATE('201910301900', 'YYYYMMDDHH24MI'), 
+      TO_DATE('201910301900', 'YYYYMMDDHH24MI'), 'F', 'de0002', 'e0009', 'cate0006');
 INSERT INTO CALENDAR VALUES
-     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '전민규 생일', null, TO_DATE('20191001', 'YYYYMMDD'), 
-      TO_DATE('20191001', 'YYYYMMDD'), 'T', 'de0002', null, 'cate0010');
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '배상현 생일', null, TO_DATE('20191001', 'YYYYMMDD'), 
+      TO_DATE('20191001', 'YYYYMMDD'), 'T', 'de0002', 'e0005', 'cate0005');
 INSERT INTO CALENDAR VALUES
-     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '김도훈 생일', null, TO_DATE('20191020', 'YYYYMMDD'), 
-      TO_DATE('20191020', 'YYYYMMDD'), 'T', 'de0002', null, 'cate0010');
-
-COMMIT;
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '조민수 생일', null, TO_DATE('20190903', 'YYYYMMDD'), 
+      TO_DATE('20190903', 'YYYYMMDD'), 'T', 'de0002', 'e0009', 'cate0005');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '전민규 생일', null, TO_DATE('20190915', 'YYYYMMDD'), 
+      TO_DATE('20190915', 'YYYYMMDD'), 'T', 'de0002', 'e0013', 'cate0005');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '김도훈 생일', null, TO_DATE('20191015', 'YYYYMMDD'), 
+      TO_DATE('20191015', 'YYYYMMDD'), 'T', 'de0002', 'e0014', 'cate0005');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '홍다은 생일', null, TO_DATE('20191025', 'YYYYMMDD'), 
+      TO_DATE('20191025', 'YYYYMMDD'), 'T', 'de0002', 'e0015', 'cate0005');
+commit;
