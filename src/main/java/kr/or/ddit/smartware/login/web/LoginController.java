@@ -114,7 +114,7 @@ public class LoginController {
 //	        	store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
 //	        	
 //	        	session.setAttribute("store", store);
-//	        	session.setAttribute("S_EMPLOYEE", employee);
+	        	session.setAttribute("S_EMPLOYEE", employee);
 	        	return "redirect:/main";
 		}
 		else {
