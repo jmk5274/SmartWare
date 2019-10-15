@@ -51,8 +51,11 @@ import kr.or.ddit.smartware.email.model.Email;
 import kr.or.ddit.smartware.email.model.GmailConnector;
 import kr.or.ddit.smartware.email.service.IEmailService;
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
+import kr.or.ddit.smartware.employee.service.IPositionService;
 import kr.or.ddit.smartware.login.web.LoginController;
+import kr.or.ddit.smartware.popup.service.IPopupService;
 import kr.or.ddit.smartware.util.file.FileUtil;
 import kr.or.ddit.smartware.util.file.model.FileInfo;
 
@@ -60,8 +63,11 @@ import kr.or.ddit.smartware.util.file.model.FileInfo;
 public class EmailController {
 	private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
 	
-	@Resource(name = "emailService")
-	private IEmailService emailService;
+	@Resource(name = "departmentService")
+	private IDepartmentService departmentService;
+	
+	@Resource(name = "positionService")
+	private IPositionService positionService;
 	
 	@Resource(name = "employeeService")
 	private IEmployeeService employeeService;
@@ -69,7 +75,7 @@ public class EmailController {
 	
 	@GetMapping(path = "writeMail")
 	public String writeMail(Model model) {
-		List<Map> departList = emailService.getDepartMentList();
+		List<Map> departList = departmentService.getDepartMentList();
 		
 //		String[] value = null;
 ////		for(Map depart : departList) {
@@ -80,14 +86,14 @@ public class EmailController {
 //		}
 		
 		List<Employee> employeeList = employeeService.allEmployeeList();
-		List<Map> positionList = emailService.getPositionList();
+		List<Map> positionList = positionService.getPositionList();
 		
 		logger.debug("departList - {}", departList);
 		model.addAttribute("departList", departList);
 		model.addAttribute("employeeList", employeeList);
 		model.addAttribute("positionList", positionList);
 		
-		return "tiles.writeMail";
+		return "tiles/email/writeMail";
 	}
 	//답글 @PostMapping 으로 return "tiles.writeMail"
 	
@@ -195,9 +201,9 @@ public class EmailController {
 	public String validator(Model model, Email email, BindingResult result) {
 		// form객체(command, vo)의 검증 결과를 담는 BindingResult객체는
 		// 반드시 메소드 인자 순서에서 form객체 바로 뒤에 위치해야 된다.
-		List<Map> departList = emailService.getDepartMentList();
+		List<Map> departList = departmentService.getDepartMentList();
 		List<Employee> employeeList = employeeService.allEmployeeList();
-		List<Map> positionList = emailService.getPositionList();
+		List<Map> positionList = positionService.getPositionList();
 		
 		model.addAttribute("departList", departList);
 		model.addAttribute("employeeList", employeeList);
@@ -209,7 +215,7 @@ public class EmailController {
 		if(result.hasErrors()) logger.debug("has Error");
 		else logger.debug("no Error");
 
-		return "tiles.writeMail";
+		return "tiles/email/writeMail";
 	}
 	
 //	@RequestMapping(path = "test")
@@ -258,6 +264,7 @@ public class EmailController {
 	          logger.debug("messages - {}", messages);
 	          
 	          model.addAttribute("messages", messages);
+	          model.addAttribute("messagesCount", folder.getMessageCount());
 	          
 	          System.out.println("No of Messages : " + folder.getMessageCount());
 	          System.out.println("No of Unread Messages : " + folder.getUnreadMessageCount());
@@ -328,13 +335,13 @@ public class EmailController {
 	        	jspName="inbox";
 	        }
 	        
-	        return  "tiles/" + jspName;
+	        return  "tiles/email/" + jspName;
 	}
 	          
 	          
 	@GetMapping(path = "addressbook")
 	public String addressbook(Model model) {
-		return "tiles.writeMail";
+		return "tiles/email/writeMail";
 	}
 	
 //	@REQUESTMAPPING(PATH = "TEST2")
