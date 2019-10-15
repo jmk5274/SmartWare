@@ -17,7 +17,9 @@ import kr.or.ddit.smartware.calendar.model.Calendar;
 import kr.or.ddit.smartware.calendar.model.Category;
 import kr.or.ddit.smartware.calendar.service.ICalendarService;
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
+import kr.or.ddit.smartware.employee.service.IPositionService;
 
 @Controller
 public class CalendarController {
@@ -27,13 +29,27 @@ public class CalendarController {
 	
 	@Resource(name="employeeService")
 	private IEmployeeService employeeService;
+
+	@Resource(name="departmentService")
+	private IDepartmentService departmentService;
+
+	@Resource(name="positionService")
+	private IPositionService positionService;
+	
 	
 	@Resource(name="jsonView")
 	private View jsonView;
 	
 	@RequestMapping("calendar")
-	public String calendar() {
-		return "tiles.calendar";
+	public String calendar(Model model, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		String depart_id = employee.getDepart_id();
+		String posi_id = employee.getPosi_id();
+		
+		model.addAttribute("depart_nm", departmentService.getDepartNm(depart_id));
+		model.addAttribute("posi_nm", positionService.getPosiNm(posi_id));
+		
+		return "tiles/calendar/calendar";
 	}
 	
 	/**

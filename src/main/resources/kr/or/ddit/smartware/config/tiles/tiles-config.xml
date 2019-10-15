@@ -12,6 +12,10 @@
 		<put-attribute name="footer" 	value="/WEB-INF/views/commonJsp/footer.jsp"/>
 	</definition>
 	
+	<definition name="tiles/*/*" extends="base">
+		<put-attribute name="content"	value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
 	<!-- 임시 메인 페이지(form/useForm) -->
 	<definition name="tiles.useForm" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/form/useForm.jsp"/>
@@ -20,11 +24,6 @@
 	<!-- 사원 리스트 출력 페이지 -->
 	<definition name="tiles.employeeList" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/employee/employeeList.jsp"/>
-	</definition>
-	
-	<!-- 로그인 -->
-	<definition name="tiles.login" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/login/login.jsp"/>
 	</definition>
 	
 	<!-- 임시 메인 화면 -->
@@ -73,10 +72,6 @@
 	
 	<definition name="tiles.test" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/email/test.jsp"/>
-	</definition>
-	
-	<definition name="tiles/*" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/email/{1}.jsp"/>
 	</definition>
 	
 </tiles-definitions>
