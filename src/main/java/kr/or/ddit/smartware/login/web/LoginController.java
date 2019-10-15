@@ -193,7 +193,7 @@ public class LoginController {
 	 */
 	@RequestMapping(path = "main")
 	private String mainView() {
-		return "tiles.useForm";
+		return "tiles/form/useForm";
 	}
 	
 }

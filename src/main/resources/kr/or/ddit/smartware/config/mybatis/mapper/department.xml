@@ -9,4 +9,13 @@
 		  from department
 		 where depart_id = #{depart_id}
 	</select>
+	
+	<select id="getAllDepartment" resultType="department">
+		select * from department
+	</select>
+	
+	<select id="getDepartMentList" resultType="hashMap">
+		select * from DEPARTMENT
+	</select>
+	
 </mapper>

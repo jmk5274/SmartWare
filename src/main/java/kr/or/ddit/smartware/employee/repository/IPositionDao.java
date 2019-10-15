@@ -1,5 +1,10 @@
 package kr.or.ddit.smartware.employee.repository;
 
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.smartware.employee.model.Position;
+
 public interface IPositionDao {
 
 	/**
@@ -11,5 +16,17 @@ public interface IPositionDao {
 	* Method 설명 : 직책 아이디에 해당하는 직책 이름을 반환 
 	*/
 	String getPosiNm(String posi_id);
+	
+	List<Position> getAllPosition();
+	
+
+	/**
+	 * Method : getPositionList
+	 * 작성자 : PC-18
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 직책 리스트 를 반환
+	 */
+	List<Map> getPositionList();
 
 }

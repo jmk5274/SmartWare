@@ -14,64 +14,6 @@
 	
 	<definition name="tiles/*/*" extends="base">
 		<put-attribute name="content"	value="/WEB-INF/views/{1}/{2}.jsp"/>
-	</definition>
-	
-	<!-- 임시 메인 페이지(form/useForm) -->
-	<definition name="tiles.useForm" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/form/useForm.jsp"/>
-	</definition>
-	
-	<!-- 사원 리스트 출력 페이지 -->
-	<definition name="tiles.employeeList" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/employee/employeeList.jsp"/>
-	</definition>
-	
-	<!-- 임시 메인 화면 -->
-	<definition name="tiles.index" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/index.jsp"/>
-	</definition>
-	
-	<!-- 메일쓰기  -->
-	<definition name="tiles.writeMail" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/email/writeMail.jsp"/>
-	</definition>
-
-	<!-- 메뉴 및 게시판 관리 -->
-	<definition name="tiles.addBoard" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/board/addBoard.jsp"/>
-	</definition>
-	
-	<!-- 일정 관리 -->
-	<definition name="tiles.calendar" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/calendar/calendar.jsp"/>
-	</definition>
-	
-	<!-- 게시글 리스트 -->
-	<definition name="tiles.post" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/post/post.jsp"/>
-	</definition>
-	
-	<!-- 게시글 작성 -->
-	<definition name="tiles.writePost" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/post/writePost.jsp"/>
-	</definition>
-	
-	<!-- 게시글 상세보기 -->
-	<definition name="tiles.selectPost" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/post/selectPost.jsp"/>
-	</definition>
-	
-	<!-- 게시글 수정 -->
-	<definition name="tiles.modifyPost" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/post/modifyPost.jsp"/>
-	</definition>
-	
-	<definition name="tiles.modifyPost" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/post/modifyPost.jsp"/>
-	</definition>
-	
-	<definition name="tiles.test" extends="base">
-		<put-attribute name="content"	value="/WEB-INF/views/email/test.jsp"/>
-	</definition>
+	</definition>	
 	
 </tiles-definitions>

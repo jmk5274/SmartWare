@@ -16,6 +16,7 @@ import org.springframework.web.servlet.View;
 import kr.or.ddit.smartware.calendar.model.Calendar;
 import kr.or.ddit.smartware.calendar.model.Category;
 import kr.or.ddit.smartware.calendar.service.ICalendarService;
+import kr.or.ddit.smartware.calendar.service.ICategoryService;
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
@@ -27,6 +28,9 @@ public class CalendarController {
 	@Resource(name="calendarService")
 	private ICalendarService calendarService;
 	
+	@Resource(name="categoryService")
+	private ICategoryService categoryService;
+	
 	@Resource(name="employeeService")
 	private IEmployeeService employeeService;
 
@@ -35,7 +39,6 @@ public class CalendarController {
 
 	@Resource(name="positionService")
 	private IPositionService positionService;
-	
 	
 	@Resource(name="jsonView")
 	private View jsonView;
@@ -81,7 +84,7 @@ public class CalendarController {
 			String emp_nm = employeeService.getEmployee(calendar.getEmp_id()).getEmp_nm();
 			map.put("emp_nm", emp_nm);						// 일정 등록자 이름
 			
-			Category category = calendarService.getCategory(calendar.getCategory_id());
+			Category category = categoryService.getCategory(calendar.getCategory_id());
 			map.put("backgroundColor", category.getColor()); // 일정 카테고리 배경색
 			map.put("category_nm", category.getCategory_nm()); // 카테고리 이름
 			map.put("category_id", category.getCategory_id()); // 카테고리 아이디
@@ -99,42 +102,6 @@ public class CalendarController {
 		return jsonView;
 	}
 	
-	/**
-	* Method : getEmpCalendarList
-	* 작성자 : JO MIN SOO
-	* 변경이력 :
-	* @param model
-	* @param session
-	* @return
-	* Method 설명 : 현재 로그인한 사원의 개인 일정 카테고리를 JSON형태로 반환한다.
-	*/
-	@RequestMapping("getEmpCategoryList")
-	public View getEmpCalendarList(Model model, HttpSession session) {
-		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
-		String emp_id = employee.getEmp_id();
-		
-		model.addAttribute(calendarService.getEmpCategoryList(emp_id));
-		
-		return jsonView;
-	}
 	
-	/**
-	* Method : getDepCalendarList
-	* 작성자 : JO MIN SOO
-	* 변경이력 :
-	* @param model
-	* @param session
-	* @return
-	* Method 설명 : 현재 로그인한 사원의 부서 일정 카테고리를 JSON형태로 반환한다.
-	*/
-	@RequestMapping("getDepCategoryList")
-	public View getDepCalendarList(Model model, HttpSession session) {
-		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
-		String emp_id = employee.getEmp_id();
-		
-		model.addAttribute(calendarService.getDepCategoryList(emp_id));
-		
-		return jsonView;
-	}
 	
 }

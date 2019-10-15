@@ -1,9 +1,14 @@
 package kr.or.ddit.smartware.employee.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import kr.or.ddit.smartware.employee.model.Position;
 
 @Repository
 public class PositionDao implements IPositionDao {
@@ -22,6 +27,24 @@ public class PositionDao implements IPositionDao {
 	@Override
 	public String getPosiNm(String posi_id) {
 		return sqlSession.selectOne("position.getPosiNm", posi_id);
+	}
+	
+	
+	/**
+	 * Method : getPositionList
+	 * 작성자 : PC-18
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 직책리스트 반환
+	 */
+	@Override
+	public List<Map> getPositionList() {
+		return sqlSession.selectList("position.getPositionList");
+	}
+
+	@Override
+	public List<Position> getAllPosition() {
+		return sqlSession.selectList("position.getAllPosition");
 	}
 
 }

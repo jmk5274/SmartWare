@@ -12,13 +12,8 @@
 		  order by c.POSI_ID
 	</select>
 	
-	<select id="getDepartMentList" resultType="hashMap">
-		select * from DEPARTMENT
-	</select>
 	
-	<select id="getPositionList" resultType="hashMap">
-		select * from POSITION
-	</select>
+	
 	
 	<select id="getEmpSearchList" parameterType="String" resultType="hashMap">
 		select a.depart_nm, b.emp_nm, b.email, c.posi_nm

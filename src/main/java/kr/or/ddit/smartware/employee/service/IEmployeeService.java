@@ -85,5 +85,26 @@ public interface IEmployeeService {
 	 */
 	int updateEmployeeRank(Employee employee);
 
+	/**
+	 * 
+	* Method : updateEmployeePosition
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param employee
+	* @return
+	* Method 설명 : 사원 직책 변경
+	 */
+	int updateEmployeePosition(Employee employee);
+	
+	/**
+	 * 
+	* Method : updateEmployeeDepartment
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param employee
+	* @return
+	* Method 설명 : 사원 부서 변경
+	 */
+	int updateEmployeeDepartment(Employee employee);
 
 }

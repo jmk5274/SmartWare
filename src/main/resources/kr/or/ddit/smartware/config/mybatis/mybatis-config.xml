@@ -16,6 +16,8 @@
 		<typeAlias alias="calendar" type="kr.or.ddit.smartware.calendar.model.Calendar"/>
 		<typeAlias alias="category" type="kr.or.ddit.smartware.calendar.model.Category"/>
 		<typeAlias alias="email" 	type="kr.or.ddit.smartware.email.model.Email"/>
+		<typeAlias alias="position" type="kr.or.ddit.smartware.employee.model.Position"/>
+		<typeAlias alias="department" type="kr.or.ddit.smartware.employee.model.Department"/>
 	</typeAliases>
 	
 	<mappers>
@@ -30,6 +32,9 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/calendar.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/category.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/email.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/position.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/department.xml"/>
+		
 	</mappers>
 	
 </configuration>

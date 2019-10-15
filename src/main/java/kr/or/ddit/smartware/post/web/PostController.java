@@ -68,7 +68,7 @@ public class PostController {
 		model.addAttribute("pagesize", pagesize);
 		model.addAttribute("paginationSize", paginationSize);
 
-		return "tiles.post";
+		return "tiles/post/post";
 	}
 
 	@GetMapping("selectPost")
@@ -93,7 +93,7 @@ public class PostController {
 			model.addAttribute("commentsList", commentsList);
 			model.addAttribute("board_nm", board_nm);
 
-			return "tiles.selectPost";
+			return "tiles/post/selectPost";
 		}
 	}
 
@@ -104,7 +104,7 @@ public class PostController {
 		model.addAttribute("gn", 0);
 		model.addAttribute("board_id", board_id);
 
-		return "tiles.writePost";
+		return "tiles/post/writePost";
 	}
 
 	@PostMapping("writePost")
@@ -176,7 +176,7 @@ public class PostController {
 		if (btnValue.equals("답글")) {
 			model.addAttribute("pa_post_id", post.getPost_id());
 			model.addAttribute("gn", post.getGn());
-			return "tiles.writePost";
+			return "tiles/post/writePost";
 		} else if (btnValue.equals("삭제")) {
 			post.setAble("T");
 
@@ -191,7 +191,7 @@ public class PostController {
 			model.addAttribute("post", post1);
 			model.addAttribute("postfileList", postfileList);
 
-			return "tiles.modifyPost";
+			return "tiles/post/modifyPost";
 		}
 		return "redirect:/post";
 	}
