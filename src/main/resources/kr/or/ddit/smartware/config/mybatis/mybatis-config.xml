@@ -26,6 +26,7 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/comments.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/postfile.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/calendar.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/category.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/email.xml"/>
 	</mappers>
 	

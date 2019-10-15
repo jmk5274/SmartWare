@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+	<!-- 카테고리 ID에 해당하는 카테고리 객체를 반환 -->
+	<select id="getCategory" parameterType="String" resultType="category">
+		select *
+		  from category
+		 where category_id = #{category_id}
+	</select>
+	
+	<!-- 사원의 개인일정 리스트 반환 -->
+	<select id="getEmpCategoryList" parameterType="String" resultType="category">
+		select *
+		  from category
+		 where emp_id = #{emp_id}
+		   and depart_id is null
+	</select>
+	
+	<!-- 사원의 부서일정 리스트 반환 -->
+	<select id="getDepCategoryList" parameterType="String" resultType="category">
+		select *
+		  from category
+		 where depart_id = (select depart_id
+		                      from employee
+		                     where emp_id = #{emp_id})
+	</select>
+</mapper>

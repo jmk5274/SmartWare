@@ -39,7 +39,7 @@ public class CalendarDao implements ICalendarDao{
 	*/
 	@Override
 	public Category getCategory(String category_id) {
-		return sqlSession.selectOne("calendar.getCategory", category_id);
+		return sqlSession.selectOne("category.getCategory", category_id);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class CalendarDao implements ICalendarDao{
 	*/
 	@Override
 	public List<Category> getEmpCategoryList(String emp_id) {
-		return sqlSession.selectList("calendar.getEmpCategoryList", emp_id);
+		return sqlSession.selectList("category.getEmpCategoryList", emp_id);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class CalendarDao implements ICalendarDao{
 	*/
 	@Override
 	public List<Category> getDepCategoryList(String emp_id) {
-		return sqlSession.selectList("calendar.getDepCategoryList", emp_id);
+		return sqlSession.selectList("category.getDepCategoryList", emp_id);
 	}
 
 }

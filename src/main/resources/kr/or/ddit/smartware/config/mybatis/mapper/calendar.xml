@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="calendar">
+	<!-- 사원의 모든 일정 리스트를 반환 -->
 	<select id="getAllCalendarList" parameterType="String" resultType="calendar">
 		select *
 		  from calendar
@@ -14,26 +15,5 @@
    		 where depart_id = (select depart_id 
          		              from employee
                      		 where emp_id = #{emp_id})
-	</select>
-	
-	<select id="getCategory" parameterType="String" resultType="category">
-		select *
-		  from category
-		 where category_id = #{category_id}
-	</select>
-	
-	<select id="getEmpCategoryList" parameterType="String" resultType="category">
-		select *
-		  from category
-		 where emp_id = #{emp_id}
-		   and depart_id is null
-	</select>
-	
-	<select id="getDepCategoryList" parameterType="String" resultType="category">
-		select *
-		  from category
-		 where depart_id = (select depart_id
-		                      from employee
-		                     where emp_id = #{emp_id})
 	</select>
 </mapper>
