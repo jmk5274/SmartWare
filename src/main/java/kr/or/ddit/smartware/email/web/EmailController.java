@@ -218,24 +218,25 @@ public class EmailController {
 //	}
 	
 	@RequestMapping(path = "mailbox", method = RequestMethod.GET)
-	public String receiveMail(HttpSession session, Model model, String emailLabel) throws MessagingException, IOException {
+	public String receiveMail(HttpSession Hsession, Model model, String emailLabel) throws MessagingException, IOException {
 		logger.debug("emailLabel - {}", emailLabel);
 		
 		 IMAPFolder folder = null;
+		    Store store = null;
 	        String subject = null;
 	        Flag flag = null;
-//	        try 
-//	        {
-//	          Properties props = System.getProperties();
-//	          props.setProperty("mail.store.protocol", "imaps");
-//
-//	          Session session = Session.getDefaultInstance(props, null);
-//
-//	          store = session.getStore("imaps");
+	        
+	          Properties props = System.getProperties();
+	          props.setProperty("mail.store.protocol", "imaps");
+
+	          Session session = Session.getDefaultInstance(props, null);
+
+	          store = session.getStore("imaps");
 //	          store.connect("imap.googlemail.com", email, emailpass);
+	          store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
 	          
-	        Store store = (Store) session.getAttribute("store");
-	        logger.debug("store - {}", store);
+//	        Store store = (Store) Hsession.getAttribute("store");
+//	        logger.debug("store - {}", store);
 			  
 		
 	          IMAPFolder imapFolder = null;
@@ -243,18 +244,11 @@ public class EmailController {
 	          for (Folder folder1 : folders1) {
 	            imapFolder = (IMAPFolder) folder1;
 	            System.out.println("[" + imapFolder.getFullName() + "]");
-//	            for (String attribute : imapFolder.getAttributes()) {
-//	            	System.out.print(attribute);
-//	            	
-//	            }
 	          }
 	          
-//	          folder = javax.mail.Folder.list("Trash");
-//	          System.out.println(folder);
 
 	          
 	          folder = (IMAPFolder) store.getFolder(emailLabel); // This doesn't work for other email account
-	          
 	          //folder = (IMAPFolder) store.getFolder("[Gmail]/스팸함"); This works for both email account
 
 
@@ -263,10 +257,6 @@ public class EmailController {
 	          Message[] messages = folder.getMessages();
 	          logger.debug("messages - {}", messages);
 	          
-//	          for(int i = 0; i < messages.length; i++) {
-//	        	  messageList.add(messages[i]);
-//	        	  logger.debug("messageList - {}", messageList);
-//	          }
 	          model.addAttribute("messages", messages);
 	          
 	          System.out.println("No of Messages : " + folder.getMessageCount());
@@ -283,13 +273,11 @@ public class EmailController {
 	            //System.out.println(folder.getUID(msg)
 
 	            subject = msg.getSubject();
-
 	            System.out.println("Subject: " + subject);
 	            System.out.println("From: " + msg.getFrom()[0]);
 	            logger.debug("msg.getFrom() - {}", msg.getFrom());
 	            logger.debug("msg.getFrom()[0] - {}", msg.getFrom()[0]);
 	            
-	            //model.addAttribute("fromList", msg.getFrom());
 	            
 	           System.out.println("ToAll: "+msg.getAllRecipients().toString());
 	           System.out.println("To: "+msg.getAllRecipients()[0]);
@@ -323,9 +311,9 @@ public class EmailController {
 	            System.out.println(msg.getContentType());
 	            System.out.println("NUMBER : " +msg.getMessageNumber());
 	            
-	          }
 //	        }
 //	        return  "tiles.test2";
+	        }
 	        
 	        String jspName = "";
 	        if(emailLabel.equals("[Gmail]/스팸함")) {
@@ -341,8 +329,9 @@ public class EmailController {
 	        }
 	        
 	        return  "tiles/" + jspName;
-	    }
-	
+	}
+	          
+	          
 	@GetMapping(path = "addressbook")
 	public String addressbook(Model model) {
 		return "tiles.writeMail";

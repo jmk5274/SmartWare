@@ -94,26 +94,28 @@ public class LoginController {
 			employee.setC_use("false");
 			
 			
-			IMAPFolder folder = null;
-	        Store store = null;
-	        String subject = null;
-	        Flag flag = null;
-		        
-          Properties props = System.getProperties();
-          props.setProperty("mail.store.protocol", "imaps");
-
-          Session mailSession = Session.getDefaultInstance(props, null);
-
-          store = mailSession.getStore("imaps");
-          store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
-          
-          session.setAttribute("store", store);
-//          GmailConnector.setStore(store);
-		        
-		      
-				
-			session.setAttribute("S_EMPLOYEE", employee);
-			return "redirect:/main";
+//			IMAPFolder folder = null;
+//	        Store store = null;
+//	        String subject = null;
+//	        Flag flag = null;
+//	        
+//	        if(employee.getEmail().contains("test") && employee.getEmail_pass() == null) {
+//	        	if(!employee.getEmp_id().equals("e0003") || employee.getEmp_id().equals("e0004")) {
+//	        		employee.setEmail("testhoon1217@gmail.com");
+//	        		employee.setEmail_pass("ewqdsa556");
+//	        	}
+//	        }
+//	        
+//	        	Properties props = System.getProperties();
+//	        	props.setProperty("mail.store.protocol", "imaps");
+//	        	Session mailSession = Session.getDefaultInstance(props, null);
+//	        	
+//	        	store = mailSession.getStore("imaps");
+//	        	store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
+//	        	
+//	        	session.setAttribute("store", store);
+//	        	session.setAttribute("S_EMPLOYEE", employee);
+	        	return "redirect:/main";
 		}
 		else {
 			return "login/login";
