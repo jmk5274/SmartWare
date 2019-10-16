@@ -24,6 +24,9 @@
 	<link rel="stylesheet" href="${cp }/bootstrap/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
 	<!-- Custom Stylesheet -->
 	<link href="${cp }/bootstrap/css/style.css" rel="stylesheet">
+	<!-- sweetalert2-->
+	<link href ="${cp }/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" >
+	
     <!--*******************
         BasicLib end
     ********************-->
@@ -121,6 +124,8 @@
     <script src="${cp }/bootstrap/plugins/chartist/js/chartist.min.js"></script>
     <script src="${cp }/bootstrap/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 
+	<!-- sweetalert2 -->
+	<script src="${cp }/sweetalert2/dist/sweetalert2.min.js"></script>
 </body>
 
 </html>
