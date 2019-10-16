@@ -5,55 +5,7 @@
 
 <script>
 
-	var socket = new SockJS("/ws/chat");
-	
-	socket.onmessage = function(evt) {
-		var str = evt.data.split(":");
-		console.log("dd");
-		if(str[0]===("msg")){
-			$.ajax({
-				url : "${cp}/getChatList",
-				contentType : "application/json",
-				dataType : "json",
-				method : "get",
-				success : function(data){
-					var chatList = data.chatList;
-					var totalCnt = data.totalCnt;
-					if (totalCnt==0){
-						totalCnt = "";
-					}
-					var html = "";
-					var emp_id = "${S_EMPLOYEE.emp_id}";
-					
-					console.log(chatList);
-					$("#chatDtailList ul").empty();
-					chatList.forEach(function(chat){
-						var msg_cnt = chat.MSG_CNT;
-						if(msg_cnt==0){
-							msg_cnt = "";
-						}
-                        html += '<li id="'+chat.CHAT_ID+'" class="notification-unread chatList">'
-	                    html +=     '<a href="javascript:void(window.open(\'${cp }/chatRoom?chat_id='+chat.CHAT_ID+'\', \'채팅방\',\'width=500px, height=650px\'))">'
-	                    html +=         '<img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id='+emp_id+'" alt="">'
-	                    html +=         '<div class="notification-content">'
-	                    html +=             '<span class="notification-heading">'+chat.CHAT_NM+' / '+chat.EMP_CNT+'명</span>'	
-	                    html +=             '<i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="'+chat.CHAT_ID+'"></i>'
-	                    html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+chat.SEND_DT+'</div>'
-	                    html +=         '</div>'
-		                html +=         	'<span id="'+msg_cnt+'" class="badge badge-pill gradient-1">'+msg_cnt+'</span>'
-	                    html +=         '<span id="'+chat.CHAT_ID+'" class="badge badge-pill gradient-1">'+chat.MSG_CNT+'</span>'
-	                    html +=     '</a>'
-	                    html += '</li>'
-					})
-					$("#totalCnt").text(totalCnt+"");
-					$("#chatDtailList ul").append(html);
-				}
-			});
-		}
-	};
-	
-	$(function() {
-		
+	function getChatList(){
 		$.ajax({
 			url : "${cp}/getChatList",
 			contentType : "application/json",
@@ -68,7 +20,6 @@
 				var html = "";
 				var emp_id = "${S_EMPLOYEE.emp_id}";
 				
-				console.log(chatList);
 				$("#chatDtailList ul").empty();
 				chatList.forEach(function(chat){
 					var msg_cnt = chat.MSG_CNT;
@@ -76,50 +27,91 @@
 						msg_cnt = "";
 					}
                     html += '<li id="'+chat.CHAT_ID+'" class="notification-unread chatList">'
-                    html +=     '<a href="javascript:void(window.open(\'${cp }/chatRoom?chat_id='+chat.CHAT_ID+'\', \'채팅방\',\'width=500px, height=650px\'))">'
+                    html +=     '<a class="getChatId" data-chat_id="'+chat.CHAT_ID+'" href="#">'
                     html +=         '<img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id='+emp_id+'" alt="">'
                     html +=         '<div class="notification-content">'
                     html +=             '<span class="notification-heading">'+chat.CHAT_NM+' / '+chat.EMP_CNT+'명</span>'	
                     html +=             '<i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="'+chat.CHAT_ID+'"></i>'
                     html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+chat.SEND_DT+'</div>'
                     html +=         '</div>'
-	                html +=         	'<span id="'+msg_cnt+'" class="badge badge-pill gradient-1">'+msg_cnt+'</span>'
-                    html +=         '<span id="'+chat.CHAT_ID+'" class="badge badge-pill gradient-1">'+chat.MSG_CNT+'</span>'
+	                html +=         '<span id="'+msg_cnt+'" class="badge badge-pill gradient-1">'+msg_cnt+'</span>'
                     html +=     '</a>'
                     html += '</li>'
 				})
 				$("#totalCnt").text(totalCnt+"");
 				$("#chatDtailList ul").append(html);
+				
+				$(".chatList").hover(function(){
+					if($(".x", this).css("visibility") == "visible")
+						$(".x", this).css("visibility", "hidden");
+					else
+						$(".x", this).css("visibility", "visible");
+				});
+				
+				$(".getChatId").click(function(){
+					var chat_id = $(this).data("chat_id")+"";
+					$.ajax({
+						url : "${cp}/getLastMsg",
+						method : "get",
+						data : "chat_id="+chat_id,
+						success : function(data){
+							var param = {};
+							var msg_id = data.msg_id + "";
+							
+							param.chat_id = chat_id;
+							param.msg_id = msg_id;
+							
+							$.ajax({
+								url : "${cp}/updateLastMsg",
+								contentType : "application/json",
+								dataType : "json",
+								method : "post",
+								data : JSON.stringify(param),
+								success : function(data){
+									getChatList();
+								}
+							});
+						}
+					});
+					window.open('${cp }/chatRoom?chat_id='+chat_id, '채팅방', 'width=500px, height=650px')
+				});
+				
+				$(".x").click(function(event){
+					var param={};
+					var chat_id = $(this).data('chat_id');
+					
+					param.chat_id = chat_id;
+					
+					$.ajax({
+						url : "${cp}/deleteChat",
+						contentType : "application/json",
+						dataType : "json",
+						method : "post",
+						data : JSON.stringify(param),
+						success : function(data){
+							$("#"+data.chat_id).remove();
+						}
+					});
+					return false;
+				});
 			}
 		});
 		
+	}
+
+	var socket = new SockJS("/ws/chat");
+	
+	socket.onmessage = function(evt) {
+		var str = evt.data.split(":");
+		console.log("dd");
+		if(str[0]===("msg")){
+			getChatList();
+		}
+	};
+	
+	$(function() {
 		
-		$(".chatList").hover(function(){
-			if($(".x", this).css("visibility") == "visible")
-				$(".x", this).css("visibility", "hidden");
-			else
-				$(".x", this).css("visibility", "visible");
-		});
-		
-		$(".x").click(function(event){
-			var param={};
-			var chat_id = $(this).data('chat_id');
-			
-			param.chat_id = chat_id;
-			
-			$.ajax({
-				url : "${cp}/deleteChat",
-				contentType : "application/json",
-				dataType : "json",
-				method : "post",
-				data : JSON.stringify(param),
-				success : function(data){
-					$("#"+data.chat_id).remove();
-				}
-			});
-			
-			event.preventDefault();
-		});
+		getChatList();
 		
 	});
 	

@@ -58,6 +58,7 @@ public class MessengerController {
 	public String chatRoom(Model model, String chat_id, HttpSession session) {
 		
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		ChatEmp chatEmp = new ChatEmp(chat_id, employee.getEmp_id());
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("chat_id", chat_id);		
@@ -66,7 +67,7 @@ public class MessengerController {
 		String emp_nm = "";
 		String chat_nm = messengerService.getChatNm(chat_id);
 		List<Employee> chatEmpList = messengerService.getChatEmp(map);
-		List<Map> messageList = messengerService.getMessageList(chat_id); 
+		List<Map> messageList = messengerService.getMessageList(chatEmp); 
 		List<Map> empList1 = messengerService.getEmpList(emp_nm);
 		List<Employee> chatList = messengerService.getChatInfo(chat_id);
 		
@@ -242,12 +243,6 @@ public class MessengerController {
 		
 		int cnt = messengerService.updateLastMsg(message);
 		
-		List<Map> mapList = messengerService.getChatList(employee.getEmp_id());
-		int conut = messengerService.getChatTotleCnt(employee.getEmp_id());
-		
-		request.getServletContext().setAttribute("A_CHATLIST", mapList);
-		request.getServletContext().setAttribute("A_CNT", conut);
-		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("cnt", cnt);
 		
@@ -288,14 +283,18 @@ public class MessengerController {
 	* Method 설명 : 메신저 사원 초대
 	*/
 	@GetMapping("insertChatEmp")
-	public String insertCahtEmp(String chat_id, String[] emp_id, Model model, HttpSession session){
+	public String insertCahtEmp(String chat_id, String[] emp_id, String msg_id, Model model, HttpSession session){
 		
 		ChatEmp chatEmp = new ChatEmp();
 		chatEmp.setChat_id(chat_id);
-		
+		Message message = new Message();
+		message.setChat_id(chat_id);
+		message.setMsg_id(msg_id);
 		for(String e : emp_id) {
 			chatEmp.setEmp_id(e);
+			message.setEmp_id(e);
 			messengerService.insertChatEmp(chatEmp);
+			messengerService.updateInviteId(message);
 		}
 		
 		String emp_nm = "";
@@ -356,6 +355,18 @@ public class MessengerController {
 			model.addAttribute("chatList", mapList);
 			model.addAttribute("totalCnt", cnt);
 		}
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("getLastMsg")
+	public String getLastMsg(String chat_id, Model model) {
+		
+		String msg_id = messengerService.getLastMsg(chat_id);
+		
+		if(msg_id.equals("msg")) msg_id = "";
+
+		model.addAttribute("msg_id", msg_id);
 		
 		return "jsonView";
 	}

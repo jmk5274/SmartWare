@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chat">
 	<select id="getChatList" parameterType="String" resultType="hashmap">
-		select a.chat_id, a.chat_nm, a.emp_cnt, nvl(b.msg_cnt, 0) as msg_cnt, c.msg_cont, c.msg_id, c.send_dt
+		select a.chat_id, a.chat_nm, a.emp_cnt, to_number(nvl(b.msg_cnt, 0)) as msg_cnt, c.msg_cont, c.msg_id, c.send_dt
 		  from (select b.chat_id, b.chat_nm, count(*) as emp_cnt
 		          from chat_emp a, (select a.*
 		                              from CHAT a, CHAT_EMP b
@@ -45,11 +45,15 @@
 		   and a.emp_id = b.emp_id
 	</select>
 	
-	<select id="getMessageList" parameterType="String" resultType="hashmap">
+	<select id="getMessageList" parameterType="chatEmp" resultType="hashmap">
 		select a.*, b.emp_nm, b.emp_pic, b.rank
-	  	  from message a, employee b
+		  from message a, employee b
 		 where a.chat_id = #{chat_id}
 		   and a.emp_id = b.emp_id
+		   and to_number(substr(a.msg_id, 4, 4)) > (select to_number(nvl(substr(invite_id, 4, 4),0))
+		                                              from chat_emp
+		                                             where emp_id = #{emp_id}
+		                                               and chat_id = #{chat_id})
 		   order by msg_id
 	</select>
 	
@@ -127,5 +131,13 @@
 		         where to_number(substr(b.msg_id, 4, 4)) > NVL(to_number(substr(a.last_msg, 4, 4)), 0)
 		         group by a.chat_id) a
 	</select>
+	
+	<select id="getLastMsg" parameterType="String" resultType="String">
+		select 'msg'||lpad(max(to_number(substr(msg_id, 4, 4))),4,0) as msg_id from message where chat_id = #{chat_id}
+	</select>
+	
+	<update id="updateInviteId" parameterType="message">
+		update chat_emp set last_msg=#{msg_id}, invite_id=#{msg_id} where emp_id=#{emp_id} and chat_id = #{chat_id}
+	</update>
 	
 </mapper>

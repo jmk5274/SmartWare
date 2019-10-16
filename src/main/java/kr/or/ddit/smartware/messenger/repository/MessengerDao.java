@@ -67,8 +67,8 @@ public class MessengerDao implements IMessengerDao{
 	* Method 설명 : 채팅방 메시지 조회
 	*/
 	@Override
-	public List<Map> getMessageList(String chat_id) {
-		return sqlSession.selectList("chat.getMessageList", chat_id);
+	public List<Map> getMessageList(ChatEmp chatEmp) {
+		return sqlSession.selectList("chat.getMessageList", chatEmp);
 	}
 
 	/**
@@ -211,6 +211,32 @@ public class MessengerDao implements IMessengerDao{
 	@Override
 	public int getChatTotleCnt(String emp_id) {
 		return sqlSession.selectOne("chat.getChatTotleCnt", emp_id);
+	}
+
+	/**
+	* Method : getLastMsg
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param chat_id
+	* @return
+	* Method 설명 : 채팅방 마지막 메시지 가져오기
+	*/
+	@Override
+	public String getLastMsg(String chat_id) {
+		return sqlSession.selectOne("chat.getLastMsg", chat_id);
+	}
+
+	/**
+	* Method : updateInviteId
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param message
+	* @return
+	* Method 설명 : 초대시점 메시지 정보 업데이트
+	*/
+	@Override
+	public int updateInviteId(Message message) {
+		return sqlSession.update("chat.updateInviteId", message);
 	}
 
 }

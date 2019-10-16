@@ -67,8 +67,8 @@ public class MessengerService implements IMessengerService{
 	* Method 설명 : 채팅방 메시지 조회
 	*/
 	@Override
-	public List<Map> getMessageList(String chat_id) {
-		return messengerDao.getMessageList(chat_id);
+	public List<Map> getMessageList(ChatEmp chatEmp) {
+		return messengerDao.getMessageList(chatEmp);
 	}
 
 	/**
@@ -170,6 +170,16 @@ public class MessengerService implements IMessengerService{
 	@Override
 	public int getChatTotleCnt(String emp_id) {
 		return messengerDao.getChatTotleCnt(emp_id);
+	}
+
+	@Override
+	public String getLastMsg(String chat_id) {
+		return messengerDao.getLastMsg(chat_id);
+	}
+
+	@Override
+	public int updateInviteId(Message message) {
+		return messengerDao.updateInviteId(message);
 	}
 	
 }

@@ -25,7 +25,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 
 <script src="https://use.typekit.net/hoy3lrg.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+<script src="${cp }/js/sockjs.min.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 <style class="cp-pen-styles">
@@ -551,9 +551,6 @@ $("#status-options ul li").click(function() {
 		var time = hours + ":" + minutes;
 		var str = evt.data.split(":");
 		
-		console.log(evt);
-		console.log(str);
-		
 		$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[3] +'><img src="${cp }/empPicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
 		
 		$('.messages').animate({
@@ -604,6 +601,7 @@ $("#status-options ul li").click(function() {
 				socket.send(message);
 				
 				$(".message-input #msg_cont").val("");
+				$(".message-input #msg_cont").focus();
 			}
 		});
 	})
@@ -652,6 +650,7 @@ $("#status-options ul li").click(function() {
 					$(".message-input #msg_cont").val("");
 				}
 			});
+			return false;
 		}
 	 })
 	 
@@ -665,8 +664,6 @@ $("#status-options ul li").click(function() {
 		param.chat_id = chat_id;
 		param.msg_id = msg_id;
 		
-		console.log(JSON.stringify(param))
-		
 		$.ajax({
 			url : "${cp}/updateLastMsg",
 			contentType : "application/json",
@@ -674,7 +671,6 @@ $("#status-options ul li").click(function() {
 			method : "post",
 			data : JSON.stringify(param),
 			success : function(data){
-				
 			}
 		});
 		
@@ -744,6 +740,7 @@ $("#status-options ul li").click(function() {
 		var param={};
 		var emp_id = new Array(); 
 		var chat_id = "${chat_id }";
+		var msg_id = $('.messages ul li:last-child').data('msg_id'); 
 		var html = "";
 		
 		 $(':checkbox:checked').each(function(i, a){
@@ -757,7 +754,7 @@ $("#status-options ul li").click(function() {
 			contentType : "application/json",
 			dataType : "json",
 			method : "get",
-			data : "chat_id="+chat_id+"&emp_id="+emp_id,
+			data : "chat_id="+chat_id+"&emp_id="+emp_id+"&msg_id="+msg_id,
 			success : function(data){
 				var empList = data.empList;
 				var chatList = data.chatList;
@@ -809,7 +806,7 @@ $("#status-options ul li").click(function() {
 				
 				$("#empTable").html(html);
 				
-			},
+			}
 		});
 	});
 
