@@ -346,9 +346,9 @@ INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0002', 'ch
 ---------------------------------------------------------------------------------------------------------
 --참가자
 
-INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0001', null);
-INSERT INTO CHAT_EMP VALUES ('e0010', 'ch0001', null);
-INSERT INTO CHAT_EMP VALUES ('e0011', 'ch0002', null);
+INSERT INTO CHAT_EMP VALUES ('e0003', 'ch0001', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0004', 'ch0001', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0003', 'ch0002', null, null);
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --카테고리
