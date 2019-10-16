@@ -141,4 +141,14 @@ public interface IMessengerService {
 	* Method 설명 : 안읽은 메시지 갯수
 	*/
 	int getChatListCount(Message message);
+	
+	/**
+	* Method : getChatTotleCnt
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 채팅방 토탈 카운트 조회
+	*/
+	int getChatTotleCnt(String emp_id);
 }

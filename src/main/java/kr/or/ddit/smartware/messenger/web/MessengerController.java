@@ -3,6 +3,7 @@ package kr.or.ddit.smartware.messenger.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import kr.or.ddit.smartware.messenger.model.Chat;
 import kr.or.ddit.smartware.messenger.model.ChatEmp;
 import kr.or.ddit.smartware.messenger.model.Message;
 import kr.or.ddit.smartware.messenger.service.IMessengerService;
+import oracle.sql.DATE;
 
 @Controller
 public class MessengerController {
@@ -225,7 +227,6 @@ public class MessengerController {
 			//conut==0일 때 해당 채팅방 상태 F로 변경(update)
 			messengerService.updateChat(chatEmp.getChat_id());
 		
-		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		resultMap.put("chat_id", chatEmp.getChat_id());
@@ -240,6 +241,12 @@ public class MessengerController {
 		message.setEmp_id(employee.getEmp_id());
 		
 		int cnt = messengerService.updateLastMsg(message);
+		
+		List<Map> mapList = messengerService.getChatList(employee.getEmp_id());
+		int conut = messengerService.getChatTotleCnt(employee.getEmp_id());
+		
+		request.getServletContext().setAttribute("A_CHATLIST", mapList);
+		request.getServletContext().setAttribute("A_CNT", conut);
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("cnt", cnt);
@@ -326,4 +333,30 @@ public class MessengerController {
 		return "jsonView";
 	}
 	
+	/**
+	* Method : getChatList
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @return
+	* Method 설명 : chatList 갱신
+	*/
+	@GetMapping("getChatList")
+	public String getChatList(Model model, HttpSession session, HttpServletRequest request) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
+		if(employee==null) {
+			
+		}else {
+			List<Map> mapList = messengerService.getChatList(employee.getEmp_id());
+			int cnt = messengerService.getChatTotleCnt(employee.getEmp_id());
+			
+			request.getServletContext().setAttribute("A_CHATLIST", mapList);
+			request.getServletContext().setAttribute("A_CNT", cnt);
+			
+			model.addAttribute("chatList", mapList);
+			model.addAttribute("totalCnt", cnt);
+		}
+		
+		return "jsonView";
+	}
 }
