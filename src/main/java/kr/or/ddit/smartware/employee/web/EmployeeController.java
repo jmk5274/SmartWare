@@ -12,8 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import kr.or.ddit.smartware.employee.model.Department;
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.model.Position;
@@ -35,26 +39,24 @@ public class EmployeeController {
 	private IDepartmentService departmentService;
 		
 	@RequestMapping(path = "employeeList", method = RequestMethod.GET)
-	public String getEmployeeList(Employee employee, Integer page, Integer pagesize, HttpSession session, Model model) {
+	public String getEmployeeList(Employee employee, @RequestParam(name = "page", defaultValue = "1") Integer page,
+													 @RequestParam(name = "pagesize", defaultValue = "30") Integer pagesize, HttpSession session, Model model) {
 		
 		employee = (Employee) session.getAttribute("S_EMPLOYEE");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		if (page == null)
-			page = 1;
-		if (pagesize == null)
-			pagesize = 30;
 
 		map.put("emp_id", employee.getEmp_id());
 		map.put("page", page);
 		map.put("pagesize", pagesize);
 
 		List<Employee> employeeList = employeeService.getEmployeeList(map);
-		logger.debug("employeeList : {}", employeeList);
+//		logger.debug("employeeList : {}", employeeList);
+		logger.debug("employeeListSize : {}", employeeList.size());
 		
-		List<Employee> pageList = employeeService.getEmployeeList(map);
+		List<Employee> pageList = employeeService.allEmployeeList();
 		int paginationSize = (int) Math.ceil((double) pageList.size() / pagesize);
+		logger.debug("paginationSize {}", paginationSize);
 		
 		// 직책 전체 리스트
 		List<Position> positionList = positionService.getAllPosition();
@@ -70,6 +72,7 @@ public class EmployeeController {
 		model.addAttribute("page", page);
 		model.addAttribute("pagesize", pagesize);
 		model.addAttribute("paginationSize", paginationSize);
+		model.addAttribute("departmentList", departmentList);
 
 		return "tiles/employee/employeeList";
 	}
@@ -85,14 +88,15 @@ public class EmployeeController {
 	* @return
 	* Method 설명 : 사원 삭제
 	 */
-	@RequestMapping(path = "deleteEmployee")
+	@PostMapping("deleteEmployee")
 	public String deletePost(Model model, Employee employee, String emp_id) {
 		
-		employeeService.deleteEmployee(emp_id);
+		int c = employeeService.deleteEmployee(emp_id);
 		
 		model.addAttribute("emp_id", emp_id);
 
-		return "redirect:/employeeList";
+		return "redirect:/employeeList?emp_id=" + employee.getEmp_id();
+		
 	}
 	
 	/**
@@ -167,36 +171,45 @@ public class EmployeeController {
 	}
 	
 	// 사용자 등록 요청
-//	@RequestMapping(path = "insertEmployee", method = RequestMethod.POST)
-//	public String insertEmployee(Employee employee, BindingResult result,
-//							@RequestPart("picture") MultipartFile picture) {
-////		new EmployeeValidator().validate(user, result);
-//		if(result.hasErrors()) // 잘못 되면 사용자 등록 화면으로 이동
-//			return "tiles.insertEmployee";
-//		else {
-//			FileInfo fileInfo = FileUtil.getFileInfo(picture.getOriginalFilename());
-//			
-//		// 첨부된 파일이 있을 경우만 업로드 처리
-//		if(picture.getSize() > 0) {
-//			try {
-//				picture.transferTo(fileInfo.getFile());
-//				employee.setFilename(fileInfo.getOriginalFileName());		// originalFilename
-//				employee.setRealfilename(fileInfo.getFile().getPath());
-//				
-//			} catch (IllegalStateException | IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		int insertCnt = employeeService.insertEmployee(employee);
-//				
-//		if(insertCnt == 1)
-//			return "redirect:/employee/insertEmployee?emp_id=" + employee.getEmp_id();
-//		else
-//			return "tiles.insertEmployee";
-//				
-//		}
-//	}
+	@RequestMapping(path = "insertEmployee", method = RequestMethod.POST)
+	public String insertEmployee(Employee employee, BindingResult result, String insertBtn, String able2, String posi_id2, String depart_id2) {
+		
+		
+		int insertCnt = employeeService.insertEmployee(employee);
+		
+		if(insertCnt == 1)
+			return "redirect:/employeeList?emp_id=" + employee.getEmp_id();
+		else
+			return "tiles/employee/employeeList";
+				
+	}
+	
+	/**
+	 * 
+	* Method : mypageView
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @return
+	* Method 설명 : 마이페이지 화면 요청
+	 */
+	@RequestMapping(path = "mypage", method = RequestMethod.GET)
+	public String mypageView() {
+		return "tiles/employee/mypage";
+	}
+	
+	/**
+	 * 
+	* Method : mypageList
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @return
+	* Method 설명 : 마이페이지 리스트 출력
+	 */
+	@RequestMapping(path = "mypage", method = RequestMethod.POST)
+	public String mypageList() {
+		
+		return "tiles/employee/mypage";
+	}
 	
 	@RequestMapping("useForm")
 	public String getEmployeeList() {

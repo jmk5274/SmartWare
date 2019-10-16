@@ -34,13 +34,13 @@
 				   #{emp_nm}, 
 				   #{rank}, 
 				   #{email}, 
-				   #{tel}, 
+				   #{tel},
 				   #{join_dt}, 
 				   #{depart_id}, 
 				   #{posi_id}, 
-				   #{emp_pic}, 
-				   #{sign}, 
-				   #{able}, 
+				   #{emp_pic, jdbcType=VARCHAR}, 
+				   #{sign, jdbcType=VARCHAR}, 
+				   'T', 
 				   #{email_pass})
 	</insert>
 	

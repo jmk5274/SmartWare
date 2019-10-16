@@ -3,6 +3,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<link href ="../sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" >
+<script src="../sweetalert2/dist/sweetalert2.min.js"></script>
 <style>
 	ol{
 		list-style : none;
@@ -26,9 +29,14 @@
 		})
 			
 		$("#save").on("click", function(){
+
 			var cont = $("#cont").val();
 			if(cont == '' || cont.length == 0){
-				alert("내용을 입력해주세요.");
+			Swal({
+				type: 'warning', // success, error, warning, info, question
+				title: '공백 오류',
+				text: '내용을 입력해주세요.'
+			})
 				return;
 			}
 			
