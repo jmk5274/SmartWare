@@ -183,7 +183,7 @@
   position: absolute;
   right: 60px;
   z-index: 4;
-  margin-top: 10px;
+  margin-top: 3px;
   font-size: 1.1em;
   color: #435f7a;
   opacity: .5;
@@ -191,7 +191,7 @@
 }
 @media screen and (max-width: 735px) {
   #frame .content .message-input .wrap .attachment {
-    margin-top: 17px;
+/*     margin-top: 17px; */
     right: 65px;
   }
 }
@@ -536,42 +536,25 @@ $("#status-options ul li").click(function() {
 	$("#status-options").removeClass("active");
 });
 
-function newMessage() {
-	var param={};
-	var chat_id = $("#btn1").data('chat_id');
-	var msg = $(".message-input #msg_cont").val();
-	var d = new Date();
-	var time = d.getHours() + ":" + d.getMinutes();
-	
-	$("#msg_cont").val("");
-	
-	param.chat_id = chat_id;
-	param.msg_cont = msg;
-	
-	$.ajax({
-		url : "${cp}/insertMessage",
-		contentType : "application/json",
-		dataType : "json",
-		method : "post",
-		data : JSON.stringify(param),
-		success : function(data){
-			$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
-			
-			$('.messages').animate({
-				scrollTop: $('.messages').get(0).scrollHeight}, 1000);
-		}
-	});
-};
-
 	var socket = new SockJS("/ws/chat");
 	
 	socket.onmessage = function(evt) {
 		var d = new Date();
-		var time = d.getHours() + ":" + d.getMinutes();
-		var str = evt.data.split(":")
+		var hours = d.getHours() + "";
+		if(hours.length == 1){
+			hours = "0" + d.getHours();
+		}
+		var minutes = d.getMinutes() + "";
+		if(minutes.length == 1){
+			minutes = "0" + d.getMinutes();
+		}
+		var time = hours + ":" + minutes;
+		var str = evt.data.split(":");
 		
-// 		$(".messages ul").append('<li class="sent msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ str[0] +'" alt="" /><p>' + str[1] + '</p> <span>'+ time +'</span></li>');
-		$(".messages ul").append('<li class="sent msgList"><img src="${cp }/empPicture?emp_id='+ str[0] +'" alt="" /><p>' + str[1] + '</p> <span>'+ time +'</span></li>');
+		console.log(evt);
+		console.log(str);
+		
+		$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[3] +'><img src="${cp }/empPicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
 		
 		$('.messages').animate({
 			scrollTop: $('.messages').get(0).scrollHeight}, 1000);    
@@ -581,35 +564,108 @@ function newMessage() {
 	}
 	
 	$("#btn1").on("click", function() {
-		message = $(".message-input #msg_cont").val();
-		if($.trim(message) == '') {
+		var msg = $(".message-input #msg_cont").val();
+		
+		if($.trim(msg) == '') {
 			return false;
 		}
-		socket.send(message);
-		newMessage();
+			
+		var param={};
+		var chat_id = $("#btn1").data('chat_id');
+		var msg = $(".message-input #msg_cont").val();
+		var d = new Date();
+		var hours = d.getHours() + "";
+		if(hours.length == 1){
+			hours = "0" + d.getHours();
+		}
+		var minutes = d.getMinutes() + "";
+		if(minutes.length == 1){
+			minutes = "0" + d.getMinutes();
+		}
+		var time = hours + ":" + minutes;
+		var message;
+		
+		param.chat_id = chat_id;
+		param.msg_cont = msg;
+		
+		$.ajax({
+			url : "${cp}/insertMessage",
+			contentType : "application/json",
+			dataType : "json",
+			method : "post",
+			data : JSON.stringify(param),
+			success : function(data){
+				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+				
+				$('.messages').animate({
+					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
+				
+				message = "msg:" + msg + ":" + data.msg_id;
+				socket.send(message);
+				
+				$(".message-input #msg_cont").val("");
+			}
+		});
 	})
 	
 	$(window).on('keydown', function(e) {
-		  if (e.which == 13) {
-			message = $(".message-input #msg_cont").val();
-			if($.trim(message) == '') {
+		if (e.which == 13) {
+			var msg = $(".message-input #msg_cont").val();
+			
+			if($.trim(msg) == '') {
 				return false;
 			}
-			socket.send(message);
-		    newMessage();
-		    return false;
-		  }
+				
+			var param={};
+			var chat_id = $("#btn1").data('chat_id');
+			var msg = $(".message-input #msg_cont").val();
+			var d = new Date();
+			var hours = d.getHours() + "";
+			if(hours.length == 1){
+				hours = "0" + d.getHours();
+			}
+			var minutes = d.getMinutes() + "";
+			if(minutes.length == 1){
+				minutes = "0" + d.getMinutes();
+			}
+			var time = hours + ":" + minutes;
+			var message;
+			
+			param.chat_id = chat_id;
+			param.msg_cont = msg;
+			
+			$.ajax({
+				url : "${cp}/insertMessage",
+				contentType : "application/json",
+				dataType : "json",
+				method : "post",
+				data : JSON.stringify(param),
+				success : function(data){
+					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+					
+					$('.messages').animate({
+						scrollTop: $('.messages').get(0).scrollHeight}, 1000);
+					
+					message = "msg:" + msg + ":" + data.msg_id;
+					socket.send(message);
+					
+					$(".message-input #msg_cont").val("");
+				}
+			});
+		}
 	 })
 	 
 	$(window).bind("beforeunload", function (e){
 		<%session.setAttribute("C_USE", "false"); %>
 		
 		var param={};
-		var chat_id = "${chat_id}";
 		var msg_id = $('.messages ul li:last-child').data('msg_id'); 
+		var chat_id = "${chat_id}";
 		
 		param.chat_id = chat_id;
 		param.msg_id = msg_id;
+		
+		console.log(JSON.stringify(param))
 		
 		$.ajax({
 			url : "${cp}/updateLastMsg",

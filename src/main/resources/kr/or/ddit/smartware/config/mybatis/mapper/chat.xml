@@ -4,24 +4,31 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chat">
 	<select id="getChatList" parameterType="String" resultType="hashmap">
-		select b.chat_id, b.chat_nm, a.msg_cont, b.cnt, a.send_dt
-	 	  from message a, (select b.chat_id, b.chat_nm, count(*) as cnt
-		                     from chat_emp a, (select a.*
-		                                         from CHAT a, CHAT_EMP b
-		                                        where a.chat_id = b.chat_id
-		                                          and b.emp_id = #{chat_id}) b
-		                    where a.chat_id = b.chat_id
-		                    group by b.chat_id,b.chat_nm) b
-		 where a.chat_id = b.chat_id
-		   and a.send_dt in (select send_dt
-		                       from (select a.chat_id, max(send_dt) as send_dt 
-		                               from message a, (select a.*
-		                                                  from CHAT a, CHAT_EMP b
-		                                                 where a.chat_id = b.chat_id
-		                                                   and b.emp_id = #{chat_id}) b
-		                              where a.chat_id = b.chat_id
-		                              group by a.chat_id))
-		 order by a.send_dt desc
+		select a.chat_id, a.chat_nm, a.emp_cnt, nvl(b.msg_cnt, 0) as msg_cnt, c.msg_cont, c.msg_id, c.send_dt
+		  from (select b.chat_id, b.chat_nm, count(*) as emp_cnt
+		          from chat_emp a, (select a.*
+		                              from CHAT a, CHAT_EMP b
+		                             where a.chat_id = b.chat_id
+		                               and b.emp_id = #{emp_id}) b
+		         where a.chat_id = b.chat_id
+		         group by b.chat_id,b.chat_nm) a
+		  left outer join (select a.chat_id, count(b.msg_id) as msg_cnt
+		                     from (select a.*, b.last_msg
+		                             from CHAT a, CHAT_EMP b
+		                            where a.chat_id = b.chat_id
+		                              and b.emp_id = #{emp_id}) a
+		                     left outer join message b
+		                       on a.chat_id = b.chat_id
+		                    where to_number(substr(b.msg_id, 4, 4)) > NVL(to_number(substr(a.last_msg, 4, 4)), 0)
+		                    group by a.chat_id) b
+		    on a.chat_id = b.chat_id
+		   left outer join (select a.chat_id, a.msg_cont, 'msg'||lpad(b.msg_id,4,0) as msg_id, a.send_dt
+		                      from message a, (select chat_id, max(to_number(substr((msg_id), 4, 4))) as msg_id 
+		                                         from message
+		                                        group by chat_id) b
+		                     where to_number(substr(a.msg_id, 4, 4)) = b.msg_id) c
+		    on a.chat_id = c.chat_id
+		    order by to_number(substr(msg_id,4,4)) desc
 	</select>
 	
 	<select id="getChatNm" parameterType="String" resultType="String">
@@ -43,7 +50,7 @@
 	  	  from message a, employee b
 		 where a.chat_id = #{chat_id}
 		   and a.emp_id = b.emp_id
-		   order by send_dt
+		   order by msg_id
 	</select>
 	
 	<insert id="insertMessage" parameterType="message">
@@ -105,6 +112,20 @@
 		select distinct count(*)
 		  from message
 		 where TO_NUMBER(substr(msg_id,4,4)) > TO_NUMBER(substr(#{msg_id},4,4))
-		   and chat_id like '%'||#{chat_id}||'%';
+		   and chat_id like '%'||#{chat_id}||'%'
 	</select>
+	
+	<select id="getChatTotleCnt" parameterType="String" resultType="int">
+		select nvl(sum(a.msg_cnt), 0)
+		  from (select a.chat_id, count(b.msg_id) as msg_cnt
+		          from (select a.*, b.last_msg
+		                  from CHAT a, CHAT_EMP b
+		                 where a.chat_id = b.chat_id
+		                   and b.emp_id = #{data}) a
+		          left outer join message b
+		            on a.chat_id = b.chat_id
+		         where to_number(substr(b.msg_id, 4, 4)) > NVL(to_number(substr(a.last_msg, 4, 4)), 0)
+		         group by a.chat_id) a
+	</select>
+	
 </mapper>

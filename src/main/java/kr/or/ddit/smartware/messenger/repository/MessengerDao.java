@@ -197,7 +197,20 @@ public class MessengerDao implements IMessengerDao{
 	*/
 	@Override
 	public int getChatListCount(Message message) {
-		return sqlSession.selectOne("chat.getChatListCount",message);
+		return sqlSession.selectOne("chat.getChatListCount", message);
+	}
+
+	/**
+	* Method : getChatTotleCnt
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 채팅방 토탈 카운트 조회
+	*/
+	@Override
+	public int getChatTotleCnt(String emp_id) {
+		return sqlSession.selectOne("chat.getChatTotleCnt", emp_id);
 	}
 
 }

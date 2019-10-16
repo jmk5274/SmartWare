@@ -86,20 +86,14 @@ public class LoginController {
 			return "login/login";	// view();
 			
 		}else if(employee.checkLoginValidate(emp_id, pass)) {
-			List<Map> mapList = messengerService.getChatList(employee.getEmp_id());
-			
-			int cnt = 0;
-			for(Map map : mapList) {
-				int num = (int) map.get("MSG_CNT");
-				cnt += num;
-			}
+//			List<Map> mapList = messengerService.getChatList(employee.getEmp_id());
+//			int cnt = messengerService.getChatTotleCnt(employee.getEmp_id());
 			
 			request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList());
-			request.getServletContext().setAttribute("A_CHATLIST", mapList);
-			request.getServletContext().setAttribute("A_CNT", cnt);
+//			request.getServletContext().setAttribute("A_CHATLIST", mapList);
+//			request.getServletContext().setAttribute("A_CNT", cnt);
 			
 			employee.setC_use("false");
-			
 			
 //			IMAPFolder folder = null;
 //	        Store store = null;

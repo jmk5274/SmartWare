@@ -4,7 +4,96 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script>
+
+	var socket = new SockJS("/ws/chat");
+	
+	socket.onmessage = function(evt) {
+		var str = evt.data.split(":");
+		console.log("dd");
+		if(str[0]===("msg")){
+			$.ajax({
+				url : "${cp}/getChatList",
+				contentType : "application/json",
+				dataType : "json",
+				method : "get",
+				success : function(data){
+					var chatList = data.chatList;
+					var totalCnt = data.totalCnt;
+					if (totalCnt==0){
+						totalCnt = "";
+					}
+					var html = "";
+					var emp_id = "${S_EMPLOYEE.emp_id}";
+					
+					console.log(chatList);
+					$("#chatDtailList ul").empty();
+					chatList.forEach(function(chat){
+						var msg_cnt = chat.MSG_CNT;
+						if(msg_cnt==0){
+							msg_cnt = "";
+						}
+                        html += '<li id="'+chat.CHAT_ID+'" class="notification-unread chatList">'
+	                    html +=     '<a href="javascript:void(window.open(\'${cp }/chatRoom?chat_id='+chat.CHAT_ID+'\', \'채팅방\',\'width=500px, height=650px\'))">'
+	                    html +=         '<img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id='+emp_id+'" alt="">'
+	                    html +=         '<div class="notification-content">'
+	                    html +=             '<span class="notification-heading">'+chat.CHAT_NM+' / '+chat.EMP_CNT+'명</span>'	
+	                    html +=             '<i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="'+chat.CHAT_ID+'"></i>'
+	                    html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+chat.SEND_DT+'</div>'
+	                    html +=         '</div>'
+		                html +=         	'<span id="'+msg_cnt+'" class="badge badge-pill gradient-1">'+msg_cnt+'</span>'
+	                    html +=         '<span id="'+chat.CHAT_ID+'" class="badge badge-pill gradient-1">'+chat.MSG_CNT+'</span>'
+	                    html +=     '</a>'
+	                    html += '</li>'
+					})
+					$("#totalCnt").text(totalCnt+"");
+					$("#chatDtailList ul").append(html);
+				}
+			});
+		}
+	};
+	
 	$(function() {
+		
+		$.ajax({
+			url : "${cp}/getChatList",
+			contentType : "application/json",
+			dataType : "json",
+			method : "get",
+			success : function(data){
+				var chatList = data.chatList;
+				var totalCnt = data.totalCnt;
+				if (totalCnt==0){
+					totalCnt = "";
+				}
+				var html = "";
+				var emp_id = "${S_EMPLOYEE.emp_id}";
+				
+				console.log(chatList);
+				$("#chatDtailList ul").empty();
+				chatList.forEach(function(chat){
+					var msg_cnt = chat.MSG_CNT;
+					if(msg_cnt==0){
+						msg_cnt = "";
+					}
+                    html += '<li id="'+chat.CHAT_ID+'" class="notification-unread chatList">'
+                    html +=     '<a href="javascript:void(window.open(\'${cp }/chatRoom?chat_id='+chat.CHAT_ID+'\', \'채팅방\',\'width=500px, height=650px\'))">'
+                    html +=         '<img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id='+emp_id+'" alt="">'
+                    html +=         '<div class="notification-content">'
+                    html +=             '<span class="notification-heading">'+chat.CHAT_NM+' / '+chat.EMP_CNT+'명</span>'	
+                    html +=             '<i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="'+chat.CHAT_ID+'"></i>'
+                    html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+chat.SEND_DT+'</div>'
+                    html +=         '</div>'
+	                html +=         	'<span id="'+msg_cnt+'" class="badge badge-pill gradient-1">'+msg_cnt+'</span>'
+                    html +=         '<span id="'+chat.CHAT_ID+'" class="badge badge-pill gradient-1">'+chat.MSG_CNT+'</span>'
+                    html +=     '</a>'
+                    html += '</li>'
+				})
+				$("#totalCnt").text(totalCnt+"");
+				$("#chatDtailList ul").append(html);
+			}
+		});
+		
+		
 		$(".chatList").hover(function(){
 			if($(".x", this).css("visibility") == "visible")
 				$(".x", this).css("visibility", "hidden");
@@ -31,6 +120,7 @@
 			
 			event.preventDefault();
 		});
+		
 	});
 	
 </script>
@@ -126,9 +216,9 @@
                     </div>
                 </li>
                 
-                <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                <li class="icons dropdown messenger"><a href="javascript:void(0)" data-toggle="dropdown">
                         <i class="fa fa-users"></i>
-                        <span class="badge badge-pill gradient-1">3</span>
+		                <span id="totalCnt" class="badge badge-pill gradient-1"></span>
                     </a>
                     <div class="drop-down animated fadeIn dropdown-menu">
                         <div class="dropdown-content-heading d-flex justify-content-between">
@@ -137,21 +227,8 @@
                                 <i class="fa fa-plus"></i>
                             </a>
                         </div>
-                        <div class="dropdown-content-body">
+                        <div id="chatDtailList" class="dropdown-content-body">
                             <ul>
-                            	<c:forEach items="${A_CHATLIST }" var="chat">
-	                                <li id="${chat.CHAT_ID }" class="notification-unread chatList">
-	                                    <a href="javascript:void(window.open('${cp }/chatRoom?chat_id=${chat.CHAT_ID }', '채팅방','width=500px, height=650px'))">
-	                                        <img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id=${S_EMPLOYEE.emp_id}" alt="">
-	                                        <div class="notification-content">
-	                                            <span class="notification-heading">${chat.CHAT_NM } / ${chat.CNT }명</span>	
-	                                            <i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="${chat.CHAT_ID }"></i>
-	                                            <div class="notification-timestamp">${chat.MSG_CONT }<br><fmt:formatDate value="${chat.SEND_DT }" pattern="yyyy/MM/dd"/></div>
-<!-- 	                                            <div class="notification-text">dsfdsfs</div> -->
-	                                        </div>
-	                                    </a>
-	                                </li>
-                            	</c:forEach>
                             </ul>
                         </div>
                     </div>

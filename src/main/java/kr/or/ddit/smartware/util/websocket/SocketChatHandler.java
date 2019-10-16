@@ -40,14 +40,18 @@ public class SocketChatHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		Employee employee = getEmployee(session);
 		logger.debug("메세지전송 = {} : {}", employee, message.getPayload());
+
+		//채팅메시지 : str[0]type, str[1]유저이름, str[2]메시지내용, str[3]msg_id
+		String[] str = message.getPayload().split(":");
+		String type = str[0];
 		
 		for (WebSocketSession currentSession : chatMap.values()) {
 			Employee employeee = getEmployee(currentSession);
 			logger.debug("map : {}", employeee.getC_use());
-			if(employeee != employee && employeee.getC_use().equals("true")) {
-				currentSession.sendMessage(new TextMessage(employee.getEmp_id() + ":" + message.getPayload()));
-			}else if(employeee != employee && employeee.getC_use().equals("false")){
-				currentSession.sendMessage(new TextMessage(employee.getEmp_id() + ":" + message.getPayload()));
+			if(employeee != employee && employeee.getC_use().equals("true") && type.equals("msg")) {
+				currentSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2]));
+			}else if(employeee != employee && employeee.getC_use().equals("false") && type.equals("msg")){
+				currentSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2]));
 			}
 		}
 	}

@@ -158,5 +158,18 @@ public class MessengerService implements IMessengerService{
 	public int getChatListCount(Message message) {
 		return messengerDao.getChatListCount(message);
 	}
+
+	/**
+	* Method : getChatTotleCnt
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 채팅방 토탈 카운트 조회
+	*/
+	@Override
+	public int getChatTotleCnt(String emp_id) {
+		return messengerDao.getChatTotleCnt(emp_id);
+	}
 	
 }
