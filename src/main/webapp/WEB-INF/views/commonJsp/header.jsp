@@ -5,11 +5,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
-	Employee employee = (Employee) session.getAttribute("S_EMPLOYEE"); 
-	employee.setC_use("false");
-	employee.setChat_id("");
-	
-	session.setAttribute("S_EMPLOYEE", employee);
+	Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+	if(employee != null){
+		employee.setC_use("false");
+		employee.setChat_id("");
+		session.setAttribute("S_EMPLOYEE", employee);
+	}
 %>
 
 <script src="${cp }/js/moment.js"></script>
