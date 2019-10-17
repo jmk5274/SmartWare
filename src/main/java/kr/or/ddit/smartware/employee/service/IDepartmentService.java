@@ -1,7 +1,6 @@
 package kr.or.ddit.smartware.employee.service;
 
 import java.util.List;
-import java.util.Map;
 
 import kr.or.ddit.smartware.employee.model.Department;
 
@@ -19,13 +18,4 @@ public interface IDepartmentService {
 	String getDepartNm(String depart_id);
 	
 	List<Department> getAllDepartment();
-	
-	/**
-	 * Method : getDepartMentList
-	 * 작성자 : KIM DO HOON
-	 * 변경이력 :
-	 * @return
-	 * Method 설명 : 부서목록 출력
-	 */
-	List<Map> getDepartMentList();
 }

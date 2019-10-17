@@ -10,15 +10,20 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
- <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-    <!-- Pignose Calender -->
-    <link href="${cp}/bootstrap/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
-    <!-- Chartist -->
-    <link rel="stylesheet" href="${cp}/bootstrap/plugins/chartist/css/chartist.min.css">
-    <link rel="stylesheet" href="${cp}/bootstrap/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
-    <!-- Custom Stylesheet -->
-    <link href="${cp}/bootstrap/css/style.css" rel="stylesheet">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="images/favicon.png">
+<!-- Pignose Calender -->
+<link
+	href="${cp}/bootstrap/plugins/pg-calendar/css/pignose.calendar.min.css"
+	rel="stylesheet">
+<!-- Chartist -->
+<link rel="stylesheet"
+	href="${cp}/bootstrap/plugins/chartist/css/chartist.min.css">
+<link rel="stylesheet"
+	href="${cp}/bootstrap/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+<!-- Custom Stylesheet -->
+<link href="${cp}/bootstrap/css/style.css" rel="stylesheet">
 
 <title>Jsp-Main</title>
 <%@ include file="/WEB-INF/views/commonJsp/basicLib.jsp"%>
@@ -27,14 +32,14 @@
 <body>
 
 	<!-- header -->
-	<%@ include file="/WEB-INF/views/commonJsp/header.jsp" %>
-	
+	<%@ include file="/WEB-INF/views/commonJsp/header.jsp"%>
+
 	<div class="container-fluid">
 		<div class="row">
 
 			<div class="col-sm-3 col-md-2 sidebar">
 				<!-- left -->
-				<%@ include file="/WEB-INF/views/commonJsp/left.jsp" %>
+				<%@ include file="/WEB-INF/views/commonJsp/left.jsp"%>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -46,8 +51,8 @@
 
 					<div class="col-sm-8 blog-main">
 
-					<!-- /.blog-main -->
-				</div>
+						<!-- /.blog-main -->
+					</div>
 				</div>
 			</div>
 		</div>

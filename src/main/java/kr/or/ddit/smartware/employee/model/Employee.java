@@ -145,7 +145,7 @@ public class Employee {
 				+ ", emp_pic=" + emp_pic + ", sign=" + sign + ", able=" + able + ", email_pass=" + email_pass
 				+ ", c_use=" + c_use + ", chat_id=" + chat_id + "]";
 	}
-	
+
 	public boolean checkLoginValidate(String emp_id, String pass) {
 		// 암호화 문장끼리 비교
 //		if(emp_id.equals(this.emp_id) && KISA_SHA256.encrypt(pass).equals(this.pass))

@@ -4,15 +4,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script type="text/javascript" src="${cp }/ckeditor/ckeditor.js"></script>
-<head>
-	<link href="${cp }/bootstrap/plugins/nestable/css/nestable.css" rel="stylesheet">
-	<link href="${cp }/bootstrap/css/style.css" rel="stylesheet">
-</head>
+<link href="${cp }/bootstrap/plugins/nestable/css/nestable.css" rel="stylesheet">
+<link href="${cp }/bootstrap/css/style.css" rel="stylesheet">
 <script>
 	$(function(){
 		
-		$("#sendbtn").click(function(){
-			$("#frm").submit();
+		$("#btnTest_alert").click(function(){
+			var cont = $("#p_content").val()
+			
+			var formData = new FormData();
+			
+			var myForm = document.getElementById('frm');
+			formData = new FormData(myForm);
+			
+			
+			 $.ajax({
+			      url : "${cp}/sendEmail?cont="+cont,
+			      enctype: 'multipart/form-data',
+			      contentType : false,
+			      processData : false,
+			      dataType : "json",
+			      method : "post",
+			      data : formData,
+			      success : function(data){
+			    	  Swal({
+							type: 'success', // success, error, warning, info, question
+							title: '메일이 전송 되었습니다',
+						});
+			    	  
+			    	  setTimeout("location.href='${cp}/main'",2000);
+			      },
+			      error : function(xhr){
+			    	  Swal({
+							type: 'error', // success, error, warning, info, question
+							title: '메일전송 실패'
+						});
+			    	  
+			    	  $("#reci").focus();
+			    	  
+			      }
+			   });
+			
 		});
 		
 		$("#emailCheck").click(function(){
@@ -32,8 +64,6 @@
 			$(':checkbox:checked').attr('checked', false );
 		});
 		
-		
-		
 		$(document).on('click', '.toggleBtn', function() {
 			var text = $(this).text();
 			$(this).text(text === 'Collapse' ? 'Collapse' : 'Expand').parent().find('.dd-list').toggle();
@@ -47,14 +77,20 @@ function checkEmail(){
 		$("#emailCheckFrm").submit();
 }	
 </script>
+
+
+
 	
-    <script src="${cp }/bootstrap/plugins/nestable/js/jquery.nestable.js"></script>
+<script src="${cp }/bootstrap/plugins/nestable/js/jquery.nestable.js"></script>
 
 <form id="emailCheckFrm" action="${cp }/validator">
 	<input type="hidden" id="checkEmail" name="email"/>
 </form>
 
-<body>
+<form id="contForm" action="${cp }/sendMail" method="post">
+	<input type="hidden" id="cont" name = "cont">
+</form>
+
 
 <div class="container-fluid">
 	<div class="row">
@@ -90,14 +126,14 @@ function checkEmail(){
 				                                            <ol class="dd-list">
 				                                            	<!-- 부서로해서 for문을 돌려 class를 지정해주고 id값을 넣어준다 -->
 				                                            	<c:forEach items="${departList }" var="depart" varStatus="loop">
-								                                            	<li class="dd-item dd-collapsed" data-id="${depart.DEPART_ID }"><button data-id="${depart.DEPART_ID }" class="toggleBtn" data-action="collapse" type="button">Collapse</button>
-								                                                    <div class="dd-handle">${depart.DEPART_NM }</div>
+								                                            	<li class="dd-item dd-collapsed" data-id="${depart.depart_id }"><button data-id="${depart.depart_id }" class="toggleBtn" data-action="collapse" type="button">Collapse</button>
+								                                                    <div class="dd-handle">${depart.depart_nm }</div>
 									                                                    <ol class="dd-list">
 										                                            		<c:forEach items="${employeeList }" var="employee">
 											                                            		<c:forEach items="${positionList }" var="position">
-											                                            				<c:if test="${depart.DEPART_ID == employee.depart_id && position.POSI_ID == employee.posi_id}">
-														                                                        <li class="dd-item select" data-id="${depart.DEPART_ID }">
-														                                                            <div class="dd-handle"><input value="${employee.email }" type="checkbox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.POSI_NM }&nbsp;</div>
+											                                            				<c:if test="${depart.depart_id == employee.depart_id && position.posi_id == employee.posi_id}">
+														                                                        <li class="dd-item select" data-id="${depart.depart_id }">
+														                                                            <div class="dd-handle"><input value="${employee.email }" type="checkbox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.posi_nm }&nbsp;</div>
 														                                                        </li>
 														                                                </c:if>
 														                                         </c:forEach>
@@ -111,10 +147,10 @@ function checkEmail(){
 				                                </div>
 				                            </div>
 				                        </div>
-                    </div>
+                  				  </div>
                                           <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                               <button type="button" id="confirmbtn" class="btn btn-primary" data-dismiss="modal">확인</button>
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                                           </div>
                                             </div>
                                         </div>
@@ -134,13 +170,13 @@ function checkEmail(){
 								<button type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button><br>
 								<form:errors path="email.email"/></font>
 								<br>
-									<input type="hidden" name="email"
+									<input type="hidden" id="email" name="email"
 									value="${S_EMPLOYEE.email }" /> <input type="hidden"
-									name="emailPass" value="${S_EMPLOYEE.email_pass }" />
+									id="emailpass" name="emailPass" value="${S_EMPLOYEE.email_pass }" />
 						</div>
 						<br>
 						<div class="form-group">
-							<input type="text" name="subject"
+							<input type="text" id="subject" name="subject"
 								class="form-control bg-transparent" placeholder=" Subject"
 								style="width: 900px;">
 						</div>
@@ -160,15 +196,16 @@ function checkEmail(){
 						</h5>
 							<div class="form-group">
 								<div class="fallback">
-									<input class="l-border-1" name="attatch" type="file"
+									<input class="l-border-1" id="attatch" name="attatch" type="file"
 										multiple="multiple">
 								</div>
 							</div>
 						</form>
 					</div>
 					<div class="text-left m-t-15">
-						<button id="sendbtn"
-							class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
+					
+						<button id="btnTest_alert"
+							class="btn btn-danger btn sweet-wrong m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
 							type="button">
 							<i class="fa fa-paper-plane m-r-5"></i> Send
 						</button>
@@ -184,4 +221,3 @@ function checkEmail(){
 		</div>
 	</div>
 </div>
-</body>

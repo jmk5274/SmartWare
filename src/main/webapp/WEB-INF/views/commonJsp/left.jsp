@@ -25,7 +25,7 @@
                     <i class="fa fa-file-text-o menu-icon"></i><span class="nav-text">전자결재</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/layout-blank.html">결재하기</a></li>
+                    <li><a href="${cp }/approval/approvalPage">결재하기</a></li>
                     <li><a href="${cp }/bootstrap/layout-fixed-header.html">결재문서 보기</a></li>
                 </ul>
             </li>
@@ -34,7 +34,7 @@
                     <i class="fa fa-list-alt menu-icon"></i> <span class="nav-text">사내 게시판</span>
                 </a>
                 <ul aria-expanded="false">
-                <c:if test="${S_EMPLOYEE.emp_id == 'e0002'}">
+                <c:if test="${S_EMPLOYEE.rank == 'admin'}">
                     <li><a href="${cp }/addBoard">메뉴 관리</a></li>                    
                 </c:if>
                     <c:forEach items="${A_BOARDLIST }" var="list">

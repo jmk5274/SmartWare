@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import kr.or.ddit.smartware.view.FileDownloadView;
+import kr.or.ddit.smartware.view.FileDownloadView2;
 
 @Configuration
 @ComponentScan(basePackages = "kr.or.ddit", useDefaultFilters = false,
@@ -51,6 +52,11 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public View fileDownloadView() {
 		return new FileDownloadView();
+	}
+	
+	@Bean
+	public View fileDownloadView2() {
+		return new FileDownloadView2();
 	}
 	
 	@Bean
