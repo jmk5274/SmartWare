@@ -362,6 +362,8 @@ INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2
 INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_중요', '#CDA85C', 'de0003', 'e0006');
 INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_생일', '#0D9A00', 'de0003', 'e0006');
 INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '부서2_이벤트', '#00C0EF', 'de0003', 'e0006');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '임원 휴가', '#22FF94', 'de0001', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '개발1팀 휴가', '#22FF94', 'de0002', 'e0005');
 
 ---------------------------------------------------------------------------------------------------------------
 --일정
@@ -424,4 +426,10 @@ INSERT INTO CALENDAR VALUES
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '홍다은 생일', null, TO_DATE('20191025', 'YYYYMMDD'), 
       TO_DATE('20191025', 'YYYYMMDD'), 'T', 'de0002', 'e0015', 'cate0005');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '송찬중 휴가', null, TO_DATE('20191010', 'YYYYMMDD'),
+      TO_DATE('20191025', 'YYYYMMDD'), 'T', 'de0001', 'e0003', 'cate0023');
+INSERT INTO CALENDAR VALUES
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '배상현 휴가', null, TO_DATE('20191015', 'YYYYMMDD'),
+      TO_DATE('20191017', 'YYYYMMDD'), 'T', 'de0002', 'e0005', 'cate0024');
 commit;

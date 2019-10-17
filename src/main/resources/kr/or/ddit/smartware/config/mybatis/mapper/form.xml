@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="form">
+	<!-- 부서 아이디에 해당하는 부서 이름을 반환 -->
+	<select id="getFormList" resultType="form">
+		select form_id, form_nm
+		  from form
+	</select>
+
+	<select id="getFormInfo" resultType="form" parameterType="String">
+		select *
+		from form
+		where form_id = #{form_id}
+	</select>
+	
+</mapper>

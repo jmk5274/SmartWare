@@ -4,7 +4,8 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-	 config.enterMode = CKEDITOR.ENTER_BR
+	// 추가해준부분
+	config.enterMode = CKEDITOR.ENTER_BR;
 	// Define changes to default configuration here.
 	// For complete reference see:
 	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
@@ -26,11 +27,26 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'colors' },
 		{ name: 'about' }
 	];
+	// config.toolbar = 'Full';
+	//
+	// config.toolbar_Full =
+	// 	[
+	// 		{ name: 'document', items : [ 'Source','-','Save','DocProps','Preview','-','Templates' ] },
+	// 		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+	// 		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv',
+	// 				'-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+	// 		{ name: 'links', items : [ 'Link','Unlink'] },
+	// 		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
+	// 		{ name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
+	// 		{ name: 'colors', items : [ 'TextColor','BGColor' ] },
+	// 		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About' ] }
+	// 	];
 
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
 	config.removeButtons = 'Underline,Subscript,Superscript';
-
+	config.pasterFilter = null;
+	config.fillEmptyBlocks = false;
 	// Set the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
 
