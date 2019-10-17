@@ -58,7 +58,9 @@ public class MessengerController {
 	public String chatRoom(Model model, String chat_id, HttpSession session) {
 		
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
-		ChatEmp chatEmp = new ChatEmp(chat_id, employee.getEmp_id());
+		ChatEmp chatEmp = new ChatEmp();
+		chatEmp.setChat_id(chat_id);
+		chatEmp.setEmp_id(employee.getEmp_id());
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("chat_id", chat_id);		
@@ -92,6 +94,7 @@ public class MessengerController {
 		model.addAttribute("chatList", chatList);
 		
 		employee.setC_use("true");
+		employee.setChat_id(chat_id);
 		session.setAttribute("S_EMPLOYEE", employee);
 		
 		return "messenger/chatView";
@@ -367,6 +370,39 @@ public class MessengerController {
 		if(msg_id.equals("msg")) msg_id = "";
 
 		model.addAttribute("msg_id", msg_id);
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("getChatInfo")
+	public String getChatInfo(String chat_id, Model model, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		String emp_nm = "";
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("chat_id", chat_id);		
+		map.put("emp_id", employee.getEmp_id());	
+		
+		List<Employee> chatEmpList = messengerService.getChatEmp(map);
+		List<Employee> chatList = messengerService.getChatInfo(chat_id);
+		List<Map> empList1 = messengerService.getEmpList(emp_nm);
+		
+		List<Map> empList = new ArrayList<Map>();
+		for(Map emp : empList1) {
+			boolean flag = false;
+			for(Employee chat : chatList) {
+				String emp_id=(String) emp.get("EMP_ID");
+				if(emp_id.equals(chat.getEmp_id()))
+				flag = true;
+			}
+			if(flag == false) {
+				empList.add(emp);
+			}
+		}
+		
+		model.addAttribute("cnt", chatEmpList.size()-1);
+		model.addAttribute("chatEmpList", chatEmpList);
+		model.addAttribute("empList", empList);
 		
 		return "jsonView";
 	}

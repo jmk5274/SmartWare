@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.smartware.employee.model.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -75,6 +76,14 @@
 							});
 						}
 					});
+
+					<%
+						Employee employee = (Employee) session.getAttribute("S_EMPLOYEE"); 
+						employee.setC_use("false");
+						employee.setChat_id("");
+						
+						session.setAttribute("S_EMPLOYEE", employee);
+					%>
 					window.open('${cp }/chatRoom?chat_id='+chat_id, '채팅방', 'width=500px, height=650px')
 				});
 				
