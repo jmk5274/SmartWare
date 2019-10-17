@@ -485,7 +485,7 @@ th{
 		<div class="message-input">
 			<div class="wrap">
 				<form id="messageFrm" action="${cp }/insertMessage" method="post">
-					<input id="msg_cont" name="msg_cont" type="text" placeholder="내용을 입력해주세요" />
+					<input id="msg_cont" name="msg_cont" type="text" placeholder="내용을 입력해주세요" autocomplete="off" />
 					<input name="chat_id" type="hidden" value="${chat_id }"/>
 					<label>
 						<i id="btn" class="fa fa-paperclip attachment" aria-hidden="true"></i>

@@ -72,6 +72,13 @@
                     <li><a href="${cp }/bootstrap/ui-alert.html">일감 추가</a></li>
                 </ul>
             </li>
+            <c:if test="${S_EMPLOYEE.emp_id == 'e0002'}">
+	            <li>
+	                <a href="${cp }/popup" aria-expanded="false">
+	                    <i class="fa fa-desktop"></i><span class="nav-text">팝업관리</span>
+	                </a>
+	            </li>
+            </c:if>
             
             <li>
                 <a href="${cp }/useForm" aria-expanded="false">

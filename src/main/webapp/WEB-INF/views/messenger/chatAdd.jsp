@@ -20,7 +20,7 @@
 	            <div class="form-group row">
 	                <label class="col-sm-2 col-form-label">이름</label>
 	                <div class="col-sm-10">
-	                    <input name="chat_nm" type="text" class="form-control" placeholder="대화방 이름을 입력해주세요">
+	                    <input name="chat_nm" type="text" class="form-control" placeholder="대화방 이름을 입력해주세요" autocomplete="off">
 	                </div>
 	            </div>
             <input type="submit" class="btn btn-primary" value="확인"/>

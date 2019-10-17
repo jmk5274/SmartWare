@@ -65,9 +65,9 @@
 	</insert>
 	
 	<insert id="insertChat" parameterType="chat">
-		insert into chat values('ch' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), #{chat_nm}, 'T')
+		insert into chat values('ch' || LPAD(CHAT_SEQ .NEXTVAL,4,0), #{chat_nm}, 'T')
 		<selectKey order="AFTER" resultType="String" keyProperty="chat_id" >
-			select 'ch' || LPAD(CATEGORY_SEQ.currval,4,0) from dual
+			select 'ch' || LPAD(CHAT_SEQ.currval,4,0) from dual
 		</selectKey>
 	</insert>
 	
