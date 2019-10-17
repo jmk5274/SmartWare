@@ -3,6 +3,8 @@ package kr.or.ddit.smartware.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketSession;
@@ -24,7 +26,6 @@ public class WebsocketConfig implements WebSocketConfigurer{
 // 			.setAllowedOrigins("*")			 // 어떤 도메인이든 상관없이 처리(cross domain)
 //	 			.addInterceptors(new HttpSessionHandshakeInterceptor())	// 다음pt 설명
 //	 			.withSockJS();
-		 
 		 registry.addHandler(chatSocketHandler(), "/ws/chat") // /ws/chat url을 처리해줄 handler 등록
 			.setAllowedOrigins("*")			 // 어떤 도메인이든 상관없이 처리(cross domain)
 	 			.addInterceptors(new HttpSessionHandshakeInterceptor())	// 다음pt 설명

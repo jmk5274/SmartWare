@@ -40,18 +40,45 @@ public class SocketChatHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		Employee employee = getEmployee(session);
 		logger.debug("메세지전송 = {} : {}", employee, message.getPayload());
-
-		//채팅메시지 : str[0]type, str[1]유저이름, str[2]메시지내용, str[3]msg_id
+		
+		//채팅메시지 : str[0]type, str[1]메시지, str[2]chat_id, str[3]msg_id, str[4...]채팅방 인원 정보
 		String[] str = message.getPayload().split(":");
 		String type = str[0];
 		
+		// 메시지전송에 대한 send 이벤트
+		if(type.equals("msg")) {
+			for(int i=0; i<str.length; i++) {
+				String chat_id = str[2];
+				if(chatMap.get(str[i])!=null && i>3) {
+					WebSocketSession webSession = chatMap.get(str[i]);
+					Employee employeee = getEmployee(webSession);
+					
+//					logger.debug("c_use {}", webSession.getAttributes().get("C_USE"));
+					logger.debug("c_use {}", employeee.getC_use());
+					if(employeee.getC_use().equals("true") && employeee.getChat_id().equals(chat_id)) {
+						webSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2] + ":" + str[3]));
+					}else if(employeee.getC_use().equals("false")) {
+						webSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2] + ":" + str[3]));
+					}
+				}
+			}
+		}
+		
 		for (WebSocketSession currentSession : chatMap.values()) {
 			Employee employeee = getEmployee(currentSession);
-			logger.debug("map : {}", employeee.getC_use());
-			if(employeee != employee && employeee.getC_use().equals("true") && type.equals("msg")) {
-				currentSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2]));
-			}else if(employeee != employee && employeee.getC_use().equals("false") && type.equals("msg")){
-				currentSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2]));
+			if(employeee.getC_use().equals("true") && type.equals("close")) {
+				currentSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_nm()));
+			}else if(employeee.getC_use().equals("true") && type.equals("invite")) {
+				String employees = "";
+				for(int i=0; i<str.length; i++) {
+					if(!str[i].equals("invite")) {
+						employees += str[i];
+						if(i!=str.length-1) {
+							employees += ", ";
+						}
+					}
+				}
+				currentSession.sendMessage(new TextMessage(type + ":" + employees));
 			}
 		}
 	}

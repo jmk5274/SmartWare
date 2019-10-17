@@ -86,12 +86,8 @@ public class LoginController {
 			return "login/login";	// view();
 			
 		}else if(employee.checkLoginValidate(emp_id, pass)) {
-//			List<Map> mapList = messengerService.getChatList(employee.getEmp_id());
-//			int cnt = messengerService.getChatTotleCnt(employee.getEmp_id());
 			
 			request.getServletContext().setAttribute("A_BOARDLIST", boardService.getBoardList());
-//			request.getServletContext().setAttribute("A_CHATLIST", mapList);
-//			request.getServletContext().setAttribute("A_CNT", cnt);
 			
 			employee.setC_use("false");
 			
