@@ -62,8 +62,16 @@
 								<div class="media align-items-center mb-4">
 								<tr id="margin">
 								<td id="photo">
+									<br>
 				                   <img class="mr-3" src="${cp }/employeePicture?emp_id=${employee.emp_id}" width="200" height="200" alt="">
 				                      <div class="media-body">
+				                      	<br>
+					                       <div class="form-group">
+												<div class="col-sm-10">
+													<input type="file" class="form-control" id="picture" name="picture"
+														placeholder="프로필 사진">
+												</div>
+											</div>
 				                    </td>
 				                         <td><h3 class="mb-3">${employee.emp_nm }</h3>
 				                            <p class="text-muted mb-0">${employee.depart_id }</p></td>
@@ -126,6 +134,21 @@
 									
 										<td><strong class="text-dark mr-4">입사일</strong></td>
 										<td><input type="date" id="join_dt" name="join_dt" class="form-control input-default" value="${employee.join_dt }"></td>
+									</tr>
+									
+									<!-- 서명 -->
+									<tr>
+									
+										<td><strong class="text-dark mr-4">서명</strong></td>
+											<td>
+<%-- 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.sign } --%>
+											<img src="${cp }/employeeSign?emp_id=${employee.emp_id}" width="100" height="100" alt="">
+											<div class="form-group">
+												<div class="col-sm-10">
+													<input type="file" class="form-control" id="sign" name="sign"
+														placeholder="서명">
+												</div>
+											</div>
 									</tr>
 
 									</div>
