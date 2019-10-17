@@ -1,6 +1,7 @@
 package kr.or.ddit.smartware.calendar.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
@@ -110,5 +114,13 @@ public class CalendarController {
 		
 		return jsonView;
 	}
-	
+	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
+	@PostMapping("insertCalendar")
+	public View insertCalendar(Model model, Calendar calendar, long start, long end) {
+		logger.debug("calendar: {}", calendar);
+		logger.debug("start: {}", new Date(start));
+		logger.debug("end: {}", new Date(end));
+		
+		return jsonView;
+	}
 }

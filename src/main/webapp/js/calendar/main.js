@@ -63,16 +63,14 @@ $(function() {
     calendar.render();
 
 	// 개인 일정 카테고리 불러오기
-	$.getJSON(cp + "/getEmpCategoryList")
-		.done(function(data) {
-			getDisplayCategory(data.categoryList, $("#empCategory"));
-		});
+	$.getJSON(cp + "/getEmpCategoryList").done(function(data) {
+		getDisplayCategory(data.categoryList, $("#empCategory"));
+	});
 	
 	// 부서 일정 카테고리 불러오기
-	$.getJSON(cp + "/getDepCategoryList")
-		.done(function(data) {
-			getDisplayCategory(data.categoryList, $("#depCategory"));
-		});
+	$.getJSON(cp + "/getDepCategoryList").done(function(data) {
+		getDisplayCategory(data.categoryList, $("#depCategory"));
+	});
 	
 	// 카테고리 체크박스 클릭
 	$(document).delegate(".categoryList", "click", function() {
