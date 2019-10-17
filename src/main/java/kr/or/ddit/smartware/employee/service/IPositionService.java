@@ -18,12 +18,4 @@ public interface IPositionService {
 	
 	List<Position> getAllPosition();
 	
-	/**
-	 * Method : getPositionList
-	 * 작성자 : KIM DO HOON
-	 * 변경이력 :
-	 * @return
-	 * Method 설명 : 
-	 */
-	List<Map> getPositionList();
 }

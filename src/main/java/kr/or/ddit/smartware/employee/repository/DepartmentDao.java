@@ -34,8 +34,4 @@ public class DepartmentDao implements IDepartmentDao {
 		return sqlSession.selectList("department.getAllDepartment");
 	}
 	
-	@Override
-	public List<Map> getDepartMentList() {
-		return sqlSession.selectList("department.getDepartMentList");
-	}
 }

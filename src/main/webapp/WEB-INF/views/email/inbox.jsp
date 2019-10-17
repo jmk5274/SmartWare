@@ -8,18 +8,23 @@
 <script>
 	$(function(){
 		$(document).on('click', '.fa-star-o', function() {
-			$(this).attr('class','ti-star');
+			$(this).attr('class','fa fa-star').css("color", "#A82743");
+			
 
 			
 		});
 		
-		$(document).on('click', '.ti-star', function() {
-			$(this).attr('class','fa-star-o');
+		$(document).on('click', '.fa-star', function() {
+			$(this).attr('class','fa fa-star-o').css("color", "black");
 			
 		});
 		
 		$(document).on('click', '.subject', function() {
+			var msgNumber = $(this).data("id");
+			console.log(msgNumber);
+			$("#msg").val(msgNumber);
 			
+			$("#mailfrm").submit();
 		});	
 		
 	});
@@ -30,6 +35,10 @@
 
 </script>
 
+<form id="mailfrm" action="${cp }/detailMail?emailLabel=${emailLabel }" method="post">
+ <input id="msg" type="hidden" name="msgNumber" >
+</form>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12">
@@ -39,49 +48,48 @@
 						<div role="toolbar" class="toolbar">
 						 <table>
 						 	 <tr>
-						 	 		<td>
-										<div class="btn-group">
-											<button aria-expanded="false" data-toggle="dropdown"
-												class="btn btn-dark dropdown-toggle" type="button">
-												More <span class="caret m-l-5"></span>
-											</button>
-											<div class="dropdown-menu">
-												<a href="javascript: void(0);" class="dropdown-item">Read Mail</a>
-												<a href="javascript: void(0);" class="dropdown-item">UnRead Mail</a> 
-											</div>
+					 	 		<td>
+									<div class="btn-group">
+										<button aria-expanded="false" data-toggle="dropdown"
+											class="btn btn-dark dropdown-toggle" type="button">
+											More <span class="caret m-l-5"></span>
+										</button>
+										<div class="dropdown-menu">
+											<a href="javascript: void(0);" class="dropdown-item">Read Mail</a>
+											<a href="javascript: void(0);" class="dropdown-item">UnRead Mail</a> 
 										</div>
-									</td>
-									<td>
-										&nbsp;&nbsp;&nbsp;<i class="fa fa-trash fa-3x" aria-hidden="true"></i>
-									</td>
-								</tr>
-							</table>
+									</div>
+								</td>
+								<td>
+									&nbsp;&nbsp;&nbsp;<i class="fa fa-trash fa-3x" aria-hidden="true"></i>
+								</td>
+							</tr>
+						</table>
 						</div>
 						<div class="email-list m-t-15">
-							<c:forEach items="${messages }" var="msg">
+							<c:set var="mNum" value="${fn:length(messages)}" />
+							
+							<c:forEach  var="i" begin="1" end="${mNum }" step="1">
+								<c:set var="msg" value="${messages[mNum-i]}" />
+								<c:set var="personal" value="${personalList[mNum-i]}" />
+								
 								<div class="message">
 									<div class="row">
 										<span class="col-1">
 											<span class="email-checkbox">
 												<input type="checkbox">
 											</span>
-											&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>
+											&nbsp;<i name="star" class="fa fa-star-o" aria-hidden="true"></i>
 										</span>
 												<c:choose>
-													<c:when test="${msg.getFrom()[0] == S_EMPLOYEE.email }">
+													<c:when test="${empty personal }">
 														<span class="col-2">나</span>
 													</c:when>
-													<%-- <c:when test="${fn:contains(msg.getFrom()[0], '@') && (msg.getFrom()[0] != S_EMPLOYEE.email)}">
-														<c:set var="array" value="${fn:split(msg.getFrom()[0], '@') }" />
-														<span class="col-2">${array[0] }</span>
-													</c:when> --%>
 													<c:otherwise>
-														<span class="col-2">${msg.getFrom()[0] }</span>
+														<span class="col-2">${personal}</span>
 													</c:otherwise>
 												</c:choose>
-										<form id action="${cp }/detailMail" method="post">
-											<span class="col-8 subject">${msg.subject }</span>
-										</form>
+											<span data-id=${msg.getMessageNumber() } class="col-8 subject">${msg.subject }</span>
 										<span class="col-1"><fmt:formatDate value="${msg.receivedDate }" pattern="yyyy-MM-dd"/></span>
 									</div>
 								</div>
@@ -89,7 +97,7 @@
 						<!-- panel -->
 						<div class="row">
 							<div class="col-7">
-								<div class="text-left">1 - 20 of ${messagesCount }</div>
+								<div class="text-left">1 - ${messagesCount } of ${messagesCount }</div>
 							</div>
 							<div class="col-5">
 								<div class="btn-group float-right">

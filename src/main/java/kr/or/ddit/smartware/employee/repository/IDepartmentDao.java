@@ -17,14 +17,5 @@ public interface IDepartmentDao {
 	String getDepartNm(String depart_id);
 	
 	List<Department> getAllDepartment();	
-	
-	/**
-	 * Method : getDepartMentList
-	 * 작성자 : KIM DO HOON
-	 * 변경이력 :
-	 * @return
-	 * Method 설명 : 부서전체목록 출력
-	 */
-	List<Map> getDepartMentList();
 
 }

@@ -28,19 +28,6 @@ public class PositionDao implements IPositionDao {
 	public String getPosiNm(String posi_id) {
 		return sqlSession.selectOne("position.getPosiNm", posi_id);
 	}
-	
-	
-	/**
-	 * Method : getPositionList
-	 * 작성자 : PC-18
-	 * 변경이력 :
-	 * @return
-	 * Method 설명 : 직책리스트 반환
-	 */
-	@Override
-	public List<Map> getPositionList() {
-		return sqlSession.selectList("position.getPositionList");
-	}
 
 	@Override
 	public List<Position> getAllPosition() {

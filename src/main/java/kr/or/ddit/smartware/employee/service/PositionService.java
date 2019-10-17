@@ -32,15 +32,4 @@ public class PositionService implements IPositionService {
 	public List<Position> getAllPosition() {
 		return positionDao.getAllPosition();
 	}
-	/**
-	 * Method : getPositionList
-	 * 작성자 : PC-18
-	 * 변경이력 :
-	 * @return
-	 * Method 설명 : 직책 리스트 반환
-	 */
-	@Override
-	public List<Map> getPositionList() {
-		return positionDao.getPositionList();
-	}
 }
