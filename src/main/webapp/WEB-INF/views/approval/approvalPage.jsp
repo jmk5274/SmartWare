@@ -98,14 +98,14 @@
                                                                             <ol class="dd-list">
                                                                                 <!-- 부서로해서 for문을 돌려 class를 지정해주고 id값을 넣어준다 -->
                                                                                 <c:forEach items="${departList }" var="depart" varStatus="loop">
-                                                                                    <li class="dd-item dd-collapsed" data-id="${depart.DEPART_ID }"><button data-id="${depart.DEPART_ID }" class="toggleBtn" data-action="collapse" type="button">Collapse</button>
-                                                                                        <div class="dd-handle">${depart.DEPART_NM }</div>
+                                                                                    <li class="dd-item dd-collapsed" data-id="${depart.depart_id }"><button data-id="${depart.depart_id }" class="toggleBtn" data-action="collapse" type="button">Collapse</button>
+                                                                                        <div class="dd-handle">${depart.depart_nm }</div>
                                                                                         <ol class="dd-list">
                                                                                             <c:forEach items="${employeeList }" var="employee">
                                                                                                 <c:forEach items="${positionList }" var="position">
-                                                                                                    <c:if test="${depart.DEPART_ID == employee.depart_id && position.POSI_ID == employee.posi_id}">
-                                                                                                        <li class="dd-item select" data-id="${depart.DEPART_ID }">
-                                                                                                            <div class="dd-handle"><input value="${employee.emp_nm}(${employee.emp_id })" type="checkbox" name="checkBox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.POSI_NM }&nbsp;</div>
+                                                                                                    <c:if test="${depart.depart_id == employee.depart_id && position.posi_id == employee.posi_id}">
+                                                                                                        <li class="dd-item select" data-id="${depart.depart_id }">
+                                                                                                            <div class="dd-handle"><input value="${employee.emp_nm}(${employee.emp_id })" type="checkbox" name="checkBox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.posi_nm }&nbsp;</div>
                                                                                                         </li>
                                                                                                     </c:if>
                                                                                                 </c:forEach>

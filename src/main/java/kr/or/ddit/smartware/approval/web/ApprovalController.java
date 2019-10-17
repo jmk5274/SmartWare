@@ -2,7 +2,9 @@ package kr.or.ddit.smartware.approval.web;
 
 import kr.or.ddit.smartware.approval.model.Form;
 import kr.or.ddit.smartware.approval.service.IFormService;
+import kr.or.ddit.smartware.employee.model.Department;
 import kr.or.ddit.smartware.employee.model.Employee;
+import kr.or.ddit.smartware.employee.model.Position;
 import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
 import kr.or.ddit.smartware.employee.service.IPositionService;
@@ -37,10 +39,10 @@ public class ApprovalController {
 
     @GetMapping("approvalPage")
     public String approvalPage(Model model) {
-        List<Map> departList = departmentService.getDepartMentList();
+        List<Department> departList = departmentService.getAllDepartment();
 
         List<Employee> employeeList = employeeService.allEmployeeList();
-        List<Map> positionList = positionService.getPositionList();
+        List<Position> positionList = positionService.getAllPosition();
         List<Form> formList = formService.getFormList();
 
         logger.debug("departList - {}", departList);
