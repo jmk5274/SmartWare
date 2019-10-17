@@ -66,5 +66,31 @@ public class CategoryDao implements ICategoryDao {
 	public int insertCategory(Category category) {
 		return sqlSession.insert("category.insertCategory", category);
 	}
+
+	/**
+	* Method : updateCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category
+	* @return
+	* Method 설명 : 카테고리 수정
+	*/
+	@Override
+	public int updateCategory(Category category) {
+		return sqlSession.update("category.updateCategory", category);
+	}
+	
+	/**
+	* Method : deleteCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category_id
+	* @return
+	* Method 설명 : 카테고리 삭제(일정 삭제 후 카테고리 삭제)
+	*/
+	@Override
+	public int deleteCategory(String category_id) {
+		return sqlSession.delete("category.deleteCategory", category_id);
+	}
 	
 }

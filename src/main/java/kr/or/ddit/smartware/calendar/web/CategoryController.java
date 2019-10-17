@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
 
 import kr.or.ddit.smartware.calendar.model.Category;
@@ -65,11 +62,53 @@ public class CategoryController {
 		return jsonView;
 	}
 	
+	/**
+	* Method : insertCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category
+	* @param model
+	* @return
+	* Method 설명 : 카테고리 생성
+	*/
 	@PostMapping("insertCategory")
 	public View insertCategory(Category category, Model model) {
 		String category_id = categoryService.insertCategory(category);
 		
 		model.addAttribute("category_id", category_id);
+		
+		return jsonView;
+	}
+	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
+	/**
+	* Method : updateCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category_id
+	* @param category_nm
+	* @param color
+	* @param model
+	* @return
+	* Method 설명 : 카테고리 수정
+	*/
+	@PostMapping("updateCategory")
+	public View updateCategory(Category category, Model model) {
+		model.addAttribute("updateCnt", categoryService.updateCategory(category));
+		return jsonView;
+	}
+	
+	/**
+	* Method : deleteCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category_id
+	* @param model
+	* @return
+	* Method 설명 : 카테고리 삭제(일정 삭제 후 카테고리 삭제)
+	*/
+	@PostMapping("deleteCategory")
+	public View deleteCategory(String category_id, Model model) {
+		model.addAttribute("deleteCnt", categoryService.deleteCategory(category_id));
 		
 		return jsonView;
 	}

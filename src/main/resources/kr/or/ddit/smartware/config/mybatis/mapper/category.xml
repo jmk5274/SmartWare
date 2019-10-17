@@ -38,4 +38,18 @@
 		</selectKey>
 	</insert>
 	
+	<!-- 카테고리 수정 -->
+	<update id="updateCategory" parameterType="category">
+		update category
+		   set category_nm = #{category_nm},
+		       color = #{color}
+		 where category_id = #{category_id} 
+	</update>
+	
+	<!-- 카테고리 삭제 -->
+	<delete id="deleteCategory" parameterType="String">
+		delete from category
+		 where category_id = #{category_id}
+	</delete>
+	
 </mapper>

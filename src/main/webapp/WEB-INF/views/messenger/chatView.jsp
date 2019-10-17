@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.smartware.employee.model.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -297,7 +298,7 @@ th{
 												 					<td> ${emp.EMP_NM} </td>
 																	<td> ${emp.DEPART_NM} </td>
 																	<td> ${emp.POSI_NM} </td>
-																	<td> <input data-emp_id = "${emp.EMP_ID }" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>
+																	<td> <input data-emp_nm="${emp.EMP_NM }" data-emp_id = "${emp.EMP_ID }" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>
 																</tr>
 																</c:forEach>
 					                                        </tbody>
@@ -364,7 +365,7 @@ th{
 														 					<td> ${emp.EMP_NM} </td>
 																			<td> ${emp.DEPART_NM} </td>
 																			<td> ${emp.POSI_NM} </td>
-													 						<td> <input data-emp_id = "${emp.EMP_ID }" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>
+													 						<td> <input data-emp_nm="${emp.EMP_NM }" data-emp_id = "${emp.EMP_ID }" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>
 																		</tr>
 													                </c:forEach>
 							                                        </tbody>
@@ -423,13 +424,13 @@ th{
 							                                           	 	<th>선택</th>
 							                                            </tr>
 							                                        </thead>
-							                                        <tbody>
+							                                        <tbody id="tbody">
 													                <c:forEach items="${empList }" var="emp">
 													 					<tr class='empList'>
 														 					<td> ${emp.EMP_NM} </td>
 																			<td> ${emp.DEPART_NM} </td>
 																			<td> ${emp.POSI_NM} </td>
-													 						<td> <input data-emp_id = "${emp.EMP_ID }" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>
+													 						<td> <input data-emp_nm="${emp.EMP_NM }" data-emp_id = "${emp.EMP_ID }" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>
 																		</tr>
 													                </c:forEach>
 							                                        </tbody>
@@ -536,7 +537,7 @@ $("#status-options ul li").click(function() {
 	$("#status-options").removeClass("active");
 });
 
-	var socket = new SockJS("/ws/chat");
+	var socket = new SockJS("${cp}/ws/chat");
 	
 	socket.onmessage = function(evt) {
 		var d = new Date();
@@ -551,10 +552,28 @@ $("#status-options ul li").click(function() {
 		var time = hours + ":" + minutes;
 		var str = evt.data.split(":");
 		
-		$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[3] +'><img src="${cp }/empPicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
-		
-		$('.messages').animate({
-			scrollTop: $('.messages').get(0).scrollHeight}, 1000);    
+		if(str[0]===("msg")){
+			$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[4] +'><img src="${cp }/empPicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
+			
+			$('.messages').animate({
+				scrollTop: $('.messages').get(0).scrollHeight}, 1000);    
+		}else if(str[0]===("close")){
+			
+			getChatInfo();
+			
+			$(".messages ul").append('<li style="text-align:center; font-weight:bold;"><p>' + str[1] + ' 님이 채팅방을 나갔습니다.</p></li>');
+			
+			$('.messages').animate({
+				scrollTop: $('.messages').get(0).scrollHeight}, 1000); 
+		}else if(str[0]===("invite")){
+
+			getChatInfo();
+			
+			$(".messages ul").append('<li style="text-align:center; font-weight:bold;"><p>' + str[1] + ' 님을 초대했습니다.</p></li>');
+			
+			$('.messages').animate({
+				scrollTop: $('.messages').get(0).scrollHeight}, 1000);
+		}
 	};
 	
 	socket.onclose = function(evt) {
@@ -580,7 +599,7 @@ $("#status-options ul li").click(function() {
 			minutes = "0" + d.getMinutes();
 		}
 		var time = hours + ":" + minutes;
-		var message;
+		var message = "msg:" + msg + ":" + chat_id + ":";
 		
 		param.chat_id = chat_id;
 		param.msg_cont = msg;
@@ -592,13 +611,31 @@ $("#status-options ul li").click(function() {
 			method : "post",
 			data : JSON.stringify(param),
 			success : function(data){
+				
+				message += data.msg_id + "";
+				
 				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
 				
 				$('.messages').animate({
 					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
 				
-				message = "msg:" + msg + ":" + data.msg_id;
-				socket.send(message);
+					$.ajax({
+						url : "${cp}/getChatInfo",
+						contentType : "application/json",
+						dataType : "json",
+						method : "get",
+						data : "chat_id="+chat_id,
+						success : function(data){
+							
+							var chatEmpList = data.chatEmpList
+							
+							chatEmpList.forEach(function(chatEmp){
+								message += ":" + chatEmp.emp_id
+							});
+							
+							socket.send(message);
+						}
+					});
 				
 				$(".message-input #msg_cont").val("");
 				$(".message-input #msg_cont").focus();
@@ -655,8 +692,6 @@ $("#status-options ul li").click(function() {
 	 })
 	 
 	$(window).bind("beforeunload", function (e){
-		<%session.setAttribute("C_USE", "false"); %>
-		
 		var param={};
 		var msg_id = $('.messages ul li:last-child').data('msg_id'); 
 		var chat_id = "${chat_id}";
@@ -724,7 +759,7 @@ $("#status-options ul li").click(function() {
 							html += 		"<td>" + emp.EMP_NM + "</td>";
 							html += 		"<td>" + emp.DEPART_NM + "</td>";
 							html += 		"<td>" + emp.POSI_NM + "</td>";
-							html += 		"<td> <input data-emp_id=" + emp.EMP_ID + " type='checkbox' class='listCheck' style='display: inline-block;'/> </td>"
+							html += 		"<td> <input data-emp_nm='"+emp.EMP_NM+"'data-emp_id=" + emp.EMP_ID + " type='checkbox' class='listCheck' style='display: inline-block;'/> </td>"
 							html += 	"</tr>";
 							html += "</tbody>"
 						}
@@ -741,10 +776,14 @@ $("#status-options ul li").click(function() {
 		var emp_id = new Array(); 
 		var chat_id = "${chat_id }";
 		var msg_id = $('.messages ul li:last-child').data('msg_id'); 
+		if(msg_id == null || msg_id == undefined || msg_id == ""){
+			msg_id = "";
+		}
 		var html = "";
-		
+		var inviteMsg = "invite";
 		 $(':checkbox:checked').each(function(i, a){
 			 emp_id.push($(this).data("emp_id"));
+			 inviteMsg += ":" + $(this).data("emp_nm")
 		 })
 		
 		$(".empTable").empty();
@@ -756,6 +795,7 @@ $("#status-options ul li").click(function() {
 			method : "get",
 			data : "chat_id="+chat_id+"&emp_id="+emp_id+"&msg_id="+msg_id,
 			success : function(data){
+				socket.send(inviteMsg);
 				var empList = data.empList;
 				var chatList = data.chatList;
 				
@@ -797,7 +837,7 @@ $("#status-options ul li").click(function() {
 							html += 		"<td>" + emp.EMP_NM + "</td>";
 							html += 		"<td>" + emp.DEPART_NM + "</td>";
 							html += 		"<td>" + emp.POSI_NM + "</td>";
-							html += 		"<td> <input data-emp_id=" + emp.EMP_ID + " type='checkbox' class='listCheck' style='display: inline-block;'/> </td>"
+							html += 		"<td> <input data-emp_nm='"+emp.EMP_NM+"' data-emp_id=" + emp.EMP_ID + " type='checkbox' class='listCheck' style='display: inline-block;'/> </td>"
 							html += 	"</tr>";
 							html += "</tbody>"
 						}
@@ -810,6 +850,45 @@ $("#status-options ul li").click(function() {
 		});
 	});
 
+	function getChatInfo(){
+		var chat_id = "${chat_id}"
+			$.ajax({
+				url : "${cp}/getChatInfo",
+				contentType : "application/json",
+				dataType : "json",
+				method : "get",
+				data : "chat_id="+chat_id,
+				success : function(data){
+					var chatEmpList = data.chatEmpList;
+					var empList = data.empList;
+					var cnt = data.cnt
+					var chatEmpSize = "";
+					var html = "";
+					
+					$("#tbody").empty();
+					
+					if(chatEmpList == null || chatEmpList.length == 0){
+						chatEmpSize = "";
+					}else if(chatEmpList.length == 1){
+						chatEmpSize = chatEmpList[0].emp_nm + "";
+					}else{
+						chatEmpSize = chatEmpList[0].emp_nm + " 외 " + cnt + "명";
+					}
+					
+					empList.forEach(function(emp){
+	 					html += '<tr class="empList">'
+	 					html += 	'<td> '+emp.EMP_NM+' </td>'
+						html += 	'<td> '+emp.DEPART_NM+' </td>'
+						html += 	'<td> '+emp.POSI_NM+' </td>'
+						html += 	'<td> <input data-emp_nm="'+emp.EMP_NM+'" data-emp_id = "'+emp.EMP_ID+'" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>'
+						html += '</tr>'
+					});
+					
+					$("#cnt").text(chatEmpSize+"");
+					$("#tbody").html(html);
+				}
+			});
+	}
 //# sourceURL=pen.js
 </script>
 </body></html>

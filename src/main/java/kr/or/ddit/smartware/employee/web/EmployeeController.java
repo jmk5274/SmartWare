@@ -1,11 +1,16 @@
 package kr.or.ddit.smartware.employee.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -186,33 +192,48 @@ public class EmployeeController {
 	
 	/**
 	 * 
-	* Method : mypageView
-	* 작성자 : Hong Da Eun
-	* 변경이력 :
-	* @return
-	* Method 설명 : 마이페이지 화면 요청
-	 */
-	@RequestMapping(path = "mypage", method = RequestMethod.GET)
-	public String mypageView() {
-		return "tiles/employee/mypage";
-	}
-	
-	/**
-	 * 
 	* Method : mypageList
 	* 작성자 : Hong Da Eun
 	* 변경이력 :
 	* @return
-	* Method 설명 : 마이페이지 리스트 출력
+	* Method 설명 : 마이페이지 화면 출력
 	 */
-	@RequestMapping(path = "mypage", method = RequestMethod.POST)
-	public String mypageList() {
+	@GetMapping("mypage")
+	public String mypage(Employee employee, Model model, String emp_id, HttpSession session) {
+		
+		employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("emp_id", employee.getEmp_id());
+
+		model.addAttribute("employee" ,employee);
 		
 		return "tiles/employee/mypage";
 	}
 	
+	@RequestMapping("employeePicture")
+	public void employeePicture(String emp_id, HttpServletResponse response) throws IOException {
+		Employee employee = employeeService.getEmployee(emp_id);
+		
+		ServletOutputStream sos = response.getOutputStream();
+		
+		File picture = new File(employee.getEmp_pic());
+		FileInputStream fis = new FileInputStream(picture);
+		
+		byte[] buff = new byte[512];
+		int len = 0;
+		
+		while( (len = fis.read(buff, 0, 512)) != -1 ) {
+			sos.write(buff, 0, len);
+			
+		}
+		
+		fis.close();
+	}
+	
 	@RequestMapping("useForm")
-	public String getEmployeeList() {
+	public String getEmployee() {
 		
 		return "tiles/form/useForm";
 	}

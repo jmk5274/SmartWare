@@ -43,6 +43,15 @@ public class CalendarController {
 	@Resource(name="jsonView")
 	private View jsonView;
 	
+	/**
+	* Method : calendar
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param session
+	* @return
+	* Method 설명 : 캘린더 페이지 요청
+	*/
 	@RequestMapping("calendar")
 	public String calendar(Model model, HttpSession session) {
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
@@ -101,7 +110,5 @@ public class CalendarController {
 		
 		return jsonView;
 	}
-	
-	
 	
 }

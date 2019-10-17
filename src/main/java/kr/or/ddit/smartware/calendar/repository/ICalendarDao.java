@@ -16,4 +16,13 @@ public interface ICalendarDao {
 	*/
 	List<Calendar> getAllCalendarList(String emp_id);
 
+	/**
+	* Method : deleteCateCalendar
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category_id
+	* @return
+	* Method 설명 : 카테고리의 모든 일정 삭제
+	*/
+	int deleteCateCalendar(String category_id);
 }

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.smartware.calendar.model.Category;
+import kr.or.ddit.smartware.calendar.repository.ICalendarDao;
 import kr.or.ddit.smartware.calendar.repository.ICategoryDao;
 
 @Service
@@ -14,6 +15,9 @@ public class CategoryService implements ICategoryService {
 
 	@Resource(name = "categoryDao")
 	private ICategoryDao categoryDao;
+	
+	@Resource(name = "calendarDao")
+	private ICalendarDao calendarDao;
 	
 	/**
 	* Method : getEmpCategoryList
@@ -66,6 +70,33 @@ public class CategoryService implements ICategoryService {
 	public String insertCategory(Category category) {
 		categoryDao.insertCategory(category);
 		return category.getCategory_id();
+	}
+
+	/**
+	 * Method : updateCategory
+	 * 작성자 : JO MIN SOO
+	 * 변경이력 :
+	 * @param category
+	 * @return
+	 * Method 설명 : 카테고리 수정
+	 */
+	@Override
+	public int updateCategory(Category category) {
+		return categoryDao.updateCategory(category);
+	}
+	
+	/**
+	* Method : deleteCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category_id
+	* @return
+	* Method 설명 : 카테고리 삭제(일정 삭제 후 카테고리 삭제)
+	*/
+	@Override
+	public int deleteCategory(String category_id) {
+		calendarDao.deleteCateCalendar(category_id);
+		return categoryDao.deleteCategory(category_id);
 	}
 	
 }

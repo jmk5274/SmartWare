@@ -1,9 +1,12 @@
+<%@page import="kr.or.ddit.smartware.employee.model.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script>
+
+	var audio = new Audio('${cp}/audio/카톡.mp3');
 
 	function getChatList(){
 		$.ajax({
@@ -73,6 +76,14 @@
 							});
 						}
 					});
+
+					<%
+						Employee employee = (Employee) session.getAttribute("S_EMPLOYEE"); 
+						employee.setC_use("false");
+						employee.setChat_id("");
+						
+						session.setAttribute("S_EMPLOYEE", employee);
+					%>
 					window.open('${cp }/chatRoom?chat_id='+chat_id, '채팅방', 'width=500px, height=650px')
 				});
 				
@@ -90,6 +101,7 @@
 						data : JSON.stringify(param),
 						success : function(data){
 							$("#"+data.chat_id).remove();
+							socket.send("close:삭제");
 						}
 					});
 					return false;
@@ -99,13 +111,24 @@
 		
 	}
 
-	var socket = new SockJS("/ws/chat");
+	var socket = new SockJS("${cp}/ws/chat");
 	
 	socket.onmessage = function(evt) {
 		var str = evt.data.split(":");
-		console.log("dd");
 		if(str[0]===("msg")){
 			getChatList();
+			audio.play();
+			const toast = Swal.mixin({
+				  toast: true,
+				  position: 'top-end',
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+
+			toast({
+			  type: 'success',
+			  title: '메시지가 왔습니다.'
+			})
 		}
 	};
 	
@@ -290,6 +313,7 @@
         </div>
     </div>
 </div>
+<button id="btnTest_timer" class="btn btn-warning btn sweet-confirm" style="display : none">confirm</button>
       <!--**********************************
           Header end ti-comment-alt
       ***********************************-->

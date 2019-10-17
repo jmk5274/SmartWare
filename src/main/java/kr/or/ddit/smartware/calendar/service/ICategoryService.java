@@ -45,5 +45,26 @@ public interface ICategoryService {
 	* Method 설명 : 카테고리 생성 
 	*/
 	String insertCategory(Category category);
+
+	/**
+	* Method : updateCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category
+	* @return
+	* Method 설명 : 카테고리 수정 
+	*/
+	int updateCategory(Category category);
+	
+	/**
+	* Method : deleteCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category_id
+	* @return
+	* Method 설명 : 카테고리 삭제(일정 삭제 후 카테고리 삭제)
+	*/
+	int deleteCategory(String category_id);
+
 	
 }

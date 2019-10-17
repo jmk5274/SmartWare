@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%response.sendRedirect("/login"); %>
+	<%response.sendRedirect(request.getContextPath() + "/login"); %>
 </body>
 </html>
