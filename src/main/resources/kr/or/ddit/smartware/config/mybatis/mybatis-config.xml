@@ -19,6 +19,7 @@
 		<typeAlias alias="position" type="kr.or.ddit.smartware.employee.model.Position"/>
 		<typeAlias alias="department" type="kr.or.ddit.smartware.employee.model.Department"/>
 		<typeAlias alias="form" type="kr.or.ddit.smartware.approval.model.Form"/>
+		<typeAlias alias="popup" type="kr.or.ddit.smartware.popup.model.Popup"/>
 	</typeAliases>
 	
 	<mappers>
@@ -36,7 +37,7 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/position.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/department.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/form.xml"/>
-
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/popup.xml"/>
 	</mappers>
 	
 </configuration>
