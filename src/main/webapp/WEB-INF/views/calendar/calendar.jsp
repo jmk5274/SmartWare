@@ -2,29 +2,17 @@
 	pageEncoding="UTF-8"%>
 
 <!-- fullcalendar css -->
-<link href= "${cp }/fullcalendar-4.3.1/core.min.css" rel="stylesheet" />
-<link href= "${cp }/fullcalendar-4.3.1/daygrid.min.css" rel="stylesheet" />
-<link href= "${cp }/fullcalendar-4.3.1/timegrid.min.css" rel="stylesheet" />
-<link href= "${cp }/fullcalendar-4.3.1/list.min.css" rel="stylesheet" />
+<link href= "${cp }/plugin/fullcalendar-4.3.1/core.min.css" rel="stylesheet" />
+<link href= "${cp }/plugin/fullcalendar-4.3.1/daygrid.min.css" rel="stylesheet" />
+<link href= "${cp }/plugin/fullcalendar-4.3.1/timegrid.min.css" rel="stylesheet" />
+<link href= "${cp }/plugin/fullcalendar-4.3.1/list.min.css" rel="stylesheet" />
 
 <!-- colorselector css -->
-<link href= "${cp }/css/bootstrap-colorselector.css" rel="stylesheet" />
+<link href= "${cp }/plugin/bootstrap-colorselector/bootstrap-colorselector.css" rel="stylesheet" />
 
-<!-- fullcalendar js -->
-<script src="${cp }/fullcalendar-4.3.1/core.min.js"></script>
-<script src="${cp }/fullcalendar-4.3.1/interaction.min.js"></script>
-<script src="${cp }/fullcalendar-4.3.1/daygrid.min.js"></script>
-<script src="${cp }/fullcalendar-4.3.1/timegrid.min.js"></script>
-<script src="${cp }/fullcalendar-4.3.1/list.min.js"></script>
-
-<!-- fullcalendar js(한글) -->
-<script src="${cp }/fullcalendar-4.3.1/ko.js"></script>
-
-<!-- colorselector js -->
-<script src="${cp }/js/bootstrap-colorselector.js"></script>
-
-<!-- moment js -->
-<script src="${cp }/js/moment.js"></script>
+<!-- tui-date-picker css -->
+<link href= "${cp }/plugin/tui-date-picker/tui-date-picker.css" rel="stylesheet"/>
+<link href= "${cp }/plugin/tui-date-picker/tui-time-picker.css" rel="stylesheet"/>
 
 <!-- 현재 페이지의 css -->
 <link href= "${cp }/css/calendar/calendar.css" rel="stylesheet" />
@@ -143,16 +131,35 @@
                 		<input type="hidden" id="cal_id" name="cal_id"/>
                 		
                 		<div class="form-group row">
-		                    <label class="col-sm-3 col-form-label">일정 이름</label>
+		                    <label class="col-sm-3 col-form-label">일정 제목</label>
 		                    <div class="col-sm-9">
 		                    	<input type="text" class="form-control" id="cal_title" name="cal_title">
 		                    </div>
 	                    </div>
 	                    
-	                    <div class="form-group row">
-		                    <label class="col-sm-3 col-form-label">일정 내용</label>
+	                     <div class="form-group row">
+		                    <label class="col-sm-3 col-form-label">날짜</label>
+		                    <div class="col-sm-4">
+								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
+									<input id="startpicker-input" type="text" aria-label="Date">
+									<span class="tui-ico-date"></span>
+									<div id="startpicker-container" style="margin-left: -1px;"></div>
+								</div>
+		                    </div>
+							<span>~</span>
+		                    <div class="col-sm-4">
+								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
+									<input id="endpicker-input" type="text" aria-label="Date">
+									<span class="tui-ico-date"></span>
+									<div id="endpicker-container" style="margin-left: -1px;"></div>
+								</div>
+		                    </div>
+						</div>
+	                    
+	                    <div class="form-group row" id="divDepartmentNm">
+		                    <label class="col-sm-3 col-form-label">하루 종일</label>
 		                    <div class="col-sm-9">
-		                    	<textarea class="form-control h-150px" rows="6" id="comment"></textarea>
+		                    	<input type="checkbox" class="form-check-input" id="allDay" name="allDay">
 		                    </div>
 	                    </div>
 	                    
@@ -166,16 +173,10 @@
 		                    </div>
 	                    </div>
 	                    
-	                    <div class="form-group row" id="divDepartmentNm">
-		                    <label class="col-sm-3 col-form-label">하루 종일</label>
-		                    <div class="col-sm-9">
-		                    	<input type="checkbox" class="form-check-input" value="">
-		                    </div>
-	                    </div>
 	                    <div class="form-group row">
-		                    <label class="col-sm-3 col-form-label">생성자</label>
+		                    <label class="col-sm-3 col-form-label">일정 내용</label>
 		                    <div class="col-sm-9">
-		                    	<input type="text" class="form-control" value="ddddd" readonly>
+		                    	<textarea class="form-control h-150px" rows="6" id="cal_cont" name="cal_cont"></textarea>
 		                    </div>
 	                    </div>
                     </form>
@@ -190,6 +191,29 @@
     </div>
 </div>
 
+<!-- moment js -->
+<script src="${cp }/js/moment.js"></script>
+
+<!-- fullcalendar js -->
+<script src="${cp }/plugin/fullcalendar-4.3.1/core.min.js"></script>
+<script src="${cp }/plugin/fullcalendar-4.3.1/interaction.min.js"></script>
+<script src="${cp }/plugin/fullcalendar-4.3.1/daygrid.min.js"></script>
+<script src="${cp }/plugin/fullcalendar-4.3.1/timegrid.min.js"></script>
+<script src="${cp }/plugin/fullcalendar-4.3.1/list.min.js"></script>
+
+<!-- fullcalendar js(한글) -->
+<script src="${cp }/plugin/fullcalendar-4.3.1/ko.js"></script>
+
+<!-- colorselector js -->
+<script src="${cp }/plugin/bootstrap-colorselector/bootstrap-colorselector.js"></script>
+
+<!-- tui-date-picker 관련 js -->
+<script type="text/javascript" src="${cp }/plugin/tui-date-picker/tui-code-snippet.js"></script>
+<script type="text/javascript" src="${cp }/plugin/tui-date-picker/tui-dom.js"></script>
+<script type="text/javascript" src="${cp }/plugin/tui-date-picker/tui-time-picker.js"></script>
+<script src="${cp }/plugin/tui-date-picker/tui-date-picker.js"></script>
+
+<!-- 현재 페이지의 js -->
 <script> // 외부스크립트에서 ${cp}를 사용하지 못하기 때문에 사용하려고 전역변수로 cp를 선언한다.
 	var cp = "${cp}";
 </script> 

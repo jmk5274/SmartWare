@@ -25,8 +25,8 @@
 	<!-- Custom Stylesheet -->
 	<link href="${cp }/bootstrap/css/style.css" rel="stylesheet">
 	<!-- sweetalert2-->
-	<link href ="${cp }/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" >
-	<script src="${cp }/sweetalert2/dist/sweetalert2.min.js"></script>
+	<link href ="${cp }/plugin/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" >
+	<script src="${cp }/plugin/sweetalert2/dist/sweetalert2.min.js"></script>
     <!--*******************
         BasicLib end
     ********************-->

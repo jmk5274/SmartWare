@@ -61,7 +61,7 @@ $(function() {
 		}
     });
     calendar.render();
-		
+
 	// 개인 일정 카테고리 불러오기
 	$.getJSON(cp + "/getEmpCategoryList")
 		.done(function(data) {
@@ -209,3 +209,24 @@ function rgb2hex(rgb) {
 
 // 컬러셀렉터 표시
 $("#colorselector").colorselector();
+
+// tui.date-picker
+var picker = tui.DatePicker.createRangePicker({
+	language: 'ko',
+    startpicker: {
+        date: new Date(),
+        input: '#startpicker-input',
+        container: '#startpicker-container'
+    },
+    endpicker: {
+        date: new Date(),
+        input: '#endpicker-input',
+        container: '#endpicker-container'
+    },
+    type: 'date',
+    format: 'yyyy-MM-dd HH:mm',
+    timepicker: {
+    	language: 'ko',
+    	showMeridiem: false
+    }
+});
