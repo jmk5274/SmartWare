@@ -16,4 +16,10 @@
          		              from employee
                      		 where emp_id = #{emp_id})
 	</select>
+	
+	<!-- 카테고리의 모든 일정 삭제 -->
+	<delete id="deleteCateCalendar" parameterType="String">
+		delete from calendar
+		 where category_id = #{category_id}
+	</delete>
 </mapper>
