@@ -9,9 +9,9 @@
 	$(function(){
 		if("${res }"){
 			alert("${res }");
-		}	
+		}
 		
-		$("#updateBtn").on("click", function(){
+		$(".updateBtn").on("click", function(){
 			$("#frm").submit();
 		})
 
@@ -54,7 +54,7 @@
 						<h2 class="sub-header">마이페이지</h2>
 							<br>
 								<div class="table-responsive">
-						<form id="frm" class="form-horizontal" action="${cp }/mypage">
+						<form id="frm" class="form-horizontal" action="${cp }/mypageModify">
 							<input id="selectEmp" name="emp_id2" type="hidden"/>
 							<table class="table table-hover">
 								<div class="form-group">
@@ -109,8 +109,7 @@
 									<tr>
 									
 										<td><strong class="text-dark mr-4">이메일</strong></td>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.email }
-											<input type="hidden" id="email" name="email" value="${employee.email }"></td>
+										<td><input type="email" id="email" name="email" class="form-control input-default" value="${employee.email }"></td>
 									</tr>
 										
 
@@ -118,8 +117,7 @@
 									<tr>
 									
 										<td><strong class="text-dark mr-4">전화번호</strong></td>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.tel }
-											<input type="hidden" id="tel" name="tel" value="${employee.tel }"></td>
+										<td><input type="tel" id="tel" name="tel" class="form-control input-default" value="${employee.tel }"></td>
 									</tr>
 										
 									
@@ -127,18 +125,17 @@
 									<tr>
 									
 										<td><strong class="text-dark mr-4">입사일</strong></td>
-											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${employee.join_dt }" pattern="yyyy-MM-dd"/>
-											<input type="hidden" id="join_dt" name="join_dt" value="${employee.join_dt }"></td>
+										<td><input type="date" id="join_dt" name="join_dt" class="form-control input-default" value="${employee.join_dt }"></td>
 									</tr>
 
 									</div>
 								</table>
 								<br>
-								<!-- 수정 페이지 이동 버튼 -->
-								<a href="${cp }/mypageModify?emp_id=${employee.emp_id}" id="modifyEmp" class="modifyEmp btn mb-1 btn-outline-success pull-right">정보수정 </a>
+								<!-- 수정 버튼 -->
+								<button id="update" type="button" name="updateBtn" class="updateBtn btn mb-1 btn-outline-success pull-right" value="modify">수정</button>		
 							</form>
 						</div>
-<%-- <!-- 사원 추가 -->			<a href="${cp }/insertEmployee" id="insertEmp" class="insertEmp btn mb-1 btn-outline-primary pull-right">사원 추가 </a> --%>
+<%-- 				<a href="${cp }/insertEmployee" id="insertEmp" class="insertEmp btn mb-1 btn-outline-primary pull-right">사원 추가 </a> --%>
 					</div>
 				</div>
 			</div>
