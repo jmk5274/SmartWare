@@ -262,7 +262,7 @@
                        	 <c:if test="${S_EMPLOYEE != null}">
                             <ul>
                                 <li>
-                                    <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                  <a href="${cp }/mypage"><i class="icon-user"></i>마이페이지</a>
                                 </li>
                                 <li>
                                     <a href="javascript:void()">

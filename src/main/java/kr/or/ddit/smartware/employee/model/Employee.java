@@ -27,8 +27,8 @@ public class Employee {
 	public Employee() { }
 
 	public Employee(String emp_id, String pass, String emp_nm, String rank, String email, String tel, Date join_dt,
-			String depart_id, String posi_id, String emp_pic, String sign, String able, String email_pass,
-			String c_use) {
+			String depart_id, String posi_id, String emp_pic, String sign, String able, String email_pass, String c_use) {
+		super();
 		this.emp_id = emp_id;
 		this.pass = pass;
 		this.emp_nm = emp_nm;
@@ -43,7 +43,12 @@ public class Employee {
 		this.able = able;
 		this.email_pass = email_pass;
 		this.c_use = c_use;
+//		this.filename = filename;
+//		this.realfilename = realfilename;
+//		this.realfilename2 = realfilename2;
 	}
+
+
 
 
 	@Override
@@ -241,8 +246,31 @@ public class Employee {
 	public void setC_use(String c_use) {
 		this.c_use = c_use;
 	}
-
 	
+//	public String getFilename() {
+//		return filename;
+//	}
+//
+//	public void setFilename(String filename) {
+//		this.filename = filename;
+//	}
+//
+//	public String getRealfilename() {
+//		return realfilename;
+//	}
+//
+//	public void setRealfilename(String realfilename) {
+//		this.realfilename = realfilename;
+//	}
+//
+//	public String getRealfilename2() {
+//		return realfilename2;
+//	}
+//
+//	public void setRealfilename2(String realfilename2) {
+//		this.realfilename2 = realfilename2;
+//	}
+
 	public boolean checkLoginValidate(String emp_id, String pass) {
 		
 		// 암호화 문장끼리 비교
