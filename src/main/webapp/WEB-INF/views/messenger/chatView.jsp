@@ -664,7 +664,7 @@ $("#status-options ul li").click(function() {
 				minutes = "0" + d.getMinutes();
 			}
 			var time = hours + ":" + minutes;
-			var message;
+			var message = "msg:" + msg + ":" + chat_id + ":";
 			
 			param.chat_id = chat_id;
 			param.msg_cont = msg;
@@ -676,15 +676,34 @@ $("#status-options ul li").click(function() {
 				method : "post",
 				data : JSON.stringify(param),
 				success : function(data){
+					
+					message += data.msg_id + "";
+					
 					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
 					
 					$('.messages').animate({
 						scrollTop: $('.messages').get(0).scrollHeight}, 1000);
 					
-					message = "msg:" + msg + ":" + data.msg_id;
-					socket.send(message);
+						$.ajax({
+							url : "${cp}/getChatInfo",
+							contentType : "application/json",
+							dataType : "json",
+							method : "get",
+							data : "chat_id="+chat_id,
+							success : function(data){
+								
+								var chatEmpList = data.chatEmpList
+								
+								chatEmpList.forEach(function(chatEmp){
+									message += ":" + chatEmp.emp_id
+								});
+								
+								socket.send(message);
+							}
+						});
 					
 					$(".message-input #msg_cont").val("");
+					$(".message-input #msg_cont").focus();
 				}
 			});
 			return false;
@@ -773,12 +792,11 @@ $("#status-options ul li").click(function() {
 	
 	$("#inviteEmp").click(function(){
 		var param={};
+		var msgList = Array.from($('.messages ul li')).filter(e => e.dataset.msg_id);
+// 		var msg_id = $('.messages ul li:last-child').data('msg_id');
+		var msg_id = msgList.slice(-1)[0].dataset.msg_id;
 		var emp_id = new Array(); 
 		var chat_id = "${chat_id }";
-		var msg_id = $('.messages ul li:last-child').data('msg_id'); 
-		if(msg_id == null || msg_id == undefined || msg_id == ""){
-			msg_id = "";
-		}
 		var html = "";
 		var inviteMsg = "invite";
 		 $(':checkbox:checked').each(function(i, a){
@@ -789,11 +807,11 @@ $("#status-options ul li").click(function() {
 		$(".empTable").empty();
 		 
 		$.ajax({
-			url : "${cp}/insertChatEmp",
+			url : "${cp}/insertChatEmp?chat_id="+chat_id+"&emp_id="+emp_id+"&msg_id="+msg_id,
 			contentType : "application/json",
 			dataType : "json",
 			method : "get",
-			data : "chat_id="+chat_id+"&emp_id="+emp_id+"&msg_id="+msg_id,
+// 			data : "chat_id="+chat_id+"&emp_id="+emp_id+"&msg_id="+msg_id,
 			success : function(data){
 				socket.send(inviteMsg);
 				var empList = data.empList;
@@ -849,7 +867,7 @@ $("#status-options ul li").click(function() {
 			}
 		});
 	});
-
+	
 	function getChatInfo(){
 		var chat_id = "${chat_id}"
 			$.ajax({
