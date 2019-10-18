@@ -77,7 +77,7 @@
 									<!-- 사원 아이디 -->
 									
 									<tr>
-										<td><strong class="text-dark mr-4">사원 아이디</strong></td>
+										<td><strong class="text-dark mr-4">아이디</strong></td>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.emp_id }
 											<input type="hidden" id="emp_id" name="emp_id" value="${employee.emp_id }"></td>
 									</tr>
@@ -85,11 +85,24 @@
 										
 									<!-- 사원 이름 -->
 									<tr>
-										<td><strong class="text-dark mr-4">사원 이름</strong></td>
+										<td><strong class="text-dark mr-4">이름</strong></td>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.emp_nm }
 											<input type="hidden" id="emp_nm" name="emp_nm" value="${employee.emp_nm }"></td>
 									</tr>
-										
+									
+									<!-- 비밀번호 -->
+									<tr>
+										<td><strong class="text-dark mr-4">비밀번호</strong></td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.pass }
+											<input type="hidden" id="emp_nm" name="emp_nm" value="${employee.pass }"></td>
+									</tr>
+									
+									<!-- 등급 -->
+									<tr>
+										<td><strong class="text-dark mr-4">등급</strong></td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.rank }
+											<input type="hidden" id="rank" name="rank" value="${employee.rank }"></td>
+									</tr>
 										
 									<!-- 부서 -->
 									<tr>
@@ -99,13 +112,19 @@
 											<input type="hidden" id="depart_id" name="depart_id" value="${employee.depart_id }"></td>
 									</tr>
 									
-									<!-- 직책 -->
+									<!-- 직급 -->
 									<tr>
-										<td><strong class="text-dark mr-4">직책</strong></td>
+										<td><strong class="text-dark mr-4">직급</strong></td>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.posi_id }
 											<input type="hidden" id="posi_id" name="posi_id" value="${employee.posi_id }"></td>
 									</tr>
 									
+									<!-- 직책 -->
+									<tr>
+										<td><strong class="text-dark mr-4">직책</strong></td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.job_id }
+											<input type="hidden" id="job_id" name="job_id" value="${employee.job_id }"></td>
+									</tr>
 
 									<!-- 이메일 -->
 									<tr>
@@ -113,6 +132,14 @@
 										<td><strong class="text-dark mr-4">이메일</strong></td>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.email }
 											<input type="hidden" id="email" name="email" value="${employee.email }"></td>
+									</tr>
+									
+									<!-- 이메일 비밀번호 -->
+									<tr>
+									
+										<td><strong class="text-dark mr-4">이메일 비밀번호</strong></td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.email_pass }
+											<input type="hidden" id="email_pass" name="email_pass" value="${employee.email_pass }"></td>
 									</tr>
 										
 
