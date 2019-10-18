@@ -2,8 +2,8 @@ package kr.or.ddit.smartware.employee.model;
 
 public class Position {
 
-	private String posi_id;		// 직책 아이디
-	private String posi_nm; 	// 직책 이름
+	private String posi_id;		// 직급 아이디
+	private String posi_nm; 	// 직급 이름
 	
 	public Position() { }
 	
