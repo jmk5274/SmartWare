@@ -28,11 +28,11 @@
 	
 	<!-- 사원 등록 -->
 	<insert id="insertEmployee" parameterType="employee">
-		insert into employee (emp_id, pass, emp_nm, rank, email, tel, join_dt, depart_id, posi_id, emp_pic, sign, able, email_pass)
+		insert into employee (emp_id, pass, emp_nm, rank, email, tel, join_dt, depart_id, posi_id, emp_pic, sign, able, email_pass, job_id)
 			values(#{emp_id}, 
 				   #{pass}, 
 				   #{emp_nm}, 
-				   #{rank}, 
+				   'USER', 
 				   #{email}, 
 				   #{tel},
 				   #{join_dt}, 
@@ -41,7 +41,8 @@
 				   #{emp_pic, jdbcType=VARCHAR}, 
 				   #{sign, jdbcType=VARCHAR}, 
 				   'T', 
-				   #{email_pass})
+				   #{email_pass},
+				   #{job_id})
 	</insert>
 	
 	<!-- 사원 삭제 -->
@@ -58,8 +59,8 @@
 							   tel = #{tel}, 
 						   join_dt = #{join_dt},
 						   emp_pic = #{emp_pic}, 
-							  sign = #{sign},
-							  able = #{able},
+							  sign = #{sign, jdbcType=VARCHAR},
+							  able = 'T',
 						email_pass = #{email_pass}
 		 where emp_id = #{emp_id}
 	</update>
@@ -76,7 +77,7 @@
 		 where emp_id = #{emp_id}
 	</update>
 	
-	<!-- 사원 직책 수정 -->
+	<!-- 사원 직급 수정 -->
 	<update id="updateEmployeePosition" parameterType="employee">
 		update employee set posi_id = #{posi_id}
 		 where emp_id = #{emp_id}
@@ -85,6 +86,12 @@
 	<!-- 사원 부서 수정 -->
 	<update id="updateEmployeeDepartment" parameterType="employee">
 		update employee set depart_id = #{depart_id}
+		 where emp_id = #{emp_id}
+	</update>
+	
+	<!-- 사원 직책 수정 -->
+	<update id="updateEmployeeJob" parameterType="employee">
+		update employee set job_id = #{job_id}
 		 where emp_id = #{emp_id}
 	</update>
 	

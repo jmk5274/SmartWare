@@ -93,7 +93,7 @@ public interface IEmployeeDao {
 	* 변경이력 :
 	* @param employee
 	* @return
-	* Method 설명 : 사원 직책 수정
+	* Method 설명 : 사원 직급 수정
 	 */
 	int updateEmployeePosition(Employee employee);
 	
@@ -107,5 +107,16 @@ public interface IEmployeeDao {
 	* Method 설명 : 사원 부서 수정
 	 */
 	int updateEmployeeDepartment(Employee employee);
+	
+	/**
+	 * 
+	* Method : updateEmployeeJob
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param employee
+	* @return
+	* Method 설명 : 사원 직책 수정
+	 */
+	int updateEmployeeJob(Employee employee);
 	
 }
