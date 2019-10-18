@@ -45,7 +45,6 @@ public class ApprovalController {
         List<Position> positionList = positionService.getAllPosition();
         List<Form> formList = formService.getFormList();
 
-        logger.debug("departList - {}", departList);
         model.addAttribute("departList", departList);
         model.addAttribute("employeeList", employeeList);
         model.addAttribute("positionList", positionList);
@@ -60,6 +59,12 @@ public class ApprovalController {
         if (form != null) {
             model.addAttribute("form_cont", form.getForm_cont());
         }
+        return "jsonView";
+    }
+
+    @PostMapping("myAppr")
+    public String myAppr(String emp_id, String form_id, Model model) {
+
         return "jsonView";
     }
 }

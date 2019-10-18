@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="batch">
+	<delete id="delApprMem">
+		delete from appr_member
+	</delete>
+
+	<delete id="delErdAppr">
+		delete from erd_appr
+	</delete>
+
+	<insert id="setErdAppr">
+		INSERT INTO ERD_APPR
+		SELECT a.APPR_LINE_ID, b.EMP_ID AS appr_line_owner FROM APPROVAL a, EMPLOYEE b
+		WHERE b."RANK" != 'ADMIN'
+	</insert>
+	
+	<insert id="setApprMem" parameterType="employee">
+		<![CDATA[
+		INSERT INTO appr_member (appr_emp, APPR_LINE_ID, APPR_LINE_OWNER, AP_ORDER)
+		SELECT a.EMP_ID AS appr_emp, b.APPR_LINE_ID,  #{emp_id} AS appr_line_owner, a.ap_order
+		FROM(
+		SELECT a.*, rownum AS ap_order
+		FROM (
+		SELECT a.EMP_ID
+		FROM EMPLOYEE a, (SELECT *
+		FROM EMPLOYEE
+		WHERE EMP_ID=#{emp_id}) b
+		WHERE TO_NUMBER(SUBSTR(a.JOB_ID, 5, 4)) < TO_NUMBER(SUBSTR(b.job_id, 5, 4))
+		AND a.DEPART_ID != b.depart_id
+		AND a.DEPART_ID = 'de0001'
+		AND a.EMP_ID NOT IN (SELECT a.EMP_ID
+		FROM CALENDAR a
+		WHERE SYSDATE BETWEEN ST_DT AND END_DT+1
+		AND a.CATEGORY_ID = (SELECT CATEGORY_ID
+		FROM CATEGORY
+		WHERE DEPART_ID = (SELECT DEPART_ID
+		FROM EMPLOYEE
+		WHERE EMP_ID = #{emp_id})
+		AND CATEGORY_NM LIKE '%휴가%'))
+		UNION
+		SELECT a.EMP_ID
+		FROM EMPLOYEE a, (SELECT *
+		FROM EMPLOYEE
+		WHERE EMP_ID=#{emp_id}) b
+		WHERE TO_NUMBER(SUBSTR(a.JOB_ID, 5, 4)) < TO_NUMBER(SUBSTR(b.job_id, 5, 4))
+		AND a.DEPART_ID = b.depart_id
+		AND a.EMP_ID NOT IN (SELECT a.EMP_ID
+		FROM CALENDAR a
+		WHERE SYSDATE BETWEEN ST_DT AND END_DT+1
+		AND a.CATEGORY_ID = (SELECT CATEGORY_ID
+		FROM CATEGORY
+		WHERE DEPART_ID = (SELECT DEPART_ID
+		FROM EMPLOYEE
+		WHERE EMP_ID = #{emp_id})
+		AND CATEGORY_NM LIKE '%휴가%'))) a ) a, approval b
+		]]>
+	</insert>
+</mapper>
