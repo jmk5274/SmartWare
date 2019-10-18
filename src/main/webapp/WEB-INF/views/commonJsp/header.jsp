@@ -4,6 +4,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%
+	Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+	if(employee != null){
+		employee.setC_use("false");
+		employee.setChat_id("");
+		session.setAttribute("S_EMPLOYEE", employee);
+	}
+%>
+
+<script src="${cp }/js/moment.js"></script>
 <script>
 
 	var audio = new Audio('${cp}/audio/카톡.mp3');
@@ -35,7 +45,7 @@
                     html +=         '<div class="notification-content">'
                     html +=             '<span class="notification-heading">'+chat.CHAT_NM+' / '+chat.EMP_CNT+'명</span>'	
                     html +=             '<i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="'+chat.CHAT_ID+'"></i>'
-                    html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+chat.SEND_DT+'</div>'
+                    html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+moment(new Date(chat.SEND_DT)).format('YYYY/MM/DD HH:mm')+'</div>'
                     html +=         '</div>'
 	                html +=         '<span id="'+msg_cnt+'" class="badge badge-pill gradient-1">'+msg_cnt+'</span>'
                     html +=     '</a>'
@@ -77,13 +87,6 @@
 						}
 					});
 
-					<%
-						Employee employee = (Employee) session.getAttribute("S_EMPLOYEE"); 
-						employee.setC_use("false");
-						employee.setChat_id("");
-						
-						session.setAttribute("S_EMPLOYEE", employee);
-					%>
 					window.open('${cp }/chatRoom?chat_id='+chat_id, '채팅방', 'width=500px, height=650px')
 				});
 				
@@ -108,7 +111,6 @@
 				});
 			}
 		});
-		
 	}
 
 	var socket = new SockJS("${cp}/ws/chat");

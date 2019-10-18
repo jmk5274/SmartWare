@@ -9,12 +9,31 @@
 	$(function(){
 		if("${res }"){
 			alert("${res }");
-		}	
+		}
 		
-		$("#updateBtn").on("click", function(){
+		$(".updateBtn").on("click", function(){
+			var join_dt = $("#join_dt").val();
+			var picture = $("#picture").val();
+			if(join_dt == '' || join_dt.length == 0){
+			Swal({
+				type: 'warning', // success, error, warning, info, question
+				title: '필수 사항',
+				text: '입사일을 입력해주세요.'
+			})
+				return;
+			
+			} else if(picture == '' || picture.length == 0){
+			Swal({
+				type: 'warning', // success, error, warning, info, question
+				title: '필수 사항',
+				text: '프로필 사진을 첨부해주세요.'
+			})
+			
+				return;
+			}
+
 			$("#frm").submit();
 		})
-
 });
 	
 </script>
@@ -37,7 +56,7 @@
 	p {
 		text-align : center;
 	}
-	
+
 </style>
 
 	<div class="container-fluid">
@@ -54,7 +73,7 @@
 						<h2 class="sub-header">마이페이지</h2>
 							<br>
 								<div class="table-responsive">
-						<form id="frm" class="form-horizontal" action="${cp }/mypage">
+						<form id="frm" class="form-horizontal" action="${cp }/mypageModify" method="post" enctype="multipart/form-data">
 							<input id="selectEmp" name="emp_id2" type="hidden"/>
 							<table class="table table-hover">
 								<div class="form-group">
@@ -62,10 +81,16 @@
 								<div class="media align-items-center mb-4">
 								<tr id="margin">
 								<td id="photo">
-								<br>
+									<br>
 				                   <img class="mr-3" src="${cp }/employeePicture?emp_id=${employee.emp_id}" width="200" height="200" alt="">
 				                      <div class="media-body">
-				                      <br>
+				                      	<br>
+					                       <div class="form-group">
+												<div class="col-sm-10">
+													<input type="file" class="form-control" id="picture" name="picture"
+														placeholder="프로필 사진">
+												</div>
+											</div>
 				                    </td>
 				                         <td><h3 class="mb-3">${employee.emp_nm }</h3>
 				                            <p class="text-muted mb-0">${employee.depart_id }</p></td>
@@ -93,8 +118,7 @@
 									<!-- 비밀번호 -->
 									<tr>
 										<td><strong class="text-dark mr-4">비밀번호</strong></td>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.pass }
-											<input type="hidden" id="emp_nm" name="emp_nm" value="${employee.pass }"></td>
+										<td><input type="text" id="pass" name="pass" class="form-control input-default" value="${employee.pass }"></td>
 									</tr>
 									
 									<!-- 등급 -->
@@ -130,16 +154,14 @@
 									<tr>
 									
 										<td><strong class="text-dark mr-4">이메일</strong></td>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.email }
-											<input type="hidden" id="email" name="email" value="${employee.email }"></td>
+										<td><input type="email" id="email" name="email" class="form-control input-default" value="${employee.email }"></td>
 									</tr>
 									
-									<!-- 이메일 비밀번호 -->
+									<!-- 이메일 비밀번호-->
 									<tr>
 									
 										<td><strong class="text-dark mr-4">이메일 비밀번호</strong></td>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.email_pass }
-											<input type="hidden" id="email_pass" name="email_pass" value="${employee.email_pass }"></td>
+										<td><input type="text" id="email_pass" name="email_pass" class="form-control input-default" value="${employee.email_pass }"></td>
 									</tr>
 										
 
@@ -147,36 +169,39 @@
 									<tr>
 									
 										<td><strong class="text-dark mr-4">전화번호</strong></td>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.tel }
-											<input type="hidden" id="tel" name="tel" value="${employee.tel }"></td>
+										<td><input type="tel" id="tel" name="tel" class="form-control input-default" value="${employee.tel }"></td>
 									</tr>
 										
 									
 									<!-- 입사일 -->
 									<tr>
-									
 										<td><strong class="text-dark mr-4">입사일</strong></td>
-											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${employee.join_dt }" pattern="yyyy-MM-dd"/>
-											<input type="hidden" id="join_dt" name="join_dt" value="${employee.join_dt }"></td>
+										<td><input type="date" id="join_dt" name="join_dt" class="form-control input-default" value="${employee.join_dt }"></td>
 									</tr>
 									
 									<!-- 서명 -->
 									<tr>
-									
 										<td><strong class="text-dark mr-4">서명</strong></td>
 											<td>
-<%-- 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.sign } --%>
 											<img src="${cp }/employeeSign?emp_id=${employee.emp_id}" width="100" height="100" alt="">
+											<br>
+											<div class="form-group">
+												<div class="col-sm-10">
+												<br>
+													<input type="file" class="form-control" id="sign" name="sign"
+														placeholder="서명">
+												</div>
+											</div>
 									</tr>
 
 									</div>
 								</table>
 								<br>
-								<!-- 수정 페이지 이동 버튼 -->
-								<a href="${cp }/mypageModify?emp_id=${employee.emp_id}" id="modifyEmp" class="modifyEmp btn mb-1 btn-outline-success pull-right">정보수정 </a>
+								<!-- 수정 버튼 -->
+								<button id="update" type="button" name="updateBtn" class="updateBtn btn mb-1 btn-outline-success pull-right" value="modify">수정</button>		
 							</form>
 						</div>
-<%-- <!-- 사원 추가 -->			<a href="${cp }/insertEmployee" id="insertEmp" class="insertEmp btn mb-1 btn-outline-primary pull-right">사원 추가 </a> --%>
+<%-- 				<a href="${cp }/insertEmployee" id="insertEmp" class="insertEmp btn mb-1 btn-outline-primary pull-right">사원 추가 </a> --%>
 					</div>
 				</div>
 			</div>

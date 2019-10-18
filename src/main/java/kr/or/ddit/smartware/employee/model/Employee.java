@@ -17,19 +17,21 @@ public class Employee {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date join_dt;           //입사 날짜
 	private String depart_id;       //부서 아이디
-	private String posi_id;         //직책 아이디
+	private String posi_id;         //직급 아이디
 	private String emp_pic;         //사원 사진
 	private String sign;            //서명
 	private String able;            //사용 여부
 	private String email_pass; 		//이메일 비밀번호
 	private String c_use;			//채팅방 참가 여부(DB컬럼으로 필요없음)
-	private String chat_id;			//채팅방 번호(DB컬럼으로 필요없음) 
+	private String chat_id;			//채팅방 번호(DB컬럼으로 필요없음)
+	private String job_id;			//직책 아이디
 	
 	public Employee() { }
 
 	public Employee(String emp_id, String pass, String emp_nm, String rank, String email, String tel, Date join_dt,
 			String depart_id, String posi_id, String emp_pic, String sign, String able, String email_pass, String c_use,
-			String chat_id) {
+			String chat_id, String job_id) {
+		super();
 		this.emp_id = emp_id;
 		this.pass = pass;
 		this.emp_nm = emp_nm;
@@ -45,6 +47,7 @@ public class Employee {
 		this.email_pass = email_pass;
 		this.c_use = c_use;
 		this.chat_id = chat_id;
+		this.job_id = job_id;
 	}
 
 	public String getEmp_id() {
@@ -138,12 +141,20 @@ public class Employee {
 		this.chat_id = chat_id;
 	}
 
+	public String getJob_id() {
+		return job_id;
+	}
+
+	public void setJob_id(String job_id) {
+		this.job_id = job_id;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [emp_id=" + emp_id + ", pass=" + pass + ", emp_nm=" + emp_nm + ", rank=" + rank + ", email="
 				+ email + ", tel=" + tel + ", join_dt=" + join_dt + ", depart_id=" + depart_id + ", posi_id=" + posi_id
 				+ ", emp_pic=" + emp_pic + ", sign=" + sign + ", able=" + able + ", email_pass=" + email_pass
-				+ ", c_use=" + c_use + ", chat_id=" + chat_id + "]";
+				+ ", c_use=" + c_use + ", chat_id=" + chat_id + ", job_id=" + job_id + "]";
 	}
 
 	public boolean checkLoginValidate(String emp_id, String pass) {

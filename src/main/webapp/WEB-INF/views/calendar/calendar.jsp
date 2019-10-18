@@ -126,7 +126,7 @@
                     <h3 class="modal-title" id="calendarModalTitle">타이틀</h3>
                 </div>
                 <div class="modal-body basic-form">
-                	<form id="categoryForm">
+                	<form id="calendarForm">
                 	
                 		<input type="hidden" id="cal_id" name="cal_id"/>
                 		
@@ -156,20 +156,17 @@
 		                    </div>
 						</div>
 	                    
-	                    <div class="form-group row" id="divDepartmentNm">
+	                    <div class="form-group row">
 		                    <label class="col-sm-3 col-form-label">하루 종일</label>
 		                    <div class="col-sm-9">
-		                    	<input type="checkbox" class="form-check-input" id="allDay" name="allDay">
+	                    		<input id="allDay" name="allDay" type="checkbox" style="margin-top: 10px;">
 		                    </div>
 	                    </div>
 	                    
 	                    <div class="form-group row">
 		                    <label class="col-sm-3 col-form-label">카테고리</label>
 		                    <div class="col-sm-9">
-		                    	<select class="form-control" id="category_nm" name="category_nm">
-		                    		<option data-category_id="test1">test1</option>
-		                    		<option data-category_id="test2">test2</option>
-		                    	</select>
+		                    	<select id="categoryList" name="category_nm"></select>
 		                    </div>
 	                    </div>
 	                    
@@ -182,8 +179,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnInsertCategory">생성</button>
-                    <button type="button" class="btn btn-primary" id="btnUpdateCategory">수정</button>
+                    <button type="button" class="btn btn-primary" id="btnInsertCalendar">생성</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdateCalendar">수정</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                 </div>
             </div>

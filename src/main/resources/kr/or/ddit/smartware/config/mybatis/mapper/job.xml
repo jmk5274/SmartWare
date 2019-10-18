@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="job">
+	<!-- 직책 아이디에 해당하는 직책 이름을 반환 -->
+	<select id="getJobNm" parameterType="String" resultType="String">
+		select job_nm
+		  from job
+		 where job_id = #{job_id}
+	</select>
+	
+	<select id="getAllJob" resultType="job">
+	select * from job
+	</select>
+
+</mapper>
