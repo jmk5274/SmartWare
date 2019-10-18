@@ -71,9 +71,18 @@
                 $.ajax({
                     url : "${cp}/approval/myAppr",
                     method : "post",
+                    data : {form_id : form_id},
                     dataType : "json",
                     success : function (data) {
+                        $("#reci").val("");
+                        var res="";
+                        for (var i = 0; i < data.empList.length; i++ ) {
+                            if (res != null && res.trim() !== "") res += ", ";
+                            res += data.empList[i].emp_nm + "(" + data.empList[i].emp_id + ")";
 
+                            $('#' + data.empList[i].emp_id).attr('checked', true);
+                        }
+                        $("#reci").val(res);
                     }
                 });
             }
@@ -122,7 +131,7 @@
                                                                                                 <c:forEach items="${positionList }" var="position">
                                                                                                     <c:if test="${depart.depart_id == employee.depart_id && position.posi_id == employee.posi_id}">
                                                                                                         <li class="dd-item select" data-id="${depart.depart_id }">
-                                                                                                            <div class="dd-handle"><input value="${employee.emp_nm}(${employee.emp_id })" type="checkbox" name="checkBox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.posi_nm }&nbsp;</div>
+                                                                                                            <div class="dd-handle"><input id="${employee.emp_id}" value="${employee.emp_nm}(${employee.emp_id })" type="checkbox" name="checkBox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.posi_nm }&nbsp;</div>
                                                                                                         </li>
                                                                                                     </c:if>
                                                                                                 </c:forEach>

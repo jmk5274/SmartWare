@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <bean id="createApproval" class="kr.or.ddit.smartware.approval.batch.CreateApproval"/>
-    <task:scheduler id="scheduler" pool-size="10"/>
-    <task:executor id="executor" pool-size="10"/>
+    <task:scheduler id="scheduler" pool-size="100"/>
+    <task:executor id="executor" pool-size="100"/>
     <task:annotation-driven executor="executor" scheduler="scheduler"/>
 
 </beans>
