@@ -57,14 +57,31 @@
                 }
             });
         });
+
+        $('#myAppr').on('click', function () {
+            var form_id = $('#formList').val();
+
+            if (form_id == null || form_id == 'noForm') {
+                Swal({
+                    type: 'error', // success, error, warning, info, question
+                    title: 'Error',
+                    text: '양식을 선택하세요'
+                });
+            } else {
+                $.ajax({
+                    url : "${cp}/approval/myAppr",
+                    method : "post",
+                    dataType : "json",
+                    success : function (data) {
+
+                    }
+                });
+            }
+        });
     });
 </script>
 
 <script src="${cp }/bootstrap/plugins/nestable/js/jquery.nestable.js"></script>
-
-<form id="emailCheckFrm" action="${cp }/validator">
-    <input type="hidden" id="checkEmail" name="email"/>
-</form>
 
 <body>
 
@@ -137,7 +154,8 @@
                                     <input id="reci" type="text" name="reci" value=""
                                            placeholder=" To"
                                            style="width: 400px; height: 43px;"> &nbsp;&nbsp
-                                    <button type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button>
+                                    <button type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button> &nbsp
+                                    <button id="myAppr" type="button" class="btn btn-outline-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10">개인 결재선</button>
                                     <br>
                                 </div>
                                 <br>
@@ -149,7 +167,7 @@
                                     <div class="form-row align-items-center">
                                         <div class="col-auto my-1 align-items-center">
                                             <select class="custom-select mr-sm-2" id="formList">
-                                                <option id="cleanForm">양식 선택</option>
+                                                <option id="cleanForm" value="noForm">양식 선택</option>
                                                 <c:forEach items="${formList}" var="form" varStatus="loop">
                                                     <option id="${form.form_id}" value="${form.form_id}">${form.form_nm}</option>
                                                 </c:forEach>

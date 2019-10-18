@@ -16,7 +16,9 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @PropertySource(value = "classpath:kr/or/ddit/smartware/config/mybatis/db.properties")
-@ImportResource("classpath:kr/or/ddit/smartware/config/spring/context-transaction.xml")
+@ImportResource(value = {"classpath:kr/or/ddit/smartware/config/spring/context-transaction.xml",
+				"classpath:kr/or/ddit/smartware/config/spring/context-batch.xml"
+})
 public class DatasourceConfig {
 	
 	@Autowired

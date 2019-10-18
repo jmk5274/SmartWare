@@ -36,6 +36,7 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/position.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/department.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/form.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/batch.xml"/>
 
 	</mappers>
 	
