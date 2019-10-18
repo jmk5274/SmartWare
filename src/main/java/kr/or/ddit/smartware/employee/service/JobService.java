@@ -18,13 +18,14 @@ public class JobService implements IJobService {
 	private IJobDao jobDao; 
 	
 	/**
-	* Method : getPosiNm
-	* 작성자 : JO MIN SOO
+	 * 
+	* Method : getJobNm
+	* 작성자 : Hong Da Eun
 	* 변경이력 :
-	* @param posi_id
+	* @param job_id
 	* @return
-	* Method 설명 : 직책 아이디에 해당하는 직책 이름을 반환
-	*/
+	* Method 설명 : 직급 아이디에 해당하는 직급명을 반환
+	 */
 	@Override
 	public String getJobNm(String job_id) {
 		return jobDao.getJobNm(job_id);
