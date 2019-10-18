@@ -245,8 +245,8 @@ INSERT INTO APPL_APPR VALUES('appl0002', 'e0006', 2, 'F');
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --게시판
 
-INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e0015', '관리자',SYSDATE, 'T');
-INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'e0015', '사내게시판',SYSDATE, 'F');
+INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'admin', '공지사항',SYSDATE, 'T');
+INSERT INTO BOARD(BOARD_ID, EMP_ID, BOARD_NM, REG_DT, ABLE) VALUES('board' || LPAD(BOARD_SEQ.NEXTVAL,4,0), 'admin', '사내게시판',SYSDATE, 'T');
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --게시글

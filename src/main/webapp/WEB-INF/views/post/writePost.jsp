@@ -19,6 +19,7 @@ $(document).ready(function() {
 			}
 		}
 	});
+
 	
 	$("#postFile").change(function(){
 		if(this.files.length > (5-$(".x").length)){

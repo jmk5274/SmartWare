@@ -10,10 +10,8 @@ $(document).ready(function() {
 	$("#savebutton").click(function(){
 		if(confirm("저장하시겠습니까?")) {
 			// 이부분에 에디터 validation 검증
-			if(validation()) {
 				$("#frm").submit();
 			}
-		}
 	})
 	
 // 	$("#cancelBtn").click(function(){
@@ -47,15 +45,15 @@ $(document).ready(function() {
 });
 
 // 필수값 Check
-function validation(){
-	var contents = $.trim(oEditors[0].getContents());
-	if(contents === '<p>&nbsp;</p>' || contents === ''){ // 기본적으로 아무것도 입력하지 않아도 <p>&nbsp;</p> 값이 입력되어 있음. 
-		alert("내용을 입력하세요.");
-		return false;
-	}
+// function validation(){
+// 	var contents = $.trim(oEditors[0].getContents());
+// 	if(contents === '<p>&nbsp;</p>' || contents === ''){ // 기본적으로 아무것도 입력하지 않아도 <p>&nbsp;</p> 값이 입력되어 있음. 
+// 		alert("내용을 입력하세요.");
+// 		return false;
+// 	}
 
-	return true;
-}
+// 	return true;
+// }
 </script>
 
 <style>

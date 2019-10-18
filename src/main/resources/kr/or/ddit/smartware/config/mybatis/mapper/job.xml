@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="getAllJob" resultType="job">
-	select * from position
+	select * from job
 	</select>
 
 </mapper>

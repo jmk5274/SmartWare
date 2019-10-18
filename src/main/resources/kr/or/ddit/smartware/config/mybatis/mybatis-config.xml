@@ -18,8 +18,10 @@
 		<typeAlias alias="email" 	type="kr.or.ddit.smartware.email.model.Email"/>
 		<typeAlias alias="position" type="kr.or.ddit.smartware.employee.model.Position"/>
 		<typeAlias alias="department" type="kr.or.ddit.smartware.employee.model.Department"/>
+		<typeAlias alias="job" type="kr.or.ddit.smartware.employee.model.Job"/>
 		<typeAlias alias="form" type="kr.or.ddit.smartware.approval.model.Form"/>
 		<typeAlias alias="popup" type="kr.or.ddit.smartware.popup.model.Popup"/>
+		<typeAlias alias="apprMember" type="kr.or.ddit.smartware.approval.model.ApprMember"/>
 	</typeAliases>
 	
 	<mappers>
@@ -37,7 +39,9 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/position.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/department.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/form.xml"/>
-		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/popup.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/batch.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/appr_member.xml"/>
+
 	</mappers>
 	
 </configuration>
