@@ -74,8 +74,8 @@
             </li>
             <c:if test="${S_EMPLOYEE.emp_id == 'e0002'}">
 	            <li>
-	                <a href="${cp }/popup" aria-expanded="false">
-	                    <i class="fa fa-desktop"></i><span class="nav-text">팝업관리</span>
+	                <a href="${cp }/popup">
+	                    <i class="fa fa-desktop menu-icon"></i><span class="nav-text">팝업관리</span>
 	                </a>
 	            </li>
             </c:if>
