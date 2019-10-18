@@ -34,7 +34,7 @@
                     <i class="fa fa-list-alt menu-icon"></i> <span class="nav-text">사내 게시판</span>
                 </a>
                 <ul aria-expanded="false">
-                <c:if test="${S_EMPLOYEE.rank == 'admin'}">
+                <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
                     <li><a href="${cp }/addBoard">메뉴 관리</a></li>                    
                 </c:if>
                     <c:forEach items="${A_BOARDLIST }" var="list">
@@ -58,7 +58,7 @@
                 <ul aria-expanded="false">
                     <li><a href="${cp }/bootstrap/chart-flot.html">조직도 조회</a></li>
                     <li><a href="${cp }/bootstrap/chart-morris.html">사원 검색</a></li>
-                    <c:if test="${S_EMPLOYEE.emp_id == 'e0002'}">
+                    <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
                     <li><a href="${cp }/employeeList">사원 관리</a></li>
                     </c:if>
                 </ul>
@@ -72,7 +72,7 @@
                     <li><a href="${cp }/bootstrap/ui-alert.html">일감 추가</a></li>
                 </ul>
             </li>
-            <c:if test="${S_EMPLOYEE.emp_id == 'e0002'}">
+            <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
 	            <li>
 	                <a href="${cp }/popup">
 	                    <i class="fa fa-desktop menu-icon"></i><span class="nav-text">팝업관리</span>

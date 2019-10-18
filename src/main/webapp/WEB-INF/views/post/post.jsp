@@ -80,7 +80,7 @@
 								</c:forEach>
 							</table>
 						</div>
-						<c:if test="${S_EMPLOYEE.emp_id == 'e0002' || board_id != 'board0003'}">
+						<c:if test="${S_EMPLOYEE.emp_id == 'admin' || board_id != 'board0001'}">
 						<a href="${cp }/writePost?board_id=${board_id}" class="btn mb-1 btn-outline-primary pull-right">글 작성</a>
 						</c:if>
 				
