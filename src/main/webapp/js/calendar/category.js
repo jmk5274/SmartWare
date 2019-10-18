@@ -139,8 +139,8 @@ $(function() {
 			if (result.value) {
 				console.log();
 				$.ajax({
-					url: cp + "/deleteCategory",
-					data: "category_id="+category_id,
+					url: cp + "/deleteCalendar",
+					data: "category_id=" + $("#cal_id").val(),
 					type: "post",
 					success: function(data) {
 						console.log($(this).parent().prev());

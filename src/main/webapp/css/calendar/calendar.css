@@ -1,8 +1,8 @@
 .popoverTitleCalendar {
-  width: 250px;
+  width: 300px;
   height: 100%;
   padding: 15px 15px;
-  font-size: 13px;
+  font-size: 20px;
   border-radius: 5px 5px 0 0;
 }
 
@@ -37,6 +37,7 @@
 .popover-content {
   padding: 15px 15px;
   font-size: 13px;
+  width: 300px;
 }
 
 .popover {
@@ -44,6 +45,7 @@
   color: #2E2F34;
   border: none;
   margin-bottom: 10px;
+  max-width: 300px !important;
 }
 .popover-header {
 	padding: 0px !important;

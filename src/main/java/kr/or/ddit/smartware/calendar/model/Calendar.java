@@ -9,21 +9,21 @@ public class Calendar {
 	private String cal_cont; 	// 일정 내용
 	private Date st_dt;      	// 시작 날짜
 	private Date end_dt;	 	// 완료 날짜
-	private String allday;		// 종일
+	private String allDay;		// 종일
 	private String depart_id;	// 부서 아이디
 	private String emp_id;		// 사원 아이디
 	private String category_id; // 카테고리 아이디
 	
 	public Calendar() { }
 	
-	public Calendar(String cal_id, String cal_title, String cal_cont, Date st_dt, Date end_dt, String allday,
+	public Calendar(String cal_id, String cal_title, String cal_cont, Date st_dt, Date end_dt, String allDay,
 			String depart_id, String emp_id, String category_id) {
 		this.cal_id = cal_id;
 		this.cal_title = cal_title;
 		this.cal_cont = cal_cont;
 		this.st_dt = st_dt;
 		this.end_dt = end_dt;
-		this.allday = allday;
+		this.allDay = allDay;
 		this.depart_id = depart_id;
 		this.emp_id = emp_id;
 		this.category_id = category_id;
@@ -77,17 +77,17 @@ public class Calendar {
 	public void setCategory_id(String category_id) {
 		this.category_id = category_id;
 	}
-	public String getAllday() {
-		return allday;
+	public String getAllDay() {
+		return allDay;
 	}
-	public void setAllday(String allday) {
-		this.allday = allday;
+	public void setAllDay(String allDay) {
+		this.allDay = allDay;
 	}
 
 	@Override
 	public String toString() {
 		return "Calendar [cal_id=" + cal_id + ", cal_title=" + cal_title + ", cal_cont=" + cal_cont + ", st_dt=" + st_dt
-				+ ", end_dt=" + end_dt + ", allday=" + allday + ", depart_id=" + depart_id + ", emp_id=" + emp_id
+				+ ", end_dt=" + end_dt + ", allDay=" + allDay + ", depart_id=" + depart_id + ", emp_id=" + emp_id
 				+ ", category_id=" + category_id + "]";
 	}
 	

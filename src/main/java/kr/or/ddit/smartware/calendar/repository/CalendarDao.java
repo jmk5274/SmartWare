@@ -14,6 +14,19 @@ public class CalendarDao implements ICalendarDao {
 
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
+
+	/**
+	* Method : getCalendar
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param cal_id
+	* @return
+	* Method 설명 : cal_id에 해당하는 일정 불러오기
+	*/
+	@Override
+	public Calendar getCalendar(String cal_id) {
+		return sqlSession.selectOne("calendar.getCalendar", cal_id);
+	}
 	
 	/**
 	* Method : getAllCalendarList
@@ -26,6 +39,45 @@ public class CalendarDao implements ICalendarDao {
 	@Override
 	public List<Calendar> getAllCalendarList(String emp_id) {
 		return sqlSession.selectList("calendar.getAllCalendarList", emp_id);
+	}
+
+	/**
+	* Method : insertCalendar
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param calendar
+	* @return
+	* Method 설명 : 일정 추가
+	*/
+	@Override
+	public int insertCalendar(Calendar calendar) {
+		return sqlSession.insert("calendar.insertCalendar", calendar);
+	}
+
+	/**
+	* Method : updateCalendar
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param calendar
+	* @return
+	* Method 설명 : 일정 수정
+	*/
+	@Override
+	public int updateCalendar(Calendar calendar) {
+		return sqlSession.update("calendar.updateCalendar", calendar);
+	}
+	
+	/**
+	* Method : deleteCalendar
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param cal_id
+	* @return
+	* Method 설명 : 일정 삭제
+	*/
+	@Override
+	public int deleteCalendar(String cal_id) {
+		return sqlSession.delete("calendar.deleteCalendar", cal_id);
 	}
 
 	/**

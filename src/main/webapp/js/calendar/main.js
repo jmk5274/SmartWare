@@ -22,7 +22,14 @@ $(function() {
 					type: "GET",
 					dataType: "json",
 					success: function(data) {
-						successCallback(data.calendarList);
+						var fixedData = data.calendarList.map(function(array) {
+							if(array.allDay && array.start !== array.end) {
+								// 2일 이상의 AllDay인 경우 달력에 하루를 더해야 정상적으로 출력됨.
+								array.end = new Date(moment(array.end).add(1, 'days'));
+							}
+							return array;
+						})
+						successCallback(fixedData);
 					}
 				});
 			}
@@ -58,10 +65,54 @@ $(function() {
 		},
 		select: function(info) { // 날짜를 클릭 or 드래그 했을 때
 			selectDate(info); // ==> calendar.js
+		},
+		eventTimeFormat: { // 달력에 표시될 time format
+			hour: '2-digit',
+			minute: '2-digit',
+			hour12: false
+		},
+		eventClick: function(info) { // 이벤트 클릭
+			selectEvent(info);
+//			alert('Event: ' + info.event.title);
+//			alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+//			alert('View: ' + info.view.type);
+			
+			// change the border color just for fun
+//			info.el.style.borderColor = 'red';
 		}
     });
     calendar.render();
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	// 개인 일정 카테고리 불러오기
 	$.getJSON(cp + "/getEmpCategoryList").done(function(data) {
 		getDisplayCategory(data.categoryList, $("#empCategory"));
@@ -142,19 +193,31 @@ function getDisplayCategory(data, loc) {
 // 받아온 시간을 moment.js를 이용하여 포맷에 정의된 형태로 반환
 function getDisplayDate(event) {
 
-	// 반환 될 데이터가 저장됨
-	var displayEventDate;
+	var displayDate; // 반환 될 데이터가 저장됨
+	var startDate = moment(event.start); // start moment객체
+	var endDate; // end moment객체
 
-	if(event.allDay == false) {
-		var startDate = moment(event.start).format('HH:mm');
-		var endDate = moment(event.end).format('HH:mm');
-		if(event.end == null) 
-			displayDate = startDate	
-		else 
-			displayDate = startDate + " - " + endDate;
-		
-	} else {
-		displayDate = "하루 종일";
+	if(event.end === null) { // startDate와 endDate가 같으면 event.end에 null이 들어감
+		endDate = startDate;
+	} else { 
+		endDate = moment(event.end);
+	}
+	
+	// allDay가 true일 때 하루를 빼줘야 달력에 정상 출력됨
+	if(event.allDay == true) endDate.subtract(1, 'days');
+	
+	if(event.allDay === true) { // allDay === true
+		if(startDate.format("YYYYMMDD") === endDate.format("YYYYMMDD")) // 하루일 때
+			displayDate = startDate.format("YYYY-MM-DD");
+		else // 이틀 이상일 때 
+			displayDate = startDate.format("YYYY-MM-DD") + " ~ " + endDate.format("YYYY-MM-DD");
+	} else { // allDay === false
+		if(startDate.format("YYYYMMDDHHmm") === endDate.format("YYYYMMDDHHmm")) // 하루 안에서 같은 시간일 때(start = end)
+			displayDate = startDate.format("YYYY-MM-DD HH:mm");
+		else if(startDate.format("YYYYMMDDHHmm") === endDate.format("YYYYMMDDHHmm")) // 하루 안에서 다른 시간일 때
+			displayDate = startDate.format("YYYY-MM-DD HH:mm") + " ~ " + endDate.format("HH:mm");
+		else // 이틀 이상 범위일 때
+			displayDate = startDate.format("YYYY-MM-DD HH:mm") + " ~ " + endDate.format("YYYY-MM-DD HH:mm");
 	}
 
 	return displayDate;

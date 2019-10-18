@@ -1438,7 +1438,7 @@ pre {
   .form-control:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #ecebfe;
+    border-color: #9a6bb5 !important;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(117, 113, 249, 0.25); }
   .form-control::placeholder {

@@ -127,8 +127,9 @@
                 </div>
                 <div class="modal-body basic-form">
                 	<form id="calendarForm">
-                	
-                		<input type="hidden" id="cal_id" name="cal_id"/>
+                		<input type="hidden" name="cal_id" id="cal_id"/>
+                		<input type="hidden" name="depart_id" value="${S_EMPLOYEE.depart_id }"/>
+                		<input type="hidden" name="emp_id" value="${S_EMPLOYEE.emp_id }"/>
                 		
                 		<div class="form-group row">
 		                    <label class="col-sm-3 col-form-label">일정 제목</label>
@@ -166,7 +167,7 @@
 	                    <div class="form-group row">
 		                    <label class="col-sm-3 col-form-label">카테고리</label>
 		                    <div class="col-sm-9">
-		                    	<select id="categoryList" name="category_nm"></select>
+		                    	<select class="form-control" id="categoryList" name="category_id"></select>
 		                    </div>
 	                    </div>
 	                    
@@ -178,10 +179,11 @@
 	                    </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnInsertCalendar">생성</button>
-                    <button type="button" class="btn btn-primary" id="btnUpdateCalendar">수정</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <div class="modal-footer" style="display: inline-block;">
+                    <button type="button" class="btn mb-1 btn-dark" data-dismiss="modal" style="float: right;">취소</button>
+                    <button type="button" class="btn mb-1 btn-dark" id="btnUpdateCalendar" style="float: right;">수정</button>
+                    <button type="button" class="btn mb-1 btn-dark" id="btnInsertCalendar" style="float: right;">생성</button>
+                    <button type="button" class="btn mb-1 btn-danger" id="btnDeleteCalendar" style="float: left;">삭제</button>
                 </div>
             </div>
         </div>
@@ -205,9 +207,9 @@
 <script src="${cp }/plugin/bootstrap-colorselector/bootstrap-colorselector.js"></script>
 
 <!-- tui-date-picker 관련 js -->
-<script type="text/javascript" src="${cp }/plugin/tui-date-picker/tui-code-snippet.js"></script>
-<script type="text/javascript" src="${cp }/plugin/tui-date-picker/tui-dom.js"></script>
-<script type="text/javascript" src="${cp }/plugin/tui-date-picker/tui-time-picker.js"></script>
+<script src="${cp }/plugin/tui-date-picker/tui-code-snippet.js"></script>
+<script src="${cp }/plugin/tui-date-picker/tui-dom.js"></script>
+<script src="${cp }/plugin/tui-date-picker/tui-time-picker.js"></script>
 <script src="${cp }/plugin/tui-date-picker/tui-date-picker.js"></script>
 
 <!-- 현재 페이지의 js -->
