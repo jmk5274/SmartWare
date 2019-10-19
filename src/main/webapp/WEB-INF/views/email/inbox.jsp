@@ -7,17 +7,112 @@
 
 <script>
 	$(function(){
+		var descount;
+		var emailLabel;
+		var mesUID = new Array();
+		
 		$(document).on('click', '.fa-star-o', function() {
 			$(this).attr('class','fa fa-star').css("color", "#A82743");
+			//클래스 가  fa fa-star 가된것들을 Array로 받는다 ex)chatView.jsp
+			var msgNumber = $(this).data("id");
+			emailLabel = $("#emailLabel").val();
 			
+			$.ajax({
+			      url : "${cp}/moveStarbox",
+			      async: false,
+			      type : "post",
+			      data : "emailLabel=" + emailLabel + '&msgNumber=' + msgNumber,
+			      success : function(data){
+			    	  descount = data.descount;
+				      emailLabel = data.emailLabel;
+			    	  
+			    	  const toast = Swal.mixin({
+						  toast: true,
+						  position: 'top-end',
+						  showConfirmButton: false,
+						  timer: 1500
+						});
 
-			
+					toast({
+					  type: 'success',
+					  title: '별표메일함으로 이동됬습니다.'
+					})
+			      },
+			      error : function(xhr){
+			    	  console.log("실패");
+			      }
+			   });
 		});
 		
 		$(document).on('click', '.fa-star', function() {
 			$(this).attr('class','fa fa-star-o').css("color", "black");
+					$.ajax({
+					      url : "${cp}/removeStarbox",
+					      type : "post",
+					      data : "emailLabel=" + emailLabel + '&descount=' + descount,
+					      success : function(data){
+					    	  const toast = Swal.mixin({
+								  toast: true,
+								  position: 'top-end',
+								  showConfirmButton: false,
+								  timer: 1500
+								});
+
+							toast({
+							  type: 'success',
+							  title: '중요메일함 에서 삭제되었습니다.'
+							})
+					      },
+					      error : function(xhr){
+					    	  console.log("실패");
+					      }
+					   });
+		});
+		
+		$(document).on('click', '.fa-trash', function() {
+			var msgNumber = new Array();
+// 			msgNumber = $(':checkbox:checked').data("id");
+			
+			$(':checkbox:checked').each(function(i, a){
+				 msgNumber.push($(this).data("id"));
+			 })
+			
+			for(var i = 0; i < msgNumber.length; i++){
+				$("#div"+msgNumber[i]).remove();
+			}
+			
+			var emailLabel = $("#emailLabel").val();
+			
+			console.log(msgNumber);
+			
+			$.ajax({
+			      url : "${cp}/trashbox",
+			      async: false,
+			      type : "post",
+			      data : "emailLabel=" + emailLabel + '&msgNumber=' + msgNumber,
+			      success : function(data){
+			    	  mesUID = data.mesUID;
+				      emailLabel = data.emailLabel;
+			    	  
+			    	  const toast = Swal.mixin({
+						  toast: true,
+						  position: 'top-end',
+						  showConfirmButton: false,
+						  timer: 1500
+						});
+
+					toast({
+					  type: 'success',
+					  title: '휴지통 으로 이동됬습니다.'
+					})
+			      },
+			      error : function(xhr){
+			    	  console.log("실패");
+			      }
+			   });
 			
 		});
+		
 		
 		$(document).on('click', '.subject', function() {
 			var msgNumber = $(this).data("id");
@@ -46,6 +141,8 @@
 				<div class="card-body">
 					<div class="email-center-box">
 						<div role="toolbar" class="toolbar">
+						<input type="hidden" id="emailLabel" name="emailLabel" value="${emailLabel }"/>
+						<input type="hidden" id="messageId" name="messageId" value="${messageId }"/>
 						 <table>
 						 	 <tr>
 					 	 		<td>
@@ -73,13 +170,13 @@
 								<c:set var="msg" value="${messages[mNum-i]}" />
 								<c:set var="personal" value="${personalList[mNum-i]}" />
 								
-								<div class="message">
+								<div id="div${msg.getMessageNumber() }" class="message">
 									<div class="row">
 										<span class="col-1">
 											<span class="email-checkbox">
-												<input type="checkbox">
+												<input data-id=${msg.getMessageNumber() } type="checkbox">
 											</span>
-											&nbsp;<i name="star" class="fa fa-star-o" aria-hidden="true"></i>
+											&nbsp;<i data-id=${msg.getMessageNumber() } name="star" class="fa fa-star-o" aria-hidden="true"></i>
 										</span>
 												<c:choose>
 													<c:when test="${empty personal }">

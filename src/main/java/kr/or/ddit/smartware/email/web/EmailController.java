@@ -17,6 +17,7 @@ import javax.activation.FileDataSource;
 import javax.annotation.Resource;
 import javax.mail.Address;
 import javax.mail.BodyPart;
+import javax.mail.Flags;
 import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -27,6 +28,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Transport;
+import javax.mail.UIDFolder;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -283,6 +285,8 @@ public class EmailController {
 	          
 	          folder = (IMAPFolder) store.getFolder(emailLabel); // This doesn't work for other email account
 	          model.addAttribute("emailLabel", emailLabel);
+	          model.addAttribute("folder", folder);
+	          logger.debug("folder - {}", folder);
 	          
 	          //folder = (IMAPFolder) store.getFolder("[Gmail]/스팸함"); This works for both email account
 
@@ -321,6 +325,11 @@ public class EmailController {
 	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
 	            String reFrom = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
 	            
+	            Address[] recipients = msg.getAllRecipients();
+	            logger.debug("recipients - {}", recipients);
+	            String reci = recipients == null ? null : ((InternetAddress) recipients[0]).getPersonal();
+	            logger.debug("reci - {}", reci);
+	            
 	            personal.add(reFrom2);
 	            
 	            logger.debug("re getFrom() - {}", reFrom);
@@ -328,7 +337,6 @@ public class EmailController {
 	            logger.debug("msg.getFrom()[0] - {}", msg.getFrom()[0]);
 	            
 	            
-	           System.out.println("ToAll: "+msg.getAllRecipients().toString());
 	           System.out.println("To: "+msg.getAllRecipients()[0]);
 	           
 	            System.out.println("Date: "+msg.getReceivedDate());
@@ -390,7 +398,7 @@ public class EmailController {
 		logger.debug("msgNumber - {}", msgNumber);
 		logger.debug("Integer.parseInt(msgNumber) - {}", Integer.parseInt(msgNumber));
 		
-		
+		//이쪽은 나중에 로그인부분으로 연결할때 고침
 		 IMAPFolder folder = null;
 		    Store store = null;
 	        String subject = null;
@@ -408,7 +416,9 @@ public class EmailController {
 	          
 //	        Store store = (Store) Hsession.getAttribute("store");
 	          
-	          folder = (IMAPFolder) store.getFolder(emailLabel); 
+	          folder = (IMAPFolder) store.getFolder(emailLabel);
+	          
+	          
 	          if(!folder.isOpen())
 		          folder.open(Folder.READ_WRITE);
 	          
@@ -416,6 +426,7 @@ public class EmailController {
 	          
 	          Address[] froms = mes.getFrom();
 	          String personal = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
+	          
 	          
 	          model.addAttribute("personal", personal);
 	          
@@ -478,6 +489,251 @@ public class EmailController {
 		return "tiles/email/readMail";
 	}
 	
+	
+	@RequestMapping(path = "moveStarbox", method = RequestMethod.POST)
+	public String moveMail(Model model, String emailLabel, Integer msgNumber) throws MessagingException, IOException {
+		logger.debug("emailLabelMove- {}",emailLabel);
+		logger.debug("msgNumberMove- {}", msgNumber);
+		
+		
+		//이쪽은 나중에 로그인부분으로 연결할때 고침
+		IMAPFolder folder = null;
+		Store store = null;
+		Flag flag = null;
+//		
+		Properties props = System.getProperties();
+		props.setProperty("mail.store.protocol", "imaps");
+//		
+		Session session = Session.getDefaultInstance(props, null);
+//		
+//		
+		store = session.getStore("imaps");
+////	          store.connect("imap.googlemail.com", email, emailpass);
+		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
+//		
+////	        Store store = (Store) Hsession.getAttribute("store");
+//		
+		folder = (IMAPFolder) store.getFolder(emailLabel); 
+		
+		if(!folder.isOpen())
+			folder.open(Folder.READ_WRITE);
+		
+		
+		UIDFolder uf = (UIDFolder)folder; // cast folder to UIDFolder interface
+		
+		List<Message> tempList = new ArrayList<>();
+		Message mes = folder.getMessage(msgNumber);
+//		Long messageId = uf.getUID(mes); // get message Id of first message in the inbox
+//		logger.debug("mesUID - {}", messageId);
+		
+		tempList.add(mes);
+		
+		 IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/별표편지함");
+		 
+		 UIDFolder desuf = (UIDFolder)desFolder;
+		 
+		 
+    	 Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
+    	 folder.copyMessages(tempMessageArray, desFolder);
+    	 int descount = desFolder.getMessageCount();
+    	 logger.debug("descount - {}", descount);
+		 
+//		 folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
+		
+		 model.addAttribute("descount", descount);
+		 model.addAttribute("emailLabel", emailLabel);
+		
+		    String jspName = "";
+	        if(emailLabel.equals("[Gmail]/스팸함")) {
+	        	jspName="spambox";
+	        }else if(emailLabel.equals("[Gmail]/휴지통")) {
+	        	jspName="trashbox";
+	        }else if(emailLabel.equals("[Gmail]/별표편지함")) {
+	        	jspName="starbox";
+	        }else if(emailLabel.equals("[Gmail]/보낸편지함")) {
+	        	jspName="sendbox";
+	        }else if(emailLabel.equals("INBOX")) {
+	        	jspName="inbox";
+	        }
+	        return  "jsonView";
+	        
+//	        return  "tiles/email/" + jspName;
+	}
+	
+	
+	@RequestMapping(path = "removeStarbox", method = RequestMethod.POST)
+	public String removeMail(Model model, String emailLabel, int descount) throws MessagingException, IOException {
+		logger.debug("emailLabelMove- {}",emailLabel);
+		logger.debug("descount- {}",descount);
+		
+		//이쪽은 나중에 로그인부분으로 연결할때 고침
+		IMAPFolder folder = null;
+		Store store = null;
+		Flag flag = null;
+		
+		Properties props = System.getProperties();
+		props.setProperty("mail.store.protocol", "imaps");
+
+		Session session = Session.getDefaultInstance(props, null);
+		
+		
+		store = session.getStore("imaps");
+		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
+		
+		//나중에 세션으로 연결시킨걸 받아올거임
+//	    Store store = (Store) Hsession.getAttribute("store");
+		
+		folder = (IMAPFolder) store.getFolder(emailLabel); 
+		
+		
+		IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/별표편지함");
+		if(!desFolder.isOpen())
+			desFolder.open(Folder.READ_WRITE);
+		
+		List<Message> tempList = new ArrayList<>();
+		Message[] message = desFolder.getMessages();
+		
+		int count = desFolder.getMessageCount();
+//		logger.debug("count - {}", count);
+		
+		
+		for(int i = 0; i < count; i++) {
+			Message msg = message[i];
+			if((descount-1) == i) {
+				logger.debug("des, i - {}, {}", descount, i);
+				msg.setFlags(new Flags(Flags.Flag.DELETED), true);
+				break;
+			}
+		}
+		
+//		Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
+//		folder.copyMessages(tempMessageArray, desFolder);
+//		folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
+		model.addAttribute("emailLabel", emailLabel);
+		
+		return  "jsonView";
+	}
+	
+	@RequestMapping(path = "trashbox", method = RequestMethod.POST)
+	public String trashMail(Model model, String emailLabel, int[] msgNumber) throws MessagingException, IOException {
+		logger.debug("emailLabelMove- {}",emailLabel);
+		logger.debug("msgNumberMove- {}", msgNumber);
+		
+		//이쪽은 나중에 로그인부분으로 연결할때 고침
+		IMAPFolder folder = null;
+		Store store = null;
+		Flag flag = null;
+//		
+		Properties props = System.getProperties();
+		props.setProperty("mail.store.protocol", "imaps");
+//		
+		Session session = Session.getDefaultInstance(props, null);
+//		
+//		
+		store = session.getStore("imaps");
+////	          store.connect("imap.googlemail.com", email, emailpass);
+		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
+//		
+////	        Store store = (Store) Hsession.getAttribute("store");
+//		
+		folder = (IMAPFolder) store.getFolder(emailLabel); 
+		
+		if(!folder.isOpen())
+			folder.open(Folder.READ_WRITE);
+		
+		UIDFolder uf = (UIDFolder)folder;
+		
+		List<Message> tempList = new ArrayList<>();
+		Long[] mesUID = new Long[msgNumber.length];
+		
+		for(int i = 0; i < msgNumber.length; i++) {
+			Message mes = folder.getMessage(msgNumber[i]);
+			mesUID[i] = uf.getUID(mes);
+			
+			mes.setFlags(new Flags(Flags.Flag.DELETED), true);
+			tempList.add(mes);
+		}
+		
+//		tempList.add(mes);
+		
+		 IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/휴지통");
+		 
+    	 Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
+    	 folder.copyMessages(tempMessageArray, desFolder);
+//    	 int descount = desFolder.getMessageCount();
+//    	 logger.debug("descount - {}", descount);
+		 
+//		 folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
+		
+//		 model.addAttribute("descount", descount);
+    	 model.addAttribute("mesUID", mesUID);
+		 model.addAttribute("emailLabel", emailLabel);
+		
+        return  "jsonView";
+	}
+	
+//	@RequestMapping(path = "restoreMail", method = RequestMethod.POST)
+//	public String restoreMail(Model model, String emailLabel, Long[] mesUID) throws MessagingException, IOException {
+//		logger.debug("emailLabelMove- {}",emailLabel);
+//		logger.debug("msgNumberMove- {}", mesUID);
+//		
+//		//이쪽은 나중에 로그인부분으로 연결할때 고침
+//		IMAPFolder folder = null;
+//		Store store = null;
+//		Flag flag = null;
+////		
+//		Properties props = System.getProperties();
+//		props.setProperty("mail.store.protocol", "imaps");
+////		
+//		Session session = Session.getDefaultInstance(props, null);
+////		
+////		
+//		store = session.getStore("imaps");
+//////	          store.connect("imap.googlemail.com", email, emailpass);
+//		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
+////		
+//////	        Store store = (Store) Hsession.getAttribute("store");
+////		
+//		folder = (IMAPFolder) store.getFolder(emailLabel); 
+//		
+//		if(!folder.isOpen())
+//			folder.open(Folder.READ_WRITE);
+//		
+//		UIDFolder uf = (UIDFolder)folder;
+//		
+//		List<Message> tempList = new ArrayList<>();
+//		
+//		for(int i = 0; i < msgNumber.length; i++) {
+//			Message mes = folder.getMessage(msgNumber[i]);
+//			mesUID.add(uf.getUID(mes));
+//			
+//			mes.setFlags(new Flags(Flags.Flag.DELETED), true);
+//			tempList.add(mes);
+//		}
+//		
+////		tempList.add(mes);
+//		
+//		IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/휴지통");
+//		
+//		Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
+//		folder.copyMessages(tempMessageArray, desFolder);
+////    	 int descount = desFolder.getMessageCount();
+////    	 logger.debug("descount - {}", descount);
+//		
+////		 folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
+//		
+////		 model.addAttribute("descount", descount);
+//		model.addAttribute("mesUID", mesUID);
+//		model.addAttribute("emailLabel", emailLabel);
+//		
+//		return  "jsonView";
+//	}
+	
+	
+	
+	
+	
+		
 	
 	
 	@GetMapping("fileDownloadView2")
