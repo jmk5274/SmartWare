@@ -19,39 +19,34 @@
 
 <!-- body 시작 -->
 
+<!-- calendar -->
+<div class="card">
+	<div class="card-body">
+		<div id="calendar"></div>
+	</div>
+</div>
+
 <!-- filter -->
 <div class="row" style='user-select:none;'>
-	<div class="col-3">
+	<div class="col">
 		<div class="card">
 			<div class="card-body filter" id="empCategory">
 				<i class="fa fa-calendar-check-o fa-2x" style="color: black;"> </i>
 				<h3>개인 일정</h3>
-				<span id="empCategoryOff" class="categoryAll">
-					<i class="fa fa-2x fa-times-circle-o" aria-hidden="true"></i>
-				</span>
-				<span id="empCategoryOn" class="categoryAll">
-					<i class="fa fa-2x fa-check-circle-o" aria-hidden="true"></i>
-				</span>
+				<span id="empCategoryOff" class="categoryAll">전체 해제</span>
+				<span class="categoryAll"> / </span>
+				<span id="empCategoryOn" class="categoryAll">전체 선택</span>
 			</div>
 		</div>
+	</div>
+	<div class="col">
 		<div class="card">
 			<div class="card-body filter" id="depCategory">
 				<i class="fa fa-calendar-check-o fa-2x" style="color: black;"> </i>
 				<h3>부서 일정(${depart_nm })</h3>
-				<span id="depCategoryOff" class="categoryAll">
-					<i class="fa fa-2x fa-times-circle-o" aria-hidden="true"></i>
-				</span>
-				<span id="depCategoryOn" class="categoryAll">
-					<i class="fa fa-2x fa-check-circle-o" aria-hidden="true"></i>
-				</span>
-			</div>
-		</div>
-	</div>
-	<!-- calendar -->
-	<div class="col-9">
-		<div class="card">
-			<div class="card-body">
-				<div id="calendar"></div>
+				<span id="depCategoryOff" class="categoryAll">전체 해제</span>
+				<span class="categoryAll"> / </span>
+				<span id="depCategoryOn" class="categoryAll">전체 선택</span>
 			</div>
 		</div>
 	</div>

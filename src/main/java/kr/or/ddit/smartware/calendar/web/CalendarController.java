@@ -65,7 +65,7 @@ public class CalendarController {
 		model.addAttribute("depart_nm", departmentService.getDepartNm(depart_id));
 		model.addAttribute("posi_nm", positionService.getPosiNm(posi_id));
 		
-		return "tiles/calendar/calendar";
+		return "tiles2/calendar/calendar";
 	}
 	
 	/**
@@ -137,10 +137,10 @@ public class CalendarController {
 		// 시간 설정(long타입 숫자로 생성된 시간 -> date로)
 		calendar.setSt_dt(new Date(start));
 		calendar.setEnd_dt(new Date(end));
+		logger.debug("calendar: {}", calendar);
 		
 		calendarService.updateCalendar(calendar);
 		
-		logger.debug("calendar: {}", calendar);
 		
 		return jsonView;
 	}

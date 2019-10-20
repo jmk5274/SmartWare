@@ -79,7 +79,7 @@ public class CategoryController {
 		
 		return jsonView;
 	}
-	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
+	
 	/**
 	* Method : updateCategory
 	* 작성자 : JO MIN SOO

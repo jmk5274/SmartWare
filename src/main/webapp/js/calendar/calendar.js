@@ -83,9 +83,6 @@ $(function() {
 		var startDate = picker._startpicker.getDate();
 		var endDate = picker._endpicker.getDate();
 		
-		$("#calendarModal input[name=depart_id]").val("${S_EMPLOYEE.depart_id }");
-		$("#calendarModal input[name=emp_id]").val("${S_EMPLOYEE.emp_id }");
-		
 		$.ajax({
 			url: cp + "/updateCalendar",
 			type: "POST",
