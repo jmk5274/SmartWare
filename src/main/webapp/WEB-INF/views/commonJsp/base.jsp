@@ -15,19 +15,7 @@
 	
 	<tiles:insertAttribute name="basicLib"/>
 	
-	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" href="bootstrap/images/favicon.png">
-	<!-- Pignose Calender -->
-<%-- 	<link href="${cp }/bootstrap/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet"> --%>
-	<!-- Chartist -->
-<%-- 	<link rel="stylesheet" href="${cp }/bootstrap/plugins/chartist/css/chartist.min.css"> --%>
-<%-- 	<link rel="stylesheet" href="${cp }/bootstrap/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css"> --%>
-	<!-- Custom Stylesheet -->
-	<link href="${cp }/bootstrap/css/style.css" rel="stylesheet">
-	<!-- sweetalert2-->
-	<link href ="${cp }/plugin/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" >
-	<script src="${cp }/plugin/sweetalert2/dist/sweetalert2.min.js"></script>
-    <!--*******************
+	<!--*******************
         BasicLib end
     ********************-->
 </head>
@@ -105,24 +93,6 @@
     <script src="${cp }/bootstrap/js/settings.js"></script>
     <script src="${cp }/bootstrap/js/gleek.js"></script>
     <script src="${cp }/bootstrap/js/styleSwitcher.js"></script>
-
-    <!-- Chartjs -->
-<%--     <script src="${cp }/bootstrap/plugins/chart.js/Chart.bundle.min.js"></script> --%>
-    <!-- Circle progress -->
-<%--     <script src="${cp }/bootstrap/plugins/circle-progress/circle-progress.min.js"></script> --%>
-    <!-- Datamap -->
-<%--     <script src="${cp }/bootstrap/plugins/d3v3/index.js"></script> --%>
-<%--     <script src="${cp }/bootstrap/plugins/topojson/topojson.min.js"></script> --%>
-<%--     <script src="${cp }/bootstrap/plugins/datamaps/datamaps.world.min.js"></script> --%>
-    <!-- Morrisjs -->
-<%--     <script src="${cp }/bootstrap/plugins/raphael/raphael.min.js"></script> --%>
-<%--     <script src="${cp }/bootstrap/plugins/morris/morris.min.js"></script> --%>
-    <!-- Pignose Calender -->
-<%--     <script src="${cp }/bootstrap/plugins/moment/moment.min.js"></script> --%>
-<%--     <script src="${cp }/bootstrap/plugins/pg-calendar/js/pignose.calendar.min.js"></script> --%>
-    <!-- ChartistJS -->
-<%--     <script src="${cp }/bootstrap/plugins/chartist/js/chartist.min.js"></script> --%>
-<%--     <script src="${cp }/bootstrap/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script> --%>
 
 </body>
 
