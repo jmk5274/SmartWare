@@ -48,7 +48,12 @@
             </li>
             <li>
                 <a href="${cp }/calendar" aria-expanded="false">
-                    <i class="fa fa-calendar menu-icon"></i><span class="nav-text">일정관리</span>
+                    <i class="fa fa-calendar menu-icon"></i><span class="nav-text">일정 관리</span>
+                </a>
+            </li>
+            <li>
+                <a href="${cp }/pms" aria-expanded="false">
+                    <i class="icon-grid menu-icon"></i><span class="nav-text">프로젝트 관리</span>
                 </a>
             </li>
             <li>
@@ -61,15 +66,6 @@
                     <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
                     <li><a href="${cp }/employeeList">사원 관리</a></li>
                     </c:if>
-                </ul>
-            </li>
-            <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-grid menu-icon"></i><span class="nav-text">PMS</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/ui-accordion.html">일감 조회</a></li>
-                    <li><a href="${cp }/bootstrap/ui-alert.html">일감 추가</a></li>
                 </ul>
             </li>
             <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
