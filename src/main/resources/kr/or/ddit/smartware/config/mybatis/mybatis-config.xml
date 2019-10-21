@@ -42,6 +42,7 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/batch.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/popup.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/appr_member.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/job.xml"/>
 
 	</mappers>
 	

@@ -11,6 +11,7 @@ $(function() {
 		},
 		locale: 'ko',
 		height: "auto",
+		contentHeight: 800,
 		navLinks : true, // can click day/week names to navigate views
 		selectable: true, // interaction 플러그인 필요, 사용자가 선택 및 드래그 하여 날짜를 선택할 수 있다.
 		editable : true,

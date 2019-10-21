@@ -139,11 +139,10 @@ $(function() {
 			if (result.value) {
 				console.log();
 				$.ajax({
-					url: cp + "/deleteCalendar",
+					url: cp + "/deleteCategory",
 					data: "category_id=" + $("#cal_id").val(),
 					type: "post",
 					success: function(data) {
-						console.log($(this).parent().prev());
 						divCategory.prev().remove(); // hr 삭제
 						divCategory.remove(); // div 삭제
 						
