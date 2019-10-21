@@ -108,7 +108,7 @@ $(function() {
 	$("#btnDeleteCalendar").on("click", function() {
 		Swal({
 			title: '정말 삭제하시겠습니까?',
-//			html: "<span class='text-danger'>\"" + category_nm + "\"</span> 카테고리와 해당 카테고리의 일정이 삭제됩니다.",
+			html: "<span class='text-danger'>\"" + category_nm + "\"</span> 카테고리와 해당 카테고리의 일정이 삭제됩니다.",
 			type: 'warning',
 			showCancelButton: true,
 			focusConfirm: false,
