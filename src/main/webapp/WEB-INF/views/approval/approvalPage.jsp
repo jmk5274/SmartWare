@@ -17,6 +17,11 @@
     <!-- include summernote css/js-->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <style>
+        .checkBlock {
+            float: right;
+        }
+    </style>
 </head>
 <script>
     $(function(){
@@ -25,14 +30,14 @@
         });
 
         $("#confirmbtn").on('click', function(){
+            $("#to").val("");
             var res = "";
             $('input:checkbox[name=checkBox]:checked').each(function (i, a) {
                 if (res != null && res.trim() !== "") res += ", ";
                 res += $(this).val();
             });
-            $("#reci").val("");
-            $("#reci").val(res);
-            // $(':checkbox:checked').attr('checked', false );
+            $("#to").val(res);
+            applCheckBox(res)
         });
 
         $(document).on('click', '.toggleBtn', function() {
@@ -44,9 +49,6 @@
         // $('#summerNote').val('<h1><strong>test</strong></h1>');
         // 코드값 넣기
         $('#formList').change(function () {
-            // var form = $(this).val();
-            // console.log(form);
-            // $('.note-editable.panel-body').html($(this).val());
             $.ajax({
                 url : "${cp}/approval/formInfo",
                 method : "post",
@@ -58,6 +60,7 @@
             });
         });
 
+        /* 개인 결재선 선택 시 */
         $('#myAppr').on('click', function () {
             var form_id = $('#formList').val();
 
@@ -74,18 +77,63 @@
                     data : {form_id : form_id},
                     dataType : "json",
                     success : function (data) {
-                        $("#reci").val("");
+                        $("#to").val("");
                         var res="";
+
                         for (var i = 0; i < data.empList.length; i++ ) {
                             if (res != null && res.trim() !== "") res += ", ";
-                            res += data.empList[i].emp_nm + "(" + data.empList[i].emp_id + ")";
+                            res += data.empList[i].EMP_NM + "(" + data.empList[i].EMP_ID + ")";
 
-                            $('#' + data.empList[i].emp_id).attr('checked', true);
+                            $('#' + data.empList[i].EMP_ID).attr('checked', true);
                         }
-                        $("#reci").val(res);
+                        $("#to").val(res);
+                        applCheckBox(res)
                     }
                 });
             }
+        });
+
+        function applCheckBox(apprMember) {
+            $.ajax({
+                url : '${cp}/approval/applCheckBox',
+                method : "post",
+                data : {apprMember : apprMember},
+                dataType : "json",
+                success : function (data) {
+                    $('#checkAppl').empty();
+                    var checkAppl = "";
+                    checkAppl += '<table class="checkBlock" cellspacing=0 border=1>';
+                    checkAppl += '        <tbody>';
+                    checkAppl += '        <tr style="height:18.066666666667px;">';
+                    checkAppl += '          <td style="text-align:center;border-left:1px solid;border-right:1px solid;border-top:1px solid;border-left-color:#000000;border-right-color:#000000;border-top-color:#000000;min-width:40px" rowspan=2>';
+                    checkAppl += '              <span>결</span>';
+                    checkAppl += '              <br />';
+                    checkAppl += '              <br />';
+                    checkAppl += '              <span>재</span>';
+                    checkAppl += '           </td>';
+                    for (var i = data.empList.length - 1; i >= 0; i-- ) {
+                        checkAppl += '           <td style="text-align:center;border:1px solid;border-left-color:#000000;border-right-color:#000000;border-top-color:#000000;border-bottom-color:#000000;min-width:100px">';
+                        checkAppl +=                data.empList[i].JOB_NM;
+                        checkAppl += '          </td>';
+                    }
+                    checkAppl += '        </tr>';
+                    checkAppl += '        <tr style="height:74px;">';
+                    for (var i = data.empList.length - 1; i >= 0; i-- ) {
+                        checkAppl += '          <td id="' + data.empList[i].JOB_ID + '" style="border:1px solid;border-left-color:#000000;border-right-color:#000000;border-top-color:#000000;border-bottom-color:#000000;min-width:100px">';
+                        checkAppl += '              &nbsp;';
+                        checkAppl += '          </td>';
+                    }
+                    checkAppl += '        </tr>';
+                    checkAppl += '    </tbody>';
+                    checkAppl += '</table>';
+
+                    $('#checkAppl').append(checkAppl);
+                }
+            })
+        }
+
+        $('#sendBtn').click(function () {
+            $('#contents').val($('.note-editable').html());
         });
     });
 </script>
@@ -129,9 +177,14 @@
                                                                                         <ol class="dd-list">
                                                                                             <c:forEach items="${employeeList }" var="employee">
                                                                                                 <c:forEach items="${positionList }" var="position">
-                                                                                                    <c:if test="${depart.depart_id == employee.depart_id && position.posi_id == employee.posi_id}">
+                                                                                                    <c:if test="${depart.depart_id == employee.DEPART_ID && position.posi_id == employee.POSI_ID}">
                                                                                                         <li class="dd-item select" data-id="${depart.depart_id }">
-                                                                                                            <div class="dd-handle"><input id="${employee.emp_id}" value="${employee.emp_nm}(${employee.emp_id })" type="checkbox" name="checkBox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.posi_nm }&nbsp;</div>
+                                                                                                            <div class="dd-handle"><input id="${employee.EMP_ID}" value="${employee.EMP_NM}(${employee.EMP_ID })" type="checkbox" name="checkBox" class="listCheck" style="display: inline-block;"/>
+                                                                                                                &nbsp;&nbsp;&nbsp;${employee.EMP_NM } &nbsp;
+                                                                                                                /&nbsp;${employee.EMAIL }&nbsp;
+                                                                                                                /&nbsp;${employee.POSI_NM }&nbsp;
+                                                                                                                /&nbsp;${employee.JOB_NM }&nbsp;
+                                                                                                            </div>
                                                                                                         </li>
                                                                                                     </c:if>
                                                                                                 </c:forEach>
@@ -159,9 +212,10 @@
 
                             </div>
                             <form id="frm" action="${cp}/sendEmail" method="post" enctype="multipart/form-data">
+                                <input id="contents" type="hidden" value="">
                                 <div class="compose-content mt-5">
-                                    <input id="reci" type="text" name="reci" value=""
-                                           placeholder=" To"
+                                    <input id="to" type="text" name="to" value=""
+                                           placeholder=" To" readonly
                                            style="width: 400px; height: 43px;"> &nbsp;&nbsp
                                     <button type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button> &nbsp
                                     <button id="myAppr" type="button" class="btn btn-outline-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10">개인 결재선</button>
@@ -170,12 +224,12 @@
                                 <br>
                                 <div class="form-group">
                                     <div style="float: left; width: 50%;">
-                                        <input type="text" name="subject"
+                                        <input id="title" type="text" name="subject"
                                                class="form-control bg-transparent" placeholder=" Title"/>
                                     </div>
                                     <div class="form-row align-items-center">
                                         <div class="col-auto my-1 align-items-center">
-                                            <select class="custom-select mr-sm-2" id="formList">
+                                            <select id="formList" class="custom-select mr-sm-2" >
                                                 <option id="cleanForm" value="noForm">양식 선택</option>
                                                 <c:forEach items="${formList}" var="form" varStatus="loop">
                                                     <option id="${form.form_id}" value="${form.form_id}">${form.form_nm}</option>
@@ -186,14 +240,7 @@
                                 </div>
                                 <div class="col_c" style="margin-bottom: 30px">
                                     <div class="input-group">
-<%--                                        ckEditor--%>
-<%--                                        <textarea class="form-control" id="p_content" name="cont"></textarea>--%>
-<%--                                        <script type="text/javascript">--%>
-<%--                                            CKEDITOR.replace('p_content', {--%>
-<%--                                                allowedContent:true, height: 500, width: 1200--%>
-<%--                                            });--%>
-<%--                                        </script>--%>
-                                        <div id="summerNote"></div>
+                                        <div id="summerNote" name="contentsText"></div>
                                         <script type="text/javascript">
                                             $('#summerNote').summernote({
                                                 height : 800,
@@ -205,20 +252,11 @@
                                         </script>
                                     </div>
                                 </div>
-                                <h5 class="m-b-20">
-                                    <i class="fa fa-paperclip m-r-5 f-s-18"></i> Attatchment
-                                </h5>
-                                <div class="form-group">
-                                    <div class="fallback">
-                                        <input class="l-border-1" name="attatch" type="file"
-                                               multiple="multiple">
-                                    </div>
-                                </div>
                             </form>
                         </div>
                         <div class="text-left m-t-15">
-                            <button id="sendbtn"
-                                    class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
+                            <button id="sendBtn"
+                                    class="btn btn-danger m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
                                     type="button">
                                 <i class="fa fa-paper-plane m-r-5"></i> Send
                             </button>

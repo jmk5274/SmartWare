@@ -10,6 +10,8 @@ public interface IEmployeeDao {
 	
 	public List<Employee> allEmployeeList();
 
+	List<Map> getDetailEmpList();
+
 	/**
 	 * 
 	* Method : getEmployee
@@ -20,6 +22,16 @@ public interface IEmployeeDao {
 	* Method 설명 : 사원 상세 조회
 	 */
 	Employee getEmployee(String emp_id);
+
+	/**
+	 * Method : getEmployeeDetail
+	 * 작성자 : Bae Sang Hyun
+	 * 변경이력 :
+	 * @param emp_id
+	 * @return
+	 * Method 설명 : 사원 상세 정보조회 ( 부서, 직책, 직급 이름 추가 )
+	 */
+	Map getEmployeeDetail(String emp_id);
 	
 	/**
 	 * 

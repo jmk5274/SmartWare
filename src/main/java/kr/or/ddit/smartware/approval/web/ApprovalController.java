@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RequestMapping("approval")
 @Controller
@@ -48,8 +48,7 @@ public class ApprovalController {
     @GetMapping("approvalPage")
     public String approvalPage(Model model) {
         List<Department> departList = departmentService.getAllDepartment();
-
-        List<Employee> employeeList = employeeService.allEmployeeList();
+        List<Map> employeeList = employeeService.getDetailEmpList();
         List<Position> positionList = positionService.getAllPosition();
         List<Form> formList = formService.getFormList();
 
@@ -82,13 +81,40 @@ public class ApprovalController {
 
         List<ApprMember> apprMemList = approvalService.getApprMember(data);
 
-        List<Employee> empList = new ArrayList<>();
+        List<Map> empList = new ArrayList<>();
         for (ApprMember apprMember : apprMemList) {
-           empList.add(employeeService.getEmployee(apprMember.getAppr_emp()));
+           empList.add(employeeService.getEmployeeDetail(apprMember.getAppr_emp()));
         }
 
         model.addAttribute("empList", empList);
 
+        return "jsonView";
+    }
+
+    @PostMapping("applCheckBox")
+    public String applCheckBox(String apprMember, Model model) {
+        final Pattern PATTERN_BRACKET = Pattern.compile("\\([^\\(\\)]+\\)");
+        final String VOID = "";
+
+        List<Map> empList = new ArrayList<>();
+
+        Matcher matcher = PATTERN_BRACKET.matcher(apprMember);
+
+        String pureText = apprMember;
+        String findMember = new String();
+
+        while (matcher.find()) {
+            int startIdx = matcher.start();
+            int endIdx = matcher.end();
+
+            findMember = pureText.substring(startIdx+1, endIdx-1);
+            pureText = pureText.replace(findMember, VOID);
+            matcher = PATTERN_BRACKET.matcher(pureText);
+
+            empList.add(employeeService.getEmployeeDetail(findMember));
+        }
+        logger.debug("members : {}", empList);
+        model.addAttribute("empList", empList);
         return "jsonView";
     }
 }

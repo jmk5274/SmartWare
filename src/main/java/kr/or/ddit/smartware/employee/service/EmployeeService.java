@@ -20,17 +20,26 @@ public class EmployeeService implements IEmployeeService{
 	public Employee getEmployee(String emp_id) {
 		return employeeDao.getEmployee(emp_id);
 	}
-	
+
+	@Override
+	public Map getEmployeeDetail(String emp_id) {
+		return employeeDao.getEmployeeDetail(emp_id);
+	}
+
 	@Override
 	public List<Employee> allEmployeeList() {
 		List<Employee> list = employeeDao.allEmployeeList();
 		return list;
 	}
-	
+
+	@Override
+	public List<Map> getDetailEmpList() {
+		return employeeDao.getDetailEmpList();
+	}
+
 	@Override
 	public List<Employee> getEmployeeList(Map map) {
-		List<Employee> list = employeeDao.getEmployeeList(map);
-		return list;
+		return employeeDao.getEmployeeList(map);
 	}
 
 	@Override

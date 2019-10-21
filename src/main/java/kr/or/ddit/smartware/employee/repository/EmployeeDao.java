@@ -21,7 +21,12 @@ public class EmployeeDao implements IEmployeeDao {
 	public List<Employee> allEmployeeList() {
 		return sqlSession.selectList("employee.allEmployeeList");
 	}
-	
+
+	@Override
+	public List<Map> getDetailEmpList() {
+		return sqlSession.selectList("employee.detailEmpList");
+	}
+
 	/**
 	 * 
 	* Method : getEmployee
@@ -34,7 +39,12 @@ public class EmployeeDao implements IEmployeeDao {
 	public Employee getEmployee(String emp_id) {
 		return sqlSession.selectOne("employee.getEmployee", emp_id);
 	}
-	
+
+	@Override
+	public Map getEmployeeDetail(String emp_id) {
+		return sqlSession.selectOne("employee.getEmployeeDetail", emp_id);
+	}
+
 	@Override
 	public List<Employee> getEmployeeList(Map map) {
 		return sqlSession.selectList("employee.getEmployeeList", map);
