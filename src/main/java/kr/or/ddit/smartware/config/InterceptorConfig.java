@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import kr.or.ddit.smartware.interceptor.PerformanceCheckInterceptor;
+import kr.or.ddit.smartware.interceptor.SessionCheckInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -14,14 +15,21 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		PerformanceCheckInterceptor performanceCheckInterceptor = new PerformanceCheckInterceptor();
-		registry.addInterceptor(performanceCheckInterceptor).addPathPatterns("/**");
+		// 세션 사원 체크 interceptor
+		registry.addInterceptor(new SessionCheckInterceptor()).addPathPatterns("/**")
+															  .excludePathPatterns("/login")
+															  .excludePathPatterns("/css/**")
+															  .excludePathPatterns("/js/**")
+															  .excludePathPatterns("/bootstrap/**")
+															  .excludePathPatterns("/error/**");
+		
+		// 작동시간 interceptor
+		registry.addInterceptor(new PerformanceCheckInterceptor()).addPathPatterns("/**");
 		
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("language");
 		registry.addInterceptor(localeChangeInterceptor)
 				.addPathPatterns("/**")
-				.addPathPatterns("/ws/chat")
 				.excludePathPatterns("/login")
 				.excludePathPatterns("/css/**")
 				.excludePathPatterns("/js/**")
