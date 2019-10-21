@@ -1,10 +1,18 @@
 package kr.or.ddit.smartware.popup.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.popup.model.Popup;
 import kr.or.ddit.smartware.popup.service.IPopupService;
 
@@ -95,11 +104,93 @@ public class PopupController {
 	* Method 설명 : pagination List 조회
 	*/
 	@PostMapping("insertPopupView")
-	public String insertPopupView(Popup popup, @RequestPart("file") MultipartFile file, HttpSession session) {
+	public String insertPopupView(Popup popup, String startPicker, String endPicker, Model model, @RequestPart("file") MultipartFile file, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		logger.debug("popup : {}", popup);
+			try {
+				if(file.getBytes() != null || file.getSize()!=0 || file.getBytes().length != 0) {
+					byte[] pop_cont = file.getBytes();
+					popup.setPop_cont(pop_cont);
+				}else {
+					byte[] pop_cont = {};
+					popup.setPop_cont(pop_cont);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		
-		logger.debug("{}", popup);
+		try {
+			popup.setPop_st_dt(sdf.parse(startPicker));
+			popup.setPop_end_dt(sdf.parse(endPicker));
+			popup.setEmp_id(employee.getEmp_id());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		int cnt = popupService.insertPopup(popup);
+		
+		model.addAttribute("cnt", cnt);
 		
 		return "jsonView";
 	}
 	
+	@PostMapping("deletePopup")
+	public String deletePopup(String pop_id, Model model) {
+		
+		int cnt = popupService.deletePopup(pop_id);
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("popupView")
+	public String popupView(String pop_id, Model model) {	
+		
+		model.addAttribute("pop_id", pop_id);
+		
+	return "popup/popupView";
+	}
+	
+	@GetMapping("getPopup")
+	public void getPopup(String pop_id, HttpServletResponse response) throws IOException {
+		Popup popup = popupService.getPopup(pop_id);
+		
+		ServletOutputStream sos = response.getOutputStream();
+		
+		byte[] pop_cont = popup.getPop_cont();
+		
+		sos.write(pop_cont);
+		
+		sos.close();
+	}
+	
+	@PostMapping("getPopupView")
+	public String getPopupView(@RequestPart("file") MultipartFile file, Model model, HttpServletResponse response) throws IOException {
+		ServletOutputStream sos = response.getOutputStream();
+		
+		byte[] pop_cont = file.getBytes();
+		
+		sos.write(pop_cont);
+		
+		sos.close();
+		
+		model.addAttribute("img", pop_cont);
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("tempPopup")
+	public String tempPopup() {
+		return "popup/tempPopup";
+	}
+	
+	@PostMapping("getOnePopup")
+	public String getOnePopup(String pop_id, Model model) {
+		
+		Popup popup = popupService.getPopup(pop_id);
+		
+		model.addAttribute("popup", popup);
+		
+		return "jsonView";
+	}
 }

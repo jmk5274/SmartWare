@@ -179,51 +179,6 @@ public class MessengerController {
 	}
 	
 	/**
-	* Method : empPicture
-	* 작성자 : JEON MIN GYU
-	* 변경이력 :
-	* @param userId
-	* @param response
-	* @throws IOException
-	* Method 설명 : 사용자 사진 출력
-	*/
-	@GetMapping("empPicture")
-	public void empPicture(String emp_id, HttpServletResponse response, HttpSession session) {
-		Employee employee = employeeService.getEmployee(emp_id);
-		
-		ServletOutputStream sos = null;
-		FileInputStream fis = null;
-		File picture = null;
-		String path = session.getServletContext().getRealPath("/img/emp");
-		
-		try {
-			sos = response.getOutputStream();
-				picture = new File(path+"/"+employee.getEmp_pic());
-			try {
-				fis = new FileInputStream(picture);
-			} catch (Exception e) {
-				picture = new File(path+"/no_img.png");
-				fis = new FileInputStream(picture);
-			}
-			byte[] buff = new byte[512];
-			int len = 0;
-			
-			while((len = fis.read(buff, 0, 512)) != -1) {
-				sos.write(buff,0,len);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				fis.close();
-				sos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	/**
 	* Method : deleteChat
 	* 작성자 : JEON MIN GYU
 	* 변경이력 :

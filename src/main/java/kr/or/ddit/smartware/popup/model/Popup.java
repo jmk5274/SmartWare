@@ -8,7 +8,7 @@ public class Popup {
 	private Date pop_st_dt; 	// 사원 아이디
 	private Date reg_dt;    	// 팝업 내용
 	private String emp_id;  	// 팝업 시작 날짜
-	private String pop_cont;	// 팝업 아래
+	private byte[] pop_cont;	// 팝업 아래
 	private String pop_id;  	// 팝업 아이디
 	private String pop_title;	// 팝업 오른쪽	
 	private int pop_bot;    	// 팝업 완료 날짜
@@ -18,7 +18,7 @@ public class Popup {
 	
 	public Popup() { }
 	
-	public Popup(Date pop_end_dt, Date pop_st_dt, Date reg_dt, String emp_id, String pop_cont, String pop_id,
+	public Popup(Date pop_end_dt, Date pop_st_dt, Date reg_dt, String emp_id, byte[] pop_cont, String pop_id,
 			String pop_title, int pop_bot, int pop_left, int pop_right, int pop_top) {
 		this.pop_end_dt = pop_end_dt;
 		this.pop_st_dt = pop_st_dt;
@@ -57,10 +57,10 @@ public class Popup {
 	public void setEmp_id(String emp_id) {
 		this.emp_id = emp_id;
 	}
-	public String getPop_cont() {
+	public byte[] getPop_cont() {
 		return pop_cont;
 	}
-	public void setPop_cont(String pop_cont) {
+	public void setPop_cont(byte[] pop_cont) {
 		this.pop_cont = pop_cont;
 	}
 	public String getPop_id() {

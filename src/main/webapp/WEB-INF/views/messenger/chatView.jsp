@@ -245,7 +245,7 @@ th{
 				<c:when test="${chat_nm == null || chat_nm == '' }">
 				</c:when>
 				<c:otherwise>
-					<img src="${cp }/empPicture?emp_id=${S_EMPLOYEE.emp_id}" alt="" />
+					<img src="${cp }/employeePicture?emp_id=${S_EMPLOYEE.emp_id}" alt="" />
 					<p>${chat_nm } </p>
 				</c:otherwise>
 			</c:choose>
@@ -464,14 +464,14 @@ th{
 							<c:choose>
 								<c:when test="${message.EMP_ID != S_EMPLOYEE.emp_id}">
 									<li class="sent msgList" data-msg_id=${message.MSG_ID }>
-										<img src="${cp }/empPicture?emp_id=${message.EMP_ID}" alt="" />
+										<img src="${cp }/employeePicture?emp_id=${message.EMP_ID}" alt="" />
 										<p>${message.MSG_CONT }</p>
 										<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/></span>
 									</li>
 								</c:when>
 								<c:otherwise>
 									<li class="replies msgList" data-msg_id=${message.MSG_ID }>
-										<img src="${cp }/empPicture?emp_id=${message.EMP_ID}" alt="" />
+										<img src="${cp }/employeePicture?emp_id=${message.EMP_ID}" alt="" />
 										<p>${message.MSG_CONT }</p>
 										<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/> </span>
 									</li>
@@ -553,7 +553,7 @@ $("#status-options ul li").click(function() {
 		var str = evt.data.split(":");
 		
 		if(str[0]===("msg")){
-			$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[4] +'><img src="${cp }/empPicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
+			$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[4] +'><img src="${cp }/employeePicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
 			
 			$('.messages').animate({
 				scrollTop: $('.messages').get(0).scrollHeight}, 1000);    
@@ -614,7 +614,7 @@ $("#status-options ul li").click(function() {
 				
 				message += data.msg_id + "";
 				
-				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
 				
 				$('.messages').animate({
 					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
@@ -679,7 +679,7 @@ $("#status-options ul li").click(function() {
 					
 					message += data.msg_id + "";
 					
-					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/empPicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
 					
 					$('.messages').animate({
 						scrollTop: $('.messages').get(0).scrollHeight}, 1000);

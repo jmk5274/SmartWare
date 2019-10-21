@@ -15,4 +15,18 @@
 	<select id="getAllPopupList" resultType="popup">
 		select * from popup order by pop_id
 	</select>
+	
+	<insert id="insertPopup" parameterType="popup">
+		insert into popup(pop_id, pop_st_dt, pop_end_dt, pop_left, pop_top, pop_bot, pop_right, pop_title, pop_cont, reg_dt, emp_id)
+			values('pop' || lpad(popup_seq.nextval, 4, 0), #{pop_st_dt}, #{pop_end_dt}, #{pop_left}, #{pop_top}, #{pop_bot}, #{pop_right}, #{pop_title}, #{pop_cont}, sysdate, #{emp_id})
+	</insert>
+	
+	<delete id="deletePopup" parameterType="String">
+		delete from popup where pop_id = #{pop_id}
+	</delete>
+	
+	<select id="getPopup" parameterType="String" resultType="popup">
+		select * from popup where pop_id = #{pop_id}
+	</select>
+	
 </mapper>

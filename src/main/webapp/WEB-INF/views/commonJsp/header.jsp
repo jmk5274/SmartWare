@@ -280,7 +280,7 @@
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                         <span class="activity active"></span>
-                        <img src="${cp }/empPicture?emp_id=${S_EMPLOYEE.emp_id}" height="40" width="40" alt="">
+                        <img src="${cp }/employeePicture?emp_id=${S_EMPLOYEE.emp_id}" height="40" width="40" alt="">
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">

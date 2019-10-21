@@ -40,4 +40,19 @@ public class PopupService implements IPopupService{
 		return popupDao.getAllPopupList();
 	}
 
+	@Override
+	public int insertPopup(Popup popup) {
+		return popupDao.insertPopup(popup);
+	}
+
+	@Override
+	public int deletePopup(String pop_id) {
+		return popupDao.deletePopup(pop_id);
+	}
+
+	@Override
+	public Popup getPopup(String pop_id) {
+		return popupDao.getPopup(pop_id);
+	}
+
 }
