@@ -1,5 +1,7 @@
 package kr.or.ddit.smartware.approval.web;
 
+import kr.or.ddit.smartware.approval.model.ApplAppr;
+import kr.or.ddit.smartware.approval.model.Application;
 import kr.or.ddit.smartware.approval.model.ApprMember;
 import kr.or.ddit.smartware.approval.model.Form;
 import kr.or.ddit.smartware.approval.service.IApprovalService;
@@ -17,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -81,27 +84,77 @@ public class ApprovalController {
 
         List<ApprMember> apprMemList = approvalService.getApprMember(data);
 
-        List<Map> empList = new ArrayList<>();
+        List<Map> apprMemInfoList = new ArrayList<>();
         for (ApprMember apprMember : apprMemList) {
-           empList.add(employeeService.getEmployeeDetail(apprMember.getAppr_emp()));
+            apprMemInfoList.add(employeeService.getEmployeeDetail(apprMember.getAppr_emp()));
         }
 
-        model.addAttribute("empList", empList);
+        model.addAttribute("apprMemInfoList", apprMemInfoList);
 
         return "jsonView";
     }
 
     @PostMapping("applCheckBox")
     public String applCheckBox(String apprMember, Model model) {
+        List<Map> applList = new ArrayList<>();
+
+        for (String findMember : checkMember(apprMember)) {
+            applList.add(employeeService.getEmployeeDetail(findMember));
+        }
+        model.addAttribute("applList", applList);
+        return "jsonView";
+    }
+
+    @PostMapping("sendAppl")
+    public String sendAppl(@RequestParam Map param, HttpSession session, Model model) {
+        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+        param.put("emp_id", emp_id);
+        List<String> apprList = checkMember((String) param.get("to"));
+
+        if(approvalService.insertAppl(param) == 1 ) {
+            int num = 0;
+            for (String apprMem : apprList) {
+                param.put("appr_emp", apprMem);
+                num += approvalService.setAppr(param);
+            }
+            if (apprList.size() == num) {
+                model.addAttribute("res", true);
+                List<Application> applications = approvalService.sendApplList(emp_id);
+                model.addAttribute("applications", applications);
+                for (Application application : applications) {
+                    List<ApplAppr> applApprs = approvalService.confirmStatus(application.getAppl_id());
+                    model.addAttribute("applApprs", applApprs );
+                }
+            }
+
+        } else {
+            model.addAttribute("res", false);
+        }
+
+        return "tiles/approval/sendApplList";
+    }
+
+    @GetMapping("senApprovalList")
+    public String senApprovalList(@RequestParam Map param, HttpSession session) {
+        return "";
+    }
+
+    @GetMapping("approvalList")
+    public String approvalList(@RequestParam Map param, HttpSession session) {
+        return "";
+    }
+
+    /* 받는 사람 아이디 추출 */
+    private List<String> checkMember(String apprMember) {
         final Pattern PATTERN_BRACKET = Pattern.compile("\\([^\\(\\)]+\\)");
         final String VOID = "";
 
-        List<Map> empList = new ArrayList<>();
+        List<String> findMembers = new ArrayList<>();
 
         Matcher matcher = PATTERN_BRACKET.matcher(apprMember);
 
         String pureText = apprMember;
-        String findMember = new String();
+        String findMember = "";
 
         while (matcher.find()) {
             int startIdx = matcher.start();
@@ -111,10 +164,9 @@ public class ApprovalController {
             pureText = pureText.replace(findMember, VOID);
             matcher = PATTERN_BRACKET.matcher(pureText);
 
-            empList.add(employeeService.getEmployeeDetail(findMember));
+            findMembers.add(findMember);
         }
-        logger.debug("members : {}", empList);
-        model.addAttribute("empList", empList);
-        return "jsonView";
+
+        return findMembers;
     }
 }

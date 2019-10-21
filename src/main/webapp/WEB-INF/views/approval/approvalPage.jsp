@@ -25,10 +25,6 @@
 </head>
 <script>
     $(function(){
-        $("#sendbtn").click(function(){
-            $("#frm").submit();
-        });
-
         $("#confirmbtn").on('click', function(){
             $("#to").val("");
             var res = "";
@@ -49,15 +45,19 @@
         // $('#summerNote').val('<h1><strong>test</strong></h1>');
         // 코드값 넣기
         $('#formList').change(function () {
-            $.ajax({
-                url : "${cp}/approval/formInfo",
-                method : "post",
-                data : {form_id : $(this).val()},
-                dataType : "json",
-                success : function (data) {
-                    $('.note-editable.panel-body').html(data.form_cont);
-                }
-            });
+            if ($(this).val() !== 'noForm') {
+                $.ajax({
+                    url : "${cp}/approval/formInfo",
+                    method : "post",
+                    data : {form_id : $(this).val()},
+                    dataType : "json",
+                    success : function (data) {
+                        $('.note-editable.panel-body').html(data.form_cont);
+                    }
+                });
+            } else {
+                $('.note-editable.panel-body').html("");
+            }
         });
 
         /* 개인 결재선 선택 시 */
@@ -65,11 +65,7 @@
             var form_id = $('#formList').val();
 
             if (form_id == null || form_id == 'noForm') {
-                Swal({
-                    type: 'error', // success, error, warning, info, question
-                    title: 'Error',
-                    text: '양식을 선택하세요'
-                });
+                alertError("양식을 선택하세요");
             } else {
                 $.ajax({
                     url : "${cp}/approval/myAppr",
@@ -80,11 +76,11 @@
                         $("#to").val("");
                         var res="";
 
-                        for (var i = 0; i < data.empList.length; i++ ) {
+                        for (var i = 0; i < data.apprMemInfoList.length; i++ ) {
                             if (res != null && res.trim() !== "") res += ", ";
-                            res += data.empList[i].EMP_NM + "(" + data.empList[i].EMP_ID + ")";
+                            res += data.apprMemInfoList[i].EMP_NM + "(" + data.apprMemInfoList[i].EMP_ID + ")";
 
-                            $('#' + data.empList[i].EMP_ID).attr('checked', true);
+                            $('#' + data.apprMemInfoList[i].EMP_ID).attr('checked', true);
                         }
                         $("#to").val(res);
                         applCheckBox(res)
@@ -111,15 +107,15 @@
                     checkAppl += '              <br />';
                     checkAppl += '              <span>재</span>';
                     checkAppl += '           </td>';
-                    for (var i = data.empList.length - 1; i >= 0; i-- ) {
+                    for (var i = data.applList.length - 1; i >= 0; i-- ) {
                         checkAppl += '           <td style="text-align:center;border:1px solid;border-left-color:#000000;border-right-color:#000000;border-top-color:#000000;border-bottom-color:#000000;min-width:100px">';
-                        checkAppl +=                data.empList[i].JOB_NM;
+                        checkAppl +=                data.applList[i].JOB_NM;
                         checkAppl += '          </td>';
                     }
                     checkAppl += '        </tr>';
                     checkAppl += '        <tr style="height:74px;">';
-                    for (var i = data.empList.length - 1; i >= 0; i-- ) {
-                        checkAppl += '          <td id="' + data.empList[i].JOB_ID + '" style="border:1px solid;border-left-color:#000000;border-right-color:#000000;border-top-color:#000000;border-bottom-color:#000000;min-width:100px">';
+                    for (var i = data.applList.length - 1; i >= 0; i-- ) {
+                        checkAppl += '          <td id="' + data.applList[i].JOB_ID + '" style="border:1px solid;border-left-color:#000000;border-right-color:#000000;border-top-color:#000000;border-bottom-color:#000000;min-width:100px">';
                         checkAppl += '              &nbsp;';
                         checkAppl += '          </td>';
                     }
@@ -133,8 +129,51 @@
         }
 
         $('#sendBtn').click(function () {
-            $('#contents').val($('.note-editable').html());
+            Swal({
+                title: '결재를 올리시겠습니까?',
+                text: "확인을 누를시 전송됩니다",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '네',
+                cancelButtonText: '아니오'
+            }).then((result) => {
+                if (result.value) {
+                if(result.value) {
+                    var contents = $('#contents').val($('.note-editable').html());
+                    var res;
+                    if ($('#to').val() === "") {
+                        alertError("결재선을 선택하세요");
+                    } else if ($('#title').val() === "") {
+                        alertError("제목을 입력하세요");
+                        $('#title').focus();
+                    } else if (contents === "") {
+                        alertError("내용을 입력하세요");
+                    } else {
+                        $('#form_id').val($('#formList').val());
+                        $("#frm").submit();
+                    }
+                }
+                    // Swal({
+                    //     title: '전송 성공.',
+                    //     text: '전송 되었습니다.',
+                    //     type: 'success',
+                    //     confirmButtonText: '확인'
+                    // }).then((result) => {
+                    //
+                    // });
+                }
+            });
         });
+
+        function alertError(errorStr) {
+            Swal({
+                type: 'error', // success, error, warning, info, question
+                title: 'Error',
+                text: errorStr
+            });
+        }
     });
 </script>
 
@@ -211,8 +250,9 @@
                                 </div> <br>
 
                             </div>
-                            <form id="frm" action="${cp}/sendEmail" method="post" enctype="multipart/form-data">
-                                <input id="contents" type="hidden" value="">
+                            <form id="frm" action="${cp}/approval/sendAppl" method="post" enctype="multipart/form-data">
+                                <input id="contents" name="cont" type="hidden" value="">
+                                <input id="form_id" name="form_id" type="hidden" value="">
                                 <div class="compose-content mt-5">
                                     <input id="to" type="text" name="to" value=""
                                            placeholder=" To" readonly
@@ -224,7 +264,7 @@
                                 <br>
                                 <div class="form-group">
                                     <div style="float: left; width: 50%;">
-                                        <input id="title" type="text" name="subject"
+                                        <input id="title" type="text" name="title"
                                                class="form-control bg-transparent" placeholder=" Title"/>
                                     </div>
                                     <div class="form-row align-items-center">

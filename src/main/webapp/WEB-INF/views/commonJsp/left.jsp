@@ -26,7 +26,8 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${cp }/approval/approvalPage">결재하기</a></li>
-                    <li><a href="${cp }/bootstrap/layout-fixed-header.html">결재문서 보기</a></li>
+                    <li><a href="${cp }/approval/senApprovalList">결재문서(송신) 목록</a></li>
+                    <li><a href="${cp }/approval/approvalList">결재문서(수신) 목록</a></li>
                 </ul>
             </li>
             <li>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="appr">
+	<select id="getApprMem" parameterType="hashMap" resultType="apprMember">
+        SELECT *
+        FROM APPR_MEMBER
+        WHERE APPR_LINE_OWNER = #{emp_id}
+        AND APPR_LINE_ID = #{appr_line_id}
+    </select>
+
+    <insert id="insertAppl" parameterType="hashmap">
+        <selectKey keyProperty="appl_id" resultType="String" order="AFTER">
+            SELECT 'appl' || lpad(application_seq.currval, 4, 0) FROM  DUAL
+        </selectKey>
+        INSERT INTO APPLICATION
+        VALUES ( 'appl' || lpad(application_seq.nextval, 4, 0), #{title}, #{cont}, SYSDATE, #{form_id}, #{emp_id} )
+    </insert>
+
+    <insert id="setAppr" parameterType="hashmap">
+        INSERT INTO APPL_APPR (appl_id, appr_emp, ap_order)
+        VALUES (
+            #{appl_id},
+            #{appr_emp},
+            (SELECT ap_order
+            FROM APPR_MEMBER
+            WHERE APPR_EMP = #{appr_emp}
+            AND APPR_LINE_ID = (SELECT APPR_LINE_ID
+                                FROM FORM
+                                WHERE FORM_ID = #{form_id})
+            AND APPR_LINE_OWNER = #{emp_id})
+        )
+    </insert>
+
+    <update id="confirmAppl" parameterType="applAppr">
+        UPDATE APPL_APPR SET ABLE = #{able}
+        WHERE appl_id = #{appl_id}
+        AND appr_emp = #{appr_emp}
+    </update>
+
+    <select id="sendApplList" parameterType="String" resultType="application">
+        SELECT *
+        FROM APPLICATION a
+        WHERE emp_id = #{emp_id}
+    </select>
+
+    <select id="confirmStatus" parameterType="String" resultType="applAppr">
+        SELECT *
+        FROM APPL_APPR
+        WHERE APPL_ID = #{appl_id}
+    </select>
+</mapper>
