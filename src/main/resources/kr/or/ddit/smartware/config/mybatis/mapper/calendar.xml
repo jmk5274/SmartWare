@@ -39,11 +39,11 @@
 	<update id="updateCalendar" parameterType="calendar">
 		update calendar
 		   set cal_title = #{cal_title},
-		   	   cal_cont = #{cal_cont},
+		   	   cal_cont = #{cal_cont, jdbcType=VARCHAR},
 		   	   st_dt = #{st_dt},
 		   	   end_dt = #{end_dt},
 		   	   allDay = #{allDay},
-		   	   depart_id = #{depart_id},
+		   	   depart_id = #{depart_id, jdbcType=VARCHAR},
 		   	   emp_id = #{emp_id},
 		   	   category_id = #{category_id}
 		 where cal_id = #{cal_id}

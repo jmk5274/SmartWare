@@ -257,6 +257,27 @@ var selectEvent = function(info) {
 	$("#calendarModal").modal("show");
 }
 
+var resizeEvent = function(info) {
+	var start = +info.event.start;
+	var end;
+	if(info.event.allDay === true) end = +(moment(info.event.end).subtract(1, 'second'));
+	else end = +info.event.end;
+	
+	$.ajax({
+		url: cp + "/updateCalendarSize",
+		type: "POST",
+		data: "cal_id=" + info.event.id + "&start=" + start + "&end=" + end,
+		success: function() {
+			Swal({
+				title: '수정되었습니다.',
+				type: 'success',
+				timer: 1500,
+				showConfirmButton: false,
+			});
+		}
+	});
+}
+
 // 하루 종일 체크박스의 상태에 따라 데이트 피커 포맷 변경
 var changeAllDay = function() {
 	if($("#allDay").prop("checked")) {

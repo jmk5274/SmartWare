@@ -1,5 +1,6 @@
 package kr.or.ddit.smartware.calendar.web;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -137,14 +138,25 @@ public class CalendarController {
 		// 시간 설정(long타입 숫자로 생성된 시간 -> date로)
 		calendar.setSt_dt(new Date(start));
 		calendar.setEnd_dt(new Date(end));
-		logger.debug("calendar: {}", calendar);
 		
 		calendarService.updateCalendar(calendar);
-		
 		
 		return jsonView;
 	}
 	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
+	@PostMapping("updateCalendarSize")
+	public View updateCalendarSize(Model model, String cal_id, long start, long end) {
+		Calendar calendar = calendarService.getCalendar(cal_id);
+		logger.debug("start: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(start));
+		logger.debug("end: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(end));
+		calendar.setSt_dt(new Date(start));
+		calendar.setEnd_dt(new Date(end));
+		
+		calendarService.updateCalendar(calendar);
+		
+		return jsonView;
+	}
+	
 	/**
 	* Method : insertCalendar
 	* 작성자 : JO MIN SOO

@@ -74,46 +74,16 @@ $(function() {
 		},
 		eventClick: function(info) { // 이벤트 클릭
 			selectEvent(info);
-//			alert('Event: ' + info.event.title);
-//			alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-//			alert('View: ' + info.view.type);
-			
-			// change the border color just for fun
-//			info.el.style.borderColor = 'red';
+		},
+		eventDrop : function(info) {
+			resizeEvent(info);
+		},
+		eventResize : function(info) {
+			resizeEvent(info)
 		}
     });
     calendar.render();
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 	// 개인 일정 카테고리 불러오기
 	$.getJSON(cp + "/getEmpCategoryList").done(function(data) {
 		getDisplayCategory(data.categoryList, $("#empCategory"));
