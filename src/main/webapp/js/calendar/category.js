@@ -109,6 +109,7 @@ $(function() {
 				});
 				$("#categoryModal").modal("hide");
 				$("#" + $("#category_id").val() + " > i").css("color", $("#colorselector").val());
+				$("#" + $("#category_id").val() + " > span").text(" " + $("#category_nm").val());
 				
 				$(calendar.getEvents()).each(function(index, event) {
 					if(event.extendedProps.category_id === $("#category_id").val()) {
@@ -140,12 +141,12 @@ $(function() {
 				console.log();
 				$.ajax({
 					url: cp + "/deleteCategory",
-					data: "category_id=" + $("#cal_id").val(),
+					data: "category_id=" + category_id,
 					type: "post",
 					success: function(data) {
 						divCategory.prev().remove(); // hr 삭제
 						divCategory.remove(); // div 삭제
-						
+						console.log(data);
 						Swal({
 							title: '삭제되었습니다.',
 							type: 'success',
