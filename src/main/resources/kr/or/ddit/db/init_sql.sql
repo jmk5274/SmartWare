@@ -362,8 +362,8 @@ INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '개발2
 INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '개발2팀_중요', '#CDA85C', 'de0003', 'e0006');
 INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '개발2팀_생일', '#0D9A00', 'de0003', 'e0006');
 INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '개발2팀_이벤트', '#00C0EF', 'de0003', 'e0006');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '임원 휴가', '#22FF94', 'de0001', 'e0002');
-INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '개발1팀 휴가', '#FF7F50', 'de0002', 'e0005');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '임원_휴가', '#22FF94', 'de0001', 'e0002');
+INSERT INTO CATEGORY VALUES ('cate' || LPAD(CATEGORY_SEQ .NEXTVAL,4,0), '개발1팀_휴가', '#FF7F50', 'de0002', 'e0005');
 
 ---------------------------------------------------------------------------------------------------------------
 --일정
