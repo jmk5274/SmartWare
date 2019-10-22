@@ -132,7 +132,6 @@ public class LoginController {
 		else {	
 			cookie.setMaxAge(0);	//삭제
 		}
-		
 		response.addCookie(cookie);
 	}
 	
