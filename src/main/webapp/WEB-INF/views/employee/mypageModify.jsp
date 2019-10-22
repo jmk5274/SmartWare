@@ -12,25 +12,17 @@
 		}
 		
 		$(".updateBtn").on("click", function(){
-			var join_dt = $("#join_dt").val();
 			var picture = $("#picture").val();
-			if(join_dt == '' || join_dt.length == 0){
-			Swal({
-				type: 'warning', // success, error, warning, info, question
-				title: '필수 사항',
-				text: '입사일을 입력해주세요.'
-			})
-				return;
 			
-			} else if(picture == '' || picture.length == 0){
-			Swal({
-				type: 'warning', // success, error, warning, info, question
-				title: '필수 사항',
-				text: '프로필 사진을 첨부해주세요.'
-			})
+			/* if(picture == '' || picture.length == 0){
+				Swal({
+					type: 'warning', // success, error, warning, info, question
+					title: '필수 사항',
+					text: '프로필 사진을 첨부해주세요.'
+				})
 			
 				return;
-			}
+			} */
 
 			$("#frm").submit();
 		})
@@ -169,12 +161,12 @@
 										<td><strong class="text-dark mr-4">전화번호</strong></td>
 										<td><input type="tel" id="tel" name="tel" class="form-control input-default" value="${employee.tel }"></td>
 									</tr>
-										
 									
 									<!-- 입사일 -->
 									<tr>
-										<td><strong class="text-dark mr-4">입사일</strong></td>
-										<td><input type="date" id="join_dt" name="join_dt" class="form-control input-default" value="${employee.join_dt }"></td>
+									<td><strong class="text-dark mr-4">입사일</strong></td>
+									<td><input type="date" class="form-control" id="join_dt"
+									name="join_dt" placeholder="입사일" value='<fmt:formatDate value="${employee.join_dt}" pattern="yyyy-MM-dd"/>'></td>
 									</tr>
 									
 									<!-- 서명 -->
