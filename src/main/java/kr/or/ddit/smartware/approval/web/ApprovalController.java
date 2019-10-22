@@ -1,5 +1,6 @@
 package kr.or.ddit.smartware.approval.web;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import kr.or.ddit.smartware.approval.model.ApplAppr;
 import kr.or.ddit.smartware.approval.model.Application;
 import kr.or.ddit.smartware.approval.model.ApprMember;
@@ -105,8 +106,25 @@ public class ApprovalController {
         return "jsonView";
     }
 
-    @PostMapping("sendAppl")
-    public String sendAppl(@RequestParam Map param, HttpSession session, Model model) {
+    @GetMapping("sendApprovalList")
+    public String getSendAppl(HttpSession session, Model model) {
+        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+        List<Application> applications = approvalService.sendApplList(emp_id);
+        List<Map> applList = new ArrayList<>();
+        for (Application application : applications) {
+            List<ApplAppr> applApprs = approvalService.confirmStatus(application.getAppl_id());
+            Map data = new HashMap();
+            data.put("application", application);
+            data.put("applApprs", applApprs);
+            applList.add(data);
+        }
+        model.addAttribute("applList", applList );
+
+        return "tiles/approval/sendApplList";
+    }
+
+    @PostMapping("sendApprovalList")
+    public String postSendAppl(@RequestParam Map param, HttpSession session, Model model) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
         param.put("emp_id", emp_id);
         List<String> apprList = checkMember((String) param.get("to"));
@@ -120,11 +138,15 @@ public class ApprovalController {
             if (apprList.size() == num) {
                 model.addAttribute("res", true);
                 List<Application> applications = approvalService.sendApplList(emp_id);
-                model.addAttribute("applications", applications);
+                List<Map> applList = new ArrayList<>();
                 for (Application application : applications) {
                     List<ApplAppr> applApprs = approvalService.confirmStatus(application.getAppl_id());
-                    model.addAttribute("applApprs", applApprs );
+                    Map data = new HashMap();
+                    data.put("application", application);
+                    data.put("applApprs", applApprs);
+                    applList.add(data);
                 }
+                model.addAttribute("applList", applList );
             }
 
         } else {
@@ -132,11 +154,6 @@ public class ApprovalController {
         }
 
         return "tiles/approval/sendApplList";
-    }
-
-    @GetMapping("senApprovalList")
-    public String senApprovalList(@RequestParam Map param, HttpSession session) {
-        return "";
     }
 
     @GetMapping("approvalList")

@@ -112,6 +112,12 @@ public class LoginController {
 	        	
 	        	store = mailSession.getStore("imaps");
 	        	store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
+	        	folder = (IMAPFolder) store.getFolder("INBOX");
+	        	if(!folder.isOpen())
+	       		 folder.open(Folder.READ_ONLY);
+	        	
+	        	int cnt = folder.getMessageCount();
+	        	session.setAttribute("cnt", cnt);
 	        	
 	        	session.setAttribute("store", store);
 	        	session.setAttribute("S_EMPLOYEE", employee);

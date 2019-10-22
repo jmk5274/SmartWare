@@ -264,7 +264,7 @@
 <!-- 										</td> -->
 										</tr>
 									</table>
-								<button id="createEmp" type="button" name="insertBtn" class="btn mb-1 btn-outline-primary pull-right" value="insert">추가</button>
+								<button id="createEmp" type="button" name="insertBtn" class="btn btn-primary pull-right" value="insert">추가</button>
 								</form>
 					<!-- 사원 등록 테이블 끝 -->
 					<br>

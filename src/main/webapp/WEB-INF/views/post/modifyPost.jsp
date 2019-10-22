@@ -9,9 +9,12 @@ $(document).ready(function() {
 	// 전송버튼 클릭이벤트
 	$("#savebutton").click(function(){
 		if(confirm("저장하시겠습니까?")) {
+// 			if(validation()) {
 			// 이부분에 에디터 validation 검증
 				$("#frm").submit();
 			}
+			
+// 		}
 	})
 	
 // 	$("#cancelBtn").click(function(){
@@ -46,9 +49,10 @@ $(document).ready(function() {
 
 // 필수값 Check
 // function validation(){
-// 	var contents = $.trim(oEditors[0].getContents());
+// 	var contents = CKEDITOR.instances.DSC.getData();
 // 	if(contents === '<p>&nbsp;</p>' || contents === ''){ // 기본적으로 아무것도 입력하지 않아도 <p>&nbsp;</p> 값이 입력되어 있음. 
 // 		alert("내용을 입력하세요.");
+// 		oEditors.getById['smarteditor'].exec('FOCUS');
 // 		return false;
 // 	}
 
@@ -93,7 +97,7 @@ $(document).ready(function() {
 
 					<div class="form-group">
 					<div class="col-sm-8"> 
-						<textarea name="cont" id="cont" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
+						<textarea name="cont" id="cont" rows="10" cols="100" style="width:766px; height:412px;">${post.cont }</textarea>
 							<script type="text/javascript">
 					                  CKEDITOR.replace('cont', {height: 500, width: 900
 					                	  

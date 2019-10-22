@@ -43,11 +43,13 @@
         SELECT *
         FROM APPLICATION a
         WHERE emp_id = #{emp_id}
+        ORDER  BY 1
     </select>
 
     <select id="confirmStatus" parameterType="String" resultType="applAppr">
         SELECT *
         FROM APPL_APPR
         WHERE APPL_ID = #{appl_id}
+        order by 2 desc
     </select>
 </mapper>
