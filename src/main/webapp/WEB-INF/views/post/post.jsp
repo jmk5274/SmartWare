@@ -81,7 +81,7 @@
 							</table>
 						</div>
 						<c:if test="${S_EMPLOYEE.emp_id == 'admin' || board_id != 'board0001'}">
-						<a href="${cp }/writePost?board_id=${board_id}" class="btn mb-1 btn-outline-primary pull-right">글 작성</a>
+						<a href="${cp }/writePost?board_id=${board_id}" class="btn btn-primary pull-right">글 작성</a>
 						</c:if>
 				
 						<div class="bootstrap-pagination">

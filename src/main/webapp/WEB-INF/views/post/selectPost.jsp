@@ -92,10 +92,10 @@
 						<input type="hidden" name="title" value="${post.title }"/>
 						<input type="hidden" name="emp_id" value="${post.emp_id }"/>
 						<input type="hidden" name="btnValue" id="hiddenBtnV"/>
-						<label for="title" class="col-sm-2 control-label">제목</label>
-						<div class="col-sm-6">
-	                    	<label class="control-label">${post.title } </label>
-						</div>
+<!-- 						<label for="title" class="col-sm-2 control-label">제목</label> -->
+<!-- 						<div class="col-sm-6">-->
+<%-- 	                    	<label class="control-label">${post.title } </label> --%>
+<!-- 						</div> -->
 					</div>
 				</form>
 
@@ -134,11 +134,11 @@
 						<label for="postFile" class="col-sm-2 control-label"></label>
 						<div class="col-sm-6">
 						<c:if test="${employee.emp_id == post.emp_id}">
-							<input type="submit" class="btn mb-1 btn-outline-success" id="btnUpdqtePost" name="btnValue" value="수정"/>
-							<input type="button" class="btn mb-1 btn-outline-dark" id="btnDelPost" value="삭제"/>
+							<input type="submit" class="btn btn-dark" id="btnUpdqtePost" name="btnValue" value="수정"/>
+							<input type="button" class="btn btn-danger" id="btnDelPost" value="삭제"/>
 						</c:if>
 							<c:if test="${S_EMPLOYEE.emp_id == 'admin' || board_id != 'board0001'}">
-							<input type="submit" class="btn mb-1 btn-outline-primary" id="btnAnsPost" name="btnValue" value="답글"/>
+							<input type="submit" class="btn btn-primary" id="btnAnsPost" name="btnValue" value="답글"/>
 							</c:if>
 						</div>
 					</div>

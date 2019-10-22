@@ -9,9 +9,25 @@ $(document).ready(function() {
 	// 전송버튼 클릭이벤트
 	$("#savebutton").click(function(){
 		if($("#title").val()==""){
-			alert("제목을 입력해주세요");
+			Swal({
+				type: 'warning', // success, error, warning, info, question
+				title: '필수 사항',
+				text: '제목을 입력해주세요.'
+			});
+			
 			return;
 		}
+			
+// 		} else if($("#cont").val()==""){
+// 			Swal({
+// 				type: 'warning', // success, error, warning, info, question
+// 				title: '필수 사항',
+// 				text: '내용을 입력해주세요.'
+// 			});
+			
+// 			return;
+// 		}
+		
 		if(confirm("저장하시겠습니까?")) {
 			// 이부분에 에디터 validation 검증
 			if(validation()) {
@@ -66,7 +82,7 @@ function validation(){
 					<div class="form-group">
 						<!-- <label for="cont" id="p_content" class="col-sm-2 control-label"></label> -->
 						<div class="col-sm-8"> 
-							<textarea name="cont" id="cont" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
+							<textarea id="cont" name="cont" id="cont" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
 							<script type="text/javascript">
 					                  CKEDITOR.replace('cont', {height: 500, width: 900
 					                	  

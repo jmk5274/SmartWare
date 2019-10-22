@@ -65,7 +65,7 @@
 <!-- 						</div> -->
 						
 <!-- 						<div class="col-sm-2"> -->
-							<td><input id="insert" type="submit" name="btnValue" class="btn mb-1 btn-outline-primary" value="생성"></td>
+							<td><input id="insert" type="submit" name="btnValue" class="btn btn-primary" value="생성"></td>
 							</tr>
 <!-- 						</div> -->
 					</div>
@@ -101,7 +101,7 @@
 							
 							<td>
 <!-- 							<div class="col-sm-2"> -->
-								<input type="submit" name="btnValue" class="btn mb-1 btn-outline-success" value="수정">
+								<input type="submit" name="btnValue" class="btn btn-dark" value="수정">
 <!-- 							</div> -->
 							</td>
  						</div>
