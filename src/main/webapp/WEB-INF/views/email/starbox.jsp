@@ -4,6 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<style>
+	.message:hover{
+		background-color: #F8F4E4;
+		
+	}
+</style>
 
 <script>
 	$(function(){
@@ -77,10 +83,6 @@
 				 msgNumber.push($(this).data("id"));
 			 })
 			
-			for(var i = 0; i < msgNumber.length; i++){
-				$("#div"+msgNumber[i]).remove();
-			}
-			
 			var emailLabel = $("#emailLabel").val();
 			
 			console.log(msgNumber);
@@ -91,6 +93,9 @@
 			      type : "post",
 			      data : "emailLabel=" + emailLabel + '&msgNumber=' + msgNumber,
 			      success : function(data){
+						for(var i = 0; i < msgNumber.length; i++){
+							$("#div"+msgNumber[i]).remove();
+						}
 			    	  mesUID = data.mesUID;
 				      emailLabel = data.emailLabel;
 			    	  
@@ -152,13 +157,13 @@
 											More <span class="caret m-l-5"></span>
 										</button>
 										<div class="dropdown-menu">
-											<a href="javascript: void(0);" class="dropdown-item">Read Mail</a>
-											<a href="javascript: void(0);" class="dropdown-item">UnRead Mail</a> 
+											<a href="${cp }/MailStatus?check=T&emailLabel=${emailLabel }" class="dropdown-item">Read Mail</a>
+											<a href="${cp }/MailStatus?check=F&emailLabel=${emailLabel }" class="dropdown-item">UnRead Mail</a> 
 										</div>
 									</div>
 								</td>
 								<td>
-									&nbsp;&nbsp;&nbsp;<i class="fa fa-trash fa-3x" aria-hidden="true"></i>
+									&nbsp;&nbsp;&nbsp;<i class="fa fa-trash fa-3x" aria-hidden="true" style="cursor:pointer;"></i>
 								</td>
 							</tr>
 						</table>
@@ -186,7 +191,7 @@
 														<span class="col-2">${personal}</span>
 													</c:otherwise>
 												</c:choose>
-											<span data-id=${msg.getMessageNumber() } class="col-8 subject">${msg.subject }</span>
+											<span data-id=${msg.getMessageNumber() } class="col-8 subject" style="cursor:pointer;">${msg.subject }</span>
 										<span class="col-1"><fmt:formatDate value="${msg.receivedDate }" pattern="yyyy-MM-dd"/></span>
 									</div>
 								</div>
@@ -194,19 +199,74 @@
 						<!-- panel -->
 						<div class="row">
 							<div class="col-7">
-								<div class="text-left">1 - ${messagesCount } of ${messagesCount }</div>
+								<c:choose>
+									<c:when test="${check eq 'T' || check eq 'F' }">
+										
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${messagesCount < map.pagesize }">
+												<div class="text-left">${map.page} - ${messagesCount} of ${messagesCount }</div>
+											</c:when>
+											<c:when test="${paginationSize == map.page  }">
+												<div class="text-left">${((map.page-1)*map.pagesize)+1} - ${messagesCount} of ${messagesCount }</div>
+											</c:when>
+											<c:otherwise>
+												<div class="text-left">${((map.page-1)*map.pagesize)+1} - ${map.page*map.pagesize} of ${messagesCount }</div>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+							
 							</div>
-							<div class="col-5">
-								<div class="btn-group float-right">
-									<button class="btn btn-gradient" type="button">
-										<i class="fa fa-angle-left"></i>
-									</button>
-									<button class="btn btn-dark" type="button">
-										<i class="fa fa-angle-right"></i>
-									</button>
-								</div>
-							</div>
+							<div class="bootstrap-pagination col-5">
+                                   <nav>
+                                       <ul class="pagination justify-content-end">
+															<c:choose>
+																<c:when test="${map.page == 1 }">
+																	 <li class="page-item disabled">
+																	 	<a class="page-link" href="#" tabindex="-1">Previous</a>
+				                                            		</li>
+																</c:when>
+																<c:otherwise>
+																	 <li class="page-item">
+																	 	<a class="page-link" href="${cp }/mailbox?page=${map.page-1 }&emailLabel=${emailLabel} " tabindex="-1">Previous</a>
+				                                            		</li>
+																</c:otherwise>
+															</c:choose>
+															
+															<c:forEach begin="1" end="${paginationSize }" var="i">
+																<c:choose>
+																	<c:when test="${i == map.page }">
+																		 <li class="page-item">
+																		 	<a class="page-link" href="#">${i }</a>
+				                                            			</li>																		
+																	</c:when>
+																	<c:otherwise>
+																		<li class="page-item">
+																			<a class="page-link" href="${cp }/mailbox?page=${i }&emailLabel=${emailLabel}">${i }</a>
+				                                            			</li>
+																	</c:otherwise>
+																</c:choose>
+															</c:forEach>
+															
+															<c:choose>
+																<c:when test="${map.page == paginationSize }">
+																	<li class="page-item disabled">
+																	 	<a class="page-link" href="#" tabindex="+1">Next</a>
+				                                            		</li>
+																</c:when>
+																<c:otherwise>
+																	<li class="page-item">
+																	 	<a class="page-link" href="${cp }/mailbox?page=${map.page+1 }&emailLabel=${emailLabel} " tabindex="+1">Next</a>
+				                                            		</li>
+																</c:otherwise>
+															
+															</c:choose>
+			                                 </ul>
+			                             </nav>
 						</div>
+					</div>
 					</div>
 				</div>
 			</div>

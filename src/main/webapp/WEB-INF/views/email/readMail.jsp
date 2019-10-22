@@ -6,11 +6,66 @@
 
 <script>
 	$(function(){
-		
-		
-		
-	});
+		$(".spam").click(function(){
+			var emailLabel = $("#emailLabel").val();
+			var msgNumber = $("#msgNumber").val();
+			
+			$.ajax({
+			      url : "${cp}/spambox",
+			      async: false,
+			      type : "post",
+			      data : "emailLabel=" + emailLabel + '&msgNumber=' + msgNumber,
+			      success : function(data){
+			    	  const toast = Swal.mixin({
+						  toast: true,
+						  position: 'top-end',
+						  showConfirmButton: false,
+						  timer: 1500
+						});
 
+					toast({
+					  type: 'success',
+					  title: '스팸메일함으로 이동됬습니다.'
+					})
+			      },
+			      error : function(xhr){
+			    	  console.log("실패");
+			      }
+			   });
+		});
+		
+		
+		$(".trash").click(function(){
+			var emailLabel = $("#emailLabel").val();
+			var msgNumber = $("#msgNumber").val();
+			
+			$.ajax({
+			      url : "${cp}/trashbox",
+			      async: false,
+			      type : "post",
+			      data : "emailLabel=" + emailLabel + '&msgNumber=' + msgNumber,
+			      success : function(data){
+					  console.log("성공");
+			    	  mesUID = data.mesUID;
+				      emailLabel = data.emailLabel;
+			    	  
+			    	  const toast = Swal.mixin({
+						  toast: true,
+						  position: 'top-end',
+						  showConfirmButton: false,
+						  timer: 1500
+						});
+					toast({
+					  type: 'success',
+					  title: '휴지통 으로 이동됬습니다.'
+					})
+			      },
+			      error : function(xhr){
+			    	  console.log("실패");
+			      }
+			   });
+		});
+	});
 
 
 
@@ -23,21 +78,17 @@
 </script>
 
 
-<form id="">
-
-
-</form>
-
 		<div class="card">
 			<div class="card-body">
-
 				<div class="email-center-box">
+					<input type="hidden" id="emailLabel" name="emailLabel" value="${emailLabel }"/>
+					<input type="hidden" id="msgNumber" name="msgNumber" value="${msgNumber }"/>
 					<div class="toolbar" role="toolbar">
 						<div class="btn-group m-b-20">
-							<button type="button" class="btn btn-light">
-								<i class="fa fa-exclamation-circle"></i>
+							<button type="button" class="btn btn-light spam">
+								<i class="fa fa-exclamation-circle spam"></i>
 							</button>
-							<button type="button" class="btn btn-light">
+							<button type="button" class="btn btn-light trash">
 								<i class="fa fa-trash"></i>
 							</button>
 						</div>
@@ -103,7 +154,7 @@
 
 					</div>
 					<div class="text-right">
-						<button id="sendWrite" class="btn btn-primaryw-md m-b-30" type="button">Send</button>
+						<a href="${cp }/writeMail?email=${message.getAllRecipients()[0] }"><button id="sendWrite" class="btn btn-primaryw-md m-b-30" type="button">Send</button></a>
 						<button class="btn btn-primaryw-md m-b-30" type="button" onclick="goBack()">cancel</button>
 					</div>
 				</div>

@@ -1,3 +1,5 @@
+<%@page import="com.sun.mail.imap.IMAPFolder"%>
+<%@page import="javax.mail.Store"%>
 <%@page import="kr.or.ddit.smartware.employee.model.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,8 +13,8 @@
 		employee.setChat_id("");
 		session.setAttribute("S_EMPLOYEE", employee);
 	}
+	
 %>
-
 <script src="${cp }/js/moment.js"></script>
 <script>
 

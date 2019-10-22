@@ -6,20 +6,26 @@
 <script type="text/javascript" src="${cp }/ckeditor/ckeditor.js"></script>
 <link href="${cp }/bootstrap/plugins/nestable/css/nestable.css" rel="stylesheet">
 <link href="${cp }/bootstrap/css/style.css" rel="stylesheet">
+
+					                  
 <script>
 	$(function(){
-		
+	
+		CKEDITOR.replace('p_content', {height: 500, width: 900
+      	  
+        });
+
 		$("#btnTest_alert").click(function(){
-			var cont = $("#p_content").val()
-			
+			var cont = CKEDITOR.instances['p_content'].getData();
+// 			$("#p_content").val(cont);
+			$("#cont").val(cont);
+					
 			var formData = new FormData();
-			
 			var myForm = document.getElementById('frm');
 			formData = new FormData(myForm);
 			
-			
 			 $.ajax({
-			      url : "${cp}/sendEmail?cont="+cont,
+			      url : "${cp}/sendEmail",
 			      enctype: 'multipart/form-data',
 			      contentType : false,
 			      processData : false,
@@ -87,10 +93,6 @@ function checkEmail(){
 	<input type="hidden" id="checkEmail" name="email"/>
 </form>
 
-<form id="contForm" action="${cp }/sendMail" method="post">
-	<input type="hidden" id="cont" name = "cont">
-</form>
-
 
 <div class="container-fluid">
 	<div class="row">
@@ -131,9 +133,14 @@ function checkEmail(){
 									                                                    <ol class="dd-list">
 										                                            		<c:forEach items="${employeeList }" var="employee">
 											                                            		<c:forEach items="${positionList }" var="position">
-											                                            				<c:if test="${depart.depart_id == employee.depart_id && position.posi_id == employee.posi_id}">
+											                                            				<c:if test="${depart.depart_id == employee.DEPART_ID && position.posi_id == employee.POSI_ID}">
 														                                                        <li class="dd-item select" data-id="${depart.depart_id }">
-														                                                            <div class="dd-handle"><input value="${employee.email }" type="checkbox" class="listCheck" style="display: inline-block;"/> &nbsp;&nbsp;&nbsp;${employee.emp_nm } &nbsp;/&nbsp;${employee.email }&nbsp;/&nbsp;${position.posi_nm }&nbsp;</div>
+														                                                            <div class="dd-handle"><input value="${employee.EMAIL }" type="checkbox" class="listCheck" style="display: inline-block;"/>
+															                                                             &nbsp;&nbsp;&nbsp;${employee.EMP_NM } &nbsp;
+															                                                             /&nbsp;${employee.EMAIL }&nbsp;
+															                                                             /&nbsp;${employee.POSI_NM }&nbsp;
+															                                                             /&nbsp;${employee.JOB_NM }&nbsp;
+														                                                             </div>
 														                                                        </li>
 														                                                </c:if>
 														                                         </c:forEach>
@@ -161,6 +168,7 @@ function checkEmail(){
 						</div>
 						<form id="frm" action="${cp}/sendEmail" method="post" enctype="multipart/form-data">
 						<div class="compose-content mt-5">
+								<input type="hidden" id="cont" name="cont"/>
 								<input id="reci" type="text" name="reci" value="${param.email }"
 									placeholder=" To"
 									style="width: 400px; height: 43px;"> &nbsp;&nbsp;
@@ -183,12 +191,7 @@ function checkEmail(){
 
 							<div class="col_c" style="margin-bottom: 30px">
 								<div class="input-group">
-									<textarea class="form-control" id="p_content" name="cont"></textarea>
-									<script type="text/javascript">
-					                  CKEDITOR.replace('p_content', {height: 500, width: 900
-					                	  
-					                                                  });
-					                  </script>
+									<textarea class="form-control" id="p_content" name="p_content"></textarea>
 								</div>
 							</div>
 						<h5 class="m-b-20">

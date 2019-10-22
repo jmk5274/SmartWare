@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -34,6 +35,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+import javax.mail.search.FlagTerm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,7 +50,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.mail.imap.IMAPFolder;
@@ -80,16 +84,7 @@ public class EmailController {
 	@GetMapping(path = "writeMail")
 	public String writeMail(Model model) {
 		List<Department> departList = departmentService.getAllDepartment();
-		
-//		String[] value = null;
-////		for(Map depart : departList) {
-//		for(int i = 0; i < departList.size(); i++) {
-//			logger.debug("depart.get(\"DEPART_ID\") - {}", departList.get(i).get("DEPART_ID"));
-//			value[i] = (String) departList.get(i).get("DEPART_ID");
-//			
-//		}
-		
-		List<Employee> employeeList = employeeService.allEmployeeList();
+		List<Map> employeeList = employeeService.getDetailEmpList();
 		List<Position> positionList = positionService.getAllPosition();
 		
 		logger.debug("departList - {}", departList);
@@ -99,8 +94,6 @@ public class EmailController {
 		
 		return "tiles/email/writeMail";
 	}
-	//답글 @PostMapping 으로 return "tiles.writeMail"
-	
 	
 	@PostMapping(path = "sendEmail")
     public String sendEmail(Model model, String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) throws IOException {
@@ -204,15 +197,6 @@ public class EmailController {
 			e.printStackTrace();
 		}
         
-//        request.setAttribute("error", error);
-//        model.addAttribute("error", error);
-        
-//        try {
-//			response.sendRedirect(request.getHeader("referer")+"?error=1");
-//		} catch (IOException e) {
-//			
-//			e.printStackTrace();
-//		}	
         
         if(error == 0) {
         	return "jsonView";
@@ -246,32 +230,28 @@ public class EmailController {
 		return "tiles/email/writeMail";
 	}
 	
-//	@RequestMapping(path = "test")
-//	public String test() {
-//		return "tiles.test";
-//	}
 	
 	@RequestMapping(path = "mailbox", method = RequestMethod.GET)
-	public String receiveMail(HttpSession Hsession, Model model, String emailLabel) throws MessagingException, IOException {
+	public String receiveMail(HttpSession Hsession, Model model, String emailLabel, @RequestParam (name = "page", defaultValue = "1") Integer page, @RequestParam(name = "pagesize", defaultValue = "10") Integer pagesize) throws MessagingException, IOException {
 		logger.debug("emailLabel - {}", emailLabel);
+		logger.debug("page - {}", page);
+		logger.debug("pagesize - {}", pagesize);
 		
 		 IMAPFolder folder = null;
-		    Store store = null;
 	        String subject = null;
 	        Flag flag = null;
 	        
-	          Properties props = System.getProperties();
-	          props.setProperty("mail.store.protocol", "imaps");
-
-	          Session session = Session.getDefaultInstance(props, null);
-
-	          store = session.getStore("imaps");
-//	          store.connect("imap.googlemail.com", email, emailpass);
-	          store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
+//	          Properties props = System.getProperties();
+//	          props.setProperty("mail.store.protocol", "imaps");
+//
+//	          Session session = Session.getDefaultInstance(props, null);
+//
+//	          store = session.getStore("imaps");
+//	          store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
 	         
 	        //나중에 로그인 창에서 session 연결할거임
-//	        Store store = (Store) Hsession.getAttribute("store");
-//	        logger.debug("store - {}", store);
+	        Store store = (Store) Hsession.getAttribute("store");
+	        logger.debug("store - {}", store);
 			  
 		
 	          IMAPFolder imapFolder = null;
@@ -288,15 +268,53 @@ public class EmailController {
 	          model.addAttribute("folder", folder);
 	          logger.debug("folder - {}", folder);
 	          
-	          //folder = (IMAPFolder) store.getFolder("[Gmail]/스팸함"); This works for both email account
-
 	          
 	          if(!folder.isOpen())
 	          folder.open(Folder.READ_WRITE);
-	          Message[] messages = folder.getMessages();
-	          logger.debug("messages - {}", messages);
+	          
+	          boolean ff= folder.hasNewMessages();
+	          logger.debug("ff- {}", ff);
+	          int nn = folder.getNewMessageCount();
+	          logger.debug("nn - {}", nn);
 	          
 	          
+	          IMAPFolder starfolder = (IMAPFolder) store.getFolder("[Gmail]/별표편지함");
+	          if(!starfolder.isOpen())
+	        	  starfolder.open(Folder.READ_ONLY);
+	          
+	          Message[] smm = starfolder.getMessages();
+	          
+	          model.addAttribute("starMail", smm);
+	          
+		      Map<String, Integer> map = new HashMap<String, Integer>();
+		      map.put("page", page);
+			  map.put("pagesize", pagesize);
+			  
+			  logger.debug("map - {}", map);
+			  logger.debug("map P - {}", map.get("page"));
+	          
+			  int paginationSize = ((int)Math.ceil((double)(folder.getMessageCount()) / pagesize));
+			  
+			  logger.debug("folder.getMessagesCount - {}", folder.getMessageCount());
+			  if(folder.getMessageCount() < pagesize) {
+				  paginationSize = 1;
+			  }
+			  int cnt = folder.getMessageCount()-page*pagesize;
+			  int tempCnt = cnt + pagesize ;
+			  if(cnt < 1) 
+				  cnt = 1;
+ 
+	          Message[] messages;
+	          if(folder.getMessageCount() < pagesize) {
+	        	  messages = folder.getMessages(1, folder.getMessageCount());
+	          }else if(page == paginationSize){
+	        	  messages = folder.getMessages(cnt, tempCnt);
+	          }else{
+	        	  messages = folder.getMessages(cnt+1, cnt+pagesize);
+	          }
+	          
+	          model.addAttribute("map", map);
+	          model.addAttribute("paginationSize", paginationSize);
 	          model.addAttribute("messages", messages);
 	          model.addAttribute("messagesCount", folder.getMessageCount());
 	          
@@ -307,56 +325,27 @@ public class EmailController {
 	          List<String> personal = new ArrayList<String>();
 	          
 	          
-	          for (int i=0; i < messages.length-1; i++) 
+	          for (int i=0; i < messages.length; i++) 
 	          {
-	            System.out.println("*****************************************************************************");
-	            System.out.println("MESSAGE " + (i + 1) + ":");
+	        	
+//	            System.out.println("*****************************************************************************");
+//	            System.out.println("MESSAGE " + (i + 1) + ":");
 	            Message msg =  messages[i];
 	            
-	            //System.out.println(msg.getMessageNumber());
-	            //Object String;
-	            //System.out.println(folder.getUID(msg)
-
 	            subject = msg.getSubject();
-	            System.out.println("Subject: " + subject);
-	            System.out.println("From: " + msg.getFrom()[0]);
+//	            System.out.println("Subject: " + subject);
+//	            System.out.println("From: " + msg.getFrom()[0]);
 	            
 	            Address[] froms = msg.getFrom();
 	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
-	            String reFrom = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
-	            
-	            Address[] recipients = msg.getAllRecipients();
-	            logger.debug("recipients - {}", recipients);
-	            String reci = recipients == null ? null : ((InternetAddress) recipients[0]).getPersonal();
-	            logger.debug("reci - {}", reci);
 	            
 	            personal.add(reFrom2);
-	            
-	            logger.debug("re getFrom() - {}", reFrom);
-	            logger.debug("re2 getFrom() - {}", reFrom2);
-	            logger.debug("msg.getFrom()[0] - {}", msg.getFrom()[0]);
-	            
-	            
-	           System.out.println("To: "+msg.getAllRecipients()[0]);
-	           
-	            System.out.println("Date: "+msg.getReceivedDate());
-	            System.out.println("Size: "+msg.getSize());
-	            System.out.println(msg.getFlags());
-//	            Multipart mp = (Multipart)msg.getContent();
-//	            Object p = mp.getBodyPart(i).getContent();  
-//                String q = p.toString();//object has the body content  
-//                System.out.println(q);//prints the body
 	            
 	            Object content = msg.getContent();
 	            MimeMultipart multiPart = null;
 	            if (content instanceof Multipart) {
 	                multiPart = (MimeMultipart)content;
-//		            Multipart mp = (Multipart)msg.getContent();
-//		            Object p = mp.getBodyPart(i).getContent();  
-//	                String q = p.toString();//object has the body content  
-//	                System.out.println(q);//prints the body
 	                int bodyCount = multiPart.getCount();
-//	                System.out.println("Multipart Count : " + multiPart.getCount());
 	                for (int j = 0; j < bodyCount; j++) {
 	                    BodyPart bp = multiPart.getBodyPart(j);
 	                    System.out.println(bp.toString());
@@ -394,27 +383,27 @@ public class EmailController {
 	
 	
 	@PostMapping(path = "detailMail")
-	public String detailMail(Model model, String emailLabel, String msgNumber) throws MessagingException, IOException {
+	public String detailMail(HttpSession Hsession, Model model, String emailLabel, String msgNumber) throws MessagingException, IOException {
 		logger.debug("msgNumber - {}", msgNumber);
 		logger.debug("Integer.parseInt(msgNumber) - {}", Integer.parseInt(msgNumber));
 		
 		//이쪽은 나중에 로그인부분으로 연결할때 고침
 		 IMAPFolder folder = null;
-		    Store store = null;
+//		    Store store = null;
 	        String subject = null;
 	        Flag flag = null;
 	        
-	          Properties props = System.getProperties();
-	          props.setProperty("mail.store.protocol", "imaps");
-
-	          Session session = Session.getDefaultInstance(props, null);
+//	          Properties props = System.getProperties();
+//	          props.setProperty("mail.store.protocol", "imaps");
+//
+//	          Session session = Session.getDefaultInstance(props, null);
+//	          
+//
+//	          store = session.getStore("imaps");
+////	          store.connect("imap.googlemail.com", email, emailpass);
+//	          store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
 	          
-
-	          store = session.getStore("imaps");
-//	          store.connect("imap.googlemail.com", email, emailpass);
-	          store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
-	          
-//	        Store store = (Store) Hsession.getAttribute("store");
+	        Store store = (Store) Hsession.getAttribute("store");
 	          
 	          folder = (IMAPFolder) store.getFolder(emailLabel);
 	          
@@ -453,9 +442,6 @@ public class EmailController {
 	                			System.out.println("bodyPart.getFileName() : " + bodyPart.getFileName());
 	                			
 	                			
-//	                			fileNames.add(handler.getName());
-	                			
-	                			
 	                			FileInfo info = FileUtil.getFileInfo(bodyPart.getFileName());
 	                			InputStream is = bodyPart.getInputStream();
 	                	        File f = info.getFile();
@@ -479,7 +465,8 @@ public class EmailController {
 	            }
 	                	
 	                	
-	            
+	            model.addAttribute("emailLabel", emailLabel);
+	            model.addAttribute("msgNumber", msgNumber);
 	            model.addAttribute("infos", infos);
 	            model.addAttribute("attachments", attachments);
 	            model.addAttribute("attachmentCount", attachmentCount);
@@ -491,97 +478,54 @@ public class EmailController {
 	
 	
 	@RequestMapping(path = "moveStarbox", method = RequestMethod.POST)
-	public String moveMail(Model model, String emailLabel, Integer msgNumber) throws MessagingException, IOException {
+	public String moveMail(HttpSession Hsession, Model model, String emailLabel, Integer msgNumber) throws MessagingException, IOException {
 		logger.debug("emailLabelMove- {}",emailLabel);
 		logger.debug("msgNumberMove- {}", msgNumber);
 		
 		
 		//이쪽은 나중에 로그인부분으로 연결할때 고침
 		IMAPFolder folder = null;
-		Store store = null;
-		Flag flag = null;
-//		
-		Properties props = System.getProperties();
-		props.setProperty("mail.store.protocol", "imaps");
-//		
-		Session session = Session.getDefaultInstance(props, null);
-//		
-//		
-		store = session.getStore("imaps");
-////	          store.connect("imap.googlemail.com", email, emailpass);
-		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
-//		
-////	        Store store = (Store) Hsession.getAttribute("store");
-//		
+		
+	    Store store = (Store) Hsession.getAttribute("store");
+		
 		folder = (IMAPFolder) store.getFolder(emailLabel); 
 		
 		if(!folder.isOpen())
 			folder.open(Folder.READ_WRITE);
 		
 		
-		UIDFolder uf = (UIDFolder)folder; // cast folder to UIDFolder interface
 		
 		List<Message> tempList = new ArrayList<>();
 		Message mes = folder.getMessage(msgNumber);
-//		Long messageId = uf.getUID(mes); // get message Id of first message in the inbox
-//		logger.debug("mesUID - {}", messageId);
 		
 		tempList.add(mes);
 		
 		 IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/별표편지함");
 		 
-		 UIDFolder desuf = (UIDFolder)desFolder;
-		 
-		 
     	 Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
     	 folder.copyMessages(tempMessageArray, desFolder);
     	 int descount = desFolder.getMessageCount();
     	 logger.debug("descount - {}", descount);
-		 
-//		 folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
 		
 		 model.addAttribute("descount", descount);
 		 model.addAttribute("emailLabel", emailLabel);
 		
-		    String jspName = "";
-	        if(emailLabel.equals("[Gmail]/스팸함")) {
-	        	jspName="spambox";
-	        }else if(emailLabel.equals("[Gmail]/휴지통")) {
-	        	jspName="trashbox";
-	        }else if(emailLabel.equals("[Gmail]/별표편지함")) {
-	        	jspName="starbox";
-	        }else if(emailLabel.equals("[Gmail]/보낸편지함")) {
-	        	jspName="sendbox";
-	        }else if(emailLabel.equals("INBOX")) {
-	        	jspName="inbox";
-	        }
-	        return  "jsonView";
-	        
-//	        return  "tiles/email/" + jspName;
+	     return  "jsonView";
 	}
 	
 	
 	@RequestMapping(path = "removeStarbox", method = RequestMethod.POST)
-	public String removeMail(Model model, String emailLabel, int descount) throws MessagingException, IOException {
+	public String removeMail(HttpSession Hsession, Model model, String emailLabel, int descount) throws MessagingException, IOException {
 		logger.debug("emailLabelMove- {}",emailLabel);
 		logger.debug("descount- {}",descount);
 		
 		//이쪽은 나중에 로그인부분으로 연결할때 고침
 		IMAPFolder folder = null;
-		Store store = null;
 		Flag flag = null;
 		
-		Properties props = System.getProperties();
-		props.setProperty("mail.store.protocol", "imaps");
-
-		Session session = Session.getDefaultInstance(props, null);
 		
-		
-		store = session.getStore("imaps");
-		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
-		
-		//나중에 세션으로 연결시킨걸 받아올거임
-//	    Store store = (Store) Hsession.getAttribute("store");
+//		나중에 세션으로 연결시킨걸 받아올거임
+	    Store store = (Store) Hsession.getAttribute("store");
 		
 		folder = (IMAPFolder) store.getFolder(emailLabel); 
 		
@@ -594,7 +538,6 @@ public class EmailController {
 		Message[] message = desFolder.getMessages();
 		
 		int count = desFolder.getMessageCount();
-//		logger.debug("count - {}", count);
 		
 		
 		for(int i = 0; i < count; i++) {
@@ -606,36 +549,22 @@ public class EmailController {
 			}
 		}
 		
-//		Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
-//		folder.copyMessages(tempMessageArray, desFolder);
-//		folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
 		model.addAttribute("emailLabel", emailLabel);
 		
 		return  "jsonView";
 	}
 	
 	@RequestMapping(path = "trashbox", method = RequestMethod.POST)
-	public String trashMail(Model model, String emailLabel, int[] msgNumber) throws MessagingException, IOException {
+	public String trashbox(HttpSession Hsession, Model model, String emailLabel, int[] msgNumber) throws MessagingException, IOException {
 		logger.debug("emailLabelMove- {}",emailLabel);
 		logger.debug("msgNumberMove- {}", msgNumber);
 		
 		//이쪽은 나중에 로그인부분으로 연결할때 고침
 		IMAPFolder folder = null;
-		Store store = null;
 		Flag flag = null;
-//		
-		Properties props = System.getProperties();
-		props.setProperty("mail.store.protocol", "imaps");
-//		
-		Session session = Session.getDefaultInstance(props, null);
-//		
-//		
-		store = session.getStore("imaps");
-////	          store.connect("imap.googlemail.com", email, emailpass);
-		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
-//		
-////	        Store store = (Store) Hsession.getAttribute("store");
-//		
+		
+	    Store store = (Store) Hsession.getAttribute("store");
+		
 		folder = (IMAPFolder) store.getFolder(emailLabel); 
 		
 		if(!folder.isOpen())
@@ -654,87 +583,205 @@ public class EmailController {
 			tempList.add(mes);
 		}
 		
-//		tempList.add(mes);
-		
 		 IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/휴지통");
 		 
     	 Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
     	 folder.copyMessages(tempMessageArray, desFolder);
-//    	 int descount = desFolder.getMessageCount();
-//    	 logger.debug("descount - {}", descount);
-		 
-//		 folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
 		
-//		 model.addAttribute("descount", descount);
     	 model.addAttribute("mesUID", mesUID);
 		 model.addAttribute("emailLabel", emailLabel);
 		
         return  "jsonView";
 	}
 	
-//	@RequestMapping(path = "restoreMail", method = RequestMethod.POST)
-//	public String restoreMail(Model model, String emailLabel, Long[] mesUID) throws MessagingException, IOException {
-//		logger.debug("emailLabelMove- {}",emailLabel);
-//		logger.debug("msgNumberMove- {}", mesUID);
-//		
-//		//이쪽은 나중에 로그인부분으로 연결할때 고침
-//		IMAPFolder folder = null;
-//		Store store = null;
-//		Flag flag = null;
-////		
-//		Properties props = System.getProperties();
-//		props.setProperty("mail.store.protocol", "imaps");
-////		
-//		Session session = Session.getDefaultInstance(props, null);
-////		
-////		
-//		store = session.getStore("imaps");
-//////	          store.connect("imap.googlemail.com", email, emailpass);
-//		store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
-////		
-//////	        Store store = (Store) Hsession.getAttribute("store");
-////		
-//		folder = (IMAPFolder) store.getFolder(emailLabel); 
-//		
-//		if(!folder.isOpen())
-//			folder.open(Folder.READ_WRITE);
-//		
-//		UIDFolder uf = (UIDFolder)folder;
-//		
-//		List<Message> tempList = new ArrayList<>();
-//		
-//		for(int i = 0; i < msgNumber.length; i++) {
-//			Message mes = folder.getMessage(msgNumber[i]);
-//			mesUID.add(uf.getUID(mes));
-//			
-//			mes.setFlags(new Flags(Flags.Flag.DELETED), true);
-//			tempList.add(mes);
-//		}
-//		
-////		tempList.add(mes);
-//		
-//		IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/휴지통");
-//		
-//		Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
-//		folder.copyMessages(tempMessageArray, desFolder);
-////    	 int descount = desFolder.getMessageCount();
-////    	 logger.debug("descount - {}", descount);
-//		
-////		 folder.setFlags(tempMessageArray, new Flags(Flags.Flag.DELETED), true);
-//		
-////		 model.addAttribute("descount", descount);
-//		model.addAttribute("mesUID", mesUID);
-//		model.addAttribute("emailLabel", emailLabel);
-//		
-//		return  "jsonView";
-//	}
 	
+	@RequestMapping(path = "spambox", method = RequestMethod.POST)
+	public String spambox(HttpSession Hsession, Model model, String emailLabel, int msgNumber) throws MessagingException, IOException {
+		logger.debug("emailLabelMove- {}",emailLabel);
+		logger.debug("msgNumberMove- {}", msgNumber);
+		
+		//이쪽은 나중에 로그인부분으로 연결할때 고침
+		IMAPFolder folder = null;
+		Flag flag = null;
+		
+	    Store store = (Store) Hsession.getAttribute("store");
+		
+		folder = (IMAPFolder) store.getFolder(emailLabel); 
+		
+		if(!folder.isOpen())
+			folder.open(Folder.READ_WRITE);
+		
+		UIDFolder uf = (UIDFolder)folder;
+		
+		List<Message> tempList = new ArrayList<>();
+		
+		Message mes = folder.getMessage(msgNumber);
+		
+		tempList.add(mes);
+		mes.setFlags(new Flags(Flags.Flag.DELETED), true);
+		
+		IMAPFolder desFolder = (IMAPFolder) store.getFolder("[Gmail]/스팸함");
+		
+		Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
+		folder.copyMessages(tempMessageArray, desFolder);
+		
+		model.addAttribute("emailLabel", emailLabel);
+		
+		return  "jsonView";
+	}
 	
-	
-	
-	
+	@RequestMapping(path = "deleteMail", method = RequestMethod.POST)
+	public String deleteMail(HttpSession Hsession, Model model, String emailLabel, int[] msgNumber) throws MessagingException, IOException {
+		logger.debug("emailLabelMove- {}",emailLabel);
+		logger.debug("msgNumberMove- {}", msgNumber);
+		
+		//이쪽은 나중에 로그인부분으로 연결할때 고침
+		IMAPFolder folder = null;
+		Flag flag = null;
+		
+	    Store store = (Store) Hsession.getAttribute("store");
+		
+		folder = (IMAPFolder) store.getFolder(emailLabel); 
+		
+		if(!folder.isOpen())
+			folder.open(Folder.READ_WRITE);
+		
+		Message[] msg = folder.getMessages();
+		for(Message m : msg) {
+			logger.debug("m Number - {}", m.getMessageNumber());
+			logger.debug("m Number - {}", m.getSubject());
+			System.out.println("===============================");
+		}
+		
+		UIDFolder uf = (UIDFolder)folder;
+		
+		List<Message> tempList = new ArrayList<>();
+		Long[] mesUID = new Long[msgNumber.length];
+		
+		for(int i = 0; i < msgNumber.length; i++) {
+			Message mes = folder.getMessage(msgNumber[i]);
+			logger.debug("mes - {}", mes.getSubject());
+			logger.debug("mes - {}", mes.getMessageNumber());
+			mesUID[i] = uf.getUID(mes);
+			
+			tempList.add(mes);
+			mes.setFlags(new Flags(Flags.Flag.DELETED), true);
+		}
+		
+		folder.close(true);
+		
+		if(!folder.isOpen())
+			folder.open(Folder.READ_WRITE);
+		
+		model.addAttribute("mesUID", mesUID);
+		model.addAttribute("emailLabel", emailLabel);
+		
+		return  "jsonView";
+	}
 		
 	
+	@RequestMapping(path = "MailStatus", method = RequestMethod.GET)
+	public String MailStatus(HttpSession Hsession, String check, Model model, String emailLabel, @RequestParam (name = "page", defaultValue = "1") Integer page, @RequestParam(name = "pagesize", defaultValue = "20") Integer pagesize) throws MessagingException, IOException {
+		logger.debug("emailLabel - {}", emailLabel);
+		logger.debug("check - {}", check);
+		logger.debug("page - {}", page);
+		logger.debug("pagesize - {}", pagesize);
+		
+		 IMAPFolder folder = null;
+	        String subject = null;
+	        Flag flag = null;
+	        
+	         
+	        //나중에 로그인 창에서 session 연결할거임
+	        Store store = (Store) Hsession.getAttribute("store");
+	        logger.debug("store - {}", store);
+			  
+	          folder = (IMAPFolder) store.getFolder(emailLabel); // This doesn't work for other email account
+	          model.addAttribute("emailLabel", emailLabel);
+	          model.addAttribute("folder", folder);
+	          logger.debug("folder - {}", folder);
+	          
+	          if(!folder.isOpen())
+	          folder.open(Folder.READ_WRITE);
+	          
+		      Map<String, Integer> map = new HashMap<String, Integer>();
+		      map.put("page", page);
+			  map.put("pagesize", pagesize);
+			  
+			  FlagTerm ft;
+			  if(check.equals("T")) {
+				  ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
+			  }else {
+				  ft = new FlagTerm(new Flags(Flags.Flag.SEEN), true);
+			  }
+			  
+			  Message[] msg = folder.search(ft);
+			  
+			  logger.debug("map - {}", map);
+			  logger.debug("map P - {}", map.get("page"));
+	          
+			  int paginationSize = ((int)Math.ceil((double)(msg.length) / pagesize));
+			  
+			  logger.debug("folder.getMessagesCount - {}", msg.length);
+			  if(msg.length < pagesize) {
+				  paginationSize = 1;
+			  }
+			  
+			  for(Message mm : msg) {
+				  logger.debug("UnreadMail - {}", mm.getMessageNumber());
+				  logger.debug("UnreadMail - {}", mm.getSubject());
+			  }
+			  
+			  //pagisize 를 늘려놓음.. 페이지네이션불가 읽은메일 페이지네이션불가..
+	          model.addAttribute("map", map);
+	          model.addAttribute("paginationSize", paginationSize);
+	          model.addAttribute("messages", msg);
+	          model.addAttribute("messagesCount", folder.getMessageCount());
+	          
+	          System.out.println("No of Messages : " + folder.getMessageCount());
+	          System.out.println("No of Unread Messages : " + folder.getUnreadMessageCount());
+	          System.out.println(msg.length);
+	          
+	          List<String> personal = new ArrayList<String>();
+	          
+	          for (int i=0; i < msg.length; i++) 
+	          {
+	            Message ms =  msg[i];
+	            
+	            Address[] froms = ms.getFrom();
+	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
+	            personal.add(reFrom2);
+	            
+	            Object content = ms.getContent();
+	            MimeMultipart multiPart = null;
+	            if (content instanceof Multipart) {
+	                multiPart = (MimeMultipart)content;
+	                int bodyCount = multiPart.getCount();
+	                for (int j = 0; j < bodyCount; j++) {
+	                    BodyPart bp = multiPart.getBodyPart(j);
+	                }
+	            } else {
+	            }
+	        }
+	        
+	        model.addAttribute("check", check);
+	        model.addAttribute("personalList", personal);
+	        
+	        String jspName = "";
+	        if(emailLabel.equals("[Gmail]/스팸함")) {
+	        	jspName="spambox";
+	        }else if(emailLabel.equals("[Gmail]/휴지통")) {
+	        	jspName="trashbox";
+	        }else if(emailLabel.equals("[Gmail]/별표편지함")) {
+	        	jspName="starbox";
+	        }else if(emailLabel.equals("[Gmail]/보낸편지함")) {
+	        	jspName="sendbox";
+	        }else if(emailLabel.equals("INBOX")) {
+	        	jspName="inbox";
+	        }
+	        
+	        return  "tiles/email/" + jspName;
+	}
 	
 	@GetMapping("fileDownloadView2")
 	public String fileDownloadView2(Model model, String filename) {
