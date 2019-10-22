@@ -250,7 +250,7 @@
                                 </div> <br>
 
                             </div>
-                            <form id="frm" action="${cp}/approval/sendAppl" method="post" enctype="multipart/form-data">
+                            <form id="frm" action="${cp}/approval/sendApprovalList" method="post" enctype="multipart/form-data">
                                 <input id="contents" name="cont" type="hidden" value="">
                                 <input id="form_id" name="form_id" type="hidden" value="">
                                 <div class="compose-content mt-5">
