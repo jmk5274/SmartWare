@@ -7,6 +7,22 @@
 		if("${res }"){
 			alert("${res }");
 		}
+		
+		$("#insert").on("click", function(event){
+			var newBoard_nm = $("#newBoard_nm").val();
+			
+			if(newBoard_nm == '' || newBoard_nm.length == 0){
+				event.preventDefault();
+				Swal({
+					type: 'warning', // success, error, warning, info, question
+					title: '필수 사항',
+					text: '게시판 이름을 입력해주세요.'
+				})
+				return;
+			}
+			
+			$("#frm").submit();
+		});
 	});
 </script>
 <style>
@@ -29,14 +45,14 @@
 				<hr>
 				<br><br>
 				
-				<form class="form-horizontal" role="form" action="${cp }/addBoard" method="post">
+				<form id="dawin" class="form-horizontal" role="form" action="${cp }/addBoard" method="post">
 					<div class="form-group">
 						<table class="table table-bordered">
 							<tr>
 						<td><label for="board" class="col-sm-6 control-label">게시판 이름</label></td>
 						<td>
 <!-- 						<div class="col-sm-2"> -->
-							<input type="text" name="board_nm" class="form-control"/>
+							<input id="newBoard_nm" type="text" name="board_nm" class="form-control"/>
 <!-- 						</div> -->
 						</td>
 						<td>
@@ -49,21 +65,21 @@
 <!-- 						</div> -->
 						
 <!-- 						<div class="col-sm-2"> -->
-							<td><input type="submit" name="btnValue" class="btn mb-1 btn-outline-primary" value="생성"></td>
+							<td><input id="insert" type="submit" name="btnValue" class="btn mb-1 btn-outline-primary" value="생성"></td>
 							</tr>
 <!-- 						</div> -->
 					</div>
 				</form>
 				
 				<c:forEach items="${A_BOARDLIST }" var="list">
-					<form class="form-horizontal" role="form" action="${cp }/addBoard" method="post">
+					<form id="frm" class="form-horizontal" role="form" action="${cp }/addBoard" method="post">
 						<div class="form-group">
 							<input type="hidden" name=board_id value="${list.board_id}"/>
 							<tr>
 							<td><label for="board" class="col-sm-6 control-label">게시판 이름</label></td>
 <!-- 							<div class="col-sm-2"> -->
 							<td>
-								<input id="board_nm" type="text" name="board_nm" class="form-control" value="${list.board_nm }"/>
+								<input type="text" name="board_nm" class="form-control" value="${list.board_nm }"/>
 							</td>
 							</div>
 							<td>
