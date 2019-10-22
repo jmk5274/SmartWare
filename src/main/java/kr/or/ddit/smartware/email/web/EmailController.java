@@ -261,6 +261,11 @@ public class EmailController {
 	            System.out.println("[" + imapFolder.getFullName() + "]");
 	          }
 	          
+	          if(emailLabel.equals("INBOX")) {
+	        	  folder = (IMAPFolder)store.getFolder(emailLabel);
+	        	  Hsession.setAttribute("cnt", folder.getMessageCount());
+	          }
+	          
 	          
 	          
 	          folder = (IMAPFolder) store.getFolder(emailLabel); // This doesn't work for other email account

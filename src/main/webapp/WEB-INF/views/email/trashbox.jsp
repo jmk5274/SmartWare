@@ -209,53 +209,60 @@
 								</c:choose>
 							
 							</div>
-							<div class="bootstrap-pagination col-5">
-                                   <nav>
-                                       <ul class="pagination justify-content-end">
-															<c:choose>
-																<c:when test="${map.page == 1 }">
-																	 <li class="page-item disabled">
-																	 	<a class="page-link" href="#" tabindex="-1">Previous</a>
-				                                            		</li>
-																</c:when>
-																<c:otherwise>
-																	 <li class="page-item">
-																	 	<a class="page-link" href="${cp }/mailbox?page=${map.page-1 }&emailLabel=${emailLabel} " tabindex="-1">Previous</a>
-				                                            		</li>
-																</c:otherwise>
-															</c:choose>
-															
-															<c:forEach begin="1" end="${paginationSize }" var="i">
-																<c:choose>
-																	<c:when test="${i == map.page }">
-																		 <li class="page-item">
-																		 	<a class="page-link" href="#">${i }</a>
-				                                            			</li>																		
-																	</c:when>
-																	<c:otherwise>
-																		<li class="page-item">
-																			<a class="page-link" href="${cp }/mailbox?page=${i }&emailLabel=${emailLabel}">${i }</a>
-				                                            			</li>
-																	</c:otherwise>
-																</c:choose>
-															</c:forEach>
-															
-															<c:choose>
-																<c:when test="${map.page == paginationSize }">
-																	<li class="page-item disabled">
-																	 	<a class="page-link" href="#" tabindex="+1">Next</a>
-				                                            		</li>
-																</c:when>
-																<c:otherwise>
-																	<li class="page-item">
-																	 	<a class="page-link" href="${cp }/mailbox?page=${map.page+1 }&emailLabel=${emailLabel} " tabindex="+1">Next</a>
-				                                            		</li>
-																</c:otherwise>
-															
-															</c:choose>
-			                                 </ul>
-			                             </nav>
-						</div>
+							<c:choose>
+								<c:when test="${check eq 'T' || check eq 'F' }">
+										
+								</c:when>
+								<c:otherwise>
+									<div class="bootstrap-pagination col-5">
+		                                   <nav>
+		                                       <ul class="pagination justify-content-end">
+																	<c:choose>
+																		<c:when test="${map.page == 1 }">
+																			 <li class="page-item disabled">
+																			 	<a class="page-link" href="#" tabindex="-1">Previous</a>
+						                                            		</li>
+																		</c:when>
+																		<c:otherwise>
+																			 <li class="page-item">
+																			 	<a class="page-link" href="${cp }/mailbox?page=${map.page-1 }&emailLabel=${emailLabel} " tabindex="-1">Previous</a>
+						                                            		</li>
+																		</c:otherwise>
+																	</c:choose>
+																	
+																	<c:forEach begin="1" end="${paginationSize }" var="i">
+																		<c:choose>
+																			<c:when test="${i == map.page }">
+																				 <li class="page-item">
+																				 	<a class="page-link" href="#">${i }</a>
+						                                            			</li>																		
+																			</c:when>
+																			<c:otherwise>
+																				<li class="page-item">
+																					<a class="page-link" href="${cp }/mailbox?page=${i }&emailLabel=${emailLabel}">${i }</a>
+						                                            			</li>
+																			</c:otherwise>
+																		</c:choose>
+																	</c:forEach>
+																	
+																	<c:choose>
+																		<c:when test="${map.page == paginationSize }">
+																			<li class="page-item disabled">
+																			 	<a class="page-link" href="#" tabindex="+1">Next</a>
+						                                            		</li>
+																		</c:when>
+																		<c:otherwise>
+																			<li class="page-item">
+																			 	<a class="page-link" href="${cp }/mailbox?page=${map.page+1 }&emailLabel=${emailLabel} " tabindex="+1">Next</a>
+						                                            		</li>
+																		</c:otherwise>
+																	
+																	</c:choose>
+					                        </ul>
+					                   </nav>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>

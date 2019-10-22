@@ -1,3 +1,4 @@
+<%@page import="javax.mail.Folder"%>
 <%@page import="com.sun.mail.imap.IMAPFolder"%>
 <%@page import="javax.mail.Store"%>
 <%@page import="kr.or.ddit.smartware.employee.model.Employee"%>
@@ -15,9 +16,23 @@
 	}
 	
 %>
+
+<%
+	Integer cnt = (Integer) session.getAttribute("cnt");
+	Store store = (Store)session.getAttribute("store");
+	IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
+	
+// 	if(!folder.isOpen())
+// 		 folder.open(Folder.READ_ONLY);
+	
+	int real = folder.getMessageCount() - cnt;
+	
+	for(int i = 0; i < real; i++){
+		String mail = "mail";
+	}
+%>
 <script src="${cp }/js/moment.js"></script>
 <script>
-
 	var audio = new Audio('${cp}/audio/카톡.mp3');
 
 	function getChatList(){
@@ -133,12 +148,32 @@
 			  type: 'success',
 			  title: '메시지가 왔습니다.'
 			})
+		}else if(str[0]===("mail")){
+			console.log("나옴");
+			const toast = Swal.mixin({
+				  toast: true,
+				  position: 'top-end',
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+
+			toast({
+			  type: 'success',
+			  title: '메일이 왔습니다.'
+			})
 		}
 	};
 	
 	$(function() {
-		
 		getChatList();
+		
+		setTimeout(function() { 
+				if(<%=real%>!=0){
+					console.log("mailamil");
+					var message = "mail:메일";
+					socket.send(message);
+				}
+			}, 1000);
 		
 	});
 	
