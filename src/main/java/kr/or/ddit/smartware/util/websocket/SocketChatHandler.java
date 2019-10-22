@@ -53,8 +53,6 @@ public class SocketChatHandler extends TextWebSocketHandler {
 					WebSocketSession webSession = chatMap.get(str[i]);
 					Employee employeee = getEmployee(webSession);
 					
-//					logger.debug("c_use {}", webSession.getAttributes().get("C_USE"));
-					logger.debug("c_use {}", employeee.getC_use());
 					if(employeee.getC_use().equals("true") && employeee.getChat_id().equals(chat_id)) {
 						webSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2] + ":" + str[3]));
 					}else if(employeee.getC_use().equals("false")) {

@@ -24,8 +24,15 @@
 		
 		$(".insertPopup").click(function(){
 			var fileCheck = document.getElementById("file").files;
-			if(fileCheck.length === 0){
-				alert("파일을 선택해주세요.")
+// 			var title = $("#pop_title").val();
+// 			var left = $("#left").val().split;
+// 			var top = $("#top").val().split;
+// 			var startpicker = $("#startpicker-input").val() + "";
+// 			var endpicker = $("#endpicker-input").val() + "";
+			
+			if(fileCheck.length===0){
+// 				|| title.length===0 || left[0].length===0 || top[0].length===0 || startpicker.length===0 || endpicker.length===0
+				alert("항목을 모두 입력해주세요.")
 				insertForm.reset();
 				$("#fileLabel").text("");
 				return false;
@@ -34,13 +41,6 @@
 	        var myForm = document.getElementById('insertForm');
 	        var formData = new FormData(myForm);
 	        
-	        for (var key of formData.keys()) {
-        	  console.log(key);
-        	}
-
-	     	for (var value of formData.values()) {
-	     	  console.log(value);
-	     	}
 			$.ajax({
 				url : "${cp}/insertPopupView",
 				enctype : "multipart/form-data",
@@ -64,6 +64,13 @@
 				hpop = window.open('${cp }/tempPopup', '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
 		});
 		
+		$("#modifyMoveBtn").click(function(){
+				var popupX = (window.screen.width / 2) - (500 / 2);
+				var popupY= (window.screen.height / 2) - (650 / 2);
+				
+				hpop = window.open('${cp }/modifyPopup', '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
+		});
+		
 		$("#file").change(function(e){
 	        var myForm = document.getElementById('insertForm');
 	        var formData = new FormData(myForm);
@@ -74,6 +81,13 @@
 		$(".bd-example-modal-lg").on('hide.bs.modal', function(e){
 			insertForm.reset();
 			$("#fileLabel").text("");
+		});
+		
+		$("#file2").change(function(e){
+	        var myForm = document.getElementById('insertForm');
+	        var formData = new FormData(myForm);
+	        
+			$("#fileLabel2").text(($('input[type=file]')[1].files[0].name));
 		});
 	});
 
@@ -104,32 +118,26 @@
 		});
 		$("#tBody").html(html);
 		
-		$(".btn").click(function(){
-			var btnValue = $(this).val();
-			var pop_id = $(this).data("pop_id");
-			
-			if(btnValue == "삭제"){
-				$.ajax({
-					url : "${cp}/deletePopup",
-					dataType : "json",
-					method : "post",
-					data : "pop_id="+pop_id,
-					success : function(data){
-						popupListView(1);
-					}
-				});
-			}
-		});
-		
 		$(".viewBtn").click(function(){
 			var pop_id = $(this).data("pop_id");
-			var popupX = (window.screen.width / 2) - (500 / 2);
-			var popupY= (window.screen.height / 2) - (650 / 2);
 			
-			window.open('${cp }/popupView?pop_id='+pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
+			$.ajax({
+				url : "${cp}/getOnePopup",
+				data : "pop_id="+pop_id,
+				method : "post",
+				success : function(data){
+					
+				var popupX = (data.popup.pop_left);
+				var popupY= (data.popup.pop_top);
+			
+				window.open('${cp }/popupView?pop_id='+pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
+				}
+			});
 		});
 		
 		$(".popupTr").click(function(){
+			$("#fileLabel2").text("");
+			modifyForm.reset();
 			var pop_id = $(this).data("pop_id");
 			$.ajax({
 				url : "${cp}/getOnePopup",
@@ -139,12 +147,51 @@
 				success : function(data){
 					$("#writer").val(data.popup.emp_id);
 					$("#modifyTitle").val(data.popup.pop_title);
-					$("#modifyTop").val("X 좌표: " + data.popup.pop_top);
-					$("#modifyLeft").val("Y 좌표: " + data.popup.pop_left);
-					$("#reg_dt").val(moment(new Date(data.popup.reg_dt)).format('YYYY/MM/DD'));
-					$("#startpicker-input2").val(moment(new Date(data.popup.pop_st_dt)).format('YYYY/MM/DD'));
-					$("#endpicker-input2").val(moment(new Date(data.popup.reg_dt)).format('YYYY/MM/DD'));
-					$("#hidden").val(data.popup.pop_id);
+					$("#modifyTop").val("X 좌표: " + data.popup.pop_left);
+					$("#modifyLeft").val("Y 좌표: " + data.popup.pop_top);
+					$("#reg_dt").val(moment(new Date(data.popup.reg_dt)).format('YYYY-MM-DD'));
+					$("#startpicker-input2").val(moment(new Date(data.popup.pop_st_dt)).format('YYYY-MM-DD'));
+					$("#endpicker-input2").val(moment(new Date(data.popup.pop_end_dt)).format('YYYY-MM-DD'));
+					$("#hidden").val(data.popup.pop_id);	
+					var deleteBtn = $('<button data-pop_id="'+data.popup.pop_id+'" type="button" style="float:right;" class="btn btn-danger deletePopup" data-dismiss="modal">삭제</button>');
+					var modifyBtn = $('<button type="button" class="btn btn-primary modifyPopup" data-dismiss="modal">수정</button>');
+					
+					deleteBtn.click(function(){
+						var pop_id = $(this).data("pop_id");
+						
+						$.ajax({
+							url : "${cp}/deletePopup",
+							dataType : "json",
+							method : "post",
+							data : "pop_id="+pop_id,
+							success : function(data){
+								popupListView(1);
+								$(".btnSpace").empty()
+							}
+						});
+					});
+					
+					modifyBtn.click(function(){
+				        var myForm = document.getElementById('modifyForm');
+				        var formData = new FormData(myForm);
+						$.ajax({
+							url : "${cp}/modifyPopup",
+							enctype : "multipart/form-data",
+							contentType : false,
+							processData : false,
+							dataType : "json",
+							method : "post",
+							data : formData,
+							success : function(data){
+								modifyForm.reset();		
+								$("#fileLabel2").text("");
+								popupListView(1);
+								$(".btnSpace").empty()
+							}
+						});
+					});
+					
+					$(".btnSpace").empty().append(deleteBtn).append(modifyBtn);
 				}
 			});
 		});
@@ -259,12 +306,12 @@
 															<label class="col-form-label">위치</label>
 														</div>
 														<div class="col">
-															<input id="left" name="pop_left" type="text"
-																class="form-control" placeholder="X 좌표" readonly/>
+															<input id="left" name="X" type="text"
+																class="form-control" placeholder="X 좌표" readonly />
 														</div>
 														<div class="col">
-															<input id="top" name="pop_top" type="text"
-																class="form-control" placeholder="Y 좌표" readonly/>
+															<input id="top" name="Y" type="text" class="form-control"
+																placeholder="Y 좌표" readonly />
 														</div>
 														<div class="col-2">
 															<input style="vertical-align: middle;" id="moveBtn"
@@ -346,15 +393,14 @@
 								<input id="reg_dt" type="text" class="form-control" readonly>
 							</div>
 						</div>
-						<form id="modifyForm" method="post"
-							enctype="multipart/form-data">
+						<form id="modifyForm" method="post" enctype="multipart/form-data">
 							<div class="form-row">
 								<div class="col-2">
 									<label class="col-form-label">타이틀</label>
 								</div>
 								<div class="col">
-									<input id="modifyTitle" name="pop_title" type="text" class="form-control"
-										placeholder="Title을 입력하세요">
+									<input id="modifyTitle" name="pop_title" type="text"
+										class="form-control" placeholder="Title을 입력하세요">
 								</div>
 							</div>
 							<div class="form-row">
@@ -362,16 +408,16 @@
 									<label class="col-form-label">위치</label>
 								</div>
 								<div class="col">
-									<input id="modifyTop" name="pop_left" type="text"
-										class="form-control" placeholder="X 좌표" readonly/>
+									<input id="modifyLeft" name="X" type="text"
+										class="form-control" placeholder="X 좌표" readonly />
 								</div>
 								<div class="col">
-									<input id="modifyLeft" name="pop_top" type="text"
-										class="form-control" placeholder="Y 좌표" readonly/>
+									<input id="modifyTop" name="Y" type="text" class="form-control"
+										placeholder="Y 좌표" readonly />
 								</div>
 								<div class="col-2">
 									<input style="vertical-align: middle;" id="modifyMoveBtn"
-										type="button" class="btn btn-secondary" value="클릭"/>
+										type="button" class="btn btn-secondary" value="클릭" />
 								</div>
 							</div>
 							<div class="form-row code-html">
@@ -381,11 +427,9 @@
 								<div class="col-4">
 									<div
 										class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
-										<input name="startPicker" id="startpicker-input2"
-											type="text" aria-label="Date"> <span
-											class="tui-ico-date"></span>
-										<div id="startpicker-container2"
-											style="margin-left: -1px;"></div>
+										<input name="startPicker" id="startpicker-input2" type="text"
+											aria-label="Date"> <span class="tui-ico-date"></span>
+										<div id="startpicker-container2" style="margin-left: -1px;"></div>
 									</div>
 								</div>
 								<div class="col-4">
@@ -403,21 +447,16 @@
 								</div>
 								<div class="col">
 									<div class="custom-file">
-										<input id="file" name="file" type="file"
-											class="custom-file-input"> <label
-											id="fileLabel" class="custom-file-label"></label>
+										<input id="file2" name="file2" type="file"
+											class="custom-file-input"> <label id="fileLabel2"
+											class="custom-file-label"></label>
 									</div>
 								</div>
 							</div>
 							<input id="hidden" name="pop_id" type="hidden" />
 						</form>
 					</div>
-					<div class="modal-footer">
-						<button data-pop_id="popup.pop_id" type="button" class="btn btn-primary insertPopup"
-							data-dismiss="modal">수정</button>
-						<button data-pop_id="popup.pop_id" type="button" class="btn btn-danger closePopup"
-							data-dismiss="modal">삭제</button>
-					</div>
+					<div class="modal-footer btnSpace"></div>
 				</div>
 			</div>
 		</div>

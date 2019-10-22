@@ -54,4 +54,14 @@ public interface IPopupService {
 	*/
 	Popup getPopup(String pop_id);
 
+	/**
+	* Method : updatePopup
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param popup
+	* @return
+	* Method 설명 : 팝업 정보 수정
+	*/
+	int updatePopup(Popup popup);
+
 }

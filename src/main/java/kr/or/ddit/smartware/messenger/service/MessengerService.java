@@ -181,5 +181,10 @@ public class MessengerService implements IMessengerService{
 	public int updateInviteId(Message message) {
 		return messengerDao.updateInviteId(message);
 	}
+
+	@Override
+	public List<Map> getChatEmpList(Map map) {
+		return messengerDao.getChatEmpList(map);
+	}
 	
 }

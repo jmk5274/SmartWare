@@ -10,8 +10,8 @@
 <script>
 	$(function(){
 		$(".btn").click(function(){
-			$( "#left", opener.document ).val("X 좌표: " + window.screenLeft);
-			$( "#top", opener.document ).val("Y 좌표: " + window.screenTop);
+			$( "#modifyLeft", opener.document ).val("X 좌표: " + window.screenLeft);
+			$( "#modifyTop", opener.document ).val("Y 좌표: " + window.screenTop);
 			
 			self.close();
 		});

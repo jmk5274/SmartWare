@@ -53,6 +53,14 @@ public class PopupDao implements IPopupDao{
 		return sqlSession.insert("popup.insertPopup", popup);
 	}
 
+	/**
+	* Method : deletePopup
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param pop_id
+	* @return
+	* Method 설명 : 팝업 정보 삭제
+	*/
 	@Override
 	public int deletePopup(String pop_id) {
 		return sqlSession.delete("popup.deletePopup", pop_id);
@@ -69,6 +77,19 @@ public class PopupDao implements IPopupDao{
 	@Override
 	public Popup getPopup(String pop_id) {
 		return sqlSession.selectOne("popup.getPopup", pop_id);
+	}
+
+	/**
+	* Method : updatePopup
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param popup
+	* @return
+	* Method 설명 : 팝업 정보 수정
+	*/
+	@Override
+	public int updatePopup(Popup popup) {
+		return sqlSession.update("popup.updatePopup", popup);
 	}
 
 }

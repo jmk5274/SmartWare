@@ -1,8 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<script>
+	$(function(){
+		var date = moment(new Date()).format('YYYYMMDD');
+		
+		$.ajax({
+			url : "${cp}/getAllPopupList",
+			dataType : "json",
+			method : "post",
+			success : function(data){
+				var popupList = data.popupList;
+				
+				popupList.forEach(function(popup){
+					var stDate = moment(new Date(popup.pop_st_dt)).format('YYYYMMDD');
+					var endDate = moment(new Date(popup.pop_end_dt)).format('YYYYMMDD')
+					
+					if(stDate <= date && date <= endDate){
+						var popupX = (popup.pop_left);
+						var popupY= (popup.pop_top);
+						
+						window.open('${cp }/popupView?pop_id='+popup.pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
+					}
+				});
+			}
+		});
+	});
+</script>
 
-<h2>Layouts</h2><br>
+<h2>${P_OPEN }</h2><br>
 <div class="col-12">
 	<div class="card">
 	

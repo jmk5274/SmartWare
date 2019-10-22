@@ -104,21 +104,23 @@ public class PopupController {
 	* Method 설명 : pagination List 조회
 	*/
 	@PostMapping("insertPopupView")
-	public String insertPopupView(Popup popup, String startPicker, String endPicker, Model model, @RequestPart("file") MultipartFile file, HttpSession session) {
+	public String insertPopupView(Popup popup, String X, String Y, String startPicker, String endPicker, Model model, @RequestPart("file") MultipartFile file, HttpSession session) {
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		logger.debug("popup : {}", popup);
-			try {
-				if(file.getBytes() != null || file.getSize()!=0 || file.getBytes().length != 0) {
-					byte[] pop_cont = file.getBytes();
-					popup.setPop_cont(pop_cont);
-				}else {
-					byte[] pop_cont = {};
-					popup.setPop_cont(pop_cont);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+		try {
+			if(file.getBytes() != null || file.getSize()!=0 || file.getBytes().length != 0) {
+				byte[] pop_cont = file.getBytes();
+				popup.setPop_cont(pop_cont);
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		String[] XArray = X.split(":");
+		String[] YArray = Y.split(":");
+		
+		popup.setPop_left(Integer.parseInt(XArray[1].trim()));
+		popup.setPop_top(Integer.parseInt(YArray[1].trim()));
 		
 		try {
 			popup.setPop_st_dt(sdf.parse(startPicker));
@@ -184,6 +186,11 @@ public class PopupController {
 		return "popup/tempPopup";
 	}
 	
+	@GetMapping("modifyPopup")
+	public String modifyPopupView() {
+		return "popup/modifyPopup";
+	}
+	
 	@PostMapping("getOnePopup")
 	public String getOnePopup(String pop_id, Model model) {
 		
@@ -193,4 +200,53 @@ public class PopupController {
 		
 		return "jsonView";
 	}
+	
+	@PostMapping("getAllPopupList")
+	public String getAllPopupList(Model model) {
+		List<Popup> popupList = popupService.getAllPopupList();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
+		model.addAttribute("popupList", popupList);
+		
+		return "jsonView";
+	}
+	
+	@PostMapping("modifyPopup")
+	public String modifyPopup(Popup popup, String X, String Y, String startPicker, String endPicker, Model model, @RequestPart("file2") MultipartFile file, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			if(file.getSize()>0) {
+				byte[] pop_cont = file.getBytes();
+				popup.setPop_cont(pop_cont);
+			}else {
+				Popup popupVo = popupService.getPopup(popup.getPop_id());
+				popup.setPop_cont(popupVo.getPop_cont());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		String[] XArray = X.split(":");
+		String[] YArray = Y.split(":");
+		
+		popup.setPop_left(Integer.parseInt(XArray[1].trim()));
+		popup.setPop_top(Integer.parseInt(YArray[1].trim()));
+		
+		try {
+			popup.setPop_st_dt(sdf.parse(startPicker));
+			popup.setPop_end_dt(sdf.parse(endPicker));
+			popup.setEmp_id(employee.getEmp_id());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		int cnt = popupService.updatePopup(popup);
+		
+		model.addAttribute(cnt);
+		
+		return "jsonView";
+	}
+	
+	
 }

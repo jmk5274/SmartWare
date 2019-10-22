@@ -238,8 +238,13 @@ public class MessengerController {
 	@GetMapping("searchInviteList")
 	public String searchList(String emp_nm, String chat_id, Model model) {
 		
+		Map map = new HashMap<>();
+		
+		map.put("emp_nm", emp_nm);
+		map.put("chat_id", chat_id);
+		
 		List<Employee> chatList = messengerService.getChatInfo(chat_id);
-		List<Map> empList = messengerService.getEmpList(emp_nm);
+		List<Map> empList = messengerService.getChatEmpList(map);
 			
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("empList", empList);
@@ -355,10 +360,11 @@ public class MessengerController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("chat_id", chat_id);		
 		map.put("emp_id", employee.getEmp_id());	
-		
+		map.put("emp_nm", emp_nm);
 		List<Employee> chatEmpList = messengerService.getChatEmp(map);
 		List<Employee> chatList = messengerService.getChatInfo(chat_id);
 		List<Map> empList1 = messengerService.getEmpList(emp_nm);
+		List<Map> chatEmpList2 = messengerService.getChatEmpList(map);
 		
 		List<Map> empList = new ArrayList<Map>();
 		for(Map emp : empList1) {
@@ -376,6 +382,7 @@ public class MessengerController {
 		model.addAttribute("cnt", chatEmpList.size()-1);
 		model.addAttribute("chatEmpList", chatEmpList);
 		model.addAttribute("empList", empList);
+		model.addAttribute("chatEmpList2", chatEmpList2);
 		
 		return "jsonView";
 	}

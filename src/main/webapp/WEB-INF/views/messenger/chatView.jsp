@@ -514,6 +514,11 @@ $(".expand-button").click(function() {
 	$("#contacts").toggleClass("expanded");
 });
 
+$("#basicModal").on('hide.bs.modal', function(e){
+	$("#emp_nm").val("");
+	searchEmp();
+});
+
 $("#status-options ul li").click(function() {
 	$("#profile-img").removeClass();
 	$("#status-online").removeClass("active");
@@ -733,11 +738,13 @@ $("#status-options ul li").click(function() {
 	});
 
 	//ajax call을 통해 page, pagesize 해당하는 사용자 데이터를 가져온다.
-	$("#searchBtn").on("click", function() {
+	$("#searchBtn").on("click", searchEmp);
+	
+	function searchEmp() {
 		var emp_nm = $("#emp_nm").val().trim();
+		$("#emp_nm").val("");
 		var html = "";
 		var flag = false;
-		
 		$(".empTable").empty();
 
 		$.ajax({
@@ -784,17 +791,19 @@ $("#status-options ul li").click(function() {
 						}
 					});
 				}
-				
 				$("#empTable").html(html);
 			}
 		});
-	});
+	}
 	
 	$("#inviteEmp").click(function(){
 		var param={};
 		var msgList = Array.from($('.messages ul li')).filter(e => e.dataset.msg_id);
-// 		var msg_id = $('.messages ul li:last-child').data('msg_id');
-		var msg_id = msgList.slice(-1)[0].dataset.msg_id;
+		if(msgList.length != 0){
+			var msg_id = msgList.slice(-1)[0].dataset.msg_id;	
+		}else{
+			var msg_id = "";
+		}
 		var emp_id = new Array(); 
 		var chat_id = "${chat_id }";
 		var html = "";
@@ -861,51 +870,49 @@ $("#status-options ul li").click(function() {
 						}
 					});
 				}
-				
 				$("#empTable").html(html);
-				
 			}
 		});
 	});
 	
 	function getChatInfo(){
 		var chat_id = "${chat_id}"
-			$.ajax({
-				url : "${cp}/getChatInfo",
-				contentType : "application/json",
-				dataType : "json",
-				method : "get",
-				data : "chat_id="+chat_id,
-				success : function(data){
-					var chatEmpList = data.chatEmpList;
-					var empList = data.empList;
-					var cnt = data.cnt
-					var chatEmpSize = "";
-					var html = "";
-					
-					$("#tbody").empty();
-					
-					if(chatEmpList == null || chatEmpList.length == 0){
-						chatEmpSize = "";
-					}else if(chatEmpList.length == 1){
-						chatEmpSize = chatEmpList[0].emp_nm + "";
-					}else{
-						chatEmpSize = chatEmpList[0].emp_nm + " 외 " + cnt + "명";
-					}
-					
-					empList.forEach(function(emp){
-	 					html += '<tr class="empList">'
-	 					html += 	'<td> '+emp.EMP_NM+' </td>'
-						html += 	'<td> '+emp.DEPART_NM+' </td>'
-						html += 	'<td> '+emp.POSI_NM+' </td>'
-						html += 	'<td> <input data-emp_nm="'+emp.EMP_NM+'" data-emp_id = "'+emp.EMP_ID+'" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>'
-						html += '</tr>'
-					});
-					
-					$("#cnt").text(chatEmpSize+"");
-					$("#tbody").html(html);
+		$.ajax({
+			url : "${cp}/getChatInfo",
+			contentType : "application/json",
+			dataType : "json",
+			method : "get",
+			data : "chat_id="+chat_id,
+			success : function(data){
+				var chatEmpList = data.chatEmpList;
+				var empList = data.chatEmpList2;
+				var cnt = data.cnt
+				var chatEmpSize = "";
+				var html = "";
+				
+				$("#tbody").empty();
+				
+				if(chatEmpList == null || chatEmpList.length == 0){
+					chatEmpSize = "";
+				}else if(chatEmpList.length == 1){
+					chatEmpSize = chatEmpList[0].emp_nm + "";
+				}else{
+					chatEmpSize = chatEmpList[0].emp_nm + " 외 " + cnt + "명";
 				}
-			});
+				
+				empList.forEach(function(emp){
+ 					html += '<tr class="empList">'
+ 					html += 	'<td> '+emp.EMP_NM+' </td>'
+					html += 	'<td> '+emp.DEPART_NM+' </td>'
+					html += 	'<td> '+emp.POSI_NM+' </td>'
+					html += 	'<td> <input data-emp_nm="'+emp.EMP_NM+'" data-emp_id = "'+emp.EMP_ID+'" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>'
+					html += '</tr>'
+				});
+				
+				$("#cnt").text(chatEmpSize+"");
+				$("#tbody").html(html);
+			}
+		});
 	}
 //# sourceURL=pen.js
 </script>

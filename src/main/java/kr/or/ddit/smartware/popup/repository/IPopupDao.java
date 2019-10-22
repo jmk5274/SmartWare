@@ -54,5 +54,15 @@ public interface IPopupDao {
 	* Method 설명 : 선택 팝업 정보 조회
 	*/
 	Popup getPopup(String pop_id);
+
+	/**
+	* Method : updatePopup
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param popup
+	* @return
+	* Method 설명 : 팝업 정보 수정
+	*/
+	int updatePopup(Popup popup);
 	
 }

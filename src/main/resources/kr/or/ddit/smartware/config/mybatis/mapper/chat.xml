@@ -140,4 +140,15 @@
 		update chat_emp set last_msg=#{msg_id}, invite_id=#{msg_id} where emp_id=#{emp_id} and chat_id = #{chat_id}
 	</update>
 	
+	<select id="getChatEmpList" parameterType="map" resultType="hashmap">
+		select emp_id, emp_nm, depart_nm, posi_nm
+		  from employee a, department b, position c
+		 where a.depart_id = b.depart_id
+		   and a.posi_id = c.posi_id
+		   and emp_nm like '%'||#{emp_nm}||'%'
+		   and emp_id not in (select emp_id
+		                  from chat_emp a
+		                 where a.chat_id = #{chat_id})
+		   order by emp_nm
+	</select>
 </mapper>

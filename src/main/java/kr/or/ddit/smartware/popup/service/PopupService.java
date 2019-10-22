@@ -55,4 +55,9 @@ public class PopupService implements IPopupService{
 		return popupDao.getPopup(pop_id);
 	}
 
+	@Override
+	public int updatePopup(Popup popup) {
+		return popupDao.updatePopup(popup);
+	}
+
 }

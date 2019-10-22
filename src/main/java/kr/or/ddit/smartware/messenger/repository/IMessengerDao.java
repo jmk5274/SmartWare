@@ -178,4 +178,14 @@ public interface IMessengerDao {
 	* Method 설명 : 초대시점 메시지 정보 업데이트
 	*/
 	int updateInviteId(Message message);
+	
+	/**
+	* Method : getChatEmpList
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param map
+	* @return
+	* Method 설명 : 채팅창에 없는 사원 목록 조회
+	*/
+	List<Map> getChatEmpList(Map map);
 }

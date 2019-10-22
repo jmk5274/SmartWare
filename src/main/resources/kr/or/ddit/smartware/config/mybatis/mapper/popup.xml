@@ -29,4 +29,7 @@
 		select * from popup where pop_id = #{pop_id}
 	</select>
 	
+	<update id="updatePopup" parameterType="popup">
+		update popup set pop_st_dt=#{pop_st_dt}, pop_end_dt=#{pop_end_dt}, pop_top=#{pop_top}, pop_left=#{pop_left}, pop_title=#{pop_title}, pop_cont=#{pop_cont}, emp_id=#{emp_id} where pop_id=#{pop_id}
+	</update>
 </mapper>
