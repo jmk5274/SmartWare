@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<link href= "${cp }/css/approval/approval.css" rel="stylesheet" />
+
 <script src="${cp }/js/jquery-3.4.1.min.js"></script>
 <script>
 
@@ -35,112 +38,99 @@
 									<th>승인 여부</th>
 								</tr>
 
-								<c:forEach items="${postList }" var="list">
-									<c:choose>
-										<c:when test="${list.able=='F' }">
-											<tr class="postTr" data-post_id="${ list.post_id }">
-										</c:when>
-										<c:otherwise>
-											<tr class="postTr" data-post_id="">
-										</c:otherwise>
-									</c:choose>
-										<td >${list.post_id }</td>
+								<c:forEach items="${applList }" var="appl">
+										<tr class="postTr" data-post_id="${ appl.application.appl_id }">
+										<td >${appl.application.appl_id }</td>
 										<td>
-										<c:forEach begin="0" end="${(list.level-1)*2 }" var="i">
-											&nbsp;
-										</c:forEach>
-										<c:if test="${(list.level-1)*2 != 0 }">
-											➔
-										</c:if>
-										
-										<c:choose>
-											<c:when test="${list.able == 'T' }">
-												삭제된 게시글입니다.
-											</c:when>
-											<c:otherwise>
-												${list.title }
-											</c:otherwise>										
-										</c:choose>
+											${appl.application.title}
 										</td>
-										
-										<td>${list.emp_id }</td>
-										<td><fmt:formatDate value="${list.reg_dt }" pattern="yyyy-MM-dd"/> </td>
+										<td>${appl.application.emp_id }</td>
+										<td><fmt:formatDate value="${appl.application.reg_dt }" pattern="yyyy-MM-dd"/> </td>
+										<td>
+											<c:forEach items="${appl.applApprs}" var="confirm">
+												<c:choose>
+													<c:when test="${confirm.able == 'T'}">
+														<input type="checkbox" checked disabled>
+													</c:when>
+													<c:otherwise>
+														<input type="checkbox" disabled>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</td>
 									</tr>
 								</c:forEach>
 							</table>
 						</div>
-						<c:if test="${S_EMPLOYEE.emp_id == 'admin' || board_id != 'board0001'}">
-						<a href="${cp }/writePost?board_id=${board_id}" class="btn mb-1 btn-outline-primary pull-right">글 작성</a>
-						</c:if>
 				
-						<div class="bootstrap-pagination">
-							<nav>
-					  
-								<ul class="pagination justify-content-center">
-								<!-- 이전 페이지 가기 : 지금 있는 페이지에서 한페이지 전으로 -->
-									
-									<c:choose>
-										<c:when test="${page == 1 }">
-											<li class="page-item  disabled"><a class="page-link" href="#" tabindex="-1">&laquo;</a></li>
-												<span aria-hidden="Previous"></span>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item">
-								 				<a class="page-link" href="${cp }/post?page=1&board_id=${board_id}" aria-label="Previous">
-													<span aria-hidden="true">&laquo;</span>
-												</a>
-											</li>
-										</c:otherwise>
-									</c:choose>
-											
-											
-									<c:choose>
-										<c:when test="${page == 1 }">
-											<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">&lt;</a></li>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item"><a class="page-link" href="${cp }/post?page=${page-1}&board_id=${board_id}" tabindex="-1">&lt;</a></li>
-										</c:otherwise>
-									</c:choose>
-									
-									<c:forEach begin="1" end="${paginationSize }" var="i">
-										<c:choose>
-											<c:when test="${i == page }">
-												 <li class="page-item disabled"><span class="page-link">${i }</span></li>
-											</c:when>
-											<c:otherwise>
-												 <li class="page-item"><a class="page-link" href="${cp }/post?page=${i }&board_id=${board_id}">${i }</a></li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-									
-									<c:choose>
-										<c:when test="${page == paginationSize || paginationSize == 0}">
-											<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
-										</c:when>
-										<c:otherwise>
-												<li class="page-item"><a class="page-link" href="${cp }/post?page=${page+1}&board_id=${board_id}">&gt;</a>
-                                            </li>
-										</c:otherwise>
-									</c:choose>
-									
-									<c:choose>
-										<c:when test="${page == paginationSize || paginationSize == 0}">
-											<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-												<span aria-hidden="Next"></span>
-										</c:when>
-										<c:otherwise>
-											<li class="page-item">
-								 				<a class="page-link" href="${cp }/post?page=${paginationSize }&board_id=${board_id}" aria-label="Previous">
-													<span aria-hidden="true">&raquo;</span>
-												</a>
-											</li>
-										</c:otherwise>
-									</c:choose>
-					
-								</ul>
-							</nav>
-						</div>
+<%--						<div class="bootstrap-pagination">--%>
+<%--							<nav>--%>
+<%--					  --%>
+<%--								<ul class="pagination justify-content-center">--%>
+<%--								<!-- 이전 페이지 가기 : 지금 있는 페이지에서 한페이지 전으로 -->--%>
+<%--									--%>
+<%--									<c:choose>--%>
+<%--										<c:when test="${page == 1 }">--%>
+<%--											<li class="page-item  disabled"><a class="page-link" href="#" tabindex="-1">&laquo;</a></li>--%>
+<%--												<span aria-hidden="Previous"></span>--%>
+<%--										</c:when>--%>
+<%--										<c:otherwise>--%>
+<%--											<li class="page-item">--%>
+<%--								 				<a class="page-link" href="${cp }/post?page=1&board_id=${board_id}" aria-label="Previous">--%>
+<%--													<span aria-hidden="true">&laquo;</span>--%>
+<%--												</a>--%>
+<%--											</li>--%>
+<%--										</c:otherwise>--%>
+<%--									</c:choose>--%>
+<%--											--%>
+<%--											--%>
+<%--									<c:choose>--%>
+<%--										<c:when test="${page == 1 }">--%>
+<%--											<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">&lt;</a></li>--%>
+<%--										</c:when>--%>
+<%--										<c:otherwise>--%>
+<%--											<li class="page-item"><a class="page-link" href="${cp }/post?page=${page-1}&board_id=${board_id}" tabindex="-1">&lt;</a></li>--%>
+<%--										</c:otherwise>--%>
+<%--									</c:choose>--%>
+<%--									--%>
+<%--									<c:forEach begin="1" end="${paginationSize }" var="i">--%>
+<%--										<c:choose>--%>
+<%--											<c:when test="${i == page }">--%>
+<%--												 <li class="page-item disabled"><span class="page-link">${i }</span></li>--%>
+<%--											</c:when>--%>
+<%--											<c:otherwise>--%>
+<%--												 <li class="page-item"><a class="page-link" href="${cp }/post?page=${i }&board_id=${board_id}">${i }</a></li>--%>
+<%--											</c:otherwise>--%>
+<%--										</c:choose>--%>
+<%--									</c:forEach>--%>
+<%--									--%>
+<%--									<c:choose>--%>
+<%--										<c:when test="${page == paginationSize || paginationSize == 0}">--%>
+<%--											<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>--%>
+<%--										</c:when>--%>
+<%--										<c:otherwise>--%>
+<%--												<li class="page-item"><a class="page-link" href="${cp }/post?page=${page+1}&board_id=${board_id}">&gt;</a>--%>
+<%--                                            </li>--%>
+<%--										</c:otherwise>--%>
+<%--									</c:choose>--%>
+<%--									--%>
+<%--									<c:choose>--%>
+<%--										<c:when test="${page == paginationSize || paginationSize == 0}">--%>
+<%--											<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>--%>
+<%--												<span aria-hidden="Next"></span>--%>
+<%--										</c:when>--%>
+<%--										<c:otherwise>--%>
+<%--											<li class="page-item">--%>
+<%--								 				<a class="page-link" href="${cp }/post?page=${paginationSize }&board_id=${board_id}" aria-label="Previous">--%>
+<%--													<span aria-hidden="true">&raquo;</span>--%>
+<%--												</a>--%>
+<%--											</li>--%>
+<%--										</c:otherwise>--%>
+<%--									</c:choose>--%>
+<%--					--%>
+<%--								</ul>--%>
+<%--							</nav>--%>
+<%--						</div>--%>
 					</div>
 				</div>
 			</div>

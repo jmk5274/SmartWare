@@ -262,6 +262,7 @@ public class EmployeeController {
 		employee = (Employee) session.getAttribute("S_EMPLOYEE");
 		
 		employee = employeeService.getEmployee(employee.getEmp_id());
+//		employee = (Employee) employeeService.getEmployeeDetail(employee.getEmp_id());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -374,67 +375,90 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("mypageModify")
-	public String mypageModify(PostFile file_nm, Employee employee, BindingResult result, Model model, 
-							   String emp_id, @RequestPart(name = "picture", required = false) MultipartFile picture, @RequestPart(name = "sign", required = false) MultipartFile sign, HttpSession session) {
+	public String mypageModify(PostFile file_nm, Employee employee, BindingResult result, Model model, HttpSession session,
+							   String emp_id, @RequestPart(name = "picture", required = false) MultipartFile picture, @RequestPart(name = "sign", required = false) MultipartFile sign) {
+		Employee sessionEmp = (Employee) session.getAttribute("S_EMPLOYEE");
+		employee.setEmp_pic(sessionEmp.getEmp_pic());
+		employee.setSign(sessionEmp.getSign());
+		employee.setAble(sessionEmp.getAble());
+		employee.setC_use(sessionEmp.getC_use());
 		
 		String path = "C:/picture";
-		FileInfo fileInfo = FileUtil.getFileInfo(picture.getOriginalFilename());
-		String fileExt = fileInfo.getFile().getPath().substring(fileInfo.getFile().getPath().lastIndexOf("."));
-		
-		if (picture.getSize() > 0) {
-			try {
-				// 기존 파일은 삭제한다
-				Employee orgEmployee = employeeService.getEmployee(employee.getEmp_id());
-				
-				if(orgEmployee.getEmp_pic() != null) {
-					File file = new File(path+"/emp/"+orgEmployee.getEmp_pic());
-					file.delete();
-				}
-
-				employee.setEmp_pic(emp_id + fileExt);
-
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		FileInfo fileInfo2 = FileUtil.getFileInfo(sign.getOriginalFilename());
-		String fileExt2 = fileInfo2.getFile().getPath().substring(fileInfo.getFile().getPath().lastIndexOf("."));
-		
-		if (sign.getSize() > 0) {
-			try {
-				// 기존 파일은 삭제한다
-				Employee orgEmployee = employeeService.getEmployee(employee.getEmp_id());
-				
-				if(orgEmployee.getSign() != null) {
-					File file = new File(path + "/sign/" + orgEmployee.getSign());
-					file.delete();
-				}
-
-				employee.setSign(emp_id + fileExt2);
-
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		int updateCnt = employeeService.updateEmployee(employee);
-
-		if (updateCnt == 1) {
-			try {
-				File pictureFile = new File(path + "/emp/" + emp_id + fileExt);
-				File signFile = new File(path + "/sign/" + emp_id + fileExt2);
-				
-				picture.transferTo(pictureFile);
-				sign.transferTo(signFile);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
+		if(picture.getSize() > 0 || sign.getSize() > 0) {
+			String fileExt = "";
+			String fileExt2 = "";
 			
-			return "redirect:/mypage?emp_id=" + employee.getEmp_id();
-		}else
-			return mypageModifyView(employee.getEmp_id(), model);
+			if (picture.getSize() > 0) {
+				FileInfo fileInfo = FileUtil.getFileInfo(picture.getOriginalFilename());
+				fileExt = fileInfo.getFile().getPath().substring(fileInfo.getFile().getPath().lastIndexOf("."));
+				try {
+					// 기존 파일은 삭제한다
+					Employee orgEmployee = employeeService.getEmployee(employee.getEmp_id());
+					
+					if(orgEmployee.getEmp_pic() != null) {
+						File file = new File(path+"/emp/"+orgEmployee.getEmp_pic());
+						file.delete();
+					}
+	
+					employee.setEmp_pic(emp_id + fileExt);
+	
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			
+			
+			if (sign.getSize() > 0) {
+				FileInfo fileInfo2 = FileUtil.getFileInfo(sign.getOriginalFilename());
+				fileExt2 = fileInfo2.getFile().getPath().substring(fileInfo2.getFile().getPath().lastIndexOf("."));
+				try {
+					// 기존 파일은 삭제한다
+					Employee orgEmployee = employeeService.getEmployee(employee.getEmp_id());
+					
+					if(orgEmployee.getSign() != null) {
+						File file = new File(path + "/sign/" + orgEmployee.getSign());
+						file.delete();
+					}
+	
+					employee.setSign(emp_id + fileExt2);
+	
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			int updateCnt = employeeService.updateEmployee(employee);
+	
+			if (updateCnt == 1) {
+				try {
+					if(picture.getSize() > 0) {
+						File pictureFile = new File(path + "/emp/" + emp_id + fileExt);
+						picture.transferTo(pictureFile);
+					}
+					if(sign.getSize() > 0) {
+						File signFile = new File(path + "/sign/" + emp_id + fileExt2);
+						sign.transferTo(signFile);
+					}
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				} 
+				
+				return "redirect:/mypage?emp_id=" + employee.getEmp_id();
+			}else {
+				return mypageModifyView(employee.getEmp_id(), model);
+			}
+			
+		} else {
+			int updateCnt = employeeService.updateEmployee(employee);
+			
+			if (updateCnt == 1) {
+				return "redirect:/mypage?emp_id=" + employee.getEmp_id();
+			} else {
+				return mypageModifyView(employee.getEmp_id(), model);
+			}
+		}
 	}
 	
 	@RequestMapping("useForm")
