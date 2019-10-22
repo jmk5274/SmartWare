@@ -12,7 +12,7 @@
 		}	
 		
 	$(".deleteBtn").on("click", function(){
-		var result = confirm("정말로 삭제하시겠습니까?");
+		var result = confirm("해당 사원을 삭제하시겠습니까?");
 		
 		if(result) {
 			$("#selectEmp").val($(this).data("emp_id"));
@@ -92,7 +92,7 @@
 		var newRank = $("#newRank").val();
 		var newEmail = $("#newEmail").val();
 		var newTel = $("#newTel").val();
-		var newJoin_dt = $("newJoin_dt").val();
+		var newJoin_dt = $("#newJoin_dt").val();
 		var newEmail_pass = $("#newEmail_pass").val();
 		
 		if(newEmp_id == '' || newEmp_id.length == 0){
@@ -172,7 +172,7 @@
 			<div class="card">
 				<div class="card-body">
 
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div class="col-sm-11 col-sm-offset-5 col-md-12 col-md-offset-4 main">
 
 				<div class="row">
 					<div class="col-sm- blog-main">
