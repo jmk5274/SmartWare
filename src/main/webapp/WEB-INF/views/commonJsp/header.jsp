@@ -22,12 +22,15 @@
 <%
 	Integer cnt = (Integer) session.getAttribute("cnt");
 	Store store = (Store)session.getAttribute("store");
-	IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
 	
-	int real = folder.getMessageCount() - cnt;
-	real = real < 0 ? 0 : real;
+	if(store != null || cnt != null){
+		IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
+		int real = folder.getMessageCount() - cnt;
+		real = real < 0 ? 0 : real;
+		
+		session.setAttribute("real", real);
+	}
 	
-	session.setAttribute("real", real);
 	
 %>
 <script src="${cp }/js/moment.js"></script>
