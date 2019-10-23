@@ -36,7 +36,6 @@
 			}
 		});
 	});
-	
 // 		var result = confirm("해당 사원을 삭제하시겠습니까?");
 		
 // 		if(result) {
@@ -153,10 +152,35 @@
 				return;
 		}
 		
-		$("#createFrm").submit();
+		Swal({
+			title: '등록 요청',
+			text: "저장하시겠습니까?",
+			type: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '네',
+			cancelButtonText: '아니오'
+		}).then((result) => {
+			if (result.value) {
+				Swal({
+					title: '등록 완료',
+					text: '저장되었습니다.',
+					type: 'success',
+					confirmButtonText: '확인'
+				})
+				
+				$("#createFrm").submit();
+			}
+		});
 	});
 	
 });
+		
+// 		$("#createFrm").submit();
+// 	});
+	
+// });
 	
 
 </script>
