@@ -162,7 +162,7 @@ public class PostController {
 		model.addAttribute("post_id", seq);
 		model.addAttribute("board_id", board_id);
 
-		return "redirect:/selectPost";
+		return "redirect:/post";
 	}
 
 	@GetMapping(path = "modifyPost")
@@ -193,6 +193,7 @@ public class PostController {
 
 			return "tiles/post/modifyPost";
 		}
+		
 		return "redirect:/post";
 	}
 
