@@ -12,41 +12,40 @@
 		}	
 		
 	$(".deleteBtn").on("click", function(){
-		var result = confirm("해당 사원을 삭제하시겠습니까?");
-		
-		if(result) {
-			$("#selectEmp").val($(this).data("emp_id"));
-			$("#frm").prop("action", "${cp}/deleteEmployee");
-			$("#frm").submit();
-		}
-		
-// 		Swal({
-// 			title: '삭제 요청',
-// 			text: "해당 사원을 삭제하시겠습니까?",
-// 			type: 'warning',
-// 			showCancelButton: true,
-// 			confirmButtonColor: '#3085d6',
-// 			cancelButtonColor: '#d33',
-// 			confirmButtonText: '네',
-// 			cancelButtonText: '아니오'
-// 		}).then((result) => {
-// 			if (result.value) {
-// 				$.ajax({
-// 					url : '${cp}deleteEmployee',
-// 					type : 'post',
-// 					data : {name : '${employee.EMP_ID}'},
-// 					success : function(data){
-// 					Swal({
-// 						title: '삭제 완료',
-// 						text: '해당 사원이 삭제되었습니다.',
-// 						type: 'black',
-// 						confirmButtonText: '확인',
-// 						timer: 3000
-// 					})
-// 					}
-// 			});
-// 		};
+		Swal({
+			title: '삭제 요청',
+			text: "해당 사원을 삭제하시겠습니까?",
+			type: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '네',
+			cancelButtonText: '아니오'
+		}).then((result) => {
+			if (result.value) {
+				Swal({
+					title: '삭제 완료',
+					text: '삭제되었습니다.',
+					type: 'success',
+					confirmButtonText: '확인'
+				})
+				
+				$("#selectEmp").val($(this).data("emp_id"));
+				$("#frm").prop("action", "${cp}/deleteEmployee");
+				$("#frm").submit();
+			}
+		});
 	});
+	
+// 		var result = confirm("해당 사원을 삭제하시겠습니까?");
+		
+// 		if(result) {
+// 			$("#selectEmp").val($(this).data("emp_id"));
+// 			$("#frm").prop("action", "${cp}/deleteEmployee");
+// 			$("#frm").submit();
+// 		}
+		
+// 	});
 	
 	$(".updateBtn").on("click", function(){
 		
