@@ -1,0 +1,12 @@
+.chart, .taskList {
+	width: auto;
+	height: 300px;
+}
+
+.taskList > table {
+	width: 650px;
+}
+
+td > h3 {
+	text-align: center;
+} 

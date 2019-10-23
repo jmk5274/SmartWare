@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project">
+
+	<!-- 현 시각 기준 사원이 속해있는 종료된 프로젝트를 반환 -->
+	<select id="getAllPastProject" parameterType="String" resultType="project">
+		select *
+		  from project
+		 where pro_id IN (select pro_id
+		                   from pro_position
+		                  where emp_id = #{emp_id}
+		                    and pro_id IN (select pro_id
+		                                    from project
+		                                   where end_dt &lt; sysdate))
+	</select>
+	
+	<!-- 현 시각 기준 사원이 속해있는 진행중인 프로젝트를 반환 -->
+	<select id="getAllRunningProject" parameterType="String" resultType="project">
+		select *
+		  from project
+		 where pro_id IN (select pro_id
+		                   from pro_position
+		                  where emp_id = #{emp_id}
+		                    and pro_id IN (select pro_id
+		                                    from project
+		                                   where end_dt &gt; sysdate))
+	</select>
+	
+</mapper>

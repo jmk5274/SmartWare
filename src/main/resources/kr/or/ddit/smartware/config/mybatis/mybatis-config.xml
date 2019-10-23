@@ -5,25 +5,28 @@
 <configuration>
 	
 	<typeAliases>
-		<typeAlias alias="employee" type="kr.or.ddit.smartware.employee.model.Employee"/>
-		<typeAlias alias="chat"  	type="kr.or.ddit.smartware.messenger.model.Chat"/>
-		<typeAlias alias="chatEmp"  type="kr.or.ddit.smartware.messenger.model.ChatEmp"/>
-		<typeAlias alias="message"  type="kr.or.ddit.smartware.messenger.model.Message"/>
-		<typeAlias alias="board"  	type="kr.or.ddit.smartware.board.model.Board"/>
-		<typeAlias alias="post"  	type="kr.or.ddit.smartware.post.model.Post"/>
-		<typeAlias alias="comments" type="kr.or.ddit.smartware.post.model.Comments"/>
-		<typeAlias alias="postfile" type="kr.or.ddit.smartware.post.model.PostFile"/>
-		<typeAlias alias="calendar" type="kr.or.ddit.smartware.calendar.model.Calendar"/>
-		<typeAlias alias="category" type="kr.or.ddit.smartware.calendar.model.Category"/>
-		<typeAlias alias="email" 	type="kr.or.ddit.smartware.email.model.Email"/>
-		<typeAlias alias="position" type="kr.or.ddit.smartware.employee.model.Position"/>
-		<typeAlias alias="department" type="kr.or.ddit.smartware.employee.model.Department"/>
-		<typeAlias alias="job" type="kr.or.ddit.smartware.employee.model.Job"/>
-		<typeAlias alias="form" type="kr.or.ddit.smartware.approval.model.Form"/>
-		<typeAlias alias="popup" type="kr.or.ddit.smartware.popup.model.Popup"/>
-		<typeAlias alias="apprMember" type="kr.or.ddit.smartware.approval.model.ApprMember"/>
-		<typeAlias alias="applAppr" type="kr.or.ddit.smartware.approval.model.ApplAppr"/>
-		<typeAlias alias="application" type="kr.or.ddit.smartware.approval.model.Application"/>
+		<typeAlias alias="employee" 	type="kr.or.ddit.smartware.employee.model.Employee"/>
+		<typeAlias alias="position" 	type="kr.or.ddit.smartware.employee.model.Position"/>
+		<typeAlias alias="department" 	type="kr.or.ddit.smartware.employee.model.Department"/>
+		<typeAlias alias="job" 			type="kr.or.ddit.smartware.employee.model.Job"/>
+		<typeAlias alias="chat"  		type="kr.or.ddit.smartware.messenger.model.Chat"/>
+		<typeAlias alias="chatEmp"  	type="kr.or.ddit.smartware.messenger.model.ChatEmp"/>
+		<typeAlias alias="message"  	type="kr.or.ddit.smartware.messenger.model.Message"/>
+		<typeAlias alias="board"  		type="kr.or.ddit.smartware.board.model.Board"/>
+		<typeAlias alias="post"  		type="kr.or.ddit.smartware.post.model.Post"/>
+		<typeAlias alias="comments" 	type="kr.or.ddit.smartware.post.model.Comments"/>
+		<typeAlias alias="postfile" 	type="kr.or.ddit.smartware.post.model.PostFile"/>
+		<typeAlias alias="calendar" 	type="kr.or.ddit.smartware.calendar.model.Calendar"/>
+		<typeAlias alias="category" 	type="kr.or.ddit.smartware.calendar.model.Category"/>
+		<typeAlias alias="email" 		type="kr.or.ddit.smartware.email.model.Email"/>
+		<typeAlias alias="form"			type="kr.or.ddit.smartware.approval.model.Form"/>
+		<typeAlias alias="apprMember" 	type="kr.or.ddit.smartware.approval.model.ApprMember"/>
+		<typeAlias alias="applAppr" 	type="kr.or.ddit.smartware.approval.model.ApplAppr"/>
+		<typeAlias alias="application" 	type="kr.or.ddit.smartware.approval.model.Application"/>
+		<typeAlias alias="popup" 		type="kr.or.ddit.smartware.popup.model.Popup"/>
+		<typeAlias alias="project" 		type="kr.or.ddit.smartware.pms.model.Project"/>
+		<typeAlias alias="task" 		type="kr.or.ddit.smartware.pms.model.Task"/>
+		<typeAlias alias="taskHistory"	type="kr.or.ddit.smartware.pms.model.TaskHistory"/>
 	</typeAliases>
 	
 	<mappers>
@@ -45,6 +48,7 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/popup.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/approval.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/job.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/project.xml"/>
 
 	</mappers>
 	
