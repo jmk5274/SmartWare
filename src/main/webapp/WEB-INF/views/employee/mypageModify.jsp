@@ -13,17 +13,67 @@
 		
 		$(".updateBtn").on("click", function(){
 			var picture = $("#picture").val();
+			var pass = $("#pass").val();
+			var email = $("#email").val();
+			var email_pass = $("#email_pass").val();
+			var tel = $("#tel").val();
+			var join_dt = $("#join_dt").val();
 			
-			/* if(picture == '' || picture.length == 0){
+// 			if(picture == '' || picture.length == 0){
+// 				Swal({
+// 					type: 'warning', // success, error, warning, info, question
+// 					title: '필수 사항',
+// 					text: '프로필 사진을 첨부해주세요.'
+// 				})
+			
+// 				return;
+			if(pass == '' || pass.length == 0){
 				Swal({
 					type: 'warning', // success, error, warning, info, question
 					title: '필수 사항',
-					text: '프로필 사진을 첨부해주세요.'
+					text: '비밀번호흘 입력해주세요.'
 				})
 			
 				return;
-			} */
-
+				
+			} else if(email == '' || email.length == 0){
+				Swal({
+					type: 'warning', // success, error, warning, info, question
+					title: '필수 사항',
+					text: '이메일을 입력해주세요.'
+				})
+			
+				return;
+				
+			} else if(email_pass == '' || email_pass.length == 0){
+				Swal({
+					type: 'warning', // success, error, warning, info, question
+					title: '필수 사항',
+					text: '이메일 비밀번호를 입력해주세요.'
+				})
+			
+				return;
+				
+			} else if(tel == '' || tel.length == 0){
+				Swal({
+					type: 'warning', // success, error, warning, info, question
+					title: '필수 사항',
+					text: '전화번호를 입력해주세요.'
+				})
+			
+				return;
+				
+			} else if(join_dt == null || join_dt.length == 0){
+				Swal({
+					type: 'warning', // success, error, warning, info, question
+					title: '필수 사항',
+					text: '입사일을 입력해주세요.'
+				})
+			
+				return;
+			}
+			
+				
 			$("#frm").submit();
 		})
 });
