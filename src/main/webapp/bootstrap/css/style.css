@@ -1232,7 +1232,8 @@ pre {
   background-color: rgba(0, 0, 0, 0.05); }
 
 .table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.075); }
+  background-color: rgba(0, 0, 0, 0.075);
+  cursor: pointer; }
 
 .table-primary,
 .table-primary > th,

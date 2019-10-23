@@ -9,6 +9,32 @@ DROP sequence CATEGORY_SEQ;
 CREATE SEQUENCE CATEGORY_SEQ START WITH 1 INCREMENT BY 1 nocache;
 delete from category;
 
+-- 업무 기록
+drop sequence TASK_HISTORY_SEQ;
+CREATE SEQUENCE TASK_HISTORY_SEQ START WITH 1 INCREMENT BY 1 nocache;
+delete from task_history;
+
+-- 업무 담당자
+delete from pro_task;
+
+-- 업무
+drop sequence TASK_SEQ;
+CREATE SEQUENCE TASK_SEQ START WITH 1 INCREMENT BY 1 nocache;
+delete task;
+
+-- 프로젝트 구성원
+delete from pro_position;
+
+--프로젝트
+drop sequence PROJECT_SEQ;
+CREATE SEQUENCE PROJECT_SEQ START WITH 1 INCREMENT BY 1 nocache;
+delete from project;
+
+-- 팝업
+drop sequence POPUP_SEQ;
+CREATE SEQUENCE POPUP_SEQ START WITH 1 INCREMENT BY 1 nocache;
+delete from popup;
+
 --직책
 drop sequence POSITION_SEQ;
 CREATE SEQUENCE POSITION_SEQ START WITH 1 INCREMENT BY 1 nocache;
@@ -65,27 +91,6 @@ delete post;
 drop sequence BOARD_SEQ;
 CREATE SEQUENCE BOARD_SEQ START WITH 1 INCREMENT BY 1 nocache;
 delete board;
-
--- 업무 담당자
-delete from pro_task;
-
--- 업무
-drop sequence TASK_SEQ;
-CREATE SEQUENCE TASK_SEQ START WITH 1 INCREMENT BY 1 nocache;
-delete task;
-
--- 프로젝트 구성원
-delete from pro_position;
-
---프로젝트
-drop sequence PROJECT_SEQ;
-CREATE SEQUENCE PROJECT_SEQ START WITH 1 INCREMENT BY 1 nocache;
-delete from project;
-
--- 팝업
-drop sequence POPUP_SEQ;
-CREATE SEQUENCE POPUP_SEQ START WITH 1 INCREMENT BY 1 nocache;
-delete from popup;
 
 -- 사원
 DROP SEQUENCE EMPLOYEE_SEQ;
@@ -155,7 +160,7 @@ insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '조민수', 'USER', 'mingsoocode@gmail.com', '010-3092-3837',
 							TO_DATE(20170703, 'YYYY/MM/DD'), 'de0002', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김혜인', 'USER', 'gpdls@gmail.com', '010-4444-1111',
-							TO_DATE(20170802, 'YYYY/MM/DD'), 'de0003', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170906, 'YYYY/MM/DD'), 'de0003', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '윤경주', 'USER', 'rudwn@gmail.com', '010-4444-2222',
 							TO_DATE(20170825, 'YYYY/MM/DD'), 'de0004', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '강승구', 'USER', 'tmdrn@gmail.com', '010-4444-3333',
@@ -272,56 +277,188 @@ INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VAL
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --프로젝트
 
-INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '그룹웨어 개발팀', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), NULL);
-INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '프로그래밍 스터디 개발팀', to_date('20191004', 'YYYYMMDD'), to_date('20191025', 'YYYYMMDD'), NULL);
-INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '자동보험 프로그래밍 개발팀', to_date('20191006', 'YYYYMMDD'), to_date('20191030', 'YYYYMMDD'), NULL);
-INSERT INTO PROJECT(PRO_ID, PRO_NM, ST_DT, END_DT, PA_PRO_ID) VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '부동산 개발팀', to_date('20191008', 'YYYYMMDD'), to_date('20191102', 'YYYYMMDD'), NULL);
-
+INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '영화관 예매 시스템', to_date('20190612', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), NULL);
+INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '유기동물 입양 시스템', to_date('20190819', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), NULL);
+INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '스마트 웨어', to_date('20190916', 'YYYYMMDD'), to_date('20191129', 'YYYYMMDD'), NULL);
+     
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --프로젝트 구성원
 
-INSERT INTO PRO_POSITION VALUES('e0005', 'pj0001', 'posi0003');
-INSERT INTO PRO_POSITION VALUES('e0009', 'pj0001', 'posi0004');
-INSERT INTO PRO_POSITION VALUES('e0013', 'pj0001', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0014', 'pj0001', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0015', 'pj0001', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0002', 'pj0001', 'job0003');
+INSERT INTO PRO_POSITION VALUES('e0005', 'pj0001', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0009', 'pj0001', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0013', 'pj0001', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0015', 'pj0001', 'job0004');
 
-INSERT INTO PRO_POSITION VALUES('e0006', 'pj0002', 'posi0003');
-INSERT INTO PRO_POSITION VALUES('e0010', 'pj0002', 'posi0004');
-INSERT INTO PRO_POSITION VALUES('e0016', 'pj0002', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0017', 'pj0002', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0018', 'pj0002', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0019', 'pj0002', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0002', 'pj0002', 'job0003');
+INSERT INTO PRO_POSITION VALUES('e0005', 'pj0002', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0009', 'pj0002', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0013', 'pj0002', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0015', 'pj0002', 'job0004');
 
-INSERT INTO PRO_POSITION VALUES('e0007', 'pj0003', 'posi0003');
-INSERT INTO PRO_POSITION VALUES('e0011', 'pj0003', 'posi0004');
-INSERT INTO PRO_POSITION VALUES('e0020', 'pj0003', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0021', 'pj0003', 'posi0005');
-
-INSERT INTO PRO_POSITION VALUES('e0008', 'pj0003', 'posi0003');
-INSERT INTO PRO_POSITION VALUES('e0012', 'pj0003', 'posi0004');
-INSERT INTO PRO_POSITION VALUES('e0022', 'pj0003', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0023', 'pj0003', 'posi0005');
-INSERT INTO PRO_POSITION VALUES('e0024', 'pj0003', 'posi0005');
+INSERT INTO PRO_POSITION VALUES('e0005', 'pj0003', 'job0003');
+INSERT INTO PRO_POSITION VALUES('e0009', 'pj0003', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0013', 'pj0003', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0014', 'pj0003', 'job0004');
+INSERT INTO PRO_POSITION VALUES('e0015', 'pj0003', 'job0004');
 
 ------------------------------------------------------------------------------------------------------------------
 --업무
 
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0001', NULL);
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0002', NULL);
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191005', 'YYYYMMDD'), to_date('20191024', 'YYYYMMDD'), 'pj0003', NULL);
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '부서업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0004', NULL);
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0001', 'task0001');
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191005', 'YYYYMMDD'), to_date('20191024', 'YYYYMMDD'), 'pj0002', 'task0002');
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0003', 'task0003');
-INSERT INTO TASK(TASK_ID, TASK_CONT, ST_DT, END_DT, PRO_ID, PA_TASK_ID) VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인업무지시', to_date('20191002', 'YYYYMMDD'), to_date('20191020', 'YYYYMMDD'), 'pj0004', 'task0004');
+-- pj0001
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그인', to_date('20190612', 'YYYYMMDD'), to_date('20190705', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그아웃', to_date('20190612', 'YYYYMMDD'), to_date('20190705', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '게시판 구현', to_date('20190612', 'YYYYMMDD'), to_date('20190705', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '예매 구현', to_date('20190612', 'YYYYMMDD'), to_date('20190705', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 구현', to_date('20190708', 'YYYYMMDD'), to_date('20190726', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영화관 배치 구현', to_date('20190708', 'YYYYMMDD'), to_date('20190726', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '예매 내역 구현', to_date('20190708', 'YYYYMMDD'), to_date('20190726', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영화관 관리 구현', to_date('20190708', 'YYYYMMDD'), to_date('20190726', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이페이지 구현', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원탈퇴 구현', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0001', null, 100);
 
+-- pj0002
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '산출물', to_date('20190819', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '수행계획서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '요구사항정의서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '유스케이스 정의서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '유스케이스 다이어그램', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '단위업무정의서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '화면정의서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로세스 정의서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로세스 흐름도', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메뉴구조도', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개념 ERD', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '논리ERD', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '물리ERD', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '테이블 정의서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '명명규칙', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개발환경구축완료보고서', to_date('20190819', 'YYYYMMDD'), to_date('20190823', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '단위테스트시나리오', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '통합테스트시나리오', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '사용자 메뉴얼', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '운영자 메뉴얼', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '결함관리대장', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0011', 100);
+-- task0032
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '기능구현', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', null, 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메인화면', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메뉴', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그인', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그아웃', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원가입', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'ID찾기', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'PW찾기', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '날씨 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '통계 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '유기동물 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양후기 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0033', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '소개', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0045', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 작성', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0045', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 수정', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0045', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 삭제', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0045', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '센터 소개', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0045', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '동물보호정보', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '동물병원 리스트 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0052', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'YOUTUBE 꿀팁', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0052', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양공고', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '유기동물 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0055', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '유기동물 추가', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0055', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '유기동물 변경', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0055', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '유기동물 삭제', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0055', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '찜하기', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0055', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양신청', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0055', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양후기', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양후기 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0062', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양후기 작성', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0062', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양후기 수정', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0062', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양후기 삭제', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0062', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '참여마당', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '찾아요 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0067', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '찾아요 작성', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0067', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '찾아요 수정', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0067', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '찾아요 삭제', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0067', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '동물 이상형 월드컵', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0067', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '찰떡 궁합 찾기', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0067', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자원봉사', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자원봉사 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0074', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자원봉사 신청', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0074', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자원봉사 내역 조회', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0074', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '쇼핑몰', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '쇼핑몰 메인 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '물건 상세 출력', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '장바구니 등록', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '리뷰 확인', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '질문 확인', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '질문 작성', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '질문 수정', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '질문 삭제', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '답변 작성', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '답변 수정', to_date('20190826', 'YYYYMMDD'), to_date('20190830', 'YYYYMMDD'), 'pj0002', 'task0078', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '장바구니', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '장바구니 출력', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0089', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '수량 변경', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0089', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '물건 제거', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0089', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '구매', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0089', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이페이지', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '개인정보조회 및 수정', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0094', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '입양이력', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0094', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자원봉사 내역', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0094', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '관심 동물 조회', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0094', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '구매 내역', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0094', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원 탈퇴', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0094', 100);
+
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '관리자페이지', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0032', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원 조회', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0101', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원 수정', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0101', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원 삭제', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0101', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '쇼핑몰 상품관리', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0101', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자원봉사 관리', to_date('20190902', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), 'pj0002', 'task0101', 100);
+-- pj0003
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --업무 담당자
 
+-- pj0001
 INSERT INTO PRO_TASK VALUES('e0005', 'task0001', 'pj0001');
-INSERT INTO PRO_TASK VALUES('e0006', 'task0002', 'pj0002');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0002', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0003', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0004', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0005', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0006', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0007', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0008', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0009', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0009', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0010', 'pj0001');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0010', 'pj0001');
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+--업무 기록
+
+-- pj0001
+INSERT INTO TASK_HISTORY VALUES('task0001', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190704', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0002', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190704', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0003', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190704', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0004', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190704', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0005', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190725', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0006', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190725', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0007', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190725', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0008', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190725', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0009', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190801', 'YYYYMMDD'));
+INSERT INTO TASK_HISTORY VALUES('task0010', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', to_date('20190801', 'YYYYMMDD'));
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 

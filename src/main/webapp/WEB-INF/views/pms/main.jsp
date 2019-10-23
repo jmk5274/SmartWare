@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
-	#chartdiv {
-		display: inline-block;
+	.chart, .taskList {
+ 		width: auto;
 		height: 300px;
 	}
+	
+	.taskList > table {
+		width: 650px;
+	}
+	
+	td > h3 {
+		text-align: center;
+	} 
 </style>
 <!-- body 시작 -->
 <div class="row">
@@ -50,19 +58,90 @@
 	<div class="col-9">
 		<div class="card">
 			<div class="card-body">
-				<h3><i class="fa fa-bars" aria-hidden="true"></i> 진행중인 프로젝트</h3>
+				<h2><i class="fa fa-bars" aria-hidden="true"></i> 진행중인 프로젝트</h2>
 				<hr>
 				<blockquote>
 					<h3>프로젝트1</h3>
 					<hr>
-				    <div id="chartdiv"></div>
-				    <span> 팀원: ㅁㄴㅇㅁㄴㅇ</span>
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<h3>전체 현황</h3>
+							    	<div id="chartdiv" class="chart"></div>
+								</td>
+								<td>
+									<h3>나의 현황</h3>
+							    	<div id="chartdiv2" class="chart"></div>
+								</td>
+								<td>
+			                        <h3>주간 업무</h3>
+				                    <div class="taskList">
+					                    <table class="table header-border table-hover verticle-middle">
+					                        <thead>
+					                            <tr>
+					                                <th scope="col"></th>
+					                                <th scope="col">업무명</th>
+					                                <th scope="col">진척도</th>
+					                                <th scope="col">현황</th>
+					                            </tr>
+					                        </thead>
+					                        <tbody>
+					                            <tr>
+					                                <th>1</th>
+					                                <td>Air Conditioner</td>
+					                                <td>
+					                                    <div class="progress" style="height: 10px">
+					                                        <div class="progress-bar gradient-1" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>
+					                                        </div>
+					                                    </div> 
+					                                </td>
+					                                <td><span class="label gradient-1 btn-rounded">70%</span>
+					                                </td>
+					                            </tr>
+					                            <tr>
+					                                <th>2</th>
+					                                <td>Textiles</td>
+					                                <td>
+					                                    <div class="progress" style="height: 10px">
+					                                        <div class="progress-bar gradient-2" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>
+					                                        </div>
+					                                    </div> 
+					                                </td>
+					                                <td><span class="label btn-rounded gradient-2">70%</span>
+					                                </td>
+					                            </tr>
+					                            <tr>
+					                                <th>3</th>
+					                                <td>Milk Powder</td>
+					                                <td>
+					                                    <div class="progress" style="height: 10px">
+					                                        <div class="progress-bar gradient-3" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>
+					                                        </div>
+					                                    </div> 
+					                                </td>
+					                                <td><span class="label btn-rounded gradient-3">70%</span>
+					                                </td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+				                    </div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<hr>
+					<div> 팀장: <img alt="" class="rounded-circle mt-4" src="/asd/bootstrap/images/users/1.jpg" style="width: 50px;">배상현</div>
+				    <div> 팀원: <img alt="" class="rounded-circle mt-4" src="/asd/bootstrap/images/users/5.jpg" style="width: 50px;">조민수, 
+				    		   <img alt="" class="rounded-circle mt-4" src="/asd/bootstrap/images/users/3.jpg" style="width: 50px;">전민규, 
+				    		   <img alt="" class="rounded-circle mt-4" src="/asd/bootstrap/images/users/2.jpg" style="width: 50px;">김도훈, 
+				    		   <img alt="" class="rounded-circle mt-4" src="/asd/bootstrap/images/users/4.jpg" style="width: 50px;">홍다은, </div>
 				</blockquote>
 			</div>
 		</div>
 		<div class="card">
 			<div class="card-body">
-				<h3><i class="fa fa-bars" aria-hidden="true"></i> 완료한 프로젝트</h3>
+				<h2><i class="fa fa-bars" aria-hidden="true"></i> 완료한 프로젝트</h2>
 				<hr>
 				<div id="accordion-two" class="accordion">
 					<div class="card">
