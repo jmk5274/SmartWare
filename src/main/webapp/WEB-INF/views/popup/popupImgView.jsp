@@ -13,15 +13,7 @@
 		    var checked = $(this).prop('checked');
 		 
 		    if(checked){
-				$.ajax({
-					url : "${cp}/insertPopupNoLook",
-					dataType : "json",
-					method : "post",
-					data : "pop_id=${pop_id}",
-					success : function(data){
-				    	self.close();
-					}
-				});
+		    	self.close();
 		    }
 		});
 	});

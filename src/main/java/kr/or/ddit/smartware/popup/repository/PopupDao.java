@@ -92,4 +92,22 @@ public class PopupDao implements IPopupDao{
 		return sqlSession.update("popup.updatePopup", popup);
 	}
 
+	/**
+	* Method : insertPopupNoLook
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param map
+	* @return
+	* Method 설명 : 팝업 오늘만 보지 않기
+	*/
+	@Override
+	public int insertPopupNoLook(Map map) {
+		return sqlSession.insert("popup.insertPopupNoLook", map);
+	}
+
+	@Override
+	public List<Map> getPopupNoLook(String emp_id) {
+		return sqlSession.selectList("popup.getPopupNoLook", emp_id);
+	}
+
 }

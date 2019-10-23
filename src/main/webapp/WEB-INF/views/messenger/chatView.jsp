@@ -375,7 +375,7 @@ th{
 													</div>
 		                                             <div class="modal-footer">
 		                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		                                                 <button type="button" id="inviteEmp" class="btn btn-primary" data-dismiss="modal">추가하기</button>
+		                                                 <button type="button" id="inviteEmp" class="btn btn-primary" data-dismiss="modal">초대하기</button>
 		                                             </div>
 		                                         </div>
 		                                     </div>

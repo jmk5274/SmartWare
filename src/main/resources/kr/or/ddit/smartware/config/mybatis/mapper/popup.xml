@@ -32,4 +32,14 @@
 	<update id="updatePopup" parameterType="popup">
 		update popup set pop_st_dt=#{pop_st_dt}, pop_end_dt=#{pop_end_dt}, pop_top=#{pop_top}, pop_left=#{pop_left}, pop_title=#{pop_title}, pop_cont=#{pop_cont}, emp_id=#{emp_id} where pop_id=#{pop_id}
 	</update>
+	
+	<insert id="insertPopupNoLook" parameterType="map">
+		insert into popup_nolook(emp_id, pop_id, nl_dt) values(#{emp_id}, #{pop_id}, #{nl_dt})
+	</insert>
+	
+	<select id="getPopupNoLook" parameterType="String" resultType="map">
+		select *
+ 		  from popup_nolook
+ 		 where emp_id = #{emp_id}
+	</select>
 </mapper>

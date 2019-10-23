@@ -11,10 +11,17 @@
 			method : "post",
 			success : function(data){
 				var popupList = data.popupList;
+				var popupNolookList = data.popupNolookList;
 				
 				popupList.forEach(function(popup){
 					var stDate = moment(new Date(popup.pop_st_dt)).format('YYYYMMDD');
 					var endDate = moment(new Date(popup.pop_end_dt)).format('YYYYMMDD')
+					
+					popupNolookList.forEach(function(nolook){
+						if(popup.msg_id===nolook.msg_id){
+							stDate = moment(new Date(nolook.nl_dt));
+						}
+					});
 					
 					if(stDate <= date && date <= endDate){
 						var popupX = (popup.pop_left);

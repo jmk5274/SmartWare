@@ -60,4 +60,14 @@ public class PopupService implements IPopupService{
 		return popupDao.updatePopup(popup);
 	}
 
+	@Override
+	public int insertPopupNoLook(Map map) {
+		return popupDao.insertPopupNoLook(map);
+	}
+
+	@Override
+	public List<Map> getPopupNoLook(String emp_id) {
+		return popupDao.getPopupNoLook(emp_id);
+	}
+
 }

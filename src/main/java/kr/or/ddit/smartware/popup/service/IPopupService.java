@@ -64,4 +64,23 @@ public interface IPopupService {
 	*/
 	int updatePopup(Popup popup);
 
+	/**
+	* Method : insertPopupNoLook
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param map
+	* @return
+	* Method 설명 : 팝업 하루만 보지 않기
+	*/
+	int insertPopupNoLook(Map map);
+
+	/**
+	* Method : getPopupNoLook
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : popup_nolook 테이블 조회
+	*/
+	List<Map> getPopupNoLook(String emp_id);
 }

@@ -24,17 +24,28 @@
 		
 		$(".insertPopup").click(function(){
 			var fileCheck = document.getElementById("file").files;
-// 			var title = $("#pop_title").val();
-// 			var left = $("#left").val().split;
-// 			var top = $("#top").val().split;
-// 			var startpicker = $("#startpicker-input").val() + "";
-// 			var endpicker = $("#endpicker-input").val() + "";
+			var title = $("#pop_title").val().trim();
+			var left = $("#left").val().trim();
+			var top = $("#top").val().trim();
+			var startpicker = $("#startpicker-input").val() + "";
+			var endpicker = $("#endpicker-input").val() + "";
+			
+			console.log(startpicker);
+			console.log(endpicker);
 			
 			if(fileCheck.length===0){
-// 				|| title.length===0 || left[0].length===0 || top[0].length===0 || startpicker.length===0 || endpicker.length===0
-				alert("항목을 모두 입력해주세요.")
-				insertForm.reset();
-				$("#fileLabel").text("");
+				alert("파일을 선택해주세요.");
+				return false;
+			}
+			
+			if(title===""){
+				alert("팝업 제목을 입력해주세요.");
+				$("#pop_title").focus();
+				return false;
+			}
+			
+			if(left==="" || top===""){
+				alert("좌표를 선택해주세요.");
 				return false;
 			}
 			
@@ -130,7 +141,7 @@
 				var popupX = (data.popup.pop_left);
 				var popupY= (data.popup.pop_top);
 			
-				window.open('${cp }/popupView?pop_id='+pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
+				window.open('${cp }/popupImgView?pop_id='+pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
 				}
 			});
 		});
@@ -166,6 +177,7 @@
 							data : "pop_id="+pop_id,
 							success : function(data){
 								popupListView(1);
+								modifyForm.reset();
 								$(".btnSpace").empty()
 							}
 						});
@@ -297,7 +309,7 @@
 															<label class="col-form-label">타이틀</label>
 														</div>
 														<div class="col">
-															<input name="pop_title" type="text" class="form-control"
+															<input id="pop_title" name="pop_title" type="text" class="form-control"
 																placeholder="Title을 입력하세요">
 														</div>
 													</div>

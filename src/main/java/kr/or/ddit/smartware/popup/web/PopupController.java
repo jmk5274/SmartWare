@@ -1,11 +1,9 @@
 package kr.or.ddit.smartware.popup.web;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +151,14 @@ public class PopupController {
 	return "popup/popupView";
 	}
 	
+	@GetMapping("popupImgView")
+	public String popupImgView(String pop_id, Model model) {	
+		
+		model.addAttribute("pop_id", pop_id);
+		
+		return "popup/popupImgView";
+	}
+	
 	@GetMapping("getPopup")
 	public void getPopup(String pop_id, HttpServletResponse response) throws IOException {
 		Popup popup = popupService.getPopup(pop_id);
@@ -202,11 +208,15 @@ public class PopupController {
 	}
 	
 	@PostMapping("getAllPopupList")
-	public String getAllPopupList(Model model) {
+	public String getAllPopupList(Model model, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
 		List<Popup> popupList = popupService.getAllPopupList();
+		List<Map> popupNolookList = popupService.getPopupNoLook(employee.getEmp_id());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
 		model.addAttribute("popupList", popupList);
+		model.addAttribute("popupNolookList", popupNolookList);
 		
 		return "jsonView";
 	}
@@ -248,5 +258,26 @@ public class PopupController {
 		return "jsonView";
 	}
 	
-	
+	@PostMapping("insertPopupNoLook")
+	public String insertPopupNoLook(String pop_id, Model model, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
+		String emp_id = employee.getEmp_id();
+		
+		Popup popup1 = popupService.getPopup(pop_id);
+		Date pop_st_dt = popup1.getPop_st_dt();
+		Date nl_dt = new Date(pop_st_dt.getTime () + (long)( 1000 * 60 * 60 * 24 ));
+		
+		logger.debug("nl_dt : {}", nl_dt);
+
+		Map map = new HashMap<>();
+		
+		map.put("emp_id", emp_id);
+		map.put("pop_id", pop_id);
+		map.put("nl_dt", nl_dt);
+		
+		int c = popupService.insertPopupNoLook(map);
+		
+		return "jsonView";
+	}
 }
