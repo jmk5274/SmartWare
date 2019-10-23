@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Task {
 
-	private Date end_dt;        	// 상위 업무 아이디
+	private String task_id;     	// 업무 아이디
+	private String task_cont;   	// 업무 내용
 	private Date st_dt;         	// 시작 날짜
-	private String pa_task_id;  	// 업무 내용
-	private String pro_id;      	// 업무 아이디
-	private String task_cont;   	// 완료 날짜
-	private String task_id;     	// 진척도
-	private int per;				// 프로젝트 아이디
+	private Date end_dt;        	// 완료 날짜
+	private String pro_id;      	// 프로젝트 아이디
+	private String pa_task_id;  	// 상위 업무 아이디
+	private int per;				// 진척도
 	
 	public Task() {	}
 	
