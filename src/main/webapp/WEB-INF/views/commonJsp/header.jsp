@@ -24,15 +24,6 @@
 	Store store = (Store)session.getAttribute("store");
 	IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
 	
-// 	Message mes = folder.getMessage(folder.getMessageCount());
-// 	mes.setFlags(new Flags(Flags.Flag.RECENT), true);
-	
-// 	boolean ff = folder.hasNewMessages();
-	
-	
-// 	if(!folder.isOpen())
-// 		 folder.open(Folder.READ_ONLY);
-	
 	int real = folder.getMessageCount() - cnt;
 	real = real < 0 ? 0 : real;
 	
@@ -176,10 +167,6 @@
 	
 	$(function() {
 		getChatList();
-		
-		if(ff){
-			console.log("das");
-		}
 		
 		setTimeout(function() { 
 				if(<%=real%>!=0){

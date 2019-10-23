@@ -255,21 +255,6 @@ public class EmailController {
 	          
 	          if(emailLabel.equals("INBOX")) {
 	        	  folder = (IMAPFolder)store.getFolder(emailLabel);
-	        	  
-	        	 	if(!folder.isOpen())
-	      		 folder.open(Folder.READ_WRITE);
-	        	  
-	        	  Message mss = folder.getMessage(folder.getMessageCount());
-	        	  mss.setFlags(new Flags(Flags.Flag.RECENT), true);
-	        	  
-	        	  int cc = folder.getNewMessageCount();
-	        	  System.out.println(cc);
-	        	  
-	        	  boolean ff = folder.hasNewMessages();
-	        	  if(ff) {
-	        		  System.out.println("제발");
-	        	  }
-	        	  
 	        	  Hsession.setAttribute("cnt", folder.getMessageCount());
 	          }
 	          
@@ -476,7 +461,9 @@ public class EmailController {
 	                	}
 	            }
 	                	
-	                	
+	            if(emailLabel.equals("INBOX")) {
+	    			Hsession.setAttribute("cnt", folder.getMessageCount());
+	    		}
 	            model.addAttribute("emailLabel", emailLabel);
 	            model.addAttribute("msgNumber", msgNumber);
 	            model.addAttribute("infos", infos);
@@ -519,6 +506,9 @@ public class EmailController {
     	 int descount = desFolder.getMessageCount();
     	 logger.debug("descount - {}", descount);
 		
+    	 if(emailLabel.equals("INBOX")) {
+ 			Hsession.setAttribute("cnt", folder.getMessageCount());
+ 		}
 		 model.addAttribute("descount", descount);
 		 model.addAttribute("emailLabel", emailLabel);
 		
@@ -561,6 +551,10 @@ public class EmailController {
 			}
 		}
 		
+		if(emailLabel.equals("INBOX")) {
+			Hsession.setAttribute("cnt", folder.getMessageCount());
+		}
+		
 		model.addAttribute("emailLabel", emailLabel);
 		
 		return  "jsonView";
@@ -600,6 +594,10 @@ public class EmailController {
     	 Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
     	 folder.copyMessages(tempMessageArray, desFolder);
 		
+    	 if(emailLabel.equals("INBOX")) {
+ 			Hsession.setAttribute("cnt", folder.getMessageCount());
+ 		 }
+    	 
     	 model.addAttribute("mesUID", mesUID);
 		 model.addAttribute("emailLabel", emailLabel);
 		
@@ -637,6 +635,9 @@ public class EmailController {
 		Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
 		folder.copyMessages(tempMessageArray, desFolder);
 		
+		if(emailLabel.equals("INBOX")) {
+			Hsession.setAttribute("cnt", folder.getMessageCount());
+		}
 		model.addAttribute("emailLabel", emailLabel);
 		
 		return  "jsonView";
@@ -776,6 +777,10 @@ public class EmailController {
 	            }
 	        }
 	        
+            if(emailLabel.equals("INBOX")) {
+	  			Hsession.setAttribute("cnt", folder.getMessageCount());
+	  		}
+	          
 	        model.addAttribute("check", check);
 	        model.addAttribute("personalList", personal);
 	        
