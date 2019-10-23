@@ -66,7 +66,7 @@
 										
 										<c:choose>
 											<c:when test="${list.able == 'T' }">
-												삭제된 게시글입니다.
+												<font color="silver">삭제된 게시글입니다.</font>
 											</c:when>
 											<c:otherwise>
 												${list.title }

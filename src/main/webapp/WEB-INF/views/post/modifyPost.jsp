@@ -14,8 +14,8 @@ $(document).ready(function() {
 				title: '필수 사항',
 				text: '제목을 입력해주세요.'
 			});
-			
 			return;
+			
 		} if(CKEDITOR.instances.cont.getData() == ''){
 			Swal({
 				type: 'warning', // success, error, warning, info, question
@@ -27,8 +27,8 @@ $(document).ready(function() {
 		}
 		
 		Swal({
-			title: '저장하시겠습니까?',
-			text: "",
+			title: '등록 요청',
+			text: "저장하시겠습니까?",
 			type: 'question',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
@@ -38,8 +38,8 @@ $(document).ready(function() {
 		}).then((result) => {
 			if (result.value) {
 				Swal({
-					title: '저장되었습니다.',
-					text: '',
+					title: '등록 완료',
+					text: '저장되었습니다.',
 					type: 'success',
 					confirmButtonText: '확인'
 				})

@@ -47,9 +47,7 @@
 			
 // 			if(result){
 // 				var com_id = $(this).data("com_id");
-				
 // 				$("#com_id").val(com_id);
-	
 // 				$("#hiddenFrm").submit();
 				
 // 			}
@@ -67,8 +65,31 @@
 				return;
 			}
 			
-			$("#cmtFrm").submit();
-		})
+			Swal({
+				title: '등록 요청',
+				text: "저장하시겠습니까?",
+				type: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '네',
+				cancelButtonText: '아니오'
+			}).then((result) => {
+				if (result.value) {
+					Swal({
+						title: '등록 완료',
+						text: '저장되었습니다.',
+						type: 'success',
+						confirmButtonText: '확인'
+					})
+					
+					$("#cmtFrm").submit();
+				}
+			});
+		});
+			
+// 			$("#cmtFrm").submit();
+// 		})
 		
 		$("#btnDelPost").on("click", function(){
 // 			var result = confirm("해당 게시글을 삭제하시겠습니까?");
