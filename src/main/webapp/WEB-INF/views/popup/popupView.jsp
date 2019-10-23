@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="${cp }/js/jquery-3.4.1.min.js"></script>
-<title>미리보기</title>
+<title>팝업</title>
 <script>
 	$(function(){
 		$("#check").change(function() {

@@ -15,11 +15,13 @@
 				
 				popupList.forEach(function(popup){
 					var stDate = moment(new Date(popup.pop_st_dt)).format('YYYYMMDD');
-					var endDate = moment(new Date(popup.pop_end_dt)).format('YYYYMMDD')
+					var endDate = moment(new Date(popup.pop_end_dt)).format('YYYYMMDD');
 					
 					popupNolookList.forEach(function(nolook){
-						if(popup.msg_id===nolook.msg_id){
-							stDate = moment(new Date(nolook.nl_dt));
+						console.log(popup.pop_id);
+						console.log(nolook.POP_ID);
+						if(popup.pop_id===nolook.POP_ID){
+							stDate = moment(new Date(nolook.NL_DT)).format('YYYYMMDD');
 						}
 					});
 					

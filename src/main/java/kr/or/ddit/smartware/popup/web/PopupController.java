@@ -213,7 +213,6 @@ public class PopupController {
 		
 		List<Popup> popupList = popupService.getAllPopupList();
 		List<Map> popupNolookList = popupService.getPopupNoLook(employee.getEmp_id());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
 		model.addAttribute("popupList", popupList);
 		model.addAttribute("popupNolookList", popupNolookList);
@@ -264,9 +263,8 @@ public class PopupController {
 		
 		String emp_id = employee.getEmp_id();
 		
-		Popup popup1 = popupService.getPopup(pop_id);
-		Date pop_st_dt = popup1.getPop_st_dt();
-		Date nl_dt = new Date(pop_st_dt.getTime () + (long)( 1000 * 60 * 60 * 24 ));
+		Date date = new Date();
+		Date nl_dt = new Date(date.getTime() + (long)( 1000 * 60 * 60 * 24 ));
 		
 		logger.debug("nl_dt : {}", nl_dt);
 

@@ -63,7 +63,7 @@ public class PopupDao implements IPopupDao{
 	*/
 	@Override
 	public int deletePopup(String pop_id) {
-		return sqlSession.delete("popup.deletePopup", pop_id);
+		return sqlSession.update("popup.deletePopup", pop_id);
 	}
 
 	/**

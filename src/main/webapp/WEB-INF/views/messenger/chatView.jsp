@@ -308,7 +308,7 @@ th{
 											</div>
                                              <div class="modal-footer">
                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                                                 <button type="button" id="inviteEmp" class="btn btn-primary" data-dismiss="modal">추가하기</button>
+                                                 <button type="button" id="inviteEmp" class="btn btn-primary" data-dismiss="modal">초대하기</button>
                                              </div>
                                          </div>
                                      </div>
@@ -440,7 +440,7 @@ th{
 													</div>
 		                                             <div class="modal-footer">
 		                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		                                                 <button type="button" id="inviteEmp" class="btn btn-primary" data-dismiss="modal">추가하기</button>
+		                                                 <button type="button" id="inviteEmp" class="btn btn-primary" data-dismiss="modal">초대하기</button>
 		                                             </div>
 		                                         </div>
 		                                     </div>
@@ -561,10 +561,10 @@ $("#status-options ul li").click(function() {
 			$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[4] +'><img src="${cp }/employeePicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
 			
 			$('.messages').animate({
-				scrollTop: $('.messages').get(0).scrollHeight}, 1000);    
+				scrollTop: $('.messages').get(0).scrollHeight}, 1000);
 		}else if(str[0]===("close")){
-			
 			getChatInfo();
+			searchEmp();
 			
 			$(".messages ul").append('<li style="text-align:center; font-weight:bold;"><p>' + str[1] + ' 님이 채팅방을 나갔습니다.</p></li>');
 			
