@@ -109,17 +109,17 @@ public class ApprovalController {
     @GetMapping("sendApprovalList")
     public String getSendAppl(HttpSession session, Model model) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
-        List<Application> applications = approvalService.sendApplList(emp_id);
+        List<Map> applications = approvalService.sendApplList(emp_id);
         List<Map> applList = new ArrayList<>();
-        for (Application application : applications) {
-            List<ApplAppr> applApprs = approvalService.confirmStatus(application.getAppl_id());
+        for (Map application : applications) {
+            List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
             Map data = new HashMap();
             data.put("application", application);
             data.put("applApprs", applApprs);
             applList.add(data);
         }
         model.addAttribute("applList", applList );
-
+        model.addAttribute("res", false);
         return "tiles/approval/sendApplList";
     }
 
@@ -137,10 +137,10 @@ public class ApprovalController {
             }
             if (apprList.size() == num) {
                 model.addAttribute("res", true);
-                List<Application> applications = approvalService.sendApplList(emp_id);
+                List<Map> applications = approvalService.sendApplList(emp_id);
                 List<Map> applList = new ArrayList<>();
-                for (Application application : applications) {
-                    List<ApplAppr> applApprs = approvalService.confirmStatus(application.getAppl_id());
+                for (Map application : applications) {
+                    List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
                     Map data = new HashMap();
                     data.put("application", application);
                     data.put("applApprs", applApprs);
@@ -157,9 +157,26 @@ public class ApprovalController {
     }
 
     @GetMapping("approvalList")
-    public String approvalList(@RequestParam Map param, HttpSession session) {
-        return "";
+    public String approvalList(@RequestParam Map param, HttpSession session, Model model) {
+        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+
+        List<Map> applList = approvalService.confirmApplList(emp_id);
+        if (applList != null) {
+            model.addAttribute("applList", applList);
+        }
+        return "tiles/approval/confirmApplList";
     }
+
+    @GetMapping("approvalDetail")
+    public String approvalDetail(Model model, String appl_id, String flag) {
+        Application appl = approvalService.getAppl(appl_id);
+
+        model.addAttribute("appl", appl);
+        model.addAttribute("flag", flag);
+        return "tiles/approval/approvalDetail";
+    }
+
+
 
     /* 받는 사람 아이디 추출 */
     private List<String> checkMember(String apprMember) {

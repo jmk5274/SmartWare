@@ -16,32 +16,42 @@ public class ApprovalDao implements IApprovalDao{
     private SqlSessionTemplate sqlSession;
 
     @Override
+    public Application getAppl(String appl_id) {
+        return sqlSession.selectOne("appl.getAppl", appl_id);
+    }
+
+    @Override
     public List<ApprMember> getApprMember(Map data) {
-        return sqlSession.selectList("appr.getApprMem", data);
+        return sqlSession.selectList("appl.getApprMem", data);
     }
 
     @Override
     public int insertAppl(Map data) {
-        return sqlSession.insert("appr.insertAppl", data);
+        return sqlSession.insert("appl.insertAppl", data);
     }
 
     @Override
     public int setAppr(Map data) {
-        return sqlSession.insert("appr.setAppr", data);
+        return sqlSession.insert("appl.setAppr", data);
     }
 
     @Override
     public int confirmAppl(ApplAppr applAppr) {
-        return sqlSession.update("appr.confirmAppl", applAppr);
+        return sqlSession.update("appl.confirmAppl", applAppr);
     }
 
     @Override
-    public List<Application> sendApplList(String emp_id) {
-        return sqlSession.selectList("appr.sendApplList", emp_id);
+    public List<Map> sendApplList(String emp_id) {
+        return sqlSession.selectList("appl.sendApplList", emp_id);
     }
 
     @Override
     public List<ApplAppr> confirmStatus(String appl_id) {
-        return sqlSession.selectList("appr.confirmStatus", appl_id);
+        return sqlSession.selectList("appl.confirmStatus", appl_id);
+    }
+
+    @Override
+    public List<Map> confirmApplList(String emp_id) {
+        return sqlSession.selectList("appl.confirmApplList", emp_id);
     }
 }

@@ -16,6 +16,11 @@ public class ApprovalService implements IApprovalService{
     private IApprovalDao approvalDao;
 
     @Override
+    public Application getAppl(String appl_id) {
+        return approvalDao.getAppl(appl_id);
+    }
+
+    @Override
     public List<ApprMember> getApprMember(Map data) {
         return approvalDao.getApprMember(data);
     }
@@ -36,12 +41,17 @@ public class ApprovalService implements IApprovalService{
     }
 
     @Override
-    public List<Application> sendApplList(String emp_id) {
+    public List<Map> sendApplList(String emp_id) {
         return approvalDao.sendApplList(emp_id);
     }
 
     @Override
     public List<ApplAppr> confirmStatus(String appl_id) {
         return approvalDao.confirmStatus(appl_id);
+    }
+
+    @Override
+    public List<Map> confirmApplList(String emp_id) {
+        return approvalDao.confirmApplList(emp_id);
     }
 }

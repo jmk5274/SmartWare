@@ -140,29 +140,21 @@
                 cancelButtonText: '아니오'
             }).then((result) => {
                 if (result.value) {
-                if(result.value) {
-                    var contents = $('#contents').val($('.note-editable').html());
-                    var res;
-                    if ($('#to').val() === "") {
-                        alertError("결재선을 선택하세요");
-                    } else if ($('#title').val() === "") {
-                        alertError("제목을 입력하세요");
-                        $('#title').focus();
-                    } else if (contents === "") {
-                        alertError("내용을 입력하세요");
-                    } else {
-                        $('#form_id').val($('#formList').val());
-                        $("#frm").submit();
+                    if(result.value) {
+                        var contents = $('#contents').val($('.note-editable').html());
+                        var res;
+                        if ($('#to').val() === "") {
+                            alertError("결재선을 선택하세요");
+                        } else if ($('#title').val() === "") {
+                            alertError("제목을 입력하세요");
+                            $('#title').focus();
+                        } else if (contents === "") {
+                            alertError("내용을 입력하세요");
+                        } else {
+                            $('#form_id').val($('#formList').val());
+                            $("#frm").submit();
+                        }
                     }
-                }
-                    // Swal({
-                    //     title: '전송 성공.',
-                    //     text: '전송 되었습니다.',
-                    //     type: 'success',
-                    //     confirmButtonText: '확인'
-                    // }).then((result) => {
-                    //
-                    // });
                 }
             });
         });

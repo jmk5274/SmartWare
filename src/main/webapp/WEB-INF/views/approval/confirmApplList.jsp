@@ -7,17 +7,7 @@
 
 <script src="${cp }/js/jquery-3.4.1.min.js"></script>
 <script>
-	$(function () {
-		var flag = ${res};
-		if (flag) {
-			Swal({
-				    title: '전송 성공',
-				    text: '전송 되었습니다.',
-				    type: 'success',
-				    confirmButtonText: '확인'
-				});
-		}
-
+	$( function () {
 		$('.applTr').on('click', function () {
 			$('#appl_id').val($(this).data("appl_id"));
 			$('#frm').submit();
@@ -27,7 +17,7 @@
 
 <form id="frm" action="${cp}/approval/approvalDetail">
 	<input type="hidden" id="appl_id" name="appl_id">
-	<input type="hidden" id="flag" name="flag" value="s">
+	<input type="hidden" id="flag" name="flag" value="c">
 </form>
 	<div class="container-fluid">
 	<div class="row">
@@ -40,7 +30,7 @@
 
 				<div class="row">
 					<div class="col-sm-12 blog-main">
-						<h2 class="sub-header">결재문서(송신) 목록</h2>
+						<h2 class="sub-header">결재문서(수신) 목록</h2>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<tr>
@@ -53,25 +43,23 @@
 								</tr>
 
 								<c:forEach items="${applList }" var="appl">
-										<tr class="applTr" data-appl_id="${ appl.application.APPL_ID }">
-											<td >${appl.application.APPL_ID }</td>
-											<td>${appl.application.FORM_NM}</td>
+										<tr class="applTr" data-appl_id="${ appl.APPL_ID }">
+											<td >${appl.APPL_ID }</td>
+											<td>${appl.FORM_NM}</td>
 											<td>
-												${appl.application.TITLE}
+												${appl.TITLE}
 											</td>
-											<td>${appl.application.EMP_NM }</td>
-											<td><fmt:formatDate value="${appl.application.REG_DT }" pattern="yyyy-MM-dd"/> </td>
+											<td>${appl.EMP_NM }</td>
+											<td><fmt:formatDate value="${appl.REG_DT }" pattern="yyyy-MM-dd"/> </td>
 											<td>
-												<c:forEach items="${appl.applApprs}" var="confirm">
-													<c:choose>
-														<c:when test="${confirm.able == 'T'}">
-															<input type="checkbox" checked disabled>
-														</c:when>
-														<c:otherwise>
-															<input type="checkbox" disabled>
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${appl.ABLE == 'T'}">
+														<input type="checkbox" checked disabled>
+													</c:when>
+													<c:otherwise>
+														<input type="checkbox" disabled>
+													</c:otherwise>
+												</c:choose>
 											</td>
 									</tr>
 								</c:forEach>

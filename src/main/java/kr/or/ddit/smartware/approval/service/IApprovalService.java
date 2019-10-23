@@ -8,6 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface IApprovalService {
+
+    /**
+     * Method : getAppl
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 신청서 상세 조회
+     */
+    Application getAppl(String appl_id);
+
     /**
      * Method : getApprMember
      * 작성자 : Bae Sang Hyun
@@ -56,7 +67,7 @@ public interface IApprovalService {
      * @return
      * Method 설명 : 본인이 송신한 신청서 목록
      */
-    List<Application> sendApplList(String emp_id);
+    List<Map> sendApplList(String emp_id);
 
     /**
      * Method : confirmStatus
@@ -67,4 +78,14 @@ public interface IApprovalService {
      * Method 설명 : 송신한 신청서의 승인 여부
      */
     List<ApplAppr> confirmStatus(String appl_id);
+
+    /**
+     * Method : confirmApplList
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 결재해줘야하는 결재목록
+     */
+    List<Map> confirmApplList(String emp_id);
 }
