@@ -27,6 +27,9 @@
 					  type: 'success',
 					  title: '스팸메일함으로 이동됬습니다.'
 					})
+					
+					setTimeout("location.href='${cp}/main'",2000);
+					
 			      },
 			      error : function(xhr){
 			    	  console.log("실패");
@@ -59,6 +62,9 @@
 					  type: 'success',
 					  title: '휴지통 으로 이동됬습니다.'
 					})
+					
+					setTimeout("location.href='${cp}/main'",2000);
+					
 			      },
 			      error : function(xhr){
 			    	  console.log("실패");
@@ -147,7 +153,8 @@
 						<div class="row m-b-30">
 							<div class="col-auto"></div>
 							<c:forEach items="${infos }" var="info">
-								<a href="${cp }/fileDownloadView2?filename=${info.originalFileName} "><span>${info.originalFileName }</span></a>
+								<a href="${cp }/fileDownloadView2?filename=${info.originalFileName} ">
+								<span>${info.originalFileName }</span>&nbsp;&nbsp;&nbsp;</a>
 							</c:forEach>
 						</div>
 						<hr>

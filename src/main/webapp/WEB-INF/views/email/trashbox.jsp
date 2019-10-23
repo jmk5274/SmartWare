@@ -70,13 +70,13 @@
 			var emailLabel = $("#emailLabel").val();
 			
 			Swal.fire({
-				  title: 'Are you sure?',
-				  text: "You won't be able to revert this!",
+				  title: '해당메일을 삭제하시겠습니까?',
+				  text: "지금 삭제시키면 복원할수 없습니다",
 				  type: 'warning',
 				  showCancelButton: true,
 				  confirmButtonColor: '#3085d6',
 				  cancelButtonColor: '#d33',
-				  confirmButtonText: 'Yes, delete it!'
+				  confirmButtonText: 'Mail delete!'
 				}).then((result) => {
 				  if (result.value) {
 				    Swal.fire(

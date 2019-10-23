@@ -241,14 +241,6 @@ public class EmailController {
 	        String subject = null;
 	        Flag flag = null;
 	        
-//	          Properties props = System.getProperties();
-//	          props.setProperty("mail.store.protocol", "imaps");
-//
-//	          Session session = Session.getDefaultInstance(props, null);
-//
-//	          store = session.getStore("imaps");
-//	          store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
-	         
 	        //나중에 로그인 창에서 session 연결할거임
 	        Store store = (Store) Hsession.getAttribute("store");
 	        logger.debug("store - {}", store);
@@ -263,6 +255,21 @@ public class EmailController {
 	          
 	          if(emailLabel.equals("INBOX")) {
 	        	  folder = (IMAPFolder)store.getFolder(emailLabel);
+	        	  
+	        	 	if(!folder.isOpen())
+	      		 folder.open(Folder.READ_WRITE);
+	        	  
+	        	  Message mss = folder.getMessage(folder.getMessageCount());
+	        	  mss.setFlags(new Flags(Flags.Flag.RECENT), true);
+	        	  
+	        	  int cc = folder.getNewMessageCount();
+	        	  System.out.println(cc);
+	        	  
+	        	  boolean ff = folder.hasNewMessages();
+	        	  if(ff) {
+	        		  System.out.println("제발");
+	        	  }
+	        	  
 	        	  Hsession.setAttribute("cnt", folder.getMessageCount());
 	          }
 	          

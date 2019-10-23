@@ -1,3 +1,5 @@
+<%@page import="javax.mail.Flags"%>
+<%@page import="javax.mail.Message"%>
 <%@page import="javax.mail.Folder"%>
 <%@page import="com.sun.mail.imap.IMAPFolder"%>
 <%@page import="javax.mail.Store"%>
@@ -22,14 +24,20 @@
 	Store store = (Store)session.getAttribute("store");
 	IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
 	
+// 	Message mes = folder.getMessage(folder.getMessageCount());
+// 	mes.setFlags(new Flags(Flags.Flag.RECENT), true);
+	
+// 	boolean ff = folder.hasNewMessages();
+	
+	
 // 	if(!folder.isOpen())
 // 		 folder.open(Folder.READ_ONLY);
 	
 	int real = folder.getMessageCount() - cnt;
+	real = real < 0 ? 0 : real;
 	
-	for(int i = 0; i < real; i++){
-		String mail = "mail";
-	}
+	session.setAttribute("real", real);
+	
 %>
 <script src="${cp }/js/moment.js"></script>
 <script>
@@ -58,7 +66,7 @@
 					}
                     html += '<li id="'+chat.CHAT_ID+'" class="notification-unread chatList">'
                     html +=     '<a class="getChatId" data-chat_id="'+chat.CHAT_ID+'" href="#">'
-                    html +=         '<img class="float-left mr-3 avatar-img" src="${cp }/empPicture?emp_id='+emp_id+'" alt="">'
+                    html +=         '<img class="float-left mr-3 avatar-img" src="${cp }/employeePicture?emp_id='+emp_id+'" alt="">'
                     html +=         '<div class="notification-content">'
                     html +=             '<span class="notification-heading">'+chat.CHAT_NM+' / '+chat.EMP_CNT+'명</span>'	
                     html +=             '<i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="'+chat.CHAT_ID+'"></i>'
@@ -103,8 +111,10 @@
 							});
 						}
 					});
-
-					window.open('${cp }/chatRoom?chat_id='+chat_id, '채팅방', 'width=500px, height=650px')
+	               var popupX = (window.screen.width / 2) - (500 / 2);
+	               var popupY= (window.screen.height / 2) - (650 / 2);
+	               
+	               window.open('${cp }/chatRoom?chat_id='+chat_id, '채팅방', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY)
 				});
 				
 				$(".x").click(function(event){
@@ -166,6 +176,10 @@
 	
 	$(function() {
 		getChatList();
+		
+		if(ff){
+			console.log("das");
+		}
 		
 		setTimeout(function() { 
 				if(<%=real%>!=0){

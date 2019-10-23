@@ -12,7 +12,13 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${cp }/writeMail">메일 작성</a></li>
-                    <li><a href="${cp }/mailbox?emailLabel=INBOX">받은 편지함</a></li>
+                    <li><a href="${cp }/mailbox?emailLabel=INBOX">받은 편지함 
+                    
+                    	<div class="pull-right" style="display:inline-block; color:white; border-radius:30%; background-color:#616382; width:25px; text-align:center;">
+                    		${real }
+                    	</div>
+                    
+                    </a></li>
                     <li><a href="${cp }/mailbox?emailLabel=[Gmail]/보낸편지함">보낸 편지함</a></li>
                     <li><a href="${cp }/mailbox?emailLabel=[Gmail]/별표편지함">별표 편지함</a></li>
                     <li><a href="${cp }/mailbox?emailLabel=[Gmail]/휴지통">휴지통</a></li>
