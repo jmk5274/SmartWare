@@ -172,7 +172,6 @@
 						</div>
 						<div class="email-list m-t-15">
 							<c:set var="mNum" value="${fn:length(messages)}" />
-							
 							<c:forEach  var="i" begin="1" end="${mNum }" step="1">
 								<c:set var="msg" value="${messages[mNum-i]}" />
 								<c:set var="personal" value="${personalList[mNum-i]}" />

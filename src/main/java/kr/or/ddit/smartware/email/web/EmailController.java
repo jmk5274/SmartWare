@@ -97,7 +97,6 @@ public class EmailController {
 	
 	@PostMapping(path = "sendEmail")
     public String sendEmail(Model model, String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) throws IOException {
-	
 		
 		logger.debug("email - {}", email);
 		logger.debug("emailpass - {}", emailPass);
@@ -174,7 +173,6 @@ public class EmailController {
 	            		fileName = new String(fileName.getBytes("KSC5601"), "8859_1");
 //	            		messageBodyPart.setFileName(MimeUtility.encodeText(fds.getName(), "EUC-KR","B"));
 	            		messageBodyPart.setFileName(fileName);
-	            		System.out.println(messageBodyPart.getFileName());
 	            		multipart.addBodyPart(messageBodyPart);
     			    }
             	}
@@ -214,7 +212,7 @@ public class EmailController {
 		// form객체(command, vo)의 검증 결과를 담는 BindingResult객체는
 		// 반드시 메소드 인자 순서에서 form객체 바로 뒤에 위치해야 된다.
 		List<Department> departList = departmentService.getAllDepartment();
-		List<Employee> employeeList = employeeService.allEmployeeList();
+		List<Map> employeeList = employeeService.getDetailEmpList();
 		List<Position> positionList = positionService.getAllPosition();
 		
 		model.addAttribute("departList", departList);
@@ -250,7 +248,6 @@ public class EmailController {
 	          Folder[] folders1 = store.getDefaultFolder().list("*");
 	          for (Folder folder1 : folders1) {
 	            imapFolder = (IMAPFolder) folder1;
-	            System.out.println("[" + imapFolder.getFullName() + "]");
 	          }
 	          
 	          if(emailLabel.equals("INBOX")) {
@@ -315,23 +312,15 @@ public class EmailController {
 	          model.addAttribute("messages", messages);
 	          model.addAttribute("messagesCount", folder.getMessageCount());
 	          
-	          System.out.println("No of Messages : " + folder.getMessageCount());
-	          System.out.println("No of Unread Messages : " + folder.getUnreadMessageCount());
-	          System.out.println(messages.length);
-	          
 	          List<String> personal = new ArrayList<String>();
 	          
 	          
 	          for (int i=0; i < messages.length; i++) 
 	          {
 	        	
-//	            System.out.println("*****************************************************************************");
-//	            System.out.println("MESSAGE " + (i + 1) + ":");
 	            Message msg =  messages[i];
 	            
 	            subject = msg.getSubject();
-//	            System.out.println("Subject: " + subject);
-//	            System.out.println("From: " + msg.getFrom()[0]);
 	            
 	            Address[] froms = msg.getFrom();
 	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
@@ -345,13 +334,9 @@ public class EmailController {
 	                int bodyCount = multiPart.getCount();
 	                for (int j = 0; j < bodyCount; j++) {
 	                    BodyPart bp = multiPart.getBodyPart(j);
-	                    System.out.println(bp.toString());
 	                }
 	            } else {
-	            	System.out.println(content);
 	            }
-	            System.out.println(msg.getContentType());
-	            System.out.println("NUMBER : " +msg.getMessageNumber());
 	        }
 	          
 	        model.addAttribute("personalList", personal);
@@ -390,16 +375,6 @@ public class EmailController {
 	        String subject = null;
 	        Flag flag = null;
 	        
-//	          Properties props = System.getProperties();
-//	          props.setProperty("mail.store.protocol", "imaps");
-//
-//	          Session session = Session.getDefaultInstance(props, null);
-//	          
-//
-//	          store = session.getStore("imaps");
-////	          store.connect("imap.googlemail.com", email, emailpass);
-//	          store.connect("imap.googlemail.com", "testhoon1217@gmail.com", "ewqdsa556");
-	          
 	        Store store = (Store) Hsession.getAttribute("store");
 	          
 	          folder = (IMAPFolder) store.getFolder(emailLabel);
@@ -433,11 +408,7 @@ public class EmailController {
 	                		String disposition = bodyPart.getDisposition();
 	                		if (disposition != null && (disposition.equals("ATTACHMENT"))) {
 	                			attachmentCount++;
-	                			System.out.println("Mail have some attachment : ");
 	                			DataHandler handler = bodyPart.getDataHandler();
-	                			System.out.println("file name : " + handler.getName());
-	                			System.out.println("bodyPart.getFileName() : " + bodyPart.getFileName());
-	                			
 	                			
 	                			FileInfo info = FileUtil.getFileInfo(bodyPart.getFileName());
 	                			InputStream is = bodyPart.getInputStream();
@@ -455,7 +426,6 @@ public class EmailController {
 	                			
 	                			
 	                		} else {
-	                			System.out.println(bodyPart.getContent());
 	                			model.addAttribute("textCont", bodyPart.getContent());
 	                		}
 	                	}
@@ -524,7 +494,6 @@ public class EmailController {
 		//이쪽은 나중에 로그인부분으로 연결할때 고침
 		IMAPFolder folder = null;
 		Flag flag = null;
-		
 		
 //		나중에 세션으로 연결시킨걸 받아올거임
 	    Store store = (Store) Hsession.getAttribute("store");
@@ -663,7 +632,6 @@ public class EmailController {
 		for(Message m : msg) {
 			logger.debug("m Number - {}", m.getMessageNumber());
 			logger.debug("m Number - {}", m.getSubject());
-			System.out.println("===============================");
 		}
 		
 		UIDFolder uf = (UIDFolder)folder;
@@ -751,10 +719,6 @@ public class EmailController {
 	          model.addAttribute("messages", msg);
 	          model.addAttribute("messagesCount", folder.getMessageCount());
 	          
-	          System.out.println("No of Messages : " + folder.getMessageCount());
-	          System.out.println("No of Unread Messages : " + folder.getUnreadMessageCount());
-	          System.out.println(msg.length);
-	          
 	          List<String> personal = new ArrayList<String>();
 	          
 	          for (int i=0; i < msg.length; i++) 
@@ -780,7 +744,14 @@ public class EmailController {
             if(emailLabel.equals("INBOX")) {
 	  			Hsession.setAttribute("cnt", folder.getMessageCount());
 	  		}
+            
+            IMAPFolder starfolder = (IMAPFolder) store.getFolder("[Gmail]/별표편지함");
+	          if(!starfolder.isOpen())
+	        	  starfolder.open(Folder.READ_ONLY);
 	          
+	          Message[] smm = starfolder.getMessages();
+	          
+	        model.addAttribute("starMail", smm);
 	        model.addAttribute("check", check);
 	        model.addAttribute("personalList", personal);
 	        
