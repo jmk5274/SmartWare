@@ -8,34 +8,49 @@ $(document).ready(function() {
 	
 	// 전송버튼 클릭이벤트
 	$("#savebutton").click(function(){
-		if(confirm("저장하시겠습니까?")) {
-// 			if(validation()) {
-			// 이부분에 에디터 validation 검증
+		if($("#title").val()==""){
+			Swal({
+				type: 'warning', // success, error, warning, info, question
+				title: '필수 사항',
+				text: '제목을 입력해주세요.'
+			});
+			
+			return;
+		} if(CKEDITOR.instances.cont.getData() == ''){
+			Swal({
+				type: 'warning', // success, error, warning, info, question
+				title: '필수 사항',
+				text: '내용을 입력해주세요.'
+			});
+			CKEDITOR.instances.cont.focus();
+			return false;
+		}
+		
+		Swal({
+			title: '저장하시겠습니까?',
+			text: "",
+			type: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '네',
+			cancelButtonText: '아니오'
+		}).then((result) => {
+			if (result.value) {
+				Swal({
+					title: '저장되었습니다.',
+					text: '',
+					type: 'success',
+					confirmButtonText: '확인'
+				})
+				
 				$("#frm").submit();
 			}
-			
-// 		}
-	})
-	
-// 	$("#cancelBtn").click(function(){
-// 		if(confirm("취소하시겠습니까?")) 
-// 			location.href = "${cp }/post";
-// 	});
+		});
+	});
 	
 	$(".x").click(function(){
 		$(this).closest('.postfiles').remove();
-// 		$(this).prev().prev().remove();
-// 		$(this).prev().remove();
-// 		$(this).next().remove();
-// 		$(this).remove();
-		
-// 		$("#atfNum").val(atfnum);
-// 		var postNm = $("#postNm2").val();
-// 		$("#postNm").val(postNm);
-// 		var postCont = $("#smarteditor").html();
-// 		$("#postCont").val(postCont);
-		
-// 		$("#hiddenFrm").submit();
 	});
 	
 	$("#postFile").change(function(){

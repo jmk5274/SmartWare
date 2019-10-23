@@ -16,26 +16,46 @@ $(document).ready(function() {
 			});
 			
 			return;
+		} if(CKEDITOR.instances.cont.getData() == ''){
+			Swal({
+				type: 'warning', // success, error, warning, info, question
+				title: '필수 사항',
+				text: '내용을 입력해주세요.'
+			});
+			CKEDITOR.instances.cont.focus();
+			return false;
 		}
-			
-// 		} else if($("#cont").val()==""){
-// 			Swal({
-// 				type: 'warning', // success, error, warning, info, question
-// 				title: '필수 사항',
-// 				text: '내용을 입력해주세요.'
-// 			});
-			
-// 			return;
-// 		}
 		
-		if(confirm("저장하시겠습니까?")) {
-			// 이부분에 에디터 validation 검증
-			if(validation()) {
+		Swal({
+			title: '저장하시겠습니까?',
+			text: "",
+			type: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '네',
+			cancelButtonText: '아니오'
+		}).then((result) => {
+			if (result.value) {
+				Swal({
+					title: '저장되었습니다.',
+					text: '',
+					type: 'success',
+					confirmButtonText: '확인'
+				})
+				
 				$("#frm").submit();
 			}
-		}
+		});
 	});
-
+		
+// 		if(confirm("저장하시겠습니까?")) {
+// 			// 이부분에 에디터 validation 검증
+// 			if(validation()) {
+// 				$("#frm").submit();
+// 			}
+// 		}
+// 	});
 	
 	$("#postFile").change(function(){
 		if(this.files.length > (5-$(".x").length)){
@@ -47,15 +67,15 @@ $(document).ready(function() {
 });
 
 // 필수값 Check
-function validation(){
-	var contents = $.trim("#p_content");
-	if(contents === '<p>&nbsp;</p>' || contents === ''){ // 기본적으로 아무것도 입력하지 않아도 <p>&nbsp;</p> 값이 입력되어 있음. 
-		alert("내용을 입력하세요.");
-		return false;
-	}
+// function validation(){
+// 	var contents = $.trim("#p_content");
+// 	if(contents === '<p>&nbsp;</p>' || contents === ''){ // 기본적으로 아무것도 입력하지 않아도 <p>&nbsp;</p> 값이 입력되어 있음. 
+// 		alert("내용을 입력하세요.");
+// 		return false;
+// 	}
 
-	return true;
-}
+// 	return true;
+// }
 </script>
 		<div class="container-fluid">
 	<div class="row">

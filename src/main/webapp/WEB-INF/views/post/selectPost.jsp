@@ -19,17 +19,41 @@
 <script>
 	$(document).ready(function(){
 		$(".delCmt").on("click", function(){
-			var result = confirm("해당 댓글을 삭제하시겠습니까?");
+			Swal({
+				title: '삭제 요청',
+				text: "해당 댓글을 삭제하시겠습니까?",
+				type: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '네',
+				cancelButtonText: '아니오'
+			}).then((result) => {
+				if (result.value) {
+					Swal({
+						title: '삭제 완료',
+						text: '삭제되었습니다.',
+						type: 'success',
+						confirmButtonText: '확인'
+					})
+					
+					var com_id = $(this).data("com_id");
+					$("#com_id").val(com_id);
+					$("#hiddenFrm").submit();
+				}
+			});
+		});
+// 			var result = confirm("해당 댓글을 삭제하시겠습니까?");
 			
-			if(result){
-				var com_id = $(this).data("com_id");
+// 			if(result){
+// 				var com_id = $(this).data("com_id");
 				
-				$("#com_id").val(com_id);
+// 				$("#com_id").val(com_id);
 	
-				$("#hiddenFrm").submit();
+// 				$("#hiddenFrm").submit();
 				
-			}
-		})
+// 			}
+// 		})
 			
 		$("#save").on("click", function(){
 
@@ -47,18 +71,44 @@
 		})
 		
 		$("#btnDelPost").on("click", function(){
-		var result = confirm("해당 게시글을 삭제하시겠습니까?");
+// 			var result = confirm("해당 게시글을 삭제하시겠습니까?");
 		
-		if(result) {
-			$('#hiddenBtnV').val($(this).val());
-			$("#selectPost").val('${post_id}');
-			$("#frm").prop("action", "${cp}/modifyPost");
-			$("#frm").submit(); 
-			
-			console.log(result)
-			
-		}
-	})
+// 			if(result) {
+// 				$('#hiddenBtnV').val($(this).val());
+// 				$("#selectPost").val('${post_id}');
+// 				$("#frm").prop("action", "${cp}/modifyPost");
+// 				$("#frm").submit(); 
+				
+// 				console.log(result)
+				
+// 			}
+// 		})
+
+			Swal({
+				title: '삭제 요청',
+				text: "해당 게시글을 삭제하시겠습니까?",
+				type: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '네',
+				cancelButtonText: '아니오'
+			}).then((result) => {
+				if (result.value) {
+					Swal({
+						title: '삭제 완료',
+						text: "삭제되었습니다.",
+						type: 'success',
+						confirmButtonText: '확인'
+					})
+					
+					$('#hiddenBtnV').val($(this).val());
+					$("#selectPost").val('${post_id}');
+					$("#frm").prop("action", "${cp}/modifyPost");
+					$("#frm").submit(); 
+				}
+			});
+		});
 	
 })
 	
