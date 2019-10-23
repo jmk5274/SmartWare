@@ -1,18 +1,20 @@
 package kr.or.ddit.smartware.post.model;
 
+import java.util.Date;
+
 public class Comments {
 
 	private String com_id;         //댓글 아이디
 	private String post_id;        //게시글 아이디
 	private String emp_id;         //사원 아이디
-	private String reg_dt;         //등록 날짜
+	private Date reg_dt;           //등록 날짜
 	private String cont;           //내용
 	private String able;           //삭제 여부
 	private String pa_com_id;      //부모 댓글 아이디
 	
 	public Comments() {}
 
-	public Comments(String com_id, String post_id, String emp_id, String reg_dt, String cont, String able,
+	public Comments(String com_id, String post_id, String emp_id, Date reg_dt, String cont, String able,
 			String pa_com_id) {
 		super();
 		this.com_id = com_id;
@@ -48,11 +50,11 @@ public class Comments {
 		this.emp_id = emp_id;
 	}
 
-	public String getReg_dt() {
+	public Date getReg_dt() {
 		return reg_dt;
 	}
 
-	public void setReg_dt(String reg_dt) {
+	public void setReg_dt(Date reg_dt) {
 		this.reg_dt = reg_dt;
 	}
 
@@ -79,5 +81,6 @@ public class Comments {
 	public void setPa_com_id(String pa_com_id) {
 		this.pa_com_id = pa_com_id;
 	}
+
 
 }

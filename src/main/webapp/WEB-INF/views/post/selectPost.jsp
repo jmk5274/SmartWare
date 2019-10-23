@@ -229,7 +229,7 @@
 											<font color="silver">삭제된 댓글입니다.</font>
 										</c:when>
 										<c:otherwise>
-											${comments.cont }&nbsp;&nbsp;&nbsp;[${comments.emp_id } / ${comments.reg_dt }]
+											${comments.cont }&nbsp;&nbsp;&nbsp;[${comments.emp_id } / <fmt:formatDate value="${comments.reg_dt }" pattern="yyyy-MM-dd HH:mm"/>]
 										</c:otherwise>
 									</c:choose>
 									<c:if test="${S_EMPLOYEE.emp_id == comments.emp_id && comments.able=='F'}">
