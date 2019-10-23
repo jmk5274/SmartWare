@@ -23,9 +23,10 @@
 	Integer cnt = (Integer) session.getAttribute("cnt");
 	Store store = (Store)session.getAttribute("store");
 	
+	int real = 0;
 	if(store != null || cnt != null){
 		IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
-		int real = folder.getMessageCount() - cnt;
+		real = folder.getMessageCount() - cnt;
 		real = real < 0 ? 0 : real;
 		
 		session.setAttribute("real", real);
