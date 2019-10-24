@@ -49,6 +49,7 @@
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/approval.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/job.xml"/>
 		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/project.xml"/>
+		<mapper resource="kr/or/ddit/smartware/config/mybatis/mapper/task.xml"/>
 
 	</mappers>
 	

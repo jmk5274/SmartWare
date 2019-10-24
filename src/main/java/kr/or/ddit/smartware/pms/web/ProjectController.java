@@ -4,17 +4,20 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
 import kr.or.ddit.smartware.pms.service.IProjectService;
+import kr.or.ddit.smartware.pms.service.ITaskService;
 
 @Controller
 public class ProjectController {
 	
 	@Resource(name="projectService")
 	private IProjectService projectService;
+	
+	@Resource(name="taskService")
+	private ITaskService taskService;
 	
 	@Resource(name="jsonView")
 	private View jsonView;
@@ -25,16 +28,16 @@ public class ProjectController {
 		return "tiles2/pms/main";
 	}
 	
-	@PostMapping("getAllPastProject")
+	@RequestMapping("getAllPastProject")
 	public View getAllPastProject(Model model, String emp_id) {
-		model.addAttribute(projectService.getAllPastProject(emp_id));
+		model.addAttribute(projectService.getDetailProject(emp_id, "past"));
 		
 		return jsonView;
 	}
 	
-	@PostMapping("getAllRunningProject")
+	@RequestMapping("getAllRunningProject")
 	public View getAllRunningProject(Model model, String emp_id) {
-		model.addAttribute(projectService.getAllRunningProject(emp_id));
+		model.addAttribute(projectService.getDetailProject(emp_id, "running"));
 		
 		return jsonView;
 	}

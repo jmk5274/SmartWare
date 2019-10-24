@@ -13,7 +13,7 @@
 		                  where emp_id = #{emp_id}
 		                    and pro_id IN (select pro_id
 		                                    from project
-		                                   where end_dt &lt; sysdate))
+		                                   where end_dt <![CDATA[<]]> sysdate))
 	</select>
 	
 	<!-- 현 시각 기준 사원이 속해있는 진행중인 프로젝트를 반환 -->
@@ -25,7 +25,100 @@
 		                  where emp_id = #{emp_id}
 		                    and pro_id IN (select pro_id
 		                                    from project
-		                                   where end_dt &gt; sysdate))
+		                                   where end_dt > sysdate))
 	</select>
 	
+	<!-- 프로젝트의 구성원 리스트를 반환 -->
+	<select id="getProjectEmployee" parameterType="String" resultType="employee">
+		select *
+		  from employee
+		 where emp_id in (select emp_id
+		                   from pro_position
+		                  where pro_id = #{pro_id})
+	</select>
+	
+	<!-- 구성원의 이름, 직책, 아이디, 부서 반환 -->
+	<select id="getProjectEmpJob" parameterType="String" resultType="hashmap">
+		select a.emp_id, b.job_nm, c.emp_nm, d.depart_nm
+		  from pro_position a, job b, employee c, department d
+		 where a.pro_id = #{pro_id}
+		   and a.job_id = b.job_id
+		   and a.emp_id = c.emp_id
+		   and c.depart_id = d.depart_id
+		 order by emp_id
+	</select>
+	
+	<!-- 프로젝트의 전체 차트 반환 -->
+	<select id="getAllProjectChart" parameterType="String" resultType="hashmap">
+		select a.*, b.*, c.*, d.*
+	 	  from  (select count(*) as complete
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id})
+	                and per = 100) a,
+	            (select count(*) as delay
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id})
+	                and end_dt <![CDATA[<=]]> sysdate
+	                and per <![CDATA[<]]> 100
+	              order by st_dt, end_dt) b,
+	            (select count(*) as running
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id})
+	                and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
+	                and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
+	                and per <![CDATA[<]]> 100
+	              order by st_dt, end_dt) c,
+	            (select count(*) as before
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id})
+	                and st_dt > sysdate
+	                and per <![CDATA[<]]> 100) d
+	</select>
+	
+	<!-- 프로젝트의 사원의 차트 반환 -->
+	<select id="getEmpProjectChart" parameterType="map" resultType="hashmap">
+		select a.*, b.*, c.*, d.*
+	 	  from  (select count(*) as complete
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id}
+	                                   and emp_id = #{emp_id})
+	                and per = 100) a,
+	            (select count(*) as delay
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id}
+	                                   and emp_id = #{emp_id})
+	                and end_dt <![CDATA[<=]]> sysdate
+	                and per <![CDATA[<]]> 100
+	              order by st_dt, end_dt) b,
+	            (select count(*) as running
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id}
+	                                   and emp_id = #{emp_id})
+	                and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
+	                and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
+	                and per <![CDATA[<]]> 100
+	              order by st_dt, end_dt) c,
+	            (select count(*) as before
+	               from task
+	              where task_id in (select task_id
+	                                  from pro_task
+	                                 where pro_id = #{pro_id}
+	                                   and emp_id = #{emp_id})
+	                and st_dt > sysdate
+	                and per <![CDATA[<]]> 100) d
+	</select>
 </mapper>

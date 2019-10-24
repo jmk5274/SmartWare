@@ -151,7 +151,7 @@ var selectDate = function(info) {
 	
 	// 날짜 초기화
 	var startDate = moment(info.start).format("YYYY-MM-DD HH:mm"); 					// fullcalendar에서 선택한 시작 시간
-	var endDate = moment(info.end).subtract(1, 'second').format("YYYY-MM-DD HH:mm");// fullcalendar에서 선택한 종료 시간
+	var endDate = moment(info.end).subtract(60, 'second').format("YYYY-MM-DD HH:mm");// fullcalendar에서 선택한 종료 시간
 	
 	picker.setStartDate(new Date(startDate)); 	// date picker start date에 선택한 시간을 입력
 	picker.setEndDate(new Date(endDate));		// date picker end date에 선택한 시간을 입력
@@ -206,7 +206,7 @@ var selectEvent = function(info) {
 	
 	// 날짜 초기화
 	var startDate = moment(info.event.start).format("YYYY-MM-DD HH:mm"); 					// fullcalendar에서 선택한 시작 시간
-	var endDate = moment(info.event.end).subtract(1, 'second').format("YYYY-MM-DD HH:mm");// fullcalendar에서 선택한 종료 시간
+	var endDate = moment(info.event.end).subtract(60, 'second').format("YYYY-MM-DD HH:mm");// fullcalendar에서 선택한 종료 시간
 	
 	picker.setStartDate(new Date(startDate)); 	// date picker start date에 선택한 시간을 입력
 	picker.setEndDate(new Date(endDate));		// date picker end date에 선택한 시간을 입력
@@ -260,7 +260,7 @@ var selectEvent = function(info) {
 var resizeEvent = function(info) {
 	var start = +info.event.start;
 	var end;
-	if(info.event.allDay === true) end = +(moment(info.event.end).subtract(1, 'second'));
+	if(info.event.allDay === true) end = +(moment(info.event.end).subtract(60, 'second'));
 	else end = +info.event.end;
 	
 	$.ajax({
