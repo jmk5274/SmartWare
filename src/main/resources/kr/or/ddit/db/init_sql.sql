@@ -661,8 +661,8 @@ INSERT INTO TASK_HISTORY VALUES('task0105', 'e0015', '진척도를 0에서 100�
 
 --팝업
 
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, 'TESTTES', 'TESTESTSETSET', SYSDATE, 'e0015', '');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, 'TESTTES1', 'TESTESTSETSET1', SYSDATE, 'e0015', '');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, 'TESTTES', 'TESTESTSETSET', SYSDATE, 'e0015', '', 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, 'TESTTES1', 'TESTESTSETSET1', SYSDATE, 'e0015', '', 'T');
 
 --------------------------------------------------------------------------------------------------------------------------------
 --채팅방
