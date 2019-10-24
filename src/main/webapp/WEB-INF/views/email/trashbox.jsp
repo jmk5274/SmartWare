@@ -27,7 +27,6 @@
 			
 			var emailLabel = $("#emailLabel").val();
 			
-			console.log(msgNumber);
 			
 			
 			Swal.fire({
@@ -111,7 +110,6 @@
 		
 		$(document).on('click', '.subject', function() {
 			var msgNumber = $(this).data("id");
-			console.log(msgNumber);
 			$("#msg").val(msgNumber);
 			
 			$("#mailfrm").submit();
@@ -171,7 +169,7 @@
 											<span class="email-checkbox">
 												<input data-id=${msg.getMessageNumber() } type="checkbox">
 											</span>
-											&nbsp;<i data-id=${msg.getMessageNumber() } name="single" class="fa fa-trash-o" aria-hidden="true"></i>
+											&nbsp;<i data-id=${msg.getMessageNumber() } name="single" class="fa fa-trash-o" aria-hidden="true" style="cursor:pointer;"></i>
 										</span>
 												<c:choose>
 													<c:when test="${empty personal }">

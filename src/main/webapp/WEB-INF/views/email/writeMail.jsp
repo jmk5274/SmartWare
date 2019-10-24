@@ -118,43 +118,45 @@ function checkEmail(){
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-							<div class="col-lg-12">
-				                        <div class="card">
-				                            <div class="card-body">
-				                                <h3 class="card-title">SmartWare</h3>
-				                                <div class="card-content">
-				                                    <div class="nestable">
-				                                        <div class="dd" id="nestable2">
-				                                            <ol class="dd-list">
-				                                            	<!-- 부서로해서 for문을 돌려 class를 지정해주고 id값을 넣어준다 -->
-				                                            	<c:forEach items="${departList }" var="depart" varStatus="loop">
-								                                            	<li class="dd-item dd-collapsed" data-id="${depart.depart_id }"><button data-id="${depart.depart_id }" class="toggleBtn" data-action="collapse" type="button">Collapse</button>
-								                                                    <div class="dd-handle">${depart.depart_nm }</div>
-									                                                    <ol class="dd-list">
-										                                            		<c:forEach items="${employeeList }" var="employee">
-											                                            		<c:forEach items="${positionList }" var="position">
-											                                            				<c:if test="${depart.depart_id == employee.DEPART_ID && position.posi_id == employee.POSI_ID}">
-														                                                        <li class="dd-item select" data-id="${depart.depart_id }">
-														                                                            <div class="dd-handle"><input value="${employee.EMAIL }" type="checkbox" class="listCheck" style="display: inline-block;"/>
-															                                                             &nbsp;&nbsp;&nbsp;${employee.EMP_NM } &nbsp;
-															                                                             /&nbsp;${employee.EMAIL }&nbsp;
-															                                                             /&nbsp;${employee.POSI_NM }&nbsp;
-															                                                             /&nbsp;${employee.JOB_NM }&nbsp;
-														                                                             </div>
-														                                                        </li>
-														                                                </c:if>
-														                                         </c:forEach>
-											                                                </c:forEach>
-								                                                    	</ol>
-							                                                   </li>
-				                                            	   </c:forEach>
-				                                            </ol>
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                            </div>
-				                        </div>
-                  				  </div>
+											<div class="col-lg-12">
+								                        <div class="card">
+								                            <div class="card-body">
+								                                <h3 class="card-title">SmartWare</h3>
+								                                <div class="card-content">
+								                                    <div class="nestable">
+								                                        <div class="dd" id="nestable2">
+								                                            <ol class="dd-list">
+								                                            	<!-- 부서로해서 for문을 돌려 class를 지정해주고 id값을 넣어준다 -->
+								                                            	<c:forEach items="${departList }" var="depart" varStatus="loop">
+								                                            					<c:if test="${depart.depart_id != 'de0006' }">
+												                                            	<li class="dd-item dd-collapsed" data-id="${depart.depart_id }"><button data-id="${depart.depart_id }" class="toggleBtn" data-action="collapse" type="button">Collapse</button>
+												                                                    <div class="dd-handle">${depart.depart_nm }</div>
+											                                                    </c:if>
+													                                                    <ol class="dd-list">
+														                                            		<c:forEach items="${employeeList }" var="employee">
+															                                            		<c:forEach items="${positionList }" var="position">
+															                                            				<c:if test="${depart.depart_id == employee.DEPART_ID && position.posi_id == employee.POSI_ID}">
+																		                                                        <li class="dd-item select" data-id="${depart.depart_id }">
+																		                                                            <div class="dd-handle"><input value="${employee.EMAIL }" type="checkbox" class="listCheck" style="display: inline-block;"/>
+																			                                                             &nbsp;&nbsp;&nbsp;${employee.EMP_NM } &nbsp;
+																			                                                             /&nbsp;${employee.EMAIL }&nbsp;
+																			                                                             /&nbsp;${employee.POSI_NM }&nbsp;
+																			                                                             /&nbsp;${employee.JOB_NM }&nbsp;
+																		                                                             </div>
+																		                                                        </li>
+																		                                                </c:if>
+																		                                         </c:forEach>
+															                                                </c:forEach>
+												                                                    	</ol>
+											                                                   </li>
+								                                            	   </c:forEach>
+								                                            </ol>
+								                                        </div>
+								                                    </div>
+								                                </div>
+								                            </div>
+								                        </div>
+				                  				  </div>
                                           <div class="modal-footer">
                                               <button type="button" id="confirmbtn" class="btn btn-primary" data-dismiss="modal">확인</button>
                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>

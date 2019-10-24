@@ -34,6 +34,26 @@ public interface IEmployeeDao {
 	Map getEmployeeDetail(String emp_id);
 	
 	/**
+	 * Method : getEmployeeDetail
+	 * 작성자 : KIM DO HOON
+	 * 변경이력 :
+	 * @param depart_id
+	 * @return
+	 * Method 설명 : 부서별 사원 상세정보 ( 부서, 직책, 직급 이름 추가 )
+	 */
+	List<Map> getDepartEmpDetail(String depart_id);
+	
+	/**
+	 * Method : SearchEmp
+	 * 작성자 : KIM DO HOON
+	 * 변경이력 :
+	 * @param keyword
+	 * @return
+	 * Method 설명 : 주소록 사원검색 
+	 */
+	List<Map> searchEmp(String keyword);
+	
+	/**
 	 * 
 	* Method : getEmployeeList
 	* 작성자 : Hong Da Eun

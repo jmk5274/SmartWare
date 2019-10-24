@@ -85,7 +85,6 @@
 			
 			var emailLabel = $("#emailLabel").val();
 			
-			console.log(msgNumber);
 			
 			$.ajax({
 			      url : "${cp}/trashbox",

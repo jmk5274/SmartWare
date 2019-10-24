@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,20 +103,12 @@ public class EmployeeController {
 	public String employeeSearch(Employee employee, @RequestParam(name = "page", defaultValue = "1") Integer page,
 			@RequestParam(name = "pagesize", defaultValue = "30") Integer pagesize, HttpSession session, Model model) {
 		
-		employee = (Employee) session.getAttribute("S_EMPLOYEE");
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("emp_id", employee.getEmp_id());
 		map.put("page", page);
 		map.put("pagesize", pagesize);
 		
-		List<Employee> employeeList = employeeService.getEmployeeList(map);
-//		logger.debug("employeeList : {}", employeeList);
-		logger.debug("employeeListSize : {}", employeeList.size());
-		
-		List<Employee> pageList = employeeService.allEmployeeList();
-		int paginationSize = (int) Math.ceil((double) pageList.size() / pagesize);
+		List<Map> employeeList = employeeService.getDetailEmpList();
+		int paginationSize = (int) Math.ceil((double) employeeList.size() / pagesize);
 		logger.debug("paginationSize {}", paginationSize);
 		
 		// 직급 전체 리스트
@@ -128,12 +121,8 @@ public class EmployeeController {
 		List<Job> jobList = jobService.getAllJob();
 		
 		model.addAttribute("positionList", positionList);
-		model.addAttribute("emp_id", employee.getEmp_id());
-		model.addAttribute("emp_nm", employee.getEmp_nm());
-		model.addAttribute("employee", map.get("employee"));
 		model.addAttribute("employeeList", employeeList);
-		model.addAttribute("page", page);
-		model.addAttribute("pagesize", pagesize);
+		model.addAttribute("map", map);
 		model.addAttribute("paginationSize", paginationSize);
 		model.addAttribute("departmentList", departmentList);
 		model.addAttribute("jobList", jobList);
@@ -290,6 +279,63 @@ public class EmployeeController {
 			return "tiles/employee/employeeList";
 				
 	}
+	
+	@GetMapping("departSearch")
+	public String departSearch(String depart_id, Model model, @RequestParam(name = "page", defaultValue = "1") Integer page,
+			@RequestParam(name = "pagesize", defaultValue = "30") Integer pagesize) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("page", page);
+		map.put("pagesize", pagesize);
+		
+		int paginationSize = 0;
+		List<Map> detailDepartList = new ArrayList<Map>();
+		if(depart_id.equals("0")) {
+			 depart_id = "";
+			 detailDepartList = employeeService.searchEmp(depart_id);
+			 paginationSize = (int) Math.ceil((double) detailDepartList.size() / pagesize);
+			 
+		}else {
+			 detailDepartList = employeeService.getDepartEmpDetail(depart_id);
+			 paginationSize = (int) Math.ceil((double) detailDepartList.size() / pagesize);
+		}
+		model.addAttribute("detailDepartList", detailDepartList);
+		model.addAttribute("paginationSize", paginationSize);
+		
+		return "jsonView";
+	}
+	
+	
+	@GetMapping("searchEmp")
+	public String searchEmp(String keyword, Model model, @RequestParam(name = "page", defaultValue = "1") Integer page,
+			@RequestParam(name = "pagesize", defaultValue = "30") Integer pagesize) {
+		logger.debug("keyword - {}", keyword);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("page", page);
+		map.put("pagesize", pagesize);
+		
+		List<Map> searchList = employeeService.searchEmp(keyword);
+		logger.debug("searchList - {}", searchList.size());
+			 
+		model.addAttribute("searchList", searchList);
+		
+		return "jsonView";
+	}
+	
+	
+	
+	@PostMapping("detailEmp")
+	public String detailEmp(String emp_id, Model model) {
+		logger.debug("emp_id - {}", emp_id);
+		
+		Map emp = employeeService.getEmployeeDetail(emp_id);
+		model.addAttribute("emp", emp);
+		
+		return "jsonView";
+	}
+	
+	
 	
 	/**
 	 * 

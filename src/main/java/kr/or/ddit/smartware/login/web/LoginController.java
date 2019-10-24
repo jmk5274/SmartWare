@@ -96,12 +96,12 @@ public class LoginController {
 //	        Store store = null;
 //	        String subject = null;
 //	        Flag flag = null;
-	        
-	        //여기서
-	        //5 , 9, 13, 14, 15
-	        //메일을 못가져온다는 권한오류가 뜨면 Gmail -> 톱니바퀴 -> 설정 -> 전달 및 POP/IMAP -> IMAP 허용만 해주시면됨
-	        //email_pass 넣어줘야함
-	        //email 비밀번호 를 암호화해야함..
+//	        
+//	        //여기서
+//	        //5 , 9, 13, 14, 15
+//	        //메일을 못가져온다는 권한오류가 뜨면 Gmail -> 톱니바퀴 -> 설정 -> 전달 및 POP/IMAP -> IMAP 허용만 해주시면됨
+//	        //email_pass 넣어줘야함
+//	        //email 비밀번호 를 암호화해야함..
 //	        if(!(employee.getEmp_id().equals("e0005") || employee.getEmp_id().equals("e0009") || employee.getEmp_id().equals("e0013")
 //	        		|| employee.getEmp_id().equals("e0014") || employee.getEmp_id().equals("e0015"))) {
 //	        		employee.setEmail("testhoon1217@gmail.com");

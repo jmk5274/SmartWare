@@ -82,4 +82,14 @@ public class EmployeeService implements IEmployeeService{
 		return employeeDao.updateEmployeeJob(employee);
 	}
 
+	@Override
+	public List<Map> getDepartEmpDetail(String depart_id) {
+		return employeeDao.getDepartEmpDetail(depart_id);
+	}
+
+	@Override
+	public List<Map> searchEmp(String keyword) {
+		return employeeDao.searchEmp(keyword);
+	}
+
 }

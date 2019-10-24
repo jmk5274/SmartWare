@@ -154,7 +154,6 @@
 			  title: '메시지가 왔습니다.'
 			})
 		}else if(str[0]===("mail")){
-			console.log("나옴");
 			const toast = Swal.mixin({
 				  toast: true,
 				  position: 'top-end',
@@ -174,7 +173,6 @@
 		
 // 		setTimeout(function() { 
 <%-- 				if(<%=real%>!=0){ --%>
-// 					console.log("mailamil");
 // 					var message = "mail:메일";
 // 					socket.send(message);
 // 				}

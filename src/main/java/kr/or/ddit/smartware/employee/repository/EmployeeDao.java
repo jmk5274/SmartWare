@@ -90,4 +90,14 @@ public class EmployeeDao implements IEmployeeDao {
 		return sqlSession.update("employee.updateEmployeeJob", employee);
 	}
 
+	@Override
+	public List<Map> getDepartEmpDetail(String depart_id) {
+		return sqlSession.selectList("employee.getDepartEmpDetail", depart_id);
+	}
+
+	@Override
+	public List<Map> searchEmp(String keyword) {
+		return sqlSession.selectList("employee.searchEmp", keyword);
+	}
+
 }

@@ -33,6 +33,27 @@
         AND a.DEPART_ID = c.DEPART_ID
         AND a.JOB_ID = d.JOB_ID
     </select>
+    
+    <!-- 부서별 사원 정보 -->
+    <select id="getDepartEmpDetail" parameterType="String" resultType="hashmap">
+	     select a.*, b.*, c.*, d.*
+	        from employee a, position b, DEPARTMENT c, JOB d
+	        where c.DEPART_ID = #{depart_id}
+	        AND a.POSI_ID = b.POSI_ID
+	        AND a.DEPART_ID = c.DEPART_ID
+	        AND a.JOB_ID = d.JOB_ID
+    </select>
+    
+    <!-- 사원 검색 -->
+    <select id="searchEmp" parameterType="String" resultType="hashMap">
+    	select a.*, b.*, c.*, d.*
+        from employee a, position b, DEPARTMENT c, JOB d
+        where a.emp_nm  like '%'||#{keyword}||'%' 
+        AND a.POSI_ID = b.POSI_ID
+        AND a.DEPART_ID = c.DEPART_ID
+        AND a.JOB_ID = d.JOB_ID
+    </select>
+    
 	
 	<!-- 사원 페이징 리스트 -->
 	<select id="getEmployeeList" resultType="map" parameterType="employee">
