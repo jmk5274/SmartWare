@@ -279,7 +279,7 @@ INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VAL
 
 INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '영화관 예매 시스템', to_date('20190612', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), NULL);
 INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '유기동물 입양 시스템', to_date('20190819', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), NULL);
-INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '스마트 웨어', to_date('20190916', 'YYYYMMDD'), to_date('20191129', 'YYYYMMDD'), NULL);
+INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '스마트 웨어', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')+12+23/24+59/1440);
      
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --프로젝트 구성원
@@ -426,7 +426,119 @@ INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원 수정', 
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원 삭제', to_date('201909020000', 'YYYYMMDDHH24MI'), to_date('201909062359', 'YYYYMMDDHH24MI'), 'pj0002', 'task0100', 100);
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '쇼핑몰 상품관리', to_date('201909020000', 'YYYYMMDDHH24MI'), to_date('201909062359', 'YYYYMMDDHH24MI'), 'pj0002', 'task0100', 100);
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자원봉사 관리', to_date('201909020000', 'YYYYMMDDHH24MI'), to_date('201909062359', 'YYYYMMDDHH24MI'), 'pj0002', 'task0100', 100);
+
 -- pj0003
+-- task0106 ~  task0109 ==> 김도훈 e0014
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그인', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-13+23/24+59/1440, 'pj0003', null, 100);	
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그인 기능', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-14+23/24+59/1440, 'pj0003', 'task0106', 100);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그아웃 기능', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-14+23/24+59/1440, 'pj0003', 'task0106', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '현재 로그인한 사원리스트 조회 기능', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-13+23/24+59/1440, 'pj0003', 'task0106', 100);
+
+-- task0110 ~ task0114 ==> 홍다은 e0015
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이페이지', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이페이지 화면 구현'	, trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-13+23/24+59/1440, 'pj0003', 'task0110', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이 페이지 상세정보 출력', trunc(sysdate, 'iw')-13, trunc(sysdate, 'iw')-12+23/24+59/1440, 'pj0003', 'task0110', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이페이지 상세정보 수정 기능', trunc(sysdate, 'iw')-11, trunc(sysdate, 'iw')-10+23/24+59/1440, 'pj0003', 'task0110', 100);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로필, 서명 사진 등록/수정 기능', trunc(sysdate, 'iw')-10, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', 'task0110', 100);
+
+-- task0115 ~ task0119 ==> 전민규 e0013
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '채팅', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '채팅방 생성 기능', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-13+23/24+59/1440, 'pj0003', 'task0115', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '다중 채팅 기능', trunc(sysdate, 'iw')-13, trunc(sysdate, 'iw')-12+23/24+59/1440, 'pj0003', 'task0115', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '채팅방 초대 기능	', trunc(sysdate, 'iw')-11, trunc(sysdate, 'iw')-10+23/24+59/1440, 'pj0003', 'task0115', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '채팅 수신 시 알림 기능', trunc(sysdate, 'iw')-10, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', 'task0115', 100);
+
+-- task0120 ~ task0124 ==> 조민수 e0009
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '일정관리', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '계정 연동 구글 캘린더 화면 출력', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-12+23/24+59/1440, 'pj0003', 'task0120', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '캘린더 일정 등록 기능', trunc(sysdate, 'iw')-11, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', 'task0120', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '캘린더 조회/삭제/수정 연동 기능', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-5+23/24+59/1440, 'pj0003', 'task0120', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '일정 알림 기능 구현', trunc(sysdate, 'iw')-4, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0120', 100);
+
+-- task0125 ~ task0129 ==> 배상현 e0005
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '출퇴근 앱', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '지문인식 로그인', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-13+23/24+59/1440, 'pj0003', 'task0125', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'GPS 기반 출퇴근 기록', trunc(sysdate, 'iw')-12, trunc(sysdate, 'iw')-11+23/24+59/1440, 'pj0003', 'task0125', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '출퇴근 기록 확인 기능', trunc(sysdate, 'iw')-10, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', 'task0125', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '근태 사유서 전송 및 확인 기능', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', 'task0125', 100);
+
+-- task0130 ~ task0132 ==> 김도훈 e0014
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '주소록', trunc(sysdate, 'iw')-12, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '주소록 부서별 조회', trunc(sysdate, 'iw')-12, trunc(sysdate, 'iw')-11+23/24+59/1440, 'pj0003', 'task0130', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '주소록 추가 삭제 수정 기능', trunc(sysdate, 'iw')-10, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', 'task0130', 100);
+
+-- task0133 ~ task0139 ==> 김도훈 e0014
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메일', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', null, 55);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메일 페이지 구현', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', 'task0133', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '받은 메일함 기능', trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')-4+23/24+59/1440, 'pj0003', 'task0133', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메일 쓰기 및 답장 기능', trunc(sysdate, 'iw')-3, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0133', 80);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '보낸 메일함 기능', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+1+23/24+59/1440, 'pj0003', 'task0133', 50);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '스팸 메일 기능', trunc(sysdate, 'iw')+2, trunc(sysdate, 'iw')+3+23/24+59/1440, 'pj0003', 'task0133', 0);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '휴지통 및 검색 기능', trunc(sysdate, 'iw')+4, trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', 'task0133', 0);
+
+-- task0140 ~ task0150 ==> 홍다은 e0015
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '게시판', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', null, 96);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메뉴 및 게시판 관리 페이지 구현', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 게시글 생성 기능', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 게시글 삭제', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 게시글 수정', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '직원소통 게시글 생성', trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')-4+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '직원소통 게시글 삭제', trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')-4+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '직원소통 게시글 수정', trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')-4+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자료실 게시글 생성', trunc(sysdate, 'iw')-3, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0140', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자료실 게시글 삭제', trunc(sysdate, 'iw')-3, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0140', 80);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '자료실 게시글 수정', trunc(sysdate, 'iw')-3, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0140', 80);
+
+-- task0151 ~ task0155 ==> 홍다은 e0015
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '사원 관리자', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', null, 5);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '사원 리스트 페이징 구현', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+1+23/24+59/1440, 'pj0003', 'task0151', 20);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '사원 계정 비활성화/삭제 기능', trunc(sysdate, 'iw')+1, trunc(sysdate, 'iw')+2+23/24+59/1440, 'pj0003', 'task0151', 0);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '사원 계정 부서/직책 변경 기능', trunc(sysdate, 'iw')+3, trunc(sysdate, 'iw')+4+23/24+59/1440, 'pj0003', 'task0151', 0);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '신규 사원 계정 추가 기능', trunc(sysdate, 'iw')+4, trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', 'task0151', 0);
+
+-- task0156 ~ task0159 ==> 전민규 e0013
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '팝업', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', null, 93);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '팝업 위치별 추가 기능', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', 'task0156', 100);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '팝업 비활성화 버튼 기능', trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')-4+23/24+59/1440, 'pj0003', 'task0156', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '팝업 삭제 및 기간 수정 기능', trunc(sysdate, 'iw')-3, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0156', 80);			
+
+-- task0160 ~ task0164 ==> 배상현 e0005
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '전자결재', trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')+3+23/24+59/1440, 'pj0003', null, 45);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '전자결재 신청서 화면 구현', trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')-4+23/24+59/1440, 'pj0003', 'task0160', 100);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '전자결재 신청서 및 결재선 연동 기능', trunc(sysdate, 'iw')-3, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0160', 80);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '결재선 배치 설정', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+1+23/24+59/1440, 'pj0003', 'task0160', 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '결재자 신청서 결재 기능', trunc(sysdate, 'iw')+2, trunc(sysdate, 'iw')+3+23/24+59/1440, 'pj0003', 'task0160', 0);			
+
+-- task0165 ~ task0166 ==> 홍다은 e0015
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영상통화', trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', null, 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영상통화 기능 구현', trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', 'task0165', 0);			
+
+-- task0167 ~ task0171 ==> 전민규 e0013
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '스마트미러/웹(날씨)', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', null, 5);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '날씨 정보 출력 구현', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+2+23/24+59/1440, 'pj0003', 'task0167', 20);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '라즈베리파이 리눅스 환경 구성', trunc(sysdate, 'iw')+3, trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', 'task0167', 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '날씨 정보 라즈베리파이 적용', trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+9+23/24+59/1440, 'pj0003', 'task0167', 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'Google Cloud Speech 연동', trunc(sysdate, 'iw')+10, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', 'task0167', 0);			
+
+-- task0172 ~ task0176 ==> 조민수 e0009
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'PMS', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', null, 5);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 생성 기능', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+2+23/24+59/1440, 'pj0003', 'task0172', 20);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 구성원 등록 및 직책 설정 기능', trunc(sysdate, 'iw')+3, trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', 'task0172', 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 일감 배분', trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+9+23/24+59/1440, 'pj0003', 'task0172', 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 일감 수정 및 검색', trunc(sysdate, 'iw')+10, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', 'task0172', 0);			
+
+-- task0177 ~ task0178 ==> 김도훈 e0014
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메일 알람', trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+9+23/24+59/1440, 'pj0003', null, 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '메일 알람 연동 기능', trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+9+23/24+59/1440, 'pj0003', 'task0177', 0);			
+
+-- task0179 ~ task0180 ==> 김도훈 e0014
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '출퇴근 버스', trunc(sysdate, 'iw')+10, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', null, 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '출퇴근 버스 실시간 조회 기능 구현', trunc(sysdate, 'iw')+10, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003','task0179', 0);			
+
+-- task0181 ~ task0182 ==> 배상현 e0005
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '스마트미러/웹(일정)', trunc(sysdate, 'iw')+4, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', null, 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '일정 관리 기능 라즈베리파이 적용', trunc(sysdate, 'iw')+4, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', 'task0181', 0);			
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --업무 담당자
@@ -542,6 +654,84 @@ INSERT INTO PRO_TASK VALUES('e0015', 'task0104', 'pj0002');
 INSERT INTO PRO_TASK VALUES('e0015', 'task0105', 'pj0002');
 
 -- pj0003
+INSERT INTO PRO_TASK VALUES('e0014', 'task0106', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0107', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0108', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0109', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0110', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0111', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0112', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0113', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0114', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0115', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0116', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0117', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0118', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0119', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0120', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0121', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0122', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0123', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0124', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0125', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0126', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0127', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0128', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0129', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0130', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0131', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0132', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0133', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0134', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0135', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0136', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0137', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0138', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0139', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0140', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0141', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0142', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0143', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0144', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0145', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0146', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0147', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0148', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0149', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0150', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0151', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0152', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0153', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0154', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0155', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0156', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0157', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0158', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0159', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0160', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0161', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0162', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0163', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0164', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0165', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0015', 'task0166', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0167', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0168', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0169', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0170', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0013', 'task0171', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0172', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0173', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0174', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0175', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0009', 'task0176', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0177', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0178', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0179', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0014', 'task0180', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0181', 'pj0003');
+INSERT INTO PRO_TASK VALUES('e0005', 'task0182', 'pj0003');
+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -656,6 +846,67 @@ INSERT INTO TASK_HISTORY VALUES('task0104', 'e0015', '진척도를 0에서 100�
 INSERT INTO TASK_HISTORY VALUES('task0105', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', to_date('201909061300', 'YYYYMMDDHH24MI'));
 
 -- pj0003
+INSERT INTO TASK_HISTORY VALUES('task0107', 'e0014', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-14+16/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0108', 'e0014', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-14+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0109', 'e0014', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-13+16/24+50/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0111', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-13+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0112', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-12+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0113', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-10+17/24+40/1440);
+INSERT INTO TASK_HISTORY VALUES('task0114', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-9+17/24+40/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0116', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-13+17/24+30/1440);
+INSERT INTO TASK_HISTORY VALUES('task0117', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-12+15/24+40/1440);
+INSERT INTO TASK_HISTORY VALUES('task0118', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-10+17/24+30/1440);
+INSERT INTO TASK_HISTORY VALUES('task0119', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-9+15/24+10/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0121', 'e0009', '진척도를 0에서 55으로 변경하였습니다.', trunc(sysdate, 'iw')-13+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0121', 'e0009', '진척도를 0에서 70으로 변경하였습니다.', trunc(sysdate, 'iw')-12+12/24+00/1440);
+INSERT INTO TASK_HISTORY VALUES('task0121', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-12+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0122', 'e0009', '진척도를 0에서 60으로 변경하였습니다.', trunc(sysdate, 'iw')-10+17/24+20/1440);
+INSERT INTO TASK_HISTORY VALUES('task0122', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-9+16/24+20/1440);
+INSERT INTO TASK_HISTORY VALUES('task0123', 'e0009', '진척도를 0에서 40으로 변경하였습니다.', trunc(sysdate, 'iw')-6+17/24+10/1440);
+INSERT INTO TASK_HISTORY VALUES('task0123', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-5+15/24+10/1440);
+INSERT INTO TASK_HISTORY VALUES('task0124', 'e0009', '진척도를 0에서 30으로 변경하였습니다.', trunc(sysdate, 'iw')-3+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0124', 'e0009', '진척도를 0에서 70으로 변경하였습니다.', trunc(sysdate, 'iw')-2+12/24);
+INSERT INTO TASK_HISTORY VALUES('task0124', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-2+17/24);
+
+INSERT INTO TASK_HISTORY VALUES('task0126', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-13+17/24+40/1440);
+INSERT INTO TASK_HISTORY VALUES('task0127', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-11+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0128', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-9+17/24+40/1440);
+INSERT INTO TASK_HISTORY VALUES('task0129', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-6+17/24+50/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0131', 'e0014', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-11+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0132', 'e0014', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-9+17/24+50/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0134', 'e0014', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-6+17/24+40/1440);
+INSERT INTO TASK_HISTORY VALUES('task0135', 'e0014', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-4+17/24+40/1440);
+INSERT INTO TASK_HISTORY VALUES('task0136', 'e0014', '진척도를 0에서 80으로 변경하였습니다.', trunc(sysdate, 'iw')-2+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0137', 'e0014', '진척도를 0에서 50으로 변경하였습니다.', trunc(sysdate, 'iw')+12/24+20/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0141', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-6+17/24+30/1440);
+INSERT INTO TASK_HISTORY VALUES('task0142', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-6+14/24+20/1440);
+INSERT INTO TASK_HISTORY VALUES('task0143', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-6+15/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0144', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-6+17/24+40/1440);
+INSERT INTO TASK_HISTORY VALUES('task0145', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-4+13/24+15/1440);
+INSERT INTO TASK_HISTORY VALUES('task0146', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-4+14/24+10/1440);
+INSERT INTO TASK_HISTORY VALUES('task0147', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-4+15/24+30/1440);
+INSERT INTO TASK_HISTORY VALUES('task0148', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-2+16/24+35/1440);
+INSERT INTO TASK_HISTORY VALUES('task0149', 'e0015', '진척도를 0에서 80으로 변경하였습니다.', trunc(sysdate, 'iw')-2+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0150', 'e0015', '진척도를 0에서 80으로 변경하였습니다.', trunc(sysdate, 'iw')-2+17/24+50/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0152', 'e0015', '진척도를 0에서 20으로 변경하였습니다.', trunc(sysdate, 'iw')+10/24+30/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0157', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-6+17/24+15/1440);
+INSERT INTO TASK_HISTORY VALUES('task0158', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-4+16/24+10/1440);
+INSERT INTO TASK_HISTORY VALUES('task0159', 'e0013', '진척도를 0에서 80으로 변경하였습니다.', trunc(sysdate, 'iw')-2+17/24+50/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0161', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', trunc(sysdate, 'iw')-4+17/24+50/1440);
+INSERT INTO TASK_HISTORY VALUES('task0162', 'e0005', '진척도를 0에서 80으로 변경하였습니다.', trunc(sysdate, 'iw')-2+17/24+50/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0168', 'e0013', '진척도를 0에서 20으로 변경하였습니다.', trunc(sysdate, 'iw')+10/24+20/1440);
+
+INSERT INTO TASK_HISTORY VALUES('task0173', 'e0009', '진척도를 0에서 20으로 변경하였습니다.', trunc(sysdate, 'iw')+10/24);
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
