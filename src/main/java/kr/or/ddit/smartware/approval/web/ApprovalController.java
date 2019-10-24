@@ -17,13 +17,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -95,6 +100,7 @@ public class ApprovalController {
         return "jsonView";
     }
 
+    /* 결재진행현황 체크박스화 */
     @PostMapping("applCheckBox")
     public String applCheckBox(String apprMember, Model model) {
         List<Map> applList = new ArrayList<>();
@@ -106,8 +112,9 @@ public class ApprovalController {
         return "jsonView";
     }
 
+    /* 송신한 결재 목록 */
     @GetMapping("sendApprovalList")
-    public String getSendAppl(HttpSession session, Model model) {
+    public String getSendAppl(HttpServletRequest request, HttpSession session, Model model) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
         List<Map> applications = approvalService.sendApplList(emp_id);
         List<Map> applList = new ArrayList<>();
@@ -119,12 +126,54 @@ public class ApprovalController {
             applList.add(data);
         }
         model.addAttribute("applList", applList );
-        model.addAttribute("res", false);
+
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if (inputFlashMap != null) {
+            Boolean res = (Boolean) inputFlashMap.get("res");
+            model.addAttribute("res", res);
+        } else {
+            model.addAttribute("res", false);
+        }
         return "tiles/approval/sendApplList";
     }
 
+    /* 송신 후 완료된 결재 목록 */
+    @GetMapping("sendApplCompleList")
+    public String getSendComple(HttpServletRequest request, HttpSession session, Model model) {
+        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+        List<Map> applications = approvalService.sendApplCompleList(emp_id);
+        List<Map> applList = new ArrayList<>();
+        for (Map application : applications) {
+            List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
+            Map data = new HashMap();
+            data.put("application", application);
+            data.put("applApprs", applApprs);
+            applList.add(data);
+        }
+        model.addAttribute("applList", applList );
+        return "tiles/approval/sendApplCompleList";
+    }
+
+    /* 송신 후 반려된 결재 목록 */
+    @GetMapping("sendApplReferList")
+    public String getSendRefer(HttpServletRequest request, HttpSession session, Model model) {
+        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+        List<Map> applications = approvalService.sendApplReferList(emp_id);
+        List<Map> applList = new ArrayList<>();
+        for (Map application : applications) {
+            List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
+            Map data = new HashMap();
+            data.put("application", application);
+            data.put("applApprs", applApprs);
+            applList.add(data);
+        }
+        model.addAttribute("applList", applList );
+        return "tiles/approval/sendApplReferList";
+    }
+
+    /* 결재 등록 */
     @PostMapping("sendApprovalList")
-    public String postSendAppl(@RequestParam Map param, HttpSession session, Model model) {
+    public String postSendAppl(@RequestParam Map param, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
         param.put("emp_id", emp_id);
         List<String> apprList = checkMember((String) param.get("to"));
@@ -136,44 +185,146 @@ public class ApprovalController {
                 num += approvalService.setAppr(param);
             }
             if (apprList.size() == num) {
-                model.addAttribute("res", true);
-                List<Map> applications = approvalService.sendApplList(emp_id);
-                List<Map> applList = new ArrayList<>();
-                for (Map application : applications) {
-                    List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
-                    Map data = new HashMap();
-                    data.put("application", application);
-                    data.put("applApprs", applApprs);
-                    applList.add(data);
-                }
-                model.addAttribute("applList", applList );
+                redirectAttributes.addFlashAttribute("res", true);
             }
 
         } else {
-            model.addAttribute("res", false);
+            redirectAttributes.addFlashAttribute("res", false);
         }
 
-        return "tiles/approval/sendApplList";
+        return "redirect:/approval/sendApprovalList";
     }
 
-    @GetMapping("approvalList")
-    public String approvalList(@RequestParam Map param, HttpSession session, Model model) {
+    /* 결재할 문서 목록*/
+    @GetMapping("confirmApplList")
+    public String confirmApplList(HttpServletRequest request, @RequestParam Map param, HttpSession session, Model model) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
 
         List<Map> applList = approvalService.confirmApplList(emp_id);
         if (applList != null) {
             model.addAttribute("applList", applList);
         }
+
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if (inputFlashMap != null) {
+            Boolean res = (Boolean) inputFlashMap.get("res");
+            model.addAttribute("res", res);
+        } else {
+            model.addAttribute("res", false);
+        }
+
         return "tiles/approval/confirmApplList";
     }
 
-    @GetMapping("approvalDetail")
-    public String approvalDetail(Model model, String appl_id, String flag) {
+    @GetMapping("confirmApplCompleList")
+    public String confirmApplCompleList(HttpServletRequest request, @RequestParam Map param, HttpSession session, Model model) {
+        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+
+        List<Map> applList = approvalService.confirmApplCompleList(emp_id);
+        if (applList != null) {
+            model.addAttribute("applList", applList);
+        }
+
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if (inputFlashMap != null) {
+            Boolean res = (Boolean) inputFlashMap.get("res");
+            model.addAttribute("res", res);
+        } else {
+            model.addAttribute("res", false);
+        }
+
+        return "tiles/approval/confirmApplCompleList";
+    }
+
+    @GetMapping("confirmReferCompleList")
+    public String confirmReferCompleList(HttpServletRequest request, @RequestParam Map param, HttpSession session, Model model) {
+        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+
+        List<Map> applList = approvalService.confirmApplReferList(emp_id);
+        if (applList != null) {
+            model.addAttribute("applList", applList);
+        }
+
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if (inputFlashMap != null) {
+            Boolean res = (Boolean) inputFlashMap.get("res");
+            model.addAttribute("res", res);
+        } else {
+            model.addAttribute("res", false);
+        }
+
+        return "tiles/approval/confirmApplReferList";
+    }
+
+    /* 해당 결재문서 상세보기 */
+    @GetMapping("/{appl_id}")
+    public String approvalDetail(HttpSession session, Model model, @PathVariable String appl_id, String flag) {
+        Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
         Application appl = approvalService.getAppl(appl_id);
 
         model.addAttribute("appl", appl);
         model.addAttribute("flag", flag);
         return "tiles/approval/approvalDetail";
+    }
+
+    /* 결재하기 */
+    @PostMapping("checkAppl")
+    public String checkAppl(@RequestParam Map data, HttpSession session, RedirectAttributes redirectAttributes) {
+        Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
+        data.put("emp_id", employee.getEmp_id());
+        int checkAppl = approvalService.checkAppl(data);
+
+        ApplAppr applAppr = new ApplAppr();
+        applAppr.setAppl_id((String) data.get("appl_id"));
+        applAppr.setAppr_emp(employee.getEmp_id());
+
+        int checkAble = approvalService.checkAble(applAppr);
+
+        if (checkAble != 0 && checkAppl != 0) {
+            redirectAttributes.addFlashAttribute("res", true);
+        }
+
+        return "redirect:/approval/confirmApplCompleList";
+    }
+
+    /* 반려하기 */
+//    @PostMapping("checkRefer")
+
+    /* 도장사진 입력 */
+    @GetMapping("empSignPicture")
+    public void empSignPicture(HttpSession session, HttpServletResponse response, String sign) {
+        Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
+
+        ServletOutputStream sos = null;
+        FileInputStream fis = null;
+        File picture = null;
+        String path = "C:/picture/sign";
+
+        try {
+            sos = response.getOutputStream();
+            picture = new File(path+"/"+employee.getSign());
+            try {
+                fis = new FileInputStream(picture);
+            } catch (Exception e) {
+                picture = new File(path+"/no_img.png");
+                fis = new FileInputStream(picture);
+            }
+            byte[] buff = new byte[512];
+            int len = 0;
+
+            while((len = fis.read(buff, 0, 512)) != -1) {
+                sos.write(buff,0,len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+                sos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

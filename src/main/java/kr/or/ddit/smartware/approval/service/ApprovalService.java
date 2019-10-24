@@ -46,6 +46,16 @@ public class ApprovalService implements IApprovalService{
     }
 
     @Override
+    public List<Map> sendApplCompleList(String emp_id) {
+        return approvalDao.sendApplCompleList(emp_id);
+    }
+
+    @Override
+    public List<Map> sendApplReferList(String emp_id) {
+        return approvalDao.sendApplReferList(emp_id);
+    }
+
+    @Override
     public List<ApplAppr> confirmStatus(String appl_id) {
         return approvalDao.confirmStatus(appl_id);
     }
@@ -53,5 +63,30 @@ public class ApprovalService implements IApprovalService{
     @Override
     public List<Map> confirmApplList(String emp_id) {
         return approvalDao.confirmApplList(emp_id);
+    }
+
+    @Override
+    public List<Map> confirmApplCompleList(String emp_id) {
+        return approvalDao.confirmApplCompleList(emp_id);
+    }
+
+    @Override
+    public List<Map> confirmApplReferList(String emp_id) {
+        return approvalDao.confirmApplReferList(emp_id);
+    }
+
+    @Override
+    public int checkAppl(Map data) {
+        return approvalDao.checkAppl(data);
+    }
+
+    @Override
+    public int referAppl(Map data) {
+        return approvalDao.referAppl(data);
+    }
+
+    @Override
+    public int checkAble(ApplAppr applAppr) {
+        return approvalDao.checkAble(applAppr);
     }
 }

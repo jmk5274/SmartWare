@@ -33,8 +33,12 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${cp }/approval/approvalPage">결재하기</a></li>
-                    <li><a href="${cp }/approval/sendApprovalList">결재문서(송신) 목록</a></li>
-                    <li><a href="${cp }/approval/approvalList">결재문서(수신) 목록</a></li>
+                    <li><a href="${cp }/approval/sendApprovalList">결재문서(송신)함</a></li>
+                    <li><a href="${cp }/approval/sendApplCompleList">결재문서(송신) 완료함</a></li>
+                    <li><a href="${cp }/approval/sendApplReferList">결재문서(송신) 반려함</a></li>
+                    <li><a href="${cp }/approval/confirmApplList">결재문서(수신)함</a></li>
+                    <li><a href="${cp }/approval/confirmApplCompleList">결재문서(수신) 완료함</a></li>
+                    <li><a href="${cp }/approval/confirmReferCompleList">결재문서(수신) 반려함</a></li>
                 </ul>
             </li>
             <li>

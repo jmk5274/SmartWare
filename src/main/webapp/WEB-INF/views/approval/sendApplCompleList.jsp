@@ -8,16 +8,6 @@
 <script src="${cp }/js/jquery-3.4.1.min.js"></script>
 <script>
 	$(function () {
-		var flag = ${res};
-		if (flag) {
-			Swal({
-				    title: '전송 성공',
-				    text: '전송 되었습니다.',
-				    type: 'success',
-				    confirmButtonText: '확인'
-				});
-		}
-
 		$('.applTr').on('click', function () {
 			$('#frm').attr('action', "${cp}/approval/" + $(this).data("appl_id")).submit();
 		});

@@ -46,6 +46,16 @@ public class ApprovalDao implements IApprovalDao{
     }
 
     @Override
+    public List<Map> sendApplCompleList(String emp_id) {
+        return sqlSession.selectList("appl.sendApplCompleList", emp_id);
+    }
+
+    @Override
+    public List<Map> sendApplReferList(String emp_id) {
+        return sqlSession.selectList("appl.sendApplReferList", emp_id);
+    }
+
+    @Override
     public List<ApplAppr> confirmStatus(String appl_id) {
         return sqlSession.selectList("appl.confirmStatus", appl_id);
     }
@@ -53,5 +63,30 @@ public class ApprovalDao implements IApprovalDao{
     @Override
     public List<Map> confirmApplList(String emp_id) {
         return sqlSession.selectList("appl.confirmApplList", emp_id);
+    }
+
+    @Override
+    public List<Map> confirmApplCompleList(String emp_id) {
+        return sqlSession.selectList("appl.confirmApplCompleList", emp_id);
+    }
+
+    @Override
+    public List<Map> confirmApplReferList(String emp_id) {
+        return sqlSession.selectList("appl.confirmApplReferList", emp_id);
+    }
+
+    @Override
+    public int checkAppl(Map data) {
+        return sqlSession.update("appl.checkAppl", data);
+    }
+
+    @Override
+    public int referAppl(Map data) {
+        return sqlSession.update("appl.referAppl", data);
+    }
+
+    @Override
+    public int checkAble(ApplAppr applAppr) {
+        return sqlSession.update("appl.checkAble", applAppr);
     }
 }

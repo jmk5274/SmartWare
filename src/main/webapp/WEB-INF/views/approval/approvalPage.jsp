@@ -132,7 +132,7 @@
             Swal({
                 title: '결재를 올리시겠습니까?',
                 text: "확인을 누를시 전송됩니다",
-                type: 'warning',
+                type: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',

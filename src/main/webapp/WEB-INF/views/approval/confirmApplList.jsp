@@ -8,15 +8,23 @@
 <script src="${cp }/js/jquery-3.4.1.min.js"></script>
 <script>
 	$( function () {
+		var flag = ${res};
+		if (flag) {
+			Swal({
+				title: '승인 성공',
+				text: '승인 하였습니다.',
+				type: 'success',
+				confirmButtonText: '확인'
+			});
+		}
+
 		$('.applTr').on('click', function () {
-			$('#appl_id').val($(this).data("appl_id"));
-			$('#frm').submit();
+			$('#frm').attr('action', "${cp}/approval/" + $(this).data("appl_id")).submit();
 		});
 	});
 </script>
 
-<form id="frm" action="${cp}/approval/approvalDetail">
-	<input type="hidden" id="appl_id" name="appl_id">
+<form id="frm">
 	<input type="hidden" id="flag" name="flag" value="c">
 </form>
 	<div class="container-fluid">

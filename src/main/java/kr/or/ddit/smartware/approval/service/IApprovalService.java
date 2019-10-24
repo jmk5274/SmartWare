@@ -70,6 +70,26 @@ public interface IApprovalService {
     List<Map> sendApplList(String emp_id);
 
     /**
+     * Method : sendApplCompleList
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 본인이 송신한 신청서 완료 목록
+     */
+    List<Map> sendApplCompleList(String emp_id);
+
+    /**
+     * Method : sendApplReferList
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 본인이 송신한 결재 반려 목록
+     */
+    List<Map> sendApplReferList(String emp_id);
+
+    /**
      * Method : confirmStatus
      * 작성자 : Bae Sang Hyun
      * 변경이력 :
@@ -88,4 +108,54 @@ public interface IApprovalService {
      * Method 설명 : 결재해줘야하는 결재목록
      */
     List<Map> confirmApplList(String emp_id);
+
+    /**
+     * Method : confirmApplCompleList
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 결재한 문서 목록
+     */
+    List<Map> confirmApplCompleList(String emp_id);
+
+    /**
+     * Method : confirmApplReferList
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 결재해줫던 목록 중 반려된 목록록
+     */
+    List<Map> confirmApplReferList(String emp_id);
+
+    /**
+     * Method : checkAppl
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 결재문서 승인
+     */
+    int checkAppl(Map data);
+
+    /**
+     * Method : referAppl
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 결재문서 반려
+     */
+    int referAppl(Map data);
+
+    /**
+     * Method : checkAble
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 결재상태 Ture변경
+     */
+    int checkAble(ApplAppr applAppr);
 }

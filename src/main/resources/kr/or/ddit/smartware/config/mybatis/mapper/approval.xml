@@ -19,8 +19,15 @@
         <selectKey keyProperty="appl_id" resultType="String" order="AFTER">
             SELECT 'appl' || lpad(application_seq.currval, 4, 0) FROM  DUAL
         </selectKey>
-        INSERT INTO APPLICATION
-        VALUES ( 'appl' || lpad(application_seq.nextval, 4, 0), #{title}, #{cont}, SYSDATE, #{form_id}, #{emp_id} )
+        INSERT INTO APPLICATION (appl_id, title, cont, reg_dt, form_id, emp_id, proceed, refer)
+        VALUES ( 'appl' || lpad(application_seq.nextval, 4, 0),
+            #{title},
+             #{cont},
+             SYSDATE,
+             #{form_id},
+             #{emp_id},
+             'T',
+             'F')
     </insert>
 
     <insert id="setAppr" parameterType="hashmap">
@@ -51,6 +58,31 @@
         LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
         LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
         WHERE a.emp_id = #{emp_id}
+        AND a.PROCEED = 'T'
+        AND a.REFER = 'F'
+        ORDER  BY a.APPL_ID
+    </select>
+
+    <select id="sendApplCompleList" parameterType="String" resultType="hashMap">
+        SELECT a.*, b.EMP_NM, c.FORM_NM
+        FROM APPLICATION a
+        LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+        LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+        WHERE a.emp_id = #{emp_id}
+        AND a.PROCEED = 'F'
+        AND a.REFER = 'F'
+        ORDER  BY a.APPL_ID
+    </select>
+
+    <select id="sendApplReferList" parameterType="String" resultType="hashMap">
+        SELECT a.*, b.EMP_NM, c.FORM_NM, d.EMP_NM as REFER_NM
+        FROM APPLICATION a
+        LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+        LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+        LEFT OUTER JOIN EMPLOYEE d ON a.REFER_EMP = d.EMP_ID
+        WHERE a.emp_id = #{emp_id}
+        AND a.PROCEED = 'F'
+        AND a.REFER = 'T'
         ORDER  BY a.APPL_ID
     </select>
 
@@ -61,6 +93,7 @@
         order by 2 desc
     </select>
 
+    <!-- 결재할 문서 -->
     <select id="confirmApplList" parameterType="String" resultType="hashMap">
         SELECT a.*, b.able, c.EMP_NM, d.FORM_NM
         FROM APPLICATION a
@@ -74,6 +107,76 @@
         LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
         LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
         WHERE b.NEXT_ABLE = 'T'
+        AND a.PROCEED = 'T'
+        AND a.REFER = 'F'
+        AND b.able = 'F'
         ORDER BY b.able, a.APPL_ID
     </select>
+
+    <!-- 결재한 문서 -->
+    <select id="confirmApplCompleList" parameterType="String" resultType="hashMap">
+        SELECT a.*, b.able, c.EMP_NM, d.FORM_NM
+        FROM APPLICATION a
+        RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                    NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                FROM APPL_APPR a, APPLICATION b
+                WHERE a.APPL_ID IN b.APPL_ID
+                AND a.appr_emp = #{emp_id}
+                ORDER BY a.APPL_ID) b
+        ON a.APPL_ID = b.APPL_ID
+        LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+        LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+        WHERE b.NEXT_ABLE = 'T'
+        AND a.REFER = 'F'
+        AND b.able = 'T'
+        ORDER BY b.able, a.APPL_ID
+    </select>
+
+    <!-- 결재한 문서 반려 목록 -->
+    <select id="confirmApplReferList" parameterType="String" resultType="hashMap">
+        SELECT a.*, b.able, c.EMP_NM, e.EMP_NM AS REFER_NM, d.FORM_NM
+        FROM APPLICATION a
+        RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                    NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                FROM APPL_APPR a, APPLICATION b
+                WHERE a.APPL_ID IN b.APPL_ID
+                AND a.appr_emp = #{emp_id}
+                ORDER BY a.APPL_ID) b
+        ON a.APPL_ID = b.APPL_ID
+        LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+        LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+        LEFT OUTER JOIN EMPLOYEE e ON a.REFER_EMP = e.EMP_ID
+        WHERE b.NEXT_ABLE = 'T'
+        AND a.PROCEED = 'F'
+        AND a.REFER = 'T'
+        AND b.able = 'T'
+        ORDER BY b.able, a.APPL_ID
+    </select>
+
+    <update id="checkAppl" parameterType="hashMap">
+        update application SET cont = #{cont},
+        PROCEED =
+            (CASE WHEN
+                (SELECT ap_order
+                    FROM APPL_APPR
+                    WHERE APPL_ID = #{appl_id}
+                    AND appr_emp = #{emp_id}) = 1
+                THEN  'F'
+                ELSE 'T' END)
+        where appl_id = #{appl_id}
+    </update>
+
+    <update id="referAppl" parameterType="hashMap">
+        UPDATE APPLICATION
+        SET PROCEED = 'F',
+            REFER = 'T',
+            REFER_EMP = #{emp_id}
+        WHERE APPL_ID = #{appl_id}
+    </update>
+
+    <update id="checkAble" parameterType="applAppr">
+        update appl_appr set able = 'T'
+        where appl_id = #{appl_id}
+        and appr_emp = #{appr_emp}
+    </update>
 </mapper>
