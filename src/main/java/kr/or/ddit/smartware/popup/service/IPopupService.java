@@ -83,4 +83,14 @@ public interface IPopupService {
 	* Method 설명 : popup_nolook 테이블 조회
 	*/
 	List<Map> getPopupNoLook(String emp_id);
+	
+	/**
+	* Method : updatePopupNoLook
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param map
+	* @return
+	* Method 설명 : 업데이트 팝업 오늘만 보지 않기
+	*/
+	int updatePopupNoLook(Map map);
 }

@@ -110,4 +110,9 @@ public class PopupDao implements IPopupDao{
 		return sqlSession.selectList("popup.getPopupNoLook", emp_id);
 	}
 
+	@Override
+	public int updatePopupNoLook(Map map) {
+		return sqlSession.update("popup.updatePopupNoLook", map);
+	}
+
 }

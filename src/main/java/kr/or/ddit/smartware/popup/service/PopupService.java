@@ -70,4 +70,9 @@ public class PopupService implements IPopupService{
 		return popupDao.getPopupNoLook(emp_id);
 	}
 
+	@Override
+	public int updatePopupNoLook(Map map) {
+		return popupDao.updatePopupNoLook(map);
+	}
+
 }

@@ -274,7 +274,11 @@ public class PopupController {
 		map.put("pop_id", pop_id);
 		map.put("nl_dt", nl_dt);
 		
-		int c = popupService.insertPopupNoLook(map);
+		try {
+			int c = popupService.insertPopupNoLook(map);
+		} catch (Exception e) {
+			int c = popupService.updatePopupNoLook(map);
+		}
 		
 		return "jsonView";
 	}

@@ -38,6 +38,10 @@
 		insert into popup_nolook(emp_id, pop_id, nl_dt) values(#{emp_id}, #{pop_id}, #{nl_dt})
 	</insert>
 	
+	<update id="updatePopupNoLook" parameterType="map">
+		update popup_nolook set nl_dt=#{nl_dt} where emp_id=#{emp_id} and pop_id=#{pop_id}
+	</update>
+	
 	<select id="getPopupNoLook" parameterType="String" resultType="map">
 		select *
  		  from popup_nolook
