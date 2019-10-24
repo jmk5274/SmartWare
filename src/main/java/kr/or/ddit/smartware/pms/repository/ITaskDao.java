@@ -1,5 +1,5 @@
 package kr.or.ddit.smartware.pms.repository;
 
-public interface IPmsDao {
+public interface ITaskDao {
 
 }

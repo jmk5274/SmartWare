@@ -3,8 +3,8 @@ package kr.or.ddit.smartware.pms.model;
 public class ProTask {
 
 	private String emp_id;  	// 사원 아이디
-	private String pro_id;  	// 업무 아이디
-	private String task_id;		// 프로젝트 아이디
+	private String task_id;		// 업무 아이디
+	private String pro_id;  	// 프로젝트 아이디
 	
 	public ProTask() {	}
 	

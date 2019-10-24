@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Project {
 
-	private Date end_dt;        	// 상위 프로젝트 아이디
-	private Date st_dt;         	// 시작 날짜
-	private String pa_pro_id;   	// 완료 날짜
 	private String pro_id;      	// 프로젝트 아이디
 	private String pro_nm;			// 프로젝트 이름
+	private Date st_dt;         	// 시작 날짜
+	private Date end_dt;        	// 완료 날짜
+	private String pa_pro_id;   	// 상위 프로젝트 아이디
 	
 	public Project() { }
 	

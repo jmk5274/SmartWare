@@ -1,19 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style>
-	.chart, .taskList {
- 		width: auto;
-		height: 300px;
-	}
-	
-	.taskList > table {
-		width: 650px;
-	}
-	
-	td > h3 {
-		text-align: center;
-	} 
-</style>
+
+<!-- 현재 페이지의 css -->
+<link href= "${cp }/css/pms/main.css" rel="stylesheet" />
+
 <!-- body 시작 -->
 <div class="row">
 	<!-- filter -->
@@ -187,5 +177,11 @@
 <script src="${cp }/plugin/amcharts/charts.js"></script>
 <script src="${cp }/plugin/amcharts/animated.js"></script>
 
-<!-- 현재 페이지 차트 js -->
+
+<!-- 현재 페이지 js -->
+<script> // 외부스크립트에서 ${cp}를 사용하지 못하기 때문에 사용하려고 전역변수로 cp를 선언한다.
+	var cp = "${cp}";
+	var emp_id = "${S_EMPLOYEE.emp_id}";
+</script> 
+<script src="${cp }/js/pms/main.js"></script>
 <script src="${cp }/js/pms/chart.js"></script>
