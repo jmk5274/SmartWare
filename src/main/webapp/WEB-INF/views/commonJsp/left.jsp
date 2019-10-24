@@ -69,8 +69,7 @@
                     <i class="fa fa-sitemap"></i> <span class="nav-text">조직도</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/bootstrap/chart-flot.html">조직도 조회</a></li>
-                    <li><a href="${cp }/bootstrap/chart-morris.html">사원 검색</a></li>
+                    <li><a href="${cp }/employeeSearch">조직도 조회</a></li>
                     <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
                     <li><a href="${cp }/employeeList">사원 관리</a></li>
                     </c:if>

@@ -98,6 +98,49 @@ public class EmployeeController {
 		return "tiles/employee/employeeList";
 	}
 	
+	@RequestMapping(path = "employeeSearch", method = RequestMethod.GET)
+	public String employeeSearch(Employee employee, @RequestParam(name = "page", defaultValue = "1") Integer page,
+			@RequestParam(name = "pagesize", defaultValue = "30") Integer pagesize, HttpSession session, Model model) {
+		
+		employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("emp_id", employee.getEmp_id());
+		map.put("page", page);
+		map.put("pagesize", pagesize);
+		
+		List<Employee> employeeList = employeeService.getEmployeeList(map);
+//		logger.debug("employeeList : {}", employeeList);
+		logger.debug("employeeListSize : {}", employeeList.size());
+		
+		List<Employee> pageList = employeeService.allEmployeeList();
+		int paginationSize = (int) Math.ceil((double) pageList.size() / pagesize);
+		logger.debug("paginationSize {}", paginationSize);
+		
+		// 직급 전체 리스트
+		List<Position> positionList = positionService.getAllPosition();
+		
+		// 부서 전체 리스트
+		List<Department> departmentList = departmentService.getAllDepartment();
+		
+		// 직책 전체 리스트
+		List<Job> jobList = jobService.getAllJob();
+		
+		model.addAttribute("positionList", positionList);
+		model.addAttribute("emp_id", employee.getEmp_id());
+		model.addAttribute("emp_nm", employee.getEmp_nm());
+		model.addAttribute("employee", map.get("employee"));
+		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("page", page);
+		model.addAttribute("pagesize", pagesize);
+		model.addAttribute("paginationSize", paginationSize);
+		model.addAttribute("departmentList", departmentList);
+		model.addAttribute("jobList", jobList);
+		
+		return "tiles/employee/employeeSearch";
+	}
+	
 	/**
 	 * 
 	* Method : deletePost
