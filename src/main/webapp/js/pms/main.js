@@ -93,7 +93,7 @@ function printProject(idx, data) {
 	html += '   <div class="projectGroup"> <span class="groupTitle"> <i class="fa fa-user"></i>팀장:</span> ';
 	$.each(data.projectEmpJob, function(index, entry) {
 		if(entry.JOB_NM === "팀장") {
-			html += ' <span class="groupContent"><img src="/asd/employeePicture?emp_id=' + entry.EMP_ID + '" height="80" width="80" class="rounded-circle"> ' + entry.EMP_NM + '<span>';
+			html += ' <span class="groupContent"><img src="' + cp + '/employeePicture?emp_id=' + entry.EMP_ID + '" height="80" width="80" class="rounded-circle"> ' + entry.EMP_NM + '<span>';
 		}
 	});
 	html += '	</div>';
@@ -102,7 +102,7 @@ function printProject(idx, data) {
 	html += '   <div class="projectGroup"> <span class="groupTitle"><i class="fa fa-users"></i>팀원:</span> ';
 	$.each(data.projectEmpJob, function(index, entry) {
 		if(entry.JOB_NM === "팀원") {
-			html += ' <span class="groupContent"><img src="/asd/employeePicture?emp_id=' + entry.EMP_ID + '" height="80" width="80" class="rounded-circle"> ' + entry.EMP_NM + '<span>';
+			html += ' <span class="groupContent"><img src="' + cp + '/employeePicture?emp_id=' + entry.EMP_ID + '" height="80" width="80" class="rounded-circle"> ' + entry.EMP_NM + '<span>';
 		}
 	});
 	html += '	</div>';
