@@ -2,6 +2,7 @@ package kr.or.ddit.smartware.post.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +95,24 @@ public class PostController {
 			model.addAttribute("board_nm", board_nm);
 
 			return "tiles/post/selectPost";
+		}
+	}
+	
+	@GetMapping("getCommentList")
+	public String getCommentList(String post_id, Model model) {
+
+		if (post_id.equals("")) {
+			model.addAttribute("commentList", null);
+			return "jsonView";
+		} else {
+			Map<String, Object> map = postService.selectPost(post_id);
+
+			List<Comments> commentsList = (List<Comments>) map.get("commentsList");
+			List<PostFile> postfileList = postService.getPostFile(post_id);
+
+			model.addAttribute("commentsList", commentsList);
+
+			return "jsonView";
 		}
 	}
 
@@ -271,16 +290,18 @@ public class PostController {
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
 
 		String emp_id = employee.getEmp_id();
+		logger.debug("cont : {}", comments.getCont());
 
-		Comments comment = new Comments("0", comments.getPost_id(), emp_id, null, comments.getCont(), "F",
-				"0");
+		Comments comment = new Comments(null, comments.getPost_id(), emp_id, new Date(), comments.getCont(), "F",
+				comments.getPa_com_id());
 
 		postService.insertComments(comment);
 
 		model.addAttribute("board_id", board_id);
 		model.addAttribute("post_id", comments.getPost_id());
+		model.addAttribute("comments", comment);
 
-		return "redirect:/selectPost";
+		return "jsonView";
 	}
 
 	@PostMapping("deleteComments")
@@ -291,7 +312,7 @@ public class PostController {
 		model.addAttribute("post_id", comments.getPost_id());
 		model.addAttribute("board_id", board_id);
 
-		return "redirect:/selectPost";
+		return "jsonView";
 	}
 
 	@RequestMapping("fileDownloadView")

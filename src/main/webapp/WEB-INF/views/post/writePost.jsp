@@ -35,7 +35,7 @@ $(document).ready(function() {
 			cancelButtonColor: '#d33',
 			confirmButtonText: '네',
 			cancelButtonText: '아니오'
-		}).then((result) => {
+		}).then(result => {
 			if (result.value) {
 				Swal({
 					title: '등록 완료',

@@ -9,8 +9,11 @@
 	</select>
 	
 	<insert id="insertComments" parameterType="comments">
+	<selectKey keyProperty="com_id" resultType="String" order="BEFORE">
+		select 'com' || lpad(comments_seq.nextval,4,0) com_id from dual
+	</selectKey>
 		insert into comments (com_id, cont, reg_dt, post_id, emp_id, able)
-   			values('com' || lpad(comments_seq.nextval,4,0), #{cont}, sysdate, #{post_id}, #{emp_id}, 'F')
+   			values(#{com_id}, #{cont}, sysdate, #{post_id}, #{emp_id}, 'F')
 	</insert>
 	
 	<update id="deleteComments" parameterType="string">
