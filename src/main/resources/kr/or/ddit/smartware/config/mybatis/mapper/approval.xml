@@ -170,7 +170,8 @@
         UPDATE APPLICATION
         SET PROCEED = 'F',
             REFER = 'T',
-            REFER_EMP = #{emp_id}
+            REFER_EMP = #{emp_id},
+            refer_res = #{refer_res}
         WHERE APPL_ID = #{appl_id}
     </update>
 

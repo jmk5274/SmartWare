@@ -40,12 +40,37 @@
                 $('#${S_EMPLOYEE.job_id}').html(img);
 
                 $('#contents').val($('#appl').html());
-                $('#frm').submit();
-            })
+                $('#frm').attr('action', "${cp}/approval/checkAppl").submit();
+            });
         });
 
         $('#returnBtn').on('click', function () {
-
+            Swal({
+                title: '결재 반려',
+                text: "반려하시겠습니까?",
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '네',
+                cancelButtonText: '아니오'
+            }).then((result) => {
+                Swal.fire({
+                    title: '반려 사유',
+                    input: 'text',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'REFER',
+                    showLoaderOnConfirm: true,
+                    preConfirm : (data) => {
+                        $('#refer_res').val(data);
+                    }
+                }).then((result) => {
+                        $('#frm').attr('action', "${cp}/approval/checkRefer").submit();
+                });
+            });
         });
     });
 </script>
@@ -61,9 +86,10 @@
                 <div class="card-body">
                     <div class="email-center-box">
                         <div class="toolbar" role="toolbar">
-                            <form id="frm" action="${cp}/approval/checkAppl" method="post" enctype="multipart/form-data">
+                            <form id="frm" method="post" enctype="multipart/form-data">
                                 <input id="contents" name="cont" type="hidden" value="">
                                 <input id="appl_id" name="appl_id" type="hidden" value="${appl.appl_id}">
+                                <input id="refer_res" name="refer_res" type="hidden" value="">
                                 <div class="compose-content mt-5">
                                 </div>
                                 <br>
@@ -89,18 +115,25 @@
                             </form>
                         </div>
                         <c:if test="${flag eq 'c'}" >
-                            <div class="text-left m-t-15">
+                             <div class="text-left m-t-15">
                                 <button id="okBtn"
                                         class="btn btn-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
                                         type="button">
                                     <i class="fa fa-paper-plane m-r-5"></i> 승인
                                 </button>
-                                <a href="${cp }/main">
-                                    <button id = "returnBtn" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20"
-                                            type="button">
-                                        <i class="ti-close m-r-5 f-s-12"></i> 기각
-                                    </button>
-                                </a>
+                                <button id = "returnBtn" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20"
+                                        type="button">
+                                    <i class="ti-close m-r-5 f-s-12"></i> 기각
+                                </button>
+                            </div>
+                        </c:if>
+                        <c:if test="${flag eq 'sr'}" >
+                            <div class="text-left m-t-15">
+                                <button id="reSend"
+                                        class="btn btn-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
+                                        type="button">
+                                    <i class="fa fa-paper-plane m-r-5"></i> 재송신
+                                </button>
                             </div>
                         </c:if>
                     </div>

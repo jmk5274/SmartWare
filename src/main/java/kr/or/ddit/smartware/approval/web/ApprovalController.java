@@ -288,12 +288,20 @@ public class ApprovalController {
     }
 
     /* 반려하기 */
-//    @PostMapping("checkRefer")
+    @PostMapping("checkRefer")
+    public String checkRefer(@RequestParam Map data, HttpSession session, RedirectAttributes redirectAttributes) {
+        Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
+        data.put("emp_id", employee.getEmp_id());
+        int referAppl = approvalService.referAppl(data);
+
+        return "redirect:/approval/confirmApplList";
+    }
 
     /* 도장사진 입력 */
     @GetMapping("empSignPicture")
-    public void empSignPicture(HttpSession session, HttpServletResponse response, String sign) {
-        Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
+    public void empSignPicture(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
+//        Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
+        String sign = request.getParameter("sign");
 
         ServletOutputStream sos = null;
         FileInputStream fis = null;
@@ -302,7 +310,7 @@ public class ApprovalController {
 
         try {
             sos = response.getOutputStream();
-            picture = new File(path+"/"+employee.getSign());
+            picture = new File(path+"/"+sign);
             try {
                 fis = new FileInputStream(picture);
             } catch (Exception e) {

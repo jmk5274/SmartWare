@@ -17,6 +17,11 @@
     <!-- include summernote css/js-->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+    <%-- select2 --%>
+    <link href= "${cp }/plugin/select2/select2.min.css" rel="stylesheet"/>
+    <script src="${cp }/plugin/select2/select2.min.js"></script>
+
     <style>
         .checkBlock {
             float: right;
@@ -57,6 +62,15 @@
                 });
             } else {
                 $('.note-editable.panel-body').html("");
+            }
+        });
+
+        $('#modalBtn').on('click', function () {
+            var form_id = $('#formList').val();
+            if (form_id == null || form_id == 'noForm') {
+                alertError("양식을 선택하세요");
+            } else {
+                $('#basicModal').modal('show');
             }
         });
 
@@ -249,7 +263,8 @@
                                     <input id="to" type="text" name="to" value=""
                                            placeholder=" To" readonly
                                            style="width: 400px; height: 43px;"> &nbsp;&nbsp
-                                    <button type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button> &nbsp
+<%--                                    <button id="modalBtn" type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button> &nbsp--%>
+                                    <button id="modalBtn" type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10">주소록</button> &nbsp
                                     <button id="myAppr" type="button" class="btn btn-outline-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10">개인 결재선</button>
                                     <br>
                                 </div>

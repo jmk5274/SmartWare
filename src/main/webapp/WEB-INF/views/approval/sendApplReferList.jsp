@@ -15,7 +15,7 @@
 </script>
 
 <form id="frm">
-	<input type="hidden" id="flag" name="flag" value="s">
+	<input type="hidden" id="flag" name="flag" value="sr">
 </form>
 	<div class="container-fluid">
 	<div class="row">
