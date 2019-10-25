@@ -136,4 +136,10 @@
 		 where emp_id = #{emp_id}
 	</update>
 	
+	<!-- 사원 아이디 중복체크 -->
+	<select id = "idCheck" parameterType = "String" resultType = "int">
+    	select count(*) from employee 
+    	 where emp_id = #{emp_id}
+	</select>
+	
 </mapper>

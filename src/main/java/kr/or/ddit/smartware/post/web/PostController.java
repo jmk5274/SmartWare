@@ -181,7 +181,7 @@ public class PostController {
 		model.addAttribute("post_id", seq);
 		model.addAttribute("board_id", board_id);
 
-		return "redirect:/post";
+		return "redirect:/selectPost";
 	}
 
 	@GetMapping(path = "modifyPost")

@@ -92,4 +92,9 @@ public class EmployeeService implements IEmployeeService{
 		return employeeDao.searchEmp(keyword);
 	}
 
+	@Override
+	public int idCheck(String emp_id) {
+		return employeeDao.idCheck(emp_id);
+	}
+
 }

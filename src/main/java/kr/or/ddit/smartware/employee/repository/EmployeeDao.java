@@ -100,4 +100,9 @@ public class EmployeeDao implements IEmployeeDao {
 		return sqlSession.selectList("employee.searchEmp", keyword);
 	}
 
+	@Override
+	public int idCheck(String emp_id) {
+		return sqlSession.selectOne("employee.idCheck", emp_id);
+	}
+
 }
