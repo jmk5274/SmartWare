@@ -167,4 +167,15 @@ public interface IEmployeeDao {
 	 */
 	int updateEmployeeJob(Employee employee);
 	
+	/**
+	 * 
+	* Method : idCheck
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 아이디 중복 체크
+	 */
+	int idCheck(String emp_id);
+	
 }

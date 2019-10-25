@@ -52,7 +52,7 @@
 											<tr class="postTr" data-post_id="${ list.post_id }">
 										</c:when>
 										<c:otherwise>
-											<tr class="postTr" data-post_id="">
+											<tr data-post_id="">
 										</c:otherwise>
 									</c:choose>
 										<td >${list.post_id }</td>
@@ -66,7 +66,7 @@
 										
 										<c:choose>
 											<c:when test="${list.able == 'T' }">
-												<font color="silver">삭제된 게시글입니다.</font>
+												삭제된 게시글입니다.
 											</c:when>
 											<c:otherwise>
 												${list.title }

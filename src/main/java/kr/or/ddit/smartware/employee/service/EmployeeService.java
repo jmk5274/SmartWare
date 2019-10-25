@@ -102,4 +102,9 @@ public class EmployeeService implements IEmployeeService{
 		return employeeDao.getDetailPagingList(map);
 	}
 
+	@Override
+	public int idCheck(String emp_id) {
+		return employeeDao.idCheck(emp_id);
+	}	
+
 }
