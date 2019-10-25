@@ -100,27 +100,8 @@
 				text: '사원 아이디를 입력해주세요.'
 			})
 				return;
-		}
 			
-// 			$.ajax({
-// 		        url: '${cp}idCheck',
-// 		        type :'POST',
-// 		        data :{
-// 		        	emp_id : newEmp_id
-// 		        },
-// 		        success: function(data){
-// 		            if($.trim(data) == 0){
-// 		                $('#chkMsg').html("<font color='blue'>사용가능한 아이디입니다.</font>");                
-// 		            }else{
-// 		                $('#chkMsg').html("<font color='red'>중복된 아이디입니다.</font>");
-// 		            }
-// 		        },
-// 		        error:function(){
-// 		                alert("에러입니다");
-// 		        }
-// 		    });
-			
-		if(newEmp_nm == '' || newEmp_nm.length == 0){
+		} else if(newEmp_nm == '' || newEmp_nm.length == 0){
 			Swal({
 				type: 'warning', // success, error, warning, info, question
 				title: '필수 사항',
@@ -205,7 +186,7 @@
 		        },
 		        success: function(data){
 		            if($.trim(data) == 0){
-		                $('#chkMsg').html("<font color='blue'>사용가능한 아이디입니다.</font>");                
+		                $('#chkMsg').html("<font color='blue'>사용 가능한 아이디입니다.</font>");                
 		            }else{
 		                $('#chkMsg').html("<font color='red'>중복된 아이디입니다.</font>");
 		            }
