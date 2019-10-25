@@ -107,8 +107,12 @@ public class EmployeeController {
 		map.put("page", page);
 		map.put("pagesize", pagesize);
 		
-		List<Map> employeeList = employeeService.getDetailEmpList();
-		int paginationSize = (int) Math.ceil((double) employeeList.size() / pagesize);
+		
+		List<Map> list = employeeService.getDetailEmpList();
+		logger.debug("list.size() - {}", list.size());
+		List<Map> employeeList = employeeService.getDetailPagingList(map);
+		logger.debug("emplo-size - {}", employeeList.size());
+		int paginationSize = (int) Math.ceil(((double)list.size() / pagesize));
 		logger.debug("paginationSize {}", paginationSize);
 		
 		// 직급 전체 리스트
@@ -329,7 +333,7 @@ public class EmployeeController {
 	public String detailEmp(String emp_id, Model model) {
 		logger.debug("emp_id - {}", emp_id);
 		
-		Map emp = employeeService.getEmployeeDetail(emp_id);
+		Map emp = employeeService.getEmployeeDetail2(emp_id);
 		model.addAttribute("emp", emp);
 		
 		return "jsonView";

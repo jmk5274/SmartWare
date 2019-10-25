@@ -92,4 +92,14 @@ public class EmployeeService implements IEmployeeService{
 		return employeeDao.searchEmp(keyword);
 	}
 
+	@Override
+	public Map getEmployeeDetail2(String emp_id) {
+		return employeeDao.getEmployeeDetail2(emp_id);
+	}
+
+	@Override
+	public List<Map> getDetailPagingList(Map map) {
+		return employeeDao.getDetailPagingList(map);
+	}
+
 }

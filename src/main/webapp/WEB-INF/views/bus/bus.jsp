@@ -6,10 +6,70 @@
 <div id="map" style="width:100%;height:400px;"></div>
 
 <script>
-var mapOptions = {
-    center: new naver.maps.LatLng(36.325050, 127.420167),
-    zoom: 8
-};
+ $(function(){
+	 $("#bus").click(function(){
+		 
+		 $.ajax({
+			 url : "/busMap",
+			 type : "GET",
+			 dataType: "text",
+			 success: function(data){
+				 console.log(data);
+				 if(data){
+					 map = new naver.maps.Map('map', map);
+					 
+// 					 $(data).firstChild('itemList').each(function(){
+// 						 var tmX = $(this).find("GPS_LATI").text();
 
-var map = new naver.maps.Map('map', mapOptions);
+						 var tmX = $(data).find('itemList').first('itemList').find("GPS_LATI").text();
+						 console.log(tmX);
+// 						 var tmY = $(this).find("GPS_LONG").text();
+						 var tmY = $(data).find('itemList').first('itemList').find("GPS_LONG").text();
+						 console.log(tmY);
+						 
+						 marker = new naver.maps.Marker({
+							
+							 position: new naver.maps.LatLng(tmX, tmY),
+							 map: map
+						 });
+// 					 });
+				 }
+			 }
+		 });
+	 });
+ })
+ 
+
+var mapOptions = {
+    center: new naver.maps.LatLng(36.350681, 127.384797),
+    
+    zoom: 8
+ }
+
+var map = new naver.maps.Map("map", mapOptions);
+
+// var polyline = new naver.maps.Polyline({
+//     map: map,
+//     path: [],
+//     strokeColor: '#5347AA',
+//     strokeWeight: 2
+// });
+
+// naver.maps.Event.addListener(map, 'change', function(e) {
+
+//     var point = e.coord;
+
+//     var path = polyline.getPath();
+//     path.push(point);
+
+//     new naver.maps.Marker({
+//         map: map,
+//         position: point
+//     });
+// });
+
 </script>
+
+
+
+<button id="bus" type="button">Bus</button>

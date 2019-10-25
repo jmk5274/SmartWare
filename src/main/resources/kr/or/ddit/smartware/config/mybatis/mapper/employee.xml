@@ -34,24 +34,38 @@
         AND a.JOB_ID = d.JOB_ID
     </select>
     
+    
+     <!-- 사원 상세 정보 3 (직급, 직책 이름 추가 null인경우 사용) -->
+    <select id="getEmployeeDetail2" parameterType="String" resultType="hashmap">
+         select a.*, b.*, c.*, d.*
+        from employee a
+        LEFT OUTER JOIN position b ON a.POSI_ID = b.POSI_ID
+        LEFT OUTER JOIN DEPARTMENT c ON a.DEPART_ID = c.DEPART_ID
+        LEFT OUTER JOIN JOB d ON a.JOB_ID = d.JOB_ID
+        where a.EMP_ID = #{emp_id}
+        ORDER BY a.posi_id
+    </select>
+    
     <!-- 부서별 사원 정보 -->
     <select id="getDepartEmpDetail" parameterType="String" resultType="hashmap">
 	     select a.*, b.*, c.*, d.*
-	        from employee a, position b, DEPARTMENT c, JOB d
-	        where c.DEPART_ID = #{depart_id}
-	        AND a.POSI_ID = b.POSI_ID
-	        AND a.DEPART_ID = c.DEPART_ID
-	        AND a.JOB_ID = d.JOB_ID
+        from employee a
+        LEFT OUTER JOIN position b ON a.POSI_ID = b.POSI_ID
+        LEFT OUTER JOIN DEPARTMENT c ON a.DEPART_ID = c.DEPART_ID
+        LEFT OUTER JOIN JOB d ON a.JOB_ID = d.JOB_ID
+        where c.DEPART_ID = #{depart_id}
+        ORDER BY a.posi_id
     </select>
     
     <!-- 사원 검색 -->
     <select id="searchEmp" parameterType="String" resultType="hashMap">
-    	select a.*, b.*, c.*, d.*
-        from employee a, position b, DEPARTMENT c, JOB d
+    	   select a.*, b.*, c.*, d.*
+        from employee a
+        LEFT OUTER JOIN position b ON a.POSI_ID = b.POSI_ID
+        LEFT OUTER JOIN DEPARTMENT c ON a.DEPART_ID = c.DEPART_ID
+        LEFT OUTER JOIN JOB d ON a.JOB_ID = d.JOB_ID
         where a.emp_nm  like '%'||#{keyword}||'%' 
-        AND a.POSI_ID = b.POSI_ID
-        AND a.DEPART_ID = c.DEPART_ID
-        AND a.JOB_ID = d.JOB_ID
+        ORDER BY a.posi_id
     </select>
     
 	
@@ -66,6 +80,23 @@
 		        order by emp_id) a) a
 		where rn between #{pagesize}*(#{page} - 1) + 1 and #{pagesize}*#{page}
 	</select>
+	
+	
+	<!-- 사원 페이징리스트 (직책이름, 부서이름, 직위이름 추가) -->
+	<select id="getDetailPagingList" resultType="hashMap" parameterType="map">
+		 select a.*
+			from 
+			    (select rownum rn, a.*
+			     from 
+	            (select a.*, b.posi_nm, c.depart_nm, d.job_nm
+	                from employee a
+	                LEFT OUTER JOIN position b ON a.POSI_ID = b.POSI_ID
+	                LEFT OUTER JOIN DEPARTMENT c ON a.DEPART_ID = c.DEPART_ID
+	                LEFT OUTER JOIN JOB d ON a.JOB_ID = d.JOB_ID
+	                ORDER BY a.posi_id) a) a
+	      where rn between #{pagesize}*(#{page} - 1) + 1 and #{pagesize}*#{page}
+      </select>
+	
 	
 	<!-- 사원 등록 -->
 	<insert id="insertEmployee" parameterType="employee">
