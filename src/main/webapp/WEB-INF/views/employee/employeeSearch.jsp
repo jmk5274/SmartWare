@@ -35,6 +35,9 @@ function btnevent(){
 							$("#position").text(posi_nm);
 							
 							var job_nm = data.emp.JOB_NM;
+							if(job_nm == undefined){
+								job_nm = "(직책없음)";
+							}
 							$("#job").text(job_nm);
 							
 							
@@ -241,7 +244,14 @@ function btnevent(){
 													<td>${employee.EMP_NM }</td>
 													<td>${employee.DEPART_NM }</td>
 													<td>${employee.POSI_NM }</td>
-													<td>${employee.JOB_NM}</td>
+													<c:choose>
+														<c:when test="${employee.JOB_NM eq undefined}">
+															<td>(직책없음)</td>
+														</c:when>
+														<c:otherwise>
+															<td>${employee.JOB_NM}</td>
+														</c:otherwise>
+													</c:choose>
 													<td><fmt:formatDate value="${employee.JOIN_DT }" pattern="yyyy-MM-dd"/></td>
 													<td><button type="button" class="btn btn-primary detailEmp" data-id="${employee.EMP_ID }" data-toggle="modal" data-target=".bd-example-modal-lg">사원 상세보기</button></td>
 												</tr>

@@ -100,4 +100,19 @@ public class EmployeeDao implements IEmployeeDao {
 		return sqlSession.selectList("employee.searchEmp", keyword);
 	}
 
+	@Override
+	public Map getEmployeeDetail2(String emp_id) {
+		return sqlSession.selectOne("employee.getEmployeeDetail2", emp_id);
+	}
+
+	@Override
+	public List<Map> getDetailPagingList(Map map) {
+		return sqlSession.selectList("employee.getDetailPagingList", map);
+	}
+
+	@Override
+	public int idCheck(String emp_id) {
+		return sqlSession.selectOne("employee.idCheck", emp_id);
+	}
+
 }

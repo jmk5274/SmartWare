@@ -150,7 +150,9 @@
 						<div class="row m-b-30">
 							<div class="col-auto"></div>
 							<c:forEach items="${infos }" var="info">
+								
 								<a href="${cp }/fileDownloadView2?filename=${info.originalFileName} ">
+								<i class="fa fa-file-pdf-o text-info fa-3x" style="display: block"></i>
 								<span>${info.originalFileName }</span>&nbsp;&nbsp;&nbsp;</a>
 							</c:forEach>
 						</div>

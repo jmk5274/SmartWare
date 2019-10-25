@@ -175,7 +175,32 @@
 		});
 	});
 	
+	$('#newEmp_id').focusout(function() {
+		var newEmp_id = $("#newEmp_id").val();
+		
+		$.ajax({
+		        url: '${cp}idCheck',
+		        type :'POST',
+		        data :{
+		        	emp_id : newEmp_id
+		        },
+		        success: function(data){
+		            if($.trim(data) == 0){
+		                $('#chkMsg').html("<font color='blue'>사용 가능한 아이디입니다.</font>");                
+		            }else{
+		                $('#chkMsg').html("<font color='red'>중복된 아이디입니다.</font>");
+		            }
+		        },
+		        error:function(){
+		                alert("에러입니다");
+		        }
+		 });
+	
+	});
+	
 });
+
+	
 		
 // 		$("#createFrm").submit();
 // 	});
@@ -213,6 +238,7 @@
 								<!-- 사원 아이디(emp_id) -->
 								<td>
 								<input placeholder="e0000" id="newEmp_id" type="text" name="emp_id" class="form-control" value=""/>
+								<span id = "chkMsg"></span>
 								</td>
 								<td><label class="col-sm control-label">비밀번호</label></td>
 								<!-- 비밀번호(pass) -->

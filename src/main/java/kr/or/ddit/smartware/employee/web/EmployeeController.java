@@ -21,11 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.smartware.employee.model.Department;
@@ -107,8 +109,12 @@ public class EmployeeController {
 		map.put("page", page);
 		map.put("pagesize", pagesize);
 		
-		List<Map> employeeList = employeeService.getDetailEmpList();
-		int paginationSize = (int) Math.ceil((double) employeeList.size() / pagesize);
+		
+		List<Map> list = employeeService.getDetailEmpList();
+		logger.debug("list.size() - {}", list.size());
+		List<Map> employeeList = employeeService.getDetailPagingList(map);
+		logger.debug("emplo-size - {}", employeeList.size());
+		int paginationSize = (int) Math.ceil(((double)list.size() / pagesize));
 		logger.debug("paginationSize {}", paginationSize);
 		
 		// 직급 전체 리스트
@@ -280,6 +286,12 @@ public class EmployeeController {
 				
 	}
 	
+	@PostMapping("idCheck")
+	public @ResponseBody String idCheck(@ModelAttribute("employee") Employee employee , Model model) throws Exception{
+		int result = employeeService.idCheck(employee.getEmp_id());
+	    return String.valueOf(result);  
+	}
+	
 	@GetMapping("departSearch")
 	public String departSearch(String depart_id, Model model, @RequestParam(name = "page", defaultValue = "1") Integer page,
 			@RequestParam(name = "pagesize", defaultValue = "30") Integer pagesize) {
@@ -329,7 +341,7 @@ public class EmployeeController {
 	public String detailEmp(String emp_id, Model model) {
 		logger.debug("emp_id - {}", emp_id);
 		
-		Map emp = employeeService.getEmployeeDetail(emp_id);
+		Map emp = employeeService.getEmployeeDetail2(emp_id);
 		model.addAttribute("emp", emp);
 		
 		return "jsonView";
