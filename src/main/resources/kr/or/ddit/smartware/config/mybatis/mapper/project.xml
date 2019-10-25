@@ -55,13 +55,15 @@
 	               from task
 	              where task_id in (select task_id
 	                                  from pro_task
-	                                 where pro_id = #{pro_id})
+	                                 where pro_id = #{pro_id}
+	                                   and pa_task_id is not null)
 	                and per = 100) a,
 	            (select count(*) as delay
 	               from task
 	              where task_id in (select task_id
 	                                  from pro_task
-	                                 where pro_id = #{pro_id})
+	                                 where pro_id = #{pro_id}
+	                                   and pa_task_id is not null)
 	                and end_dt <![CDATA[<=]]> sysdate
 	                and per <![CDATA[<]]> 100
 	              order by st_dt, end_dt) b,
@@ -69,7 +71,8 @@
 	               from task
 	              where task_id in (select task_id
 	                                  from pro_task
-	                                 where pro_id = #{pro_id})
+	                                 where pro_id = #{pro_id}
+	                                   and pa_task_id is not null)
 	                and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
 	                and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
 	                and per <![CDATA[<]]> 100
@@ -78,7 +81,8 @@
 	               from task
 	              where task_id in (select task_id
 	                                  from pro_task
-	                                 where pro_id = #{pro_id})
+	                                 where pro_id = #{pro_id}
+	                                   and pa_task_id is not null)
 	                and st_dt > sysdate
 	                and per <![CDATA[<]]> 100) d
 	</select>
@@ -91,14 +95,16 @@
 	              where task_id in (select task_id
 	                                  from pro_task
 	                                 where pro_id = #{pro_id}
-	                                   and emp_id = #{emp_id})
+	                                   and emp_id = #{emp_id}
+	                                   and pa_task_id is not null)
 	                and per = 100) a,
 	            (select count(*) as delay
 	               from task
 	              where task_id in (select task_id
 	                                  from pro_task
 	                                 where pro_id = #{pro_id}
-	                                   and emp_id = #{emp_id})
+	                                   and emp_id = #{emp_id}
+	                                   and pa_task_id is not null)
 	                and end_dt <![CDATA[<=]]> sysdate
 	                and per <![CDATA[<]]> 100
 	              order by st_dt, end_dt) b,
@@ -107,7 +113,8 @@
 	              where task_id in (select task_id
 	                                  from pro_task
 	                                 where pro_id = #{pro_id}
-	                                   and emp_id = #{emp_id})
+	                                   and emp_id = #{emp_id}
+	                                   and pa_task_id is not null)
 	                and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
 	                and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
 	                and per <![CDATA[<]]> 100
@@ -117,7 +124,8 @@
 	              where task_id in (select task_id
 	                                  from pro_task
 	                                 where pro_id = #{pro_id}
-	                                   and emp_id = #{emp_id})
+	                                   and emp_id = #{emp_id}
+	                                   and pa_task_id is not null)
 	                and st_dt > sysdate
 	                and per <![CDATA[<]]> 100) d
 	</select>

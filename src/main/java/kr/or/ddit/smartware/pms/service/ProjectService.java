@@ -62,7 +62,7 @@ public class ProjectService implements IProjectService {
 	public List<Employee> getProjectEmployee(String pro_id) {
 		return projectDao.getProjectEmployee(pro_id);
 	}
-	private static final Logger logger = LoggerFactory.getLogger(ProjectService.class);
+	
 	@Override
 	public Map<String, Object> getDetailProject(String emp_id, String type) {
 		// 사원이 속한 프로젝트 리스트(running or past)

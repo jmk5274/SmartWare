@@ -133,63 +133,65 @@ INSERT INTO DEPARTMENT VALUES ('de' || LPAD(DEPARTMENT_SEQ.NEXTVAL,4,0), '인사
 
 
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '하재관', 'USER', 'worhks@gmail.com', '010-1111-1111',
-							TO_DATE(20100101, 'YYYY/MM/DD'), 'de0001', 'posi0001', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20100101, 'YYYY/MM/DD'), 'de0001', 'posi0001', 'e0001.png', null, 'T', null);
 							
 							
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '이진우', 'USER', 'wlsdn@gmail.com', '010-2222-1111',
-							TO_DATE(20130101, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20130101, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'e0002.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '송찬중', 'USER', 'ckdwns@gmail.com', '010-2222-2222',
-							TO_DATE(20130601, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'C:\picture\cony.png', null, 'T', null);
-							
+							TO_DATE(20130601, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'e0003.png', null, 'T', null);
+insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '이영만', 'USER', 'dudaks@gmail.com', '010-2222-3333',
+							TO_DATE(20130601, 'YYYY/MM/DD'), 'de0001', 'posi0002', 'e0004.png', null, 'T', null);
+														
 --인사팀 ADMIN(POSITION 하나더생김)
 insert into employee values('admin', 'test1234', '관리자', 'ADMIN', 'admin@gmail.com', '010-0000-0000',
-							TO_DATE(20000101, 'YYYY/MM/DD'), 'de0006', null, 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20000101, 'YYYY/MM/DD'), 'de0006', null, 'admin.png', null, 'T', null);
 	
 	
 															
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '배상현', 'USER', 'bshn1234@gmail.com', '010-7277-7285',
-							TO_DATE(20150115, 'YYYY/MM/DD'), 'de0002', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20150115, 'YYYY/MM/DD'), 'de0002', 'posi0003', 'e0005.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '윤재훈', 'USER', 'wogns@gmail.com', '010-3333-2222',
-							TO_DATE(20150518, 'YYYY/MM/DD'), 'de0003', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20150518, 'YYYY/MM/DD'), 'de0003', 'posi0003', 'e0006.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박진하', 'USER', 'wlsgk@gmail.com', '010-3333-3333',
-							TO_DATE(20150823, 'YYYY/MM/DD'), 'de0004', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20150823, 'YYYY/MM/DD'), 'de0004', 'posi0003', 'e0007.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박태순', 'USER', 'xotns@gmail.com', '010-3333-4444',
-							TO_DATE(20160303, 'YYYY/MM/DD'), 'de0005', 'posi0003', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20160303, 'YYYY/MM/DD'), 'de0005', 'posi0003', 'e0008.png', null, 'T', null);
 							
 							
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '조민수', 'USER', 'mingsoocode@gmail.com', '010-3092-3837',
-							TO_DATE(20170703, 'YYYY/MM/DD'), 'de0002', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170703, 'YYYY/MM/DD'), 'de0002', 'posi0004', 'e0009.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김혜인', 'USER', 'gpdls@gmail.com', '010-4444-1111',
-							TO_DATE(20170906, 'YYYY/MM/DD'), 'de0003', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170906, 'YYYY/MM/DD'), 'de0003', 'posi0004', 'e0010.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '윤경주', 'USER', 'rudwn@gmail.com', '010-4444-2222',
-							TO_DATE(20170825, 'YYYY/MM/DD'), 'de0004', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170825, 'YYYY/MM/DD'), 'de0004', 'posi0004', 'e0011.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '강승구', 'USER', 'tmdrn@gmail.com', '010-4444-3333',
-							TO_DATE(20170920, 'YYYY/MM/DD'), 'de0005', 'posi0004', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170920, 'YYYY/MM/DD'), 'de0005', 'posi0004', 'e0012.png', null, 'T', null);
 							
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '전민규', 'USER', 'jmk5274@gmail.com', '010-6406-5274',
-							TO_DATE(20170404, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170404, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'e0013.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김도훈', 'USER', 'testhoon1217@gmail.com', '010-2566-7607',
-							TO_DATE(20191010, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'C:\picture\cony.png', null, 'T', 'ewqdsa556');
+							TO_DATE(20191010, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'e0014.png', null, 'T', 'ewqdsa556');
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '홍다은', 'USER', 'testhong@gmail.com', '010-9326-3253',
-							TO_DATE(20181005, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20181005, 'YYYY/MM/DD'), 'de0002', 'posi0005', 'e0015.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김시우', 'USER', 'tldn@gmail.com', '010-5555-1111',
-							TO_DATE(20170706, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170706, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'e0016.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박은지', 'USER', 'dmswl@gmail.com', '010-5555-2222',
-							TO_DATE(20190909, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20190909, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'e0017.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '차주환', 'USER', 'wnghks@gmail.com', '010-5555-3333',
-							TO_DATE(20180618, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20180618, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'e0018.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '류우찬', 'USER', 'dncks@gmail.com', '010-5555-4444',
-							TO_DATE(20170203, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170203, 'YYYY/MM/DD'), 'de0003', 'posi0005', 'e0019.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '박채은', 'USER', 'codms@gmail.com', '010-5555-5555',
-							TO_DATE(20180901, 'YYYY/MM/DD'), 'de0004', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20180901, 'YYYY/MM/DD'), 'de0004', 'posi0005', 'e0020.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '조하경', 'USER', 'gkrud@gmail.com', '010-5555-6666',
-							TO_DATE(20190806, 'YYYY/MM/DD'), 'de0004', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20190806, 'YYYY/MM/DD'), 'de0004', 'posi0005', 'e0021.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '강해신', 'USER', 'gotls@gmail.com', '010-5555-7777',
-							TO_DATE(20170403, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170403, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'e0022.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '최재영', 'USER', 'wodud@gmail.com', '010-5555-8888',
-							TO_DATE(20170303, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'C:\picture\cony.png', null, 'T', null);
+							TO_DATE(20170303, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'e0023.png', null, 'T', null);
 insert into employee values('e' || LPAD(EMPLOYEE_SEQ.NEXTVAL,4,0), 'test1234', '김소리', 'USER', 'thflthfl@gmail.com', '010-5555-9999',
-							TO_DATE(20170406, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'C:\picture\cony.png', null, 'F', null);
+							TO_DATE(20170406, 'YYYY/MM/DD'), 'de0005', 'posi0005', 'e0024.png', null, 'F', null);
 							
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -279,7 +281,7 @@ INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VAL
 
 INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '영화관 예매 시스템', to_date('20190612', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), NULL);
 INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '유기동물 입양 시스템', to_date('20190819', 'YYYYMMDD'), to_date('20190906', 'YYYYMMDD'), NULL);
-INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '스마트 웨어', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')+12+23/24+59/1440);
+INSERT INTO PROJECT VALUES ('pj' || LPAD(PROJECT_SEQ.NEXTVAL,4,0), '스마트 웨어', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')+12+23/24+59/1440, NULL);
      
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --프로젝트 구성원
@@ -306,16 +308,16 @@ INSERT INTO PRO_POSITION VALUES('e0015', 'pj0003', 'job0004');
 --업무
 
 -- pj0001
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그인', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그아웃', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '게시판 구현', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '예매 구현', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영화관 배치 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '예매 내역 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영화관 관리 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이페이지 구현', to_date('201909020000', 'YYYYMMDDHH24MI'), to_date('201909062359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원탈퇴 구현', to_date('201909020000', 'YYYYMMDDHH24MI'), to_date('201909062359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '기능', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '로그인과 로그아웃', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '게시판 구현', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '예매 구현', to_date('201906120000', 'YYYYMMDDHH24MI'), to_date('201907052359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '공지사항 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영화관 배치 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '예매 내역 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '영화관 관리 구현', to_date('201907080000', 'YYYYMMDDHH24MI'), to_date('201907262359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '마이페이지 구현', to_date('201909020000', 'YYYYMMDDHH24MI'), to_date('201909062359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '회원탈퇴 구현', to_date('201909020000', 'YYYYMMDDHH24MI'), to_date('201909062359', 'YYYYMMDDHH24MI'), 'pj0001', 'task0001', 100);
 
 -- pj0002
 -- task0011 ~ task0031
@@ -738,7 +740,6 @@ INSERT INTO PRO_TASK VALUES('e0005', 'task0182', 'pj0003');
 --업무 기록
 
 -- pj0001
-INSERT INTO TASK_HISTORY VALUES('hist' || LPAD(TASK_HISTORY_SEQ.NEXTVAL,4,0), 'task0001', 'e0005', '진척도를 0에서 100으로 변경하였습니다.', to_date('201907041300', 'YYYYMMDDHH24MI'));
 INSERT INTO TASK_HISTORY VALUES('hist' || LPAD(TASK_HISTORY_SEQ.NEXTVAL,4,0), 'task0002', 'e0009', '진척도를 0에서 100으로 변경하였습니다.', to_date('201907041300', 'YYYYMMDDHH24MI'));
 INSERT INTO TASK_HISTORY VALUES('hist' || LPAD(TASK_HISTORY_SEQ.NEXTVAL,4,0), 'task0003', 'e0013', '진척도를 0에서 100으로 변경하였습니다.', to_date('201907041300', 'YYYYMMDDHH24MI'));
 INSERT INTO TASK_HISTORY VALUES('hist' || LPAD(TASK_HISTORY_SEQ.NEXTVAL,4,0), 'task0004', 'e0015', '진척도를 0에서 100으로 변경하였습니다.', to_date('201907041300', 'YYYYMMDDHH24MI'));

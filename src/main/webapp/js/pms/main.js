@@ -7,7 +7,9 @@ $(function() {
 		success: function(datas) {
 			$.each(datas.hashMap, function(idx, data) {
 				$("#runningProject").append(printProject(idx, data));
-			})
+				printChart(idx, data.allProjectChart, data.project.pro_id); // 전체 현황
+				printChart(idx, data.empProjectChart, data.project.pro_id + '_' + emp_id); // 나의 현황 
+			});
 		}
 	});
 	
@@ -21,10 +23,15 @@ $(function() {
 				$("#pastProject").append(printProject(idx, data));
 				printChart(idx, data.allProjectChart, data.project.pro_id); // 전체 현황
 				printChart(idx, data.empProjectChart, data.project.pro_id + '_' + emp_id); // 나의 현황 
-			})
+			});
 		}
 	});
-
+	
+	// 신규 프로젝트 생성 버튼 클릭
+	$("#btnInsertProject").on("click", function() {
+		$("#projectModal").modal("show");
+	});
+	
 });
 
 function printProject(idx, data) {
@@ -32,68 +39,49 @@ function printProject(idx, data) {
 	console.log(data);
 	var html = "";
 	html += '<hr>';
-	html += '<blockquote>';
-	html += '   <h3>' + data.project.pro_nm + '</h3>';
+	html += '<div class="projectContent">';
+	html += '   <h2><i class="fa fa-angle-right"></i> ' + data.project.pro_nm + '</h2>';
 	html += '   <hr>';
 	html += '   <table>';
 	html += '   	<tbody>';
 	html += '   		<tr>';
 	html += '   			<td>';
-	html += '   				<h3>전체 현황</h3>';
+	html += '   				<h2><i class="fa fa-pie-chart"></i> 전체 현황</h2>';
 	html += '   		    	<div id=' + data.project.pro_id + ' class="chart"></div>';
 	html += '   			</td>';
 	html += '   			<td>';
-	html += '   				<h3>나의 현황</h3>';
+	html += '   				<h2><i class="fa fa-pie-chart"></i> 나의 현황</h2>';
 	html += '   		    	<div id=' + data.project.pro_id + '_' + emp_id + ' class="chart"></div>';
 	html += '   			</td>';
 	html += '   			<td>';
-    html += '                   <h3>주간 업무</h3>';
+	html += '                   <h2><i class="fa fa-tasks"></i> 주간 업무</h2>';
     html += '                   <div class="taskList">';
-	html += '                       <table class="table header-border table-hover verticle-middle">';
-	html += '                           <thead>';
-	html += '                               <tr>';
-	html += '                                   <th scope="col"></th>';
-	html += '                                   <th scope="col">업무명</th>';
-	html += '                                   <th scope="col">진척도</th>';
-	html += '                                   <th scope="col">현황</th>';
-	html += '                               </tr>';
-	html += '                           </thead>';
-	html += '                           <tbody>';
-	
+    
 	// 지연 업무
 	$.each(data.delayTask, function(index, entry) {
-		html += '<tr>';
-		html += '    <th>1</th>';
-		html += '    <td>' + entry.task_cont + '</td>';
-		html += '    <td>';
-		html += '        <div class="progress" style="height: 10px">';
-		html += '            <div class="progress-bar gradient-2" style="width: ' + entry.per + '%;" role="progressbar">';
-		html += '            </div>';
-		html += '        </div>'; 
-		html += '    </td>';
-		html += '    <td><span class="label gradient-2 btn-rounded">' + entry.per + '%</span>';
-		html += '    </td>';
-		html += '</tr>';
+		html += '<h5 class="mt-3">' + entry.task_cont + '<span class="float-right">' + entry.per + '%</span></h5>';
+		html += '<div class="progress" style="height: 15px">';
+		html += '   <div class="progress-bar bg-danger wow  progress-" style="width: ' + entry.per + '%;" role="progressbar">';
+		html += '   </div>';
+		html += '</div>';
 	});
 	
 	// 주간 업무
 	$.each(data.weekTask, function(index, entry) {
-		html += '<tr>';
-		html += '    <th>' + index + '</th>';
-		html += '    <td>' + entry.task_cont + '</td>';
-		html += '    <td>';
-		html += '        <div class="progress" style="height: 10px">';
-		html += '            <div class="progress-bar gradient-1" style="width: ' + entry.per + '%;" role="progressbar">';
-		html += '            </div>';
-		html += '        </div>'; 
-		html += '    </td>';
-		html += '    <td><span class="label gradient-1 btn-rounded">' + entry.per + '%</span>';
-		html += '    </td>';
-		html += '</tr>';
+		html += '<h5 class="mt-3">' + entry.task_cont + '<span class="float-right">' + entry.per + '%</span></h5>';
+		html += '<div class="progress" style="height: 15px">';
+		html += '   <div class="progress-bar ';
+		if(entry.per === 100)
+			html += 'bg-success';
+		else if(entry.end_dt < new Date() && entry.per < 100)
+			html += 'bg-danger';
+		else
+			html += 'bg-info';
+		html += ' wow  progress-" style="width: ' + entry.per + '%;" role="progressbar">';
+		html += '   </div>';
+		html += '</div>';
 	});
 	
-	html += '                           </tbody>';
-	html += '                       </table>';
     html += '                   </div>';
 	html += '   			</td>';
 	html += '   		</tr>';
@@ -102,24 +90,24 @@ function printProject(idx, data) {
 	html += '   <hr>';
 
 	// 팀장
-	html += '   <div> 팀장: ';
+	html += '   <div class="projectGroup"> <span class="groupTitle"> <i class="fa fa-user"></i>팀장:</span> ';
 	$.each(data.projectEmpJob, function(index, entry) {
 		if(entry.JOB_NM === "팀장") {
-			html += ' <img src="/asd/employeePicture?emp_id=' + entry.EMP_ID + '" height="40" width="40" class="rounded-circle"> ' + entry.EMP_NM;
+			html += ' <span class="groupContent"><img src="/asd/employeePicture?emp_id=' + entry.EMP_ID + '" height="80" width="80" class="rounded-circle"> ' + entry.EMP_NM + '<span>';
 		}
 	});
 	html += '	</div>';
 	
 	// 팀원
-	html += '   <div> 팀원: ';
+	html += '   <div class="projectGroup"> <span class="groupTitle"><i class="fa fa-users"></i>팀원:</span> ';
 	$.each(data.projectEmpJob, function(index, entry) {
 		if(entry.JOB_NM === "팀원") {
-			html += ' <img src="/asd/employeePicture?emp_id=' + entry.EMP_ID + '" height="40" width="40" class="rounded-circle"> ' + entry.EMP_NM;
+			html += ' <span class="groupContent"><img src="/asd/employeePicture?emp_id=' + entry.EMP_ID + '" height="80" width="80" class="rounded-circle"> ' + entry.EMP_NM + '<span>';
 		}
 	});
 	html += '	</div>';
 	
-    html += '</blockquote>';
+    html += '</div>';
     
     return html;
 }
@@ -135,16 +123,21 @@ function printChart(idx, data, id) {
 	// Add data
 	var result = [];
 	var index = 0;
-	var colors = ["#A5DF00", "#D8D8D8", "#81BEF7", "#F78181"];
+	// complete , before, running, delay
+	var colors = ["#6fd96f", "#e9ecef", "#4d7cff", "#ff5e5e"];
 	for (var key in data[0]) {
+		var name;
+		if(key === "COMPLETE") name = "완료";
+		else if(key === "DELAY") name = "지연";
+		else if(key === "RUNNING") name = "진행 중";
+		else name = "시작 전";
+		
 		result.push({
-			category: key, value: data[0][key], color: am4core.color(colors[index])
+			category: name, value: data[0][key], color: am4core.color(colors[index])
 		});
 		index++;
 	}
-	
 	chart.data = result;
-	console.log(result);
 	
 	// Add and configure Series
 	var pieSeries = chart.series.push(new am4charts.PieSeries());
@@ -168,3 +161,23 @@ function printChart(idx, data, id) {
 	pieSeries.labels.template.disabled = true;
 	pieSeries.ticks.template.disabled = true;
 }
+
+//tui.date-picker
+var picker = tui.DatePicker.createRangePicker({
+	language: 'ko',
+    startpicker: {
+        date: new Date(),
+        input: '#startpicker-input',
+        container: '#startpicker-container'
+    },
+    endpicker: {
+        date: new Date(),
+        input: '#endpicker-input',
+        container: '#endpicker-container'
+    },
+    type: 'date',
+    format: 'yyyy-MM-dd'
+});
+
+// select2
+$('.testSe').select2();

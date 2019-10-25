@@ -29,10 +29,10 @@
 		 where task_id in (select task_id
 		                     from pro_task
 		                    where pro_id = #{pro_id}
-		                      and emp_id = #{emp_id})
-		 
-		 and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
-		 and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
+		                      and emp_id = #{emp_id}
+		                      and pa_task_id is not null)
+		   and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
+		   and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
 		 order by st_dt, end_dt
 	</select>
 	
@@ -43,8 +43,9 @@
 		 where task_id in (select task_id
 		                     from pro_task
 		                    where pro_id = #{pro_id}
-		                      and emp_id = #{emp_id})
-		   and end_dt <![CDATA[<=]]> sysdate
+		                      and emp_id = #{emp_id}
+		                      and pa_task_id is not null)
+		   and end_dt <![CDATA[<=]]> trunc(sysdate, 'iw')
 		   and per <![CDATA[<]]> 100
 		 order by st_dt, end_dt
 	</select>
