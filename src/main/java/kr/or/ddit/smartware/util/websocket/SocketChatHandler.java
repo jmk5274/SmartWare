@@ -42,7 +42,7 @@ public class SocketChatHandler extends TextWebSocketHandler {
 		logger.debug("메세지전송 = {} : {}", employee, message.getPayload());
 		
 		//채팅메시지 : str[0]type, str[1]메시지, str[2]chat_id, str[3]msg_id, str[4...]채팅방 인원 정보
-		String[] str = message.getPayload().split(":");
+		String[] str = message.getPayload().split("\\^");
 		String type = str[0];
 		
 		// 메시지전송에 대한 send 이벤트
@@ -54,9 +54,9 @@ public class SocketChatHandler extends TextWebSocketHandler {
 					Employee employeee = getEmployee(webSession);
 					
 					if(employeee.getC_use().equals("true") && employeee.getChat_id().equals(chat_id)) {
-						webSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2] + ":" + str[3]));
+						webSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_id() + "^" + str[1] + "^" + str[2] + "^" + str[3]));
 					}else if(employeee.getC_use().equals("false")) {
-						webSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_id() + ":" + str[1] + ":" + str[2] + ":" + str[3]));
+						webSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_id() + "^" + str[1] + "^" + str[2] + "^" + str[3]));
 					}
 				}
 			}
@@ -65,7 +65,7 @@ public class SocketChatHandler extends TextWebSocketHandler {
 		for (WebSocketSession currentSession : chatMap.values()) {
 			Employee employeee = getEmployee(currentSession);
 			if(employeee.getC_use().equals("true") && type.equals("close")) {
-				currentSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_nm()));
+				currentSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_nm()));
 			}else if(employeee.getC_use().equals("true") && type.equals("invite")) {
 				String employees = "";
 				for(int i=0; i<str.length; i++) {
@@ -76,9 +76,9 @@ public class SocketChatHandler extends TextWebSocketHandler {
 						}
 					}
 				}
-				currentSession.sendMessage(new TextMessage(type + ":" + employees));
+				currentSession.sendMessage(new TextMessage(type + "^" + employees));
 			}else if(employee.getEmp_id().equals(employeee.getEmp_id()) && type.equals("mail")) {
-				currentSession.sendMessage(new TextMessage(type + ":" + employee.getEmp_nm()));
+				currentSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_nm()));
 			}
 		}
 	}

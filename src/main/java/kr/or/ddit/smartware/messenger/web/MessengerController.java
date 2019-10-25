@@ -2,6 +2,7 @@ package kr.or.ddit.smartware.messenger.web;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IEmployeeService;
@@ -31,6 +34,8 @@ import kr.or.ddit.smartware.messenger.model.Chat;
 import kr.or.ddit.smartware.messenger.model.ChatEmp;
 import kr.or.ddit.smartware.messenger.model.Message;
 import kr.or.ddit.smartware.messenger.service.IMessengerService;
+import kr.or.ddit.smartware.util.file.FileUtil;
+import kr.or.ddit.smartware.util.file.model.FileInfo;
 import oracle.sql.DATE;
 
 @Controller
@@ -112,10 +117,24 @@ public class MessengerController {
 	*/
 	@PostMapping("insertMessage")
 	@ResponseBody
-	public Map<String, Object> insertMessage(@RequestBody Message message, HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> insertMessage(Message message, @RequestPart("file") MultipartFile file, HttpSession session, HttpServletRequest request) {
 		Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
 		
 		message.setEmp_id(employee.getEmp_id());
+		if(file.getSize()>0) {
+			try {
+				FileInfo fileInfo = FileUtil.getFileInfo(file.getOriginalFilename());
+				String fileName = fileInfo.getOriginalFileName();
+				
+				File downloadFile = new File("C:/picture/file/"+fileName);
+				file.transferTo(downloadFile);
+				message.setMsg_cont("<a href='chatFile?path=C:/picture/file/"+fileName+"' download>"+fileName+"</a>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			message.setMsg_cont(message.getMsg_cont().replaceAll("<", "&lt;"));
+		}
 		
 		//메시지 저장
 		String msg_id = messengerService.insertMessage(message);
@@ -385,5 +404,38 @@ public class MessengerController {
 		model.addAttribute("chatEmpList2", chatEmpList2);
 		
 		return "jsonView";
+	}
+	
+	@RequestMapping("chatFile")
+	public void chatFile(String path, HttpServletResponse response, HttpSession session) throws IOException {
+		ServletOutputStream sos = null;
+		FileInputStream fis = null;
+		File file = null;
+		
+		String fileName = path.substring(path.lastIndexOf("/")+1);
+		
+		response.setHeader("Content-Disposition", "attachment;filename="+fileName);
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		try {
+			sos = response.getOutputStream();
+			file = new File(path);
+			fis = new FileInputStream(file);
+			
+			byte[] buff = new byte[512];
+			int len = 0;
+			
+			while((len = fis.read(buff, 0, 512)) != -1) {
+				sos.write(buff,0,len);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fis.close();
+				sos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

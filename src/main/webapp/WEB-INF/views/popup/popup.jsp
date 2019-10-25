@@ -30,9 +30,6 @@
 			var startpicker = $("#startpicker-input").val() + "";
 			var endpicker = $("#endpicker-input").val() + "";
 			
-			console.log(startpicker);
-			console.log(endpicker);
-			
 			if(fileCheck.length===0){
 				alert("파일을 선택해주세요.");
 				return false;
@@ -83,9 +80,6 @@
 		});
 		
 		$("#file").change(function(e){
-	        var myForm = document.getElementById('insertForm');
-	        var formData = new FormData(myForm);
-	        
 			$("#fileLabel").text(($('input[type=file]')[0].files[0].name));
 		});
 
@@ -144,6 +138,7 @@
 				window.open('${cp }/popupImgView?pop_id='+pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
 				}
 			});
+			return false;
 		});
 		
 		$(".popupTr").click(function(){
@@ -265,8 +260,8 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>번호</th>
-								<th>타이틀</th>
+								<th>팝업 번호</th>
+								<th style="width:400px;">타이틀</th>
 								<th>시작 날짜</th>
 								<th>종료 날짜</th>
 							</tr>

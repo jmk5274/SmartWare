@@ -2,7 +2,9 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
 <script src="${cp }/js/jquery-3.4.1.min.js"></script>
+<script src="${cp }/js/moment.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -23,7 +25,6 @@ body {
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
-  margin-top: -150px;
   margin-bottom: 50px; }
   .forecast-container .forecast {
     display: table-cell;
@@ -65,8 +66,10 @@ body {
         font-size: 6.4285714286rem;
         margin-right: 30px; }
       .forecast-container .forecast.today span {
+        font-size: 20px;
         margin-right: 20px; }
-        .forecast-container .forecast.today span img {
+        .forecast-container .forecast.today span i {
+          font-size: 20px;
           margin-right: 5px;
           vertical-align: middle; }
       @media screen and (max-width: 990px) {
@@ -79,12 +82,15 @@ body {
       text-align: center;
       font-weight: 400; }
     .forecast-container .forecast .forecast-icon {
-      height: 50px; }
+      height: 90px; }
     .forecast-container .forecast .forecast-content {
       padding: 50px 20px 10px;
       text-align: center; }
       .forecast-container .forecast .forecast-content .forecast-icon {
         margin-bottom: 20px; }
+      .forecast-container .forecast .forecast-content .forecast-icon i{
+        font-size: 80px;
+        color: white; }
       .forecast-container .forecast .forecast-content .degree {
         font-size: 24px;
         font-size: 1.7142857143em;
@@ -95,19 +101,41 @@ body {
         font-size: 1.1428571429em; }
 </style>
 <script>
+moment.lang('ko', {
+    weekdays: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
+});
 
 function parseWeather() 
 { 
       loadJSON(function(data) 
       {
           var jsonData = JSON.parse(data);
-          console.log(data);
-          var date = new Date();
+          var date = moment(new Date()).format('YYYYMMDD ddd');
           var list = jsonData.list;
-          list.forEach(function(info){
-			console.log(info);        	  
-          });
+          console.log(list)
+          var tempDate;
           
+          for(var i=0; i<5; i++){
+        	  if(i!=0){
+        	  	  var maxTemp = 0;
+        	  	  var minTemp = 100;
+        	  	  var icon = "";
+        	 	  var week = moment(list[i * 8].dt_txt).format('dddd');
+		          for(var j=0; j<8; j++){
+		        	  var nowTemp = list[i * 8 + j].main.temp-273.15;
+		        	  if(j==4){
+		        		  icon = list[i * 8 + j].weather[0].icon;
+		        	  }
+		        	  if(maxTemp < nowTemp) maxTemp = nowTemp ;
+		        	  if(minTemp > nowTemp) minTemp = nowTemp ;
+		          }
+		          icon = iconView(icon);
+		          $(".forecast-icon:eq("+i+")").html("<i class='wi "+icon+"'></i>");
+		          $(".week:eq("+i+")").html(week);
+		          $(".degree:eq("+i+")").html("<i class='wi wi-thermometer'></i> "+Math.round(maxTemp)+"<sup>o</sup>C");
+		          $(".forecast-content:eq("+(i)+")").append("<i class='wi wi-thermometer-exterior'></i><small> "+Math.round(minTemp)+"<sup>o</sup></small>");
+        	  }
+          }
       });
 }
 
@@ -127,106 +155,133 @@ function loadJSON(callback) //url의 json 데이터 불러오는 함수
    request.send(null);  
 } 
 
-
-
 window.onload = function()
 {
+  currParseWeather();
   parseWeather();
+}
+
+function currParseWeather() 
+{ 
+      currLoadJSON(function(data) 
+      {
+          var jsonData = JSON.parse(data);
+          var date = moment(new Date()).format('YYYY-MM-DD');
+          var weekDay = moment(new Date()).format('dddd');
+          var location = jsonData.name;
+          var temp = Math.round(jsonData.main.temp-273.15);
+          var maxTemp = Math.round(jsonData.main.temp_max-273.15);
+          var minTemp = Math.round(jsonData.main.temp_min-273.15);
+          var condition = jsonData.weather[0].main
+          var icon = iconView(jsonData.weather[0].icon);
+          
+          $(".forecast-icon:eq(0)").html("<i class='wi "+icon+"'></i>")
+          $("#todayWeek").text(weekDay);
+          $("#todayDate").text(date);
+          $(".location").text(location);
+          $(".num").html(temp+"<sup>o</sup>C");
+          $("#todayMaxTemp").html("<i class='wi wi-thermometer'></i> "+maxTemp+"<sup>o</sup>");
+          $("#todayMinTemp").html("<i class='wi wi-thermometer-exterior'></i> "+minTemp+"<sup>o</sup>");
+      });
+}
+
+function currLoadJSON(callback) //url의 json 데이터 불러오는 함수
+{   
+   var url = "http://api.openweathermap.org/data/2.5/weather?q=Daejeon, KR&appid=8d2599dd27086ad9803defbf929421dd";
+   var request = new XMLHttpRequest();
+   request.overrideMimeType("application/json");
+   request.open('GET', url, true);
+   request.onreadystatechange = function () 
+   {
+     if (request.readyState == 4 && request.status == "200") 
+     {
+       callback(request.responseText);
+     }
+   };
+   request.send(null);  
+} 
+
+function iconView(icon){
+	var i = "";
+	if(icon=="01d" || icon=="01n"){
+		i = "wi-day-sunny";	
+	}else if(icon=="02d" || icon=="02n"){
+		i = "wi-day-cloudy";
+	}else if(icon=="03d" || icon=="03n"){
+		i = "wi-cloud";
+	}else if(icon=="04d" || icon=="04n"){
+		i = "wi-cloudy";
+	}else if(icon=="09d" || icon=="09n"){
+		i = "wi-rain";
+	}else if(icon=="10d" || icon=="10n"){
+		i = "wi-day-rain";
+	}else if(icon=="11d" || icon=="11n"){
+		i = "wi-thunderstorm";
+	}else if(icon=="13d" || icon=="13n"){
+		i = "wi-snow";
+	}
+	return i;
 }
 </script>
 </head>
 <body>
-<div class="forecast-table" style="margin-top: 200px;">
+<div class="forecast-table">
 	<div class="container">
 		<div class="forecast-container">
 			<div class="today forecast">
 				<div class="forecast-header">
-					<div class="day">월요일</div>
-					<div class="date">6 Oct</div>
+					<div id="todayWeek" class="day week"></div>
+					<div id="todayDate" class="date"></div>
 				</div> <!-- .forecast-header -->
 				<div class="forecast-content">
-					<div class="location">New York</div>
+					<div class="location"></div>
 					<div class="degree">
-						<div class="num">23<sup>o</sup>C</div>
-						<div class="forecast-icon">
-							<img src="${cp}/img/weather/icons/icon-1.svg" alt="" width="90">
+						<div class="num"></div>
+						<div id="todayIcon" class="forecast-icon">
 						</div>	
 					</div>
-					<span><img src="${cp}/img/weather/icon-umberella.png" alt="">20%</span>
-					<span><img src="${cp}/img/weather/icon-wind.png" alt="">18km/h</span>
-					<span><img src="${cp}/img/weather/icon-compass.png" alt="">East</span>
+					<span id="todayMaxTemp"></span>
+					<span id="todayMinTemp"></span>
 				</div>
 			</div>
 			<div class="forecast">
 				<div class="forecast-header">
-					<div class="day">화요일</div>
+					<div class="day week"></div>
 				</div> <!-- .forecast-header -->
 				<div class="forecast-content">
 					<div class="forecast-icon">
-						<img src="${cp}/img/weather/icons/icon-3.svg" alt="" width="48">
 					</div>
-					<div class="degree">23<sup>o</sup>C</div>
-					<small>18<sup>o</sup></small>
+					<div class="degree"></div>
 				</div>
 			</div>
 			<div class="forecast">
 				<div class="forecast-header">
-					<div class="day">수요일</div>
+					<div class="day week"></div>
 				</div> <!-- .forecast-header -->
 				<div class="forecast-content">
 					<div class="forecast-icon">
-						<img src="${cp}/img/weather/icons/icon-5.svg" alt="" width="48">
 					</div>
-					<div class="degree">23<sup>o</sup>C</div>
-					<small>18<sup>o</sup></small>
+					<div class="degree"></div>
 				</div>
 			</div>
 			<div class="forecast">
 				<div class="forecast-header">
-					<div class="day">목요일</div>
+					<div class="day week"></div>
 				</div> <!-- .forecast-header -->
 				<div class="forecast-content">
 					<div class="forecast-icon">
-						<img src="${cp}/img/weather/icons/icon-7.svg" alt="" width="48">
 					</div>
-					<div class="degree">23<sup>o</sup>C</div>
-					<small>18<sup>o</sup></small>
+					<div class="degree"></div>
 				</div>
 			</div>
 			<div class="forecast">
 				<div class="forecast-header">
-					<div class="day">금요일</div>
+					<div class="day week"></div>
 				</div> <!-- .forecast-header -->
 				<div class="forecast-content">
 					<div class="forecast-icon">
-						<img src="${cp}/img/weather/icons/icon-12.svg" alt="" width="48">
 					</div>
-					<div class="degree">23<sup>o</sup>C</div>
-					<small>18<sup>o</sup></small>
-				</div>
-			</div>
-			<div class="forecast">
-				<div class="forecast-header">
-					<div class="day">토요일</div>
-				</div> <!-- .forecast-header -->
-				<div class="forecast-content">
-					<div class="forecast-icon">
-						<img src="${cp}/img/weather/icons/icon-13.svg" alt="" width="48">
-					</div>
-					<div class="degree">23<sup>o</sup>C</div>
-					<small>18<sup>o</sup></small>
-				</div>
-			</div>
-			<div class="forecast">
-				<div class="forecast-header">
-					<div class="day">일요일</div>
-				</div> <!-- .forecast-header -->
-				<div class="forecast-content">
-					<div class="forecast-icon">
-						<img src="${cp}/img/weather/icons/icon-14.svg" alt="" width="48">
-					</div>
-					<div class="degree">23<sup>o</sup>C</div>
-					<small>18<sup>o</sup></small>
+					<div class="degree"></div>
 				</div>
 			</div>
 		</div>

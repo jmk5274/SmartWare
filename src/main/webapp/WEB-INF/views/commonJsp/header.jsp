@@ -126,7 +126,7 @@
 						data : JSON.stringify(param),
 						success : function(data){
 							$("#"+data.chat_id).remove();
-							socket.send("close:삭제");
+							socket.send("close^삭제");
 						}
 					});
 					return false;
@@ -138,7 +138,7 @@
 	var socket = new SockJS("${cp}/ws/chat");
 	
 	socket.onmessage = function(evt) {
-		var str = evt.data.split(":");
+		var str = evt.data.split("^");
 		if(str[0]===("msg")){
 			getChatList();
 			audio.play();
@@ -173,7 +173,7 @@
 		
 // 		setTimeout(function() { 
 <%-- 				if(<%=real%>!=0){ --%>
-// 					var message = "mail:메일";
+// 					var message = "mail^메일";
 // 					socket.send(message);
 // 				}
 // 			}, 1000);

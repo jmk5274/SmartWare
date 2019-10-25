@@ -128,6 +128,9 @@
   background: #435f7a;
   color: #f5f5f5;
 }
+#frame .content .messages ul li.sent p a {
+  color: white;
+}
 #frame .content .messages ul li.replies img {
   float: right;
   margin: 6px 0 0 8px;
@@ -235,7 +238,6 @@
 th{
 	font-weight: bold;
 }
-
 </style></head><body>
 
 <div id="frame">
@@ -489,7 +491,7 @@ th{
 					<input name="chat_id" type="hidden" value="${chat_id }"/>
 					<label>
 						<i id="btn" class="fa fa-paperclip attachment" aria-hidden="true"></i>
-						<input name="file" type="file" style='display: none'/>
+						<input id="file" name="file" type="file" style='display: none'/>
 					</label>
 					<button id="btn1" class="submit" type="button" data-chat_id="${chat_id }"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 				</form>
@@ -555,10 +557,11 @@ $("#status-options ul li").click(function() {
 			minutes = "0" + d.getMinutes();
 		}
 		var time = hours + ":" + minutes;
-		var str = evt.data.split(":");
-		
+		var str = evt.data.split("^");
+		console.log(str);
 		if(str[0]===("msg")){
-			$(".messages ul").append('<li class="sent msgList" data-msg_id='+ str[4] +'><img src="${cp }/employeePicture?emp_id='+ str[1] +'" alt="" /><p>' + str[2] + '</p> <span>'+ time +'</span></li>');
+// 			console.log(str);
+			$(".messages ul").append("<li class='sent msgList' data-msg_id="+ str[4] +"><img src='${cp }/employeePicture?emp_id="+ str[1] +"' alt='' /><p>" + str[2] + "</p> <span>"+ time +"</span></li>");
 			
 			$('.messages').animate({
 				scrollTop: $('.messages').get(0).scrollHeight}, 1000);
@@ -591,7 +594,6 @@ $("#status-options ul li").click(function() {
 			return false;
 		}
 			
-		var param={};
 		var chat_id = $("#btn1").data('chat_id');
 		var msg = $(".message-input #msg_cont").val();
 		var d = new Date();
@@ -604,19 +606,19 @@ $("#status-options ul li").click(function() {
 			minutes = "0" + d.getMinutes();
 		}
 		var time = hours + ":" + minutes;
-		var message = "msg:" + msg + ":" + chat_id + ":";
-		
-		param.chat_id = chat_id;
-		param.msg_cont = msg;
+		var myForm = document.getElementById('messageFrm');
+		var formData = new FormData(myForm);
 		
 		$.ajax({
 			url : "${cp}/insertMessage",
-			contentType : "application/json",
+			enctype : "multipart/form-data",
+            processData: false,
+            contentType: false,
 			dataType : "json",
 			method : "post",
-			data : JSON.stringify(param),
+			data : formData,
 			success : function(data){
-				
+				var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 				message += data.msg_id + "";
 				
 				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
@@ -624,25 +626,24 @@ $("#status-options ul li").click(function() {
 				$('.messages').animate({
 					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
 				
-					$.ajax({
-						url : "${cp}/getChatInfo",
-						contentType : "application/json",
-						dataType : "json",
-						method : "get",
-						data : "chat_id="+chat_id,
-						success : function(data){
-							
-							var chatEmpList = data.chatEmpList
-							
-							chatEmpList.forEach(function(chatEmp){
-								message += ":" + chatEmp.emp_id
-							});
-							
-							socket.send(message);
-						}
-					});
-				
-				$(".message-input #msg_cont").val("");
+				$.ajax({
+					url : "${cp}/getChatInfo",
+					contentType : "application/json",
+					dataType : "json",
+					method : "get",
+					data : "chat_id="+chat_id,
+					success : function(data){
+						
+						var chatEmpList = data.chatEmpList
+						
+						chatEmpList.forEach(function(chatEmp){
+							message += "^" + chatEmp.emp_id
+						});
+						
+						socket.send(message);
+					}
+				});
+				messageFrm.reset();
 				$(".message-input #msg_cont").focus();
 			}
 		});
@@ -656,7 +657,6 @@ $("#status-options ul li").click(function() {
 				return false;
 			}
 				
-			var param={};
 			var chat_id = $("#btn1").data('chat_id');
 			var msg = $(".message-input #msg_cont").val();
 			var d = new Date();
@@ -669,19 +669,19 @@ $("#status-options ul li").click(function() {
 				minutes = "0" + d.getMinutes();
 			}
 			var time = hours + ":" + minutes;
-			var message = "msg:" + msg + ":" + chat_id + ":";
-			
-			param.chat_id = chat_id;
-			param.msg_cont = msg;
+			var myForm = document.getElementById('messageFrm');
+			var formData = new FormData(myForm);
 			
 			$.ajax({
 				url : "${cp}/insertMessage",
-				contentType : "application/json",
+				enctype : "multipart/form-data",
+	            processData: false,
+	            contentType: false,
 				dataType : "json",
 				method : "post",
-				data : JSON.stringify(param),
+				data : formData,
 				success : function(data){
-					
+					var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 					message += data.msg_id + "";
 					
 					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
@@ -700,14 +700,14 @@ $("#status-options ul li").click(function() {
 								var chatEmpList = data.chatEmpList
 								
 								chatEmpList.forEach(function(chatEmp){
-									message += ":" + chatEmp.emp_id
+									message += "^" + chatEmp.emp_id
 								});
 								
 								socket.send(message);
 							}
 						});
 					
-					$(".message-input #msg_cont").val("");
+					messageFrm.reset();
 					$(".message-input #msg_cont").focus();
 				}
 			});
@@ -810,7 +810,7 @@ $("#status-options ul li").click(function() {
 		var inviteMsg = "invite";
 		 $(':checkbox:checked').each(function(i, a){
 			 emp_id.push($(this).data("emp_id"));
-			 inviteMsg += ":" + $(this).data("emp_nm")
+			 inviteMsg += "^" + $(this).data("emp_nm")
 		 })
 		
 		$(".empTable").empty();
@@ -820,7 +820,6 @@ $("#status-options ul li").click(function() {
 			contentType : "application/json",
 			dataType : "json",
 			method : "get",
-// 			data : "chat_id="+chat_id+"&emp_id="+emp_id+"&msg_id="+msg_id,
 			success : function(data){
 				socket.send(inviteMsg);
 				var empList = data.empList;
@@ -871,6 +870,65 @@ $("#status-options ul li").click(function() {
 					});
 				}
 				$("#empTable").html(html);
+			}
+		});
+	});
+	
+	$("#file").change(function(e){
+		var msg = $(".message-input #msg_cont").val();
+		
+		var chat_id = $("#btn1").data('chat_id');
+		var msg = $(".message-input #msg_cont").val();
+		var d = new Date();
+		var hours = d.getHours() + "";
+		if(hours.length == 1){
+			hours = "0" + d.getHours();
+		}
+		var minutes = d.getMinutes() + "";
+		if(minutes.length == 1){
+			minutes = "0" + d.getMinutes();
+		}
+		var time = hours + ":" + minutes;
+		var myForm = document.getElementById('messageFrm');
+		var formData = new FormData(myForm);
+		
+		$.ajax({
+			url : "${cp}/insertMessage",
+			enctype : "multipart/form-data",
+            processData: false,
+            contentType: false,
+			dataType : "json",
+			method : "post",
+			data : formData,
+			success : function(data){
+				var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
+				message += data.msg_id + "";
+				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+				
+				$('.messages').animate({
+					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
+				
+				$.ajax({
+					url : "${cp}/getChatInfo",
+					async : false,
+					contentType : "application/json",
+					dataType : "json",
+					method : "get",
+					data : "chat_id="+chat_id,
+					success : function(data){
+						
+						var chatEmpList = data.chatEmpList
+						
+						chatEmpList.forEach(function(chatEmp){
+							message += "^" + chatEmp.emp_id
+						});
+						console.log(message);
+					}
+				});
+				console.log(message);
+				socket.send(message);
+				messageFrm.reset();
+				$(".message-input #msg_cont").focus();
 			}
 		});
 	});
