@@ -5,10 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style>
-	.message:hover{
-		background-color: #F8F4E4;
-		
-	}
+ 	.message:hover{
+ 		box-shadow:0 5px 20px rgba(0, 0, 0, 0.1);
+	} 
+	
+	
+	
+	
 </style>
 
 
@@ -176,9 +179,9 @@
 								<c:set var="personal" value="${personalList[mNum-i]}" />
 								
 								
-								<div id="div${msg.getMessageNumber() }" class="message">
+								<div id="div${msg.getMessageNumber() }" class="message" style="margin-bottom: 2px;">
 									<div class="row">
-										<span class="col-1">
+										<span class="col-1" style="text-align: center">
 											<span class="email-checkbox">
 												<input data-id=${msg.getMessageNumber() } type="checkbox">
 											</span>

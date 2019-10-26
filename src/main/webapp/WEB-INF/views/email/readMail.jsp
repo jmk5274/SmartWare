@@ -3,6 +3,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style>
+	.hpanel .panel-body {
+	    background: #fff;
+	    border-radius: 2px;
+	    padding: 15px;
+	    position: relative;
+	   -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+	    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+	}
+	.panel-body {
+	    padding: 15px;
+	   background:#fff;
+	}
+
+
+</style>
 
 <script>
 	$(function(){
@@ -150,10 +166,15 @@
 						<div class="row m-b-30">
 							<div class="col-auto"></div>
 							<c:forEach items="${infos }" var="info">
-								
-								<a href="${cp }/fileDownloadView2?filename=${info.originalFileName} ">
-								<i class="fa fa-file-pdf-o text-info fa-3x" style="display: block"></i>
-								<span>${info.originalFileName }</span>&nbsp;&nbsp;&nbsp;</a>
+								<div class="hpanel">
+			                        <div class="panel-body file-body incon-ctn-view" style="text-align: center;">
+										<a href="${cp }/fileDownloadView2?filename=${info.originalFileName} ">
+										<i class="fa fa-file-pdf-o text-info fa-3x" style="display: block"></i>
+			                        </div>
+			                        <div class="panel-footer">
+										<span>${info.originalFileName }</span>&nbsp;&nbsp;&nbsp;</a>
+			                        </div>
+		                      </div>
 							</c:forEach>
 						</div>
 						<hr>

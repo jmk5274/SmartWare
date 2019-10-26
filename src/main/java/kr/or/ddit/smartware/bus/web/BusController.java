@@ -29,10 +29,16 @@ public class BusController {
 	public String busMap(Locale locale, Model model) throws UnsupportedEncodingException, IOException {
 //		StringBuilder urlBuilder = new StringBuilder("http://ws.bus.go.kr/api/rest/buspos/getLowBusPosByRtid");
 //		http://openapitraffic.daejeon.go.kr/api/rest/busposinfo/getBusPosByRtid?busRouteId=30300001&serviceKey=서비스키
+		
+//		http://openapitraffic.daejeon.go.kr/api/rest/busposinfo/getBusPosByRtid?busRouteId=30300001&serviceKey=서비스키
+		
+//		http://openapitraffic.daejeon.go.kr/api/rest/stationinfo/getStationByUid?arsId=32350&serviceKey=서비스키
+		
+//		StringBuilder urlBuilder = new StringBuilder("http://openapitraffic.daejeon.go.kr/api/rest/arrive/getArrInfoByStopID");
 		StringBuilder urlBuilder = new StringBuilder("http://openapitraffic.daejeon.go.kr/api/rest/busposinfo/getBusPosByRtid");
 		
 		urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=ZjBD%2Bw2HZJAOqnauf1qUuUGWeaoBN7ECeyy%2BsLFAHWgd8b1CJFsf92ib%2FMIFqfkKehWA0Tg9B3%2FVFIDNY0fKQA%3D%3D");
-		urlBuilder.append("&" + URLEncoder.encode("busRouteId", "UTF-8") + "=" + URLEncoder.encode("30300050", "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("busRouteId", "UTF-8") + "=" + URLEncoder.encode("30300083", "UTF-8"));
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");

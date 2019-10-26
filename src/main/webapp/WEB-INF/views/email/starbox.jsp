@@ -6,9 +6,8 @@
 
 <style>
 	.message:hover{
-		background-color: #F8F4E4;
-		
-	}
+ 		box-shadow:0 5px 20px rgba(0, 0, 0, 0.1);
+	} 
 </style>
 
 <script>
@@ -176,7 +175,7 @@
 								
 								<div id="div${msg.getMessageNumber() }" class="message">
 									<div class="row">
-										<span class="col-1">
+										<span class="col-1" style="text-align: center">
 											<span class="email-checkbox">
 												<input data-id=${msg.getMessageNumber() } type="checkbox">
 											</span>
