@@ -31,18 +31,18 @@
 			var endpicker = $("#endpicker-input").val() + "";
 			
 			if(fileCheck.length===0){
-				alert("파일을 선택해주세요.");
+				alertSet("파일을 선택해주세요.");
 				return false;
 			}
 			
 			if(title===""){
-				alert("팝업 제목을 입력해주세요.");
+				alertSet("팝업 제목을 입력해주세요.");
 				$("#pop_title").focus();
 				return false;
 			}
 			
 			if(left==="" || top===""){
-				alert("좌표를 선택해주세요.");
+				alertSet("좌표를 선택해주세요.");
 				return false;
 			}
 			
@@ -228,6 +228,20 @@
     		var page = $(this).data("page");
     		popupListView(page);
     	});
+	}
+	
+	function alertSet(str){
+		const toast = Swal.mixin({
+			  toast: true,
+			  position: 'top',
+			  showConfirmButton: false,
+			  timer: 1500
+			});
+
+		toast({
+		  type: 'warning',
+		  title: str
+		})
 	}
 </script>
 
