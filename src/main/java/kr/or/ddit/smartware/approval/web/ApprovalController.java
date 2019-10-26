@@ -55,7 +55,7 @@ public class ApprovalController {
     private IApprovalService approvalService;
 
     @GetMapping("approvalPage")
-    public String approvalPage(Model model) {
+    public String approvalPage(HttpServletRequest request, Model model) {
         List<Department> departList = departmentService.getAllDepartment();
         List<Map> employeeList = employeeService.getDetailEmpList();
         List<Position> positionList = positionService.getAllPosition();
@@ -65,6 +65,12 @@ public class ApprovalController {
         model.addAttribute("employeeList", employeeList);
         model.addAttribute("positionList", positionList);
         model.addAttribute("formList", formList);
+
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if (inputFlashMap != null) {
+            Map data = (Map) inputFlashMap.get("data");
+            model.addAttribute("refer", data);
+        }
 
         return "tiles/approval/approvalPage";
     }
@@ -295,6 +301,24 @@ public class ApprovalController {
         int referAppl = approvalService.referAppl(data);
 
         return "redirect:/approval/confirmApplList";
+    }
+
+    /* 반려된 문서 재송신 */
+    @PostMapping("reSend")
+    public String reSend(@RequestParam Map data, RedirectAttributes redirectAttributes) {
+        if (data != null) {
+            redirectAttributes.addFlashAttribute("data", data);
+        }
+        return "redirect:/approval/approvalPage";
+    }
+
+    @PostMapping("getRefer")
+    public String getRefer(String appl_id, Model model) {
+        Application appl = approvalService.getAppl(appl_id);
+        if (appl != null) {
+            model.addAttribute("appl", appl);
+        }
+        return "jsonView";
     }
 
     /* 도장사진 입력 */

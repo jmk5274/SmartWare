@@ -37,10 +37,13 @@
                 confirmButtonText: '네',
                 cancelButtonText: '아니오'
             }).then((result) => {
-                $('#${S_EMPLOYEE.job_id}').html(img);
+                if(result.value) {
+                    console.log(result);
+                    $('#${S_EMPLOYEE.job_id}').html(img);
 
-                $('#contents').val($('#appl').html());
-                $('#frm').attr('action', "${cp}/approval/checkAppl").submit();
+                    $('#contents').val($('#appl').html());
+                    $('#frm').attr('action', "${cp}/approval/checkAppl").submit();
+                }
             });
         });
 
@@ -55,21 +58,42 @@
                 confirmButtonText: '네',
                 cancelButtonText: '아니오'
             }).then((result) => {
-                Swal.fire({
-                    title: '반려 사유',
-                    input: 'text',
-                    inputAttributes: {
-                        autocapitalize: 'off'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'REFER',
-                    showLoaderOnConfirm: true,
-                    preConfirm : (data) => {
-                        $('#refer_res').val(data);
-                    }
-                }).then((result) => {
-                        $('#frm').attr('action', "${cp}/approval/checkRefer").submit();
-                });
+                if(result.value) {
+                    Swal.fire({
+                        title: '반려 사유',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'REFER',
+                        showLoaderOnConfirm: true,
+                        preConfirm : (data) => {
+                            $('#refer_res').val(data);
+                        }
+                    }).then((result) => {
+                            $('#frm').attr('action', "${cp}/approval/checkRefer").submit();
+                    });
+                }
+            });
+        });
+
+        $('#reSend').on('click', function () {
+            Swal({
+                title: '결재 반려',
+                text: "반려하시겠습니까?",
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '네',
+                cancelButtonText: '아니오'
+            }).then((result) => {
+                if (result.value) {
+
+                    $('#contents').val($('#appl').html());
+                    $('#frm').attr('action', "${cp}/approval/reSend").submit();
+                }
             });
         });
     });
@@ -89,6 +113,7 @@
                             <form id="frm" method="post" enctype="multipart/form-data">
                                 <input id="contents" name="cont" type="hidden" value="">
                                 <input id="appl_id" name="appl_id" type="hidden" value="${appl.appl_id}">
+                                <input id="form_id" name="form_id" type="hidden" value="${appl.form_id}">
                                 <input id="refer_res" name="refer_res" type="hidden" value="">
                                 <div class="compose-content mt-5">
                                 </div>

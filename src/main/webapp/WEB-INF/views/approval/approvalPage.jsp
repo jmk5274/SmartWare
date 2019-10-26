@@ -112,7 +112,7 @@
                 success : function (data) {
                     $('#checkAppl').empty();
                     var checkAppl = "";
-                    checkAppl += '<table class="checkBlock" cellspacing=0 border=1>';
+                    checkAppl += '<table id="checkBlock" class="checkBlock" cellspacing=0 border=1>';
                     checkAppl += '        <tbody>';
                     checkAppl += '        <tr style="height:18.066666666667px;">';
                     checkAppl += '          <td style="text-align:center;border-left:1px solid;border-right:1px solid;border-top:1px solid;border-left-color:#000000;border-right-color:#000000;border-top-color:#000000;min-width:40px" rowspan=2>';
@@ -154,20 +154,18 @@
                 cancelButtonText: '아니오'
             }).then((result) => {
                 if (result.value) {
-                    if(result.value) {
-                        var contents = $('#contents').val($('.note-editable').html());
-                        var res;
-                        if ($('#to').val() === "") {
-                            alertError("결재선을 선택하세요");
-                        } else if ($('#title').val() === "") {
-                            alertError("제목을 입력하세요");
-                            $('#title').focus();
-                        } else if (contents === "") {
-                            alertError("내용을 입력하세요");
-                        } else {
-                            $('#form_id').val($('#formList').val());
-                            $("#frm").submit();
-                        }
+                    var contents = $('#contents').val($('.note-editable').html());
+                    var res;
+                    if ($('#to').val() === "") {
+                        alertError("결재선을 선택하세요");
+                    } else if ($('#title').val() === "") {
+                        alertError("제목을 입력하세요");
+                        $('#title').focus();
+                    } else if (contents === "") {
+                        alertError("내용을 입력하세요");
+                    } else {
+                        $('#form_id').val($('#formList').val());
+                        $("#frm").submit();
                     }
                 }
             });
@@ -180,6 +178,26 @@
                 text: errorStr
             });
         }
+
+        (function() {
+            <%--console.log('${refer.appl_id}');--%>
+            <%--console.log('${refer.cont}');--%>
+            <%--console.log('${refer.cont}');--%>
+            <%--if ('${refer.cont}' != null ) {--%>
+            <%--    $('.note-editable.panel-body').html('${refer.cont}');--%>
+            <%--}--%>
+            <%--var refer = '${refer}';--%>
+            <%--console.log(refer);--%>
+            $.ajax({
+                url : "${cp}/approval/getRefer",
+                method : "post",
+                data : {appl_id : '${refer.appl_id}'},
+                dataType : "json",
+                success : function (data) {
+                    $('#checkBlock').remove();
+                }
+            });
+        }());
     });
 </script>
 
@@ -279,7 +297,7 @@
                                             <select id="formList" class="custom-select mr-sm-2" >
                                                 <option id="cleanForm" value="noForm">양식 선택</option>
                                                 <c:forEach items="${formList}" var="form" varStatus="loop">
-                                                    <option id="${form.form_id}" value="${form.form_id}">${form.form_nm}</option>
+                                                    <option id="${form.form_id}" value="${form.form_id}" <c:if test="${form.form_id == refer.form_id}">selected</c:if>>${form.form_nm}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
