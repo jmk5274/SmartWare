@@ -67,4 +67,24 @@ public interface IProjectDao {
 	*/
 	List<Map<String, Object>> getEmpProjectChart(Map<String, String> map);
 
+	/**
+	* Method : insertProject
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param project
+	* @return
+	* Method 설명 : 프로젝트 추가
+	*/
+	int insertProject(Project project);
+
+	/**
+	* Method : insertProjectMember
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param map
+	* @return
+	* Method 설명 : 프로젝트 구성원 추가
+	*/
+	int insertProjectMember(Map<String, String> map);
+
 }

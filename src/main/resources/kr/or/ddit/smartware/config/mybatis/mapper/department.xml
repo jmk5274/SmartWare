@@ -14,4 +14,11 @@
 		select * from department
 	</select>
 	
+	<!-- 부서에 속한 사원의 리스트를 반환  -->
+	<select id="getDepartEmpList" parameterType="String" resultType="employee">
+		select *
+		  from employee
+		 where depart_id = #{depart_id}
+	</select>
+	
 </mapper>

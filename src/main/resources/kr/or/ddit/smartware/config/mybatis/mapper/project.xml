@@ -129,4 +129,17 @@
 	                and st_dt > sysdate
 	                and per <![CDATA[<]]> 100) d
 	</select>
+	
+	<insert id="insertProject" parameterType="project">
+		insert into project(pro_id, pro_nm, st_dt, end_dt)
+			values('pj' || lpad(project_seq.nextval, 4, 0), #{pro_nm}, #{st_dt}, #{end_dt})
+		<selectKey order="AFTER" resultType="String" keyProperty="pro_id" >
+			select 'pj' || lpad(project_seq.currval, 4, 0) from dual
+		</selectKey>
+	</insert>
+	
+	<insert id="insertProjectMember" parameterType="hashmap">
+		insert into pro_position(pro_id, emp_id, job_id)
+			values(#{pro_id}, #{emp_id}, #{job_id})
+	</insert>
 </mapper>

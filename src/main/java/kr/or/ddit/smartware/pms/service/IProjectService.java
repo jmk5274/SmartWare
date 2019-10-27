@@ -38,6 +38,27 @@ public interface IProjectService {
 	*/
 	List<Employee> getProjectEmployee(String pro_id);
 	
+	/**
+	* Method : getDetailProject
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @param type
+	* @return
+	* Method 설명 : 프로젝트의 상세내용들을 리스트로 반환
+	*/
 	Map<String, Object> getDetailProject(String emp_id, String type);
+
+	/**
+	* Method : insertProject
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param project
+	* @param leader
+	* @param member
+	* @return
+	* Method 설명 : 프로젝트 및 구성원 추가
+	*/
+	String insertProject(Project project, String leader, String[] member);
 
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.smartware.employee.model.Employee;
@@ -93,6 +94,32 @@ public class ProjectDao implements IProjectDao {
 	@Override
 	public List<Map<String, Object>> getEmpProjectChart(Map<String, String> map) {
 		return sqlSession.selectList("project.getEmpProjectChart", map);
+	}
+
+	/**
+	* Method : insertProject
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param project
+	* @return
+	* Method 설명 : 프로젝트 추가
+	*/
+	@Override
+	public int insertProject(Project project) {
+		return sqlSession.insert("insertProject", project);
+	}
+
+	/**
+	* Method : insertProjectMember
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param map
+	* @return
+	* Method 설명 : 프로젝트 구성원 추가
+	*/
+	@Override
+	public int insertProjectMember(Map<String, String> map) {
+		return sqlSession.insert("insertProjectMember", map);
 	}
 
 }

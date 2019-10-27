@@ -36,8 +36,6 @@ $(function() {
 		var startDate = picker._startpicker.getDate();
 		var endDate = picker._endpicker.getDate();
 		
-		$("")
-		
 		$.ajax({
 			url: cp + "/insertCalendar",
 			type: "POST",

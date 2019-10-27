@@ -78,16 +78,16 @@
                     <h3 class="modal-title"><i class='fa fa-file-text fa-lg' style='color: black;'> </i> 신규 프로젝트 생성</h3>
                 </div>
                 <div class="modal-body basic-form">
-                	<form id="calendarForm">
-                		<input type="hidden" name="cal_id" id="cal_id"/>
-                		<input type="hidden" name="depart_id" value="${S_EMPLOYEE.depart_id }"/>
-                		<input type="hidden" name="emp_id" value="${S_EMPLOYEE.emp_id }"/>
+                	<form id="projectForm">
+<!--                 		<input type="hidden" name="cal_id" id="cal_id"/> -->
+<%--                 		<input type="hidden" name="depart_id" value="${S_EMPLOYEE.depart_id }"/> --%>
+<%--                 		<input type="hidden" name="emp_id" value="${S_EMPLOYEE.emp_id }"/> --%>
                 		
                 		<div class="form-group row">
                 			<div class="col-sm-1"></div>
 		                    <label class="col-sm-2 col-form-label">프로젝트명</label>
 		                    <div class="col-sm-8">
-		                    	<input type="text" class="form-control" id="cal_title" name="cal_title">
+		                    	<input type="text" class="form-control" id="pro_nm" name="pro_nm">
 		                    </div>
 	                    </div>
 	                    
@@ -96,7 +96,7 @@
 		                    <label class="col-sm-2 col-form-label">시작일</label>
 		                    <div class="col-sm-3">
 								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
-									<input id="startpicker-input" type="text" aria-label="Date">
+									<input id="startpicker-input" type="text" aria-label="Date" name="st_dt">
 									<span class="tui-ico-date"></span>
 									<div id="startpicker-container" style="margin-left: -1px;"></div>
 								</div>
@@ -104,7 +104,7 @@
 		                    <label class="col-sm-2 col-form-label">종료일</label>
 		                    <div class="col-sm-3">
 								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
-									<input id="endpicker-input" type="text" aria-label="Date">
+									<input id="endpicker-input" type="text" aria-label="Date" name="end_dt">
 									<span class="tui-ico-date"></span>
 									<div id="endpicker-container" style="margin-left: -1px;"></div>
 								</div>
@@ -115,33 +115,23 @@
 	                    	<div class="col-sm-1"></div>
 		                    <label class="col-sm-2 col-form-label">팀장</label>
 		                    <div class="col-sm-8">
-		                    	<select class="form-control testSe" style="width: 100%" name="states[]">
-		                    		<option value="AL">조민수</option>
-									<option value="WY">전민규</option>
-									<option value="WY">배상현</option>
-									<option value="WY">전민규</option>
-		                    	</select>
+		                    	<select class="form-control empList" style="width: 100%" name="leader"></select>
 		                    </div>
 	                    </div>
 	                    <div class="form-group row">
 	                    	<div class="col-sm-1"></div>
 		                    <label class="col-sm-2 col-form-label">팀원</label>
 		                    <div class="col-sm-8">
-								<select class="form-control testSe" style="width: 100%" name="states[]" multiple="multiple">
-									<option value="AL">조민수</option>
-									<option value="WY">전민규</option>
-									<option value="WY">배상현</option>
-									<option value="WY">전민규</option>
-								</select>
+								<select class="form-control empList" style="width: 100%" name="member" multiple="multiple"></select>
 		                    </div>
 	                    </div>
                     </form>
                 </div>
                 <div class="modal-footer" style="display: inline-block;">
                     <button type="button" class="btn mb-1 btn-dark" data-dismiss="modal" style="float: right;">취소</button>
-                    <button type="button" class="btn mb-1 btn-dark" id="btnUpdateCalendar" style="float: right;">수정</button>
-                    <button type="button" class="btn mb-1 btn-dark" id="btnInsertCalendar" style="float: right;">생성</button>
-                    <button type="button" class="btn mb-1 btn-danger" id="btnDeleteCalendar" style="float: left;">삭제</button>
+                    <button type="button" class="btn mb-1 btn-dark" id="updateProject" style="float: right;">수정</button>
+                    <button type="button" class="btn mb-1 btn-dark" id="insertProject" style="float: right;">생성</button>
+                    <button type="button" class="btn mb-1 btn-danger" id="deleteProject" style="float: left;">삭제</button>
                 </div>
             </div>
         </div>
@@ -169,3 +159,4 @@
 </script> 
 <script src="${cp }/js/pms/main.js"></script>
 <script src="${cp }/js/pms/chart.js"></script>
+<script src="${cp }/js/pms/project.js"></script>

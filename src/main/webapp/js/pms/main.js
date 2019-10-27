@@ -27,6 +27,26 @@ $(function() {
 		}
 	});
 	
+	// 부서의 사원 리스트
+	$.ajax({
+		url: cp + "/getAllDepartEmpList",
+		type: "POST",
+		success: function(datas) {
+			$.each(datas.departmentList, function(idx, data) {
+				var html = "<optgroup label='" + data.depart_nm + "' class='empList_" + data.depart_id + "'></optgroup>";
+				$(".empList").append(html);
+				
+			});
+			$.each(datas.allDepartEmpList, function(idx, empList) {
+				var html = "";
+				$.each(empList, function(idx2, data) {
+					html += "<option value='" + data.emp_id + "'>" + data.emp_nm + "</option>";
+				});
+				$(".empList_" + idx).append(html);
+			});
+		}
+	});
+	
 	// 신규 프로젝트 생성 버튼 클릭
 	$("#btnInsertProject").on("click", function() {
 		$("#projectModal").modal("show");
@@ -35,8 +55,6 @@ $(function() {
 });
 
 function printProject(idx, data) {
-	console.log(data.project.pro_nm);
-	console.log(data);
 	var html = "";
 	html += '<hr>';
 	html += '<div class="projectContent">';
@@ -180,4 +198,4 @@ var picker = tui.DatePicker.createRangePicker({
 });
 
 // select2
-$('.testSe').select2();
+$('.empList').select2();

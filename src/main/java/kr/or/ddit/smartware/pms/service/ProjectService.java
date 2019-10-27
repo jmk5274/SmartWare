@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.smartware.employee.model.Employee;
@@ -63,6 +61,15 @@ public class ProjectService implements IProjectService {
 		return projectDao.getProjectEmployee(pro_id);
 	}
 	
+	/**
+	* Method : getDetailProject
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @param type
+	* @return
+	* Method 설명 : 프로젝트의 상세내용들을 리스트로 반환
+	*/
 	@Override
 	public Map<String, Object> getDetailProject(String emp_id, String type) {
 		// 사원이 속한 프로젝트 리스트(running or past)
@@ -113,6 +120,39 @@ public class ProjectService implements IProjectService {
 		}
 		
 		return rtnMap;
+	}
+
+	/**
+	* Method : insertProject
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param project
+	* @param leader
+	* @param member
+	* @return
+	* Method 설명 : 프로젝트 및 구성원 추가
+	*/
+	@Override
+	public String insertProject(Project project, String leader, String[] member) {
+		// 1. 프로젝트 생성
+		projectDao.insertProject(project);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("pro_id", project.getPro_id());
+		
+		// 2. 팀장 추가
+		map.put("emp_id", leader);
+		map.put("job_id", "job0003");
+		projectDao.insertProjectMember(map);
+		
+		// 3. 팀원 추가
+		for(String mem : member) {
+			map.put("emp_id", mem);
+			map.put("job_id", "job0004");
+			projectDao.insertProjectMember(map);
+		}
+		
+		return project.getPro_id();
 	}
 
 }

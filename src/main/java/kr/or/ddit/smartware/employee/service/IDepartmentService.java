@@ -1,8 +1,10 @@
 package kr.or.ddit.smartware.employee.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.smartware.employee.model.Department;
+import kr.or.ddit.smartware.employee.model.Employee;
 
 
 public interface IDepartmentService {
@@ -18,4 +20,13 @@ public interface IDepartmentService {
 	String getDepartNm(String depart_id);
 	
 	List<Department> getAllDepartment();
+	
+	/**
+	* Method : getAllDepartEmpList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @return Map(key: emp_id, value: List<Employee>)
+	* Method 설명 : 모든 부서의 사원리스트를 반환
+	*/
+	Map<String, List<Employee>> getAllDepartEmpList();
 }
