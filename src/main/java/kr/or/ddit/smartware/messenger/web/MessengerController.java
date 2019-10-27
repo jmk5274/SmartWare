@@ -125,10 +125,22 @@ public class MessengerController {
 			try {
 				FileInfo fileInfo = FileUtil.getFileInfo(file.getOriginalFilename());
 				String fileName = fileInfo.getOriginalFileName();
+				String extName = fileInfo.getExtName();
 				
 				File downloadFile = new File("C:/picture/file/"+fileName);
+				downloadFile.delete();
+				
+				if(extName.equals(".jpg")||extName.equals(".JPG")||extName.equals(".jpeg")||extName.equals(".JPEG")||
+						extName.equals(".png")||extName.equals(".PNG")||extName.equals(".gif")||extName.equals(".GIF")||
+						extName.equals(".bmp")||extName.equals(".BMP")) {
+					message.setMsg_cont("<img src='chatImgFile?path=C:picture/file/"+fileName+"' style='width:150px; height:150px; border-radius: 0%;'><br>"+
+							"<a href='chatFile?path=C:/picture/file/"+fileName+"' download>"+fileName+"</a>");
+				}else {
+					message.setMsg_cont("<a href='chatFile?path=C:/picture/file/"+fileName+"' download>"+fileName+"</a>");
+				}
+				
+				downloadFile = new File("C:/picture/file/"+fileName);
 				file.transferTo(downloadFile);
-				message.setMsg_cont("<a href='chatFile?path=C:/picture/file/"+fileName+"' download>"+fileName+"</a>");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -408,6 +420,39 @@ public class MessengerController {
 	
 	@RequestMapping("chatFile")
 	public void chatFile(String path, HttpServletResponse response, HttpSession session) throws IOException {
+		ServletOutputStream sos = null;
+		FileInputStream fis = null;
+		File file = null;
+		
+		String fileName = path.substring(path.lastIndexOf("/")+1);
+		
+		response.setHeader("Content-Disposition", "attachment;filename="+fileName);
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		try {
+			sos = response.getOutputStream();
+			file = new File(path);
+			fis = new FileInputStream(file);
+			
+			byte[] buff = new byte[512];
+			int len = 0;
+			
+			while((len = fis.read(buff, 0, 512)) != -1) {
+				sos.write(buff,0,len);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fis.close();
+				sos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@RequestMapping("chatImgFile")
+	public void chatImgFile(String path, HttpServletResponse response, HttpSession session) throws IOException {
 		ServletOutputStream sos = null;
 		FileInputStream fis = null;
 		File file = null;
