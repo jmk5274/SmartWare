@@ -116,24 +116,27 @@ function parseWeather()
           var tempDate;
           
           for(var i=0; i<5; i++){
+       	  	  var maxTemp = 0;
+       	  	  var minTemp = 100;
+       	  	  var icon = "";
+       	 	  var week = moment(list[i * 8].dt_txt).format('dddd');
+	          for(var j=0; j<8; j++){
+	        	  var nowTemp = list[i * 8 + j].main.temp-273.15;
+	        	  if(j==4){
+	        		  icon = list[i * 8 + j].weather[0].icon;
+	        	  }
+	        	  if(maxTemp < nowTemp) maxTemp = nowTemp ;
+	        	  if(minTemp > nowTemp) minTemp = nowTemp ;
+	          }
         	  if(i!=0){
-        	  	  var maxTemp = 0;
-        	  	  var minTemp = 100;
-        	  	  var icon = "";
-        	 	  var week = moment(list[i * 8].dt_txt).format('dddd');
-		          for(var j=0; j<8; j++){
-		        	  var nowTemp = list[i * 8 + j].main.temp-273.15;
-		        	  if(j==4){
-		        		  icon = list[i * 8 + j].weather[0].icon;
-		        	  }
-		        	  if(maxTemp < nowTemp) maxTemp = nowTemp ;
-		        	  if(minTemp > nowTemp) minTemp = nowTemp ;
-		          }
 		          icon = iconView(icon);
 		          $(".forecast-icon:eq("+i+")").html("<i class='wi "+icon+"'></i>");
 		          $(".week:eq("+i+")").html(week);
 		          $(".degree:eq("+i+")").html("<i class='wi wi-thermometer'></i> "+Math.round(maxTemp)+"<sup>o</sup>C");
 		          $(".forecast-content:eq("+(i)+")").append("<i class='wi wi-thermometer-exterior'></i><small> "+Math.round(minTemp)+"<sup>o</sup></small>");
+        	  }else{
+                  $("#todayMaxTemp").html("<i class='wi wi-thermometer'></i> "+Math.round(maxTemp)+"<sup>o</sup>");
+                  $("#todayMinTemp").html("<i class='wi wi-thermometer-exterior'></i> "+Math.round(minTemp)+"<sup>o</sup>");
         	  }
           }
       });
@@ -170,8 +173,6 @@ function currParseWeather()
           var weekDay = moment(new Date()).format('dddd');
           var location = jsonData.name;
           var temp = Math.round(jsonData.main.temp-273.15);
-          var maxTemp = Math.round(jsonData.main.temp_max-273.15);
-          var minTemp = Math.round(jsonData.main.temp_min-273.15);
           var condition = jsonData.weather[0].main
           var icon = iconView(jsonData.weather[0].icon);
           
@@ -180,8 +181,6 @@ function currParseWeather()
           $("#todayDate").text(date);
           $(".location").text(location);
           $(".num").html(temp+"<sup>o</sup>C");
-          $("#todayMaxTemp").html("<i class='wi wi-thermometer'></i> "+maxTemp+"<sup>o</sup>");
-          $("#todayMinTemp").html("<i class='wi wi-thermometer-exterior'></i> "+minTemp+"<sup>o</sup>");
       });
 }
 

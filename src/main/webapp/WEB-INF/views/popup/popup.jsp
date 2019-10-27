@@ -153,8 +153,8 @@
 				success : function(data){
 					$("#writer").val(data.popup.emp_id);
 					$("#modifyTitle").val(data.popup.pop_title);
-					$("#modifyTop").val("X 좌표: " + data.popup.pop_left);
-					$("#modifyLeft").val("Y 좌표: " + data.popup.pop_top);
+					$("#modifyLeft").val("X 좌표: " + data.popup.pop_left);
+					$("#modifyTop").val("Y 좌표: " + data.popup.pop_top);
 					$("#reg_dt").val(moment(new Date(data.popup.reg_dt)).format('YYYY-MM-DD'));
 					$("#startpicker-input2").val(moment(new Date(data.popup.pop_st_dt)).format('YYYY-MM-DD'));
 					$("#endpicker-input2").val(moment(new Date(data.popup.pop_end_dt)).format('YYYY-MM-DD'));
