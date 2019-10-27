@@ -58,12 +58,12 @@
 	<div class="col-9">
 		<div class="card">
 			<div id="runningProject" class="card-body">
-				<h2><i class="fa fa-file-text" aria-hidden="true"></i> 진행중인 프로젝트</h2>
+				<h2><i class="fa fa-file-text"></i> 진행중인 프로젝트</h2>
 			</div>
 		</div>
 		<div class="card">
 			<div id="pastProject" class="card-body">
-				<h2><i class="fa fa-file" aria-hidden="true"></i> 완료한 프로젝트</h2>
+				<h2><i class="fa fa-file-text"></i> 완료한 프로젝트</h2>
 			</div>
 		</div>
 	</div>

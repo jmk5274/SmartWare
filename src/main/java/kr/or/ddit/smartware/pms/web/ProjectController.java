@@ -1,8 +1,6 @@
 package kr.or.ddit.smartware.pms.web;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -34,10 +32,30 @@ public class ProjectController {
 	@Resource(name="jsonView")
 	private View jsonView;
 	
+	/**
+	* Method : pmsView
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @return
+	* Method 설명 : pms 메인화면
+	*/
 	@RequestMapping("pms")
 	public String pmsView() {
 		
 		return "tiles2/pms/main";
+	}
+	
+	/**
+	* Method : proView
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @return
+	* Method 설명 : 프로젝트 화면
+	*/
+	@PostMapping("pro")
+	public String proView(Model model, String pro_id) {
+		model.addAttribute("pro_id", pro_id);
+		return "tiles2/pms/project";
 	}
 	
 	/**

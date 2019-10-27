@@ -17,8 +17,8 @@ td > h2 {
 
 .projectContent {
 	border: 1px solid silver;
-	padding: 30px;
-	letter-spacing: 5px;
+	padding: 20px;
+	letter-spacing: 2px;
 }
 
 .projectGroup {
@@ -45,42 +45,30 @@ td > h2 {
 	text-align: right;
 	font-size: 20px;
 }
-/*
-.select2-container--default .select2-selection--multiple .select2-selection__rendered {
-	box-sizing: border-box;
-    list-style: none;
-    margin: 0;
-    padding: 0 5px;
-    width: 100%;
+
+/* project title */
+.projectTitle i {
+	width: 20px;
+	text-align: center;
 }
 
-.select2-container .select2-selection--multiple .select2-selection__rendered {
-    display: inline-block;
-    overflow: hidden;
-    padding-left: 8px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.projectHead span:first-child {
+	color: black;
+	cursor: pointer;
+	font-size: 30px;
+	line-height: 40px;	
 }
 
-select.form-control[size], select.form-control[multiple] {
-    height: auto;
+.projectHead span:last-child {
+	color: blue;
+	cursor: pointer;
+	font-size: 20px;
+	text-decoration: underline;
+	float: right;
+	vertical-align: middle;	
+	line-height: 40px;
 }
-
-.select2-hidden-accessible {
-    border: 0 !important;
-    clip: rect(0 0 0 0) !important;
-    -webkit-clip-path: inset(50%) !important;
-    clip-path: inset(50%) !important;
-    height: 1px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: absolute !important;
-    width: 1px !important;
-    white-space: nowrap !important;
-}
-
-*/
-
+ 
 
 
 

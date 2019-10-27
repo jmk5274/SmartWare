@@ -24,6 +24,11 @@ $(function() {
 				printChart(idx, data.allProjectChart, data.project.pro_id); // 전체 현황
 				printChart(idx, data.empProjectChart, data.project.pro_id + '_' + emp_id); // 나의 현황 
 			});
+			$.each($("#pastProject .projectTitle"), function(idx, data) {
+				$(this).children("i").removeClass("fa-angle-right on");
+				$(this).children("i").addClass("fa-angle-down off");	
+				$(this).parent().next().hide();
+			});
 		}
 	});
 	
@@ -61,23 +66,29 @@ $(function() {
 function printProject(idx, data) {
 	var html = "";
 	html += '<hr>';
-	html += '<div class="projectContent">';
-	html += '   <h2><i class="fa fa-angle-right"></i> ' + data.project.pro_nm + '</h2>';
-	html += '   <hr>';
-	html += '   <table>';
-	html += '   	<tbody>';
-	html += '   		<tr>';
-	html += '   			<td>';
-	html += '   				<h2><i class="fa fa-pie-chart"></i> 전체 현황</h2>';
-	html += '   		    	<div id=' + data.project.pro_id + ' class="chart"></div>';
-	html += '   			</td>';
-	html += '   			<td>';
-	html += '   				<h2><i class="fa fa-pie-chart"></i> 나의 현황</h2>';
-	html += '   		    	<div id=' + data.project.pro_id + '_' + emp_id + ' class="chart"></div>';
-	html += '   			</td>';
-	html += '   			<td>';
-	html += '                   <h2><i class="fa fa-tasks"></i> 주간 업무</h2>';
-    html += '                   <div class="taskList">';
+	html += '<div class="projectContent" data-pro_id="' + data.project.pro_id + '">';
+	html += '	<div class="projectHead">';
+	html += '   	<span class="projectTitle"><i class="fa fa-angle-right on"></i> ' + data.project.pro_nm + '</span>';
+	html += '		<span>' + moment(data.project.st_dt).format("YYYY/MM/DD") + " ~ " + moment(data.project.end_dt).format("YYYY/MM/DD") + '</span>';
+	html += '		<span class="projectLink"><i class="fa fa-share"> 프로젝트로 이동</i></span>';
+	html += '	</div>';
+	
+	html += '	<div class="projectBody">';
+	html += '   	<hr>';
+	html += '   	<table>';
+	html += '   		<tbody>';
+	html += '   			<tr>';
+	html += '   				<td>';
+	html += '   					<h2><i class="fa fa-pie-chart"></i> 전체 현황</h2>';
+	html += '   		  	  		<div id=' + data.project.pro_id + ' class="chart"></div>';
+	html += '   				</td>';
+	html += '   				<td>';
+	html += '   					<h2><i class="fa fa-pie-chart"></i> 나의 현황</h2>';
+	html += '   		    		<div id=' + data.project.pro_id + '_' + emp_id + ' class="chart"></div>';
+	html += '   				</td>';
+	html += '   				<td>';
+	html += '                  		<h2><i class="fa fa-tasks"></i> 주간 업무</h2>';
+    html += '                   	<div class="taskList">';
     
 	// 지연 업무
 	$.each(data.delayTask, function(index, entry) {
@@ -104,12 +115,12 @@ function printProject(idx, data) {
 		html += '</div>';
 	});
 	
-    html += '                   </div>';
-	html += '   			</td>';
-	html += '   		</tr>';
-	html += '   	</tbody>';
-	html += '   </table>';
-	html += '   <hr>';
+    html += '                   	</div>';
+	html += '   				</td>';
+	html += '   			</tr>';
+	html += '   		</tbody>';
+	html += '   	</table>';
+	html += '   	<hr>';
 
 	// 팀장
 	html += '   <div class="projectGroup"> <span class="groupTitle"> <i class="fa fa-user"></i>팀장:</span> ';
@@ -127,10 +138,10 @@ function printProject(idx, data) {
 			html += ' <span class="groupContent"><img src="' + cp + '/employeePicture?emp_id=' + entry.EMP_ID + '" height="80" width="80" class="rounded-circle"> ' + entry.EMP_NM + '<span>';
 		}
 	});
-	html += '	</div>';
+	html += '		</div>';
 	
+    html += '	</div>';
     html += '</div>';
-    
     return html;
 }
 

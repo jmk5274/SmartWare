@@ -53,11 +53,44 @@ $(function() {
 			}
 		});
 	});
+	
 	$("#updateProject").on("click", function() {
 		
 	});
+	
 	$("#deleteProject").on("click", function() {
 		
 	});
 	
+	$("body").on("click", ".projectTitle", function() {
+		var iTag = $(this).children("i");
+		
+		if(iTag.hasClass("on")) { 
+			$(this).children("i").removeClass("fa-angle-right on");
+			$(this).children("i").addClass("fa-angle-down off");	
+			$(this).parent().next().hide();
+		} else if(iTag.hasClass("off")) { 
+			$(this).children("i").removeClass("fa-angle-down off");
+			$(this).children("i").addClass("fa-angle-right on");
+			$(this).parent().next().show();
+		}
+		
+	});
+	
+	$("body").on("click", ".projectLink", function() {
+		var pro_id = $(this).parent().parent().data("pro_id");
+
+	    var form = document.createElement("form");
+	    document.body.appendChild(form);
+	    form.method = "POST";
+	    form.action = cp + "/pro";
+	    
+        var input = document.createElement('input');
+        input.type = "hidden";
+        input.name = "pro_id";
+        input.value = pro_id;
+        
+        form.appendChild(input);
+	    form.submit();
+	});
 });
