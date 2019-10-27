@@ -49,6 +49,10 @@ $(function() {
 	
 	// 신규 프로젝트 생성 버튼 클릭
 	$("#btnInsertProject").on("click", function() {
+		$("#pro_nm").val("");
+		picker._startpicker.setDate(new Date());
+		picker._endpicker.setDate(new Date());
+		select2.val(null).trigger("change");
 		$("#projectModal").modal("show");
 	});
 	
@@ -198,4 +202,4 @@ var picker = tui.DatePicker.createRangePicker({
 });
 
 // select2
-$('.empList').select2();
+var select2 = $('.empList').select2();

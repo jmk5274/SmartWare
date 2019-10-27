@@ -115,14 +115,14 @@
 	                    	<div class="col-sm-1"></div>
 		                    <label class="col-sm-2 col-form-label">팀장</label>
 		                    <div class="col-sm-8">
-		                    	<select class="form-control empList" style="width: 100%" name="leader"></select>
+		                    	<select class="form-control empList" id="leader" style="width: 100%" name="leader"></select>
 		                    </div>
 	                    </div>
 	                    <div class="form-group row">
 	                    	<div class="col-sm-1"></div>
 		                    <label class="col-sm-2 col-form-label">팀원</label>
 		                    <div class="col-sm-8">
-								<select class="form-control empList" style="width: 100%" name="member" multiple="multiple"></select>
+								<select class="form-control empList" id="member" style="width: 100%" name="member" multiple="multiple"></select>
 		                    </div>
 	                    </div>
                     </form>
