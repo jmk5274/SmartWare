@@ -210,6 +210,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <h2 class="sub-header">결재문서 작성</h2>
                     <div class="email-center-box">
                         <div class="toolbar" role="toolbar">
                             <div class="btn-group m-b-20">                                &nbsp;&nbsp;&nbsp;&nbsp;

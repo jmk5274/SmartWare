@@ -40,4 +40,14 @@ public interface IBatchDao {
      * Method 설명 : Appr_Member 테이블에 해당 사원 결재선 멤버 입력
      */
     int setApprMem(String emp_id);
+
+    /**
+     * Method :  setCommute
+     * 작성자 : Bae Sang Hyun
+     * 변경이력 :
+     * @param
+     * @return
+     * Method 설명 : 사원 미출근 시 미출근 배치프로그램
+     */
+    int setCommute();
 }

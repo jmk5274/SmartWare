@@ -20,6 +20,7 @@ public class CreateApproval {
 
     @Scheduled(cron = "0 0 02 * * ?")
     public void scheduleRun() {
+        // 결재선 배치
         List<Employee> employees = employeeService.allEmployeeList();
         logger.debug("배치 시작");
         batchService.delApprMem();
@@ -29,6 +30,10 @@ public class CreateApproval {
         for (Employee employee : employees) {
             batchService.setApprMem(employee.getEmp_id());
         }
+
+        // 사원 근태 배치
+        batchService.setCommute();
+
         logger.debug("배치 끝");
     }
 

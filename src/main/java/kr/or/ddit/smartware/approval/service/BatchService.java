@@ -29,4 +29,9 @@ public class BatchService implements IBatchService{
     public int setApprMem(String emp_id) {
         return batchDao.setApprMem(emp_id);
     }
+
+    @Override
+    public int setCommute() {
+        return batchDao.setCommute();
+    }
 }

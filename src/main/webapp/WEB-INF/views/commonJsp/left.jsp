@@ -32,7 +32,7 @@
                     <i class="fa fa-file-text-o menu-icon"></i><span class="nav-text">전자결재</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="${cp }/approval/approvalPage">결재하기</a></li>
+                    <li><a href="${cp }/approval/approvalPage">결재문서 작성</a></li>
                     <li><a href="${cp }/approval/sendApprovalList">결재문서(송신)함</a></li>
                     <li><a href="${cp }/approval/sendApplCompleList">결재문서(송신) 완료함</a></li>
                     <li><a href="${cp }/approval/sendApplReferList">결재문서(송신) 반려함</a></li>

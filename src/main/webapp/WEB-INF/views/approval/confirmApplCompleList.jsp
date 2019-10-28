@@ -28,7 +28,7 @@
 
 				<div class="row">
 					<div class="col-sm-12 blog-main">
-						<h2 class="sub-header">결재문서(수신) 목록</h2>
+						<h2 class="sub-header">결재문서(수신) 완료함</h2>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<tr>
