@@ -495,6 +495,8 @@ public class EmployeeController {
 				try {
 					// 기존 파일은 삭제한다
 					Employee orgEmployee = employeeService.getEmployee(employee.getEmp_id());
+					File pathFile = new File("C:/picture/emp");
+					if(!pathFile.exists()) pathFile.mkdirs();
 					
 					if(orgEmployee.getEmp_pic() != null) {
 						File file = new File(path+"/emp/"+orgEmployee.getEmp_pic());
@@ -516,6 +518,8 @@ public class EmployeeController {
 				try {
 					// 기존 파일은 삭제한다
 					Employee orgEmployee = employeeService.getEmployee(employee.getEmp_id());
+					File pathFile = new File("C:/picture/sign");
+					if(!pathFile.exists()) pathFile.mkdirs();
 					
 					if(orgEmployee.getSign() != null) {
 						File file = new File(path + "/sign/" + orgEmployee.getSign());
