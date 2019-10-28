@@ -48,7 +48,6 @@
 				var html = "";
 				var empList = data.employeeList;
 				empList.forEach(function(emp){
-					console.log(emp);
  					html += "<tr class='empList'>";
 	 				html += 	"<td> "+emp.EMP_NM+" </td>";
 					html += 	"<td> "+emp.DEPART_NM+" </td>";
