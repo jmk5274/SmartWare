@@ -2,9 +2,7 @@ package kr.or.ddit.smartware.messenger.web;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +34,6 @@ import kr.or.ddit.smartware.messenger.model.Message;
 import kr.or.ddit.smartware.messenger.service.IMessengerService;
 import kr.or.ddit.smartware.util.file.FileUtil;
 import kr.or.ddit.smartware.util.file.model.FileInfo;
-import oracle.sql.DATE;
 
 @Controller
 public class MessengerController {
@@ -126,6 +123,9 @@ public class MessengerController {
 				FileInfo fileInfo = FileUtil.getFileInfo(file.getOriginalFilename());
 				String fileName = fileInfo.getOriginalFileName();
 				String extName = fileInfo.getExtName();
+				File pathFile = new File("C:/picture/file");
+				
+				if(!pathFile.exists()) pathFile.mkdirs();
 				
 				File downloadFile = new File("C:/picture/file/"+fileName);
 				downloadFile.delete();
@@ -133,10 +133,10 @@ public class MessengerController {
 				if(extName.equals(".jpg")||extName.equals(".JPG")||extName.equals(".jpeg")||extName.equals(".JPEG")||
 						extName.equals(".png")||extName.equals(".PNG")||extName.equals(".gif")||extName.equals(".GIF")||
 						extName.equals(".bmp")||extName.equals(".BMP")) {
-					message.setMsg_cont("<img src='chatImgFile?path=C:picture/file/"+fileName+"' style='width:150px; height:150px; border-radius: 0%;'><br>"+
-							"<a href='chatFile?path=C:/picture/file/"+fileName+"' download>"+fileName+"</a>");
+					message.setMsg_cont("<img src='chatImgFile?path=C:picture/file/"+fileName+"' style='width:150px; height:150px; border-radius: 30%;'><br>"+
+							"<a href='chatFile?path=C:/picture/file/"+fileName+"' download><i class='fa fa-download'></i>"+fileName+"</a>");
 				}else {
-					message.setMsg_cont("<a href='chatFile?path=C:/picture/file/"+fileName+"' download>"+fileName+"</a>");
+					message.setMsg_cont("<a href='chatFile?path=C:/picture/file/"+fileName+"' download><i class='fa fa-download'></i>"+fileName+"</a>");
 				}
 				
 				downloadFile = new File("C:/picture/file/"+fileName);
@@ -162,6 +162,7 @@ public class MessengerController {
 		resultMap.put("msg_cont", message.getMsg_cont());
 		resultMap.put("msg_id", msg_id);
 		resultMap.put("emp_id", message.getEmp_id());
+		resultMap.put("emp_nm", employee.getEmp_nm());
 		
 		return resultMap;
 	}

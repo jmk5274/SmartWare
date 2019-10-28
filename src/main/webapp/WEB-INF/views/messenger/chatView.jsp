@@ -467,14 +467,15 @@ th{
 								<c:when test="${message.EMP_ID != S_EMPLOYEE.emp_id}">
 									<li class="sent msgList" data-msg_id=${message.MSG_ID }>
 										<img src="${cp }/employeePicture?emp_id=${message.EMP_ID}" alt="" />
-										<p>${message.MSG_CONT }</p>
-										<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/></span>
+										<p style='background: none; color: black; font-weight: bold;'>${message.EMP_NM }</p>
+										<div><p>${message.MSG_CONT }</p><span style='margin-left:2px;'><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/></span></div>
 									</li>
 								</c:when>
 								<c:otherwise>
 									<li class="replies msgList" data-msg_id=${message.MSG_ID }>
 										<img src="${cp }/employeePicture?emp_id=${message.EMP_ID}" alt="" />
-										<p>${message.MSG_CONT }</p>
+										<p style='background: none; font-weight: bold;'>${message.EMP_NM }</p><br><br><br>
+										<div><p>${message.MSG_CONT }</p></div>
 										<span><fmt:formatDate value="${message.SEND_DT }" pattern="HH:mm"/> </span>
 									</li>
 								</c:otherwise>
@@ -561,7 +562,7 @@ $("#status-options ul li").click(function() {
 		console.log(str);
 		if(str[0]===("msg")){
 // 			console.log(str);
-			$(".messages ul").append("<li class='sent msgList' data-msg_id="+ str[4] +"><img src='${cp }/employeePicture?emp_id="+ str[1] +"' alt='' /><p>" + str[2] + "</p> <span>"+ time +"</span></li>");
+			$(".messages ul").append("<li class='sent msgList' data-msg_id="+ str[5] +"><img src='${cp }/employeePicture?emp_id="+ str[1] +"' alt='' /><p style='background: none; color: black; font-weight: bold;'>"+str[2]+"</p><div><p>" + str[3] + "</p> <span>"+ time +"</span></div></li>");
 			
 			$('.messages').animate({
 				scrollTop: $('.messages').get(0).scrollHeight}, 1000);
@@ -621,7 +622,7 @@ $("#status-options ul li").click(function() {
 				var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 				message += data.msg_id + "";
 				
-				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p style="background: none; font-weight: bold;">'+data.emp_nm+'</p><br><br><br><div><p>' + data.msg_cont + '</p> <span>'+ time +'</span></div></li>');
 				
 				$('.messages').animate({
 					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
@@ -684,7 +685,7 @@ $("#status-options ul li").click(function() {
 					var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 					message += data.msg_id + "";
 					
-					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p style="background: none; font-weight: bold;">'+data.emp_nm+'</p><br><br><br><div><p>' + data.msg_cont + '</p> <span>'+ time +'</span></div></li>');
 					
 					$('.messages').animate({
 						scrollTop: $('.messages').get(0).scrollHeight}, 1000);
@@ -903,7 +904,7 @@ $("#status-options ul li").click(function() {
 			success : function(data){
 				var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 				message += data.msg_id + "";
-				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
+				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p style="background: none; font-weight: bold;">'+data.emp_nm+'</p><br><br><br><div><p>' + data.msg_cont + '</p> <span>'+ time +'</span></div></li>');
 				
 				$('.messages').animate({
 					scrollTop: $('.messages').get(0).scrollHeight}, 1000);

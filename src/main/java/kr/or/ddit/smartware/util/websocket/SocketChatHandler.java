@@ -54,7 +54,7 @@ public class SocketChatHandler extends TextWebSocketHandler {
 					Employee employeee = getEmployee(webSession);
 					
 					if(employeee.getC_use().equals("true") && employeee.getChat_id().equals(chat_id)) {
-						webSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_id() + "^" + str[1] + "^" + str[2] + "^" + str[3]));
+						webSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_id() + "^" + employee.getEmp_nm() + "^" + str[1] + "^" + str[2] + "^" + str[3]));
 					}else if(employeee.getC_use().equals("false")) {
 						webSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_id() + "^" + str[1] + "^" + str[2] + "^" + str[3]));
 					}

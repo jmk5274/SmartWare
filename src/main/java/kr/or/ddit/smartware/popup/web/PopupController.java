@@ -106,7 +106,7 @@ public class PopupController {
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			if(file.getBytes() != null || file.getSize()!=0 || file.getBytes().length != 0) {
+			if(file.getSize()>0) {
 				byte[] pop_cont = file.getBytes();
 				popup.setPop_cont(pop_cont);
 			}

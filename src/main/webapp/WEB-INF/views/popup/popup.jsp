@@ -209,19 +209,19 @@
 		
 		$(".pagination").empty();
 		if(page == 1)
-			html += '<li class="page-item readonly"><span class="page-link">«</span></li>';
+			html += '<li class="page-item disabled"><span class="page-link">«</span></li>';
 		else
-       		html +=	'<li class="page-item" data-page="'+i+'"><span class="page-link">«</span></li>';
+       		html +=	'<li class="page-item" data-page="'+(page-1)+'"><span class="page-link">«</span></li>';
        	for(var i=1; i<=paginationSize; i++){
 			if(i==page)
-				html += '<li class="page-item readonly"><span class="page-link">'+i+'</span></li>';
+				html += '<li class="page-item disabled"><span class="page-link">'+i+'</span></li>';
 			else
 				html += '<li class="page-item" data-page="'+i+'"><span class="page-link">'+i+'</span></li>';
        	}
        	if(page == paginationSize)
-       		html += '<li class="page-item readonly"><span class="page-link">»</span></li>';
+       		html += '<li class="page-item disabled"><span class="page-link">»</span></li>';
        	else
-       		html += '<li class="page-item" data-page="'+i+'"><span class="page-link">»</span></li>';
+       		html += '<li class="page-item" data-page="'+(page+1)+'"><span class="page-link">»</span></li>';
 		$(".pagination").html(html);
        		
     	$(".page-item").click(function(){
