@@ -18,7 +18,7 @@ public class CreateApproval {
     @Resource(name = "batchService")
     private IBatchService batchService;
 
-    @Scheduled(cron = "* * 2 * * *")
+    @Scheduled(cron = "0 0 02 * * ?")
     public void scheduleRun() {
         List<Employee> employees = employeeService.allEmployeeList();
         logger.debug("배치 시작");
