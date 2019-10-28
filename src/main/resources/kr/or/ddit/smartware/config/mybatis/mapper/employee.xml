@@ -173,4 +173,13 @@
     	 where emp_id = #{emp_id}
 	</select>
 	
+	<!-- 영상 사원 리스트 출력 -->
+	<select id="videoEmpList" parameterType="employee" resultType="hashmap">
+		select emp_id, emp_nm, depart_nm, posi_nm
+		  from employee a, department b, position c
+		 where a.depart_id = b.depart_id
+		   and a.posi_id = c.posi_id
+		   and emp_id != #{emp_id}
+		   order by emp_nm
+	</select>
 </mapper>

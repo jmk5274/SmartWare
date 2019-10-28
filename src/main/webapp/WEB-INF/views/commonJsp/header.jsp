@@ -38,6 +38,41 @@
 <script>
 	var audio = new Audio('${cp}/audio/카톡.mp3');
 
+	function getVideoEmpList(){
+		$.ajax({
+			url : "${cp}/videoEmpList",
+			contentType : "application/json",
+			dataType : "json",
+			method : "post",
+			success : function(data){
+				var html = "";
+				var empList = data.employeeList;
+				empList.forEach(function(emp){
+					console.log(emp);
+ 					html += "<tr class='empList'>";
+	 				html += 	"<td> "+emp.EMP_NM+" </td>";
+					html += 	"<td> "+emp.DEPART_NM+" </td>";
+					html += 	"<td> "+emp.POSI_NM+" </td>";
+ 					html += 	'<td> <input data-emp_nm="'+emp.EMP_NM+'" data-emp_id = "'+emp.EMP_ID+'" type="checkbox" class="listCheck" style="display: inline-block;"/> </td>';
+					html += "</tr>";
+				})
+				$("#tbody").append(html);
+				
+				$("#inviteEmp1").click(function(){
+					var emp_id;
+					 $(':checkbox:checked').each(function(i, a){
+						 emp_id=$(this).data("emp_id");
+					 })
+					 socket.send("video^"+emp_id);
+					 $(':checkbox:checked').each(function(i, a){
+						 $(this).attr("checked", false);
+					 })
+					 window.open('https://192.168.0.116:8085', '영상통화방', 'width=1280px, height=1024px');
+				});
+			}
+		});
+	}
+	
 	function getChatList(){
 		$.ajax({
 			url : "${cp}/getChatList",
@@ -139,6 +174,7 @@
 	
 	socket.onmessage = function(evt) {
 		var str = evt.data.split("^");
+		
 		if(str[0]===("msg")){
 			getChatList();
 			audio.play();
@@ -165,11 +201,26 @@
 			  type: 'success',
 			  title: '메일이 왔습니다.'
 			})
+			
+			
+		}else if(str[0]===("video")){
+			const toast = Swal.mixin({
+				  toast: true,
+				  position: 'center',
+				  showConfirmButton: false,
+				});
+
+			toast({
+			  type: 'success',
+			  title: '<a href="javascript:void(window.open(\'https://192.168.0.116:8085\', \'영상통화방\',\'width=1280px, height=1024px\'))">영상통화 요청이 왔습니다</a>.',
+			})
 		}
 	};
 	
 	$(function() {
 		getChatList();
+		
+		getVideoEmpList();
 		
 // 		setTimeout(function() { 
 <%-- 				if(<%=real%>!=0){ --%>
@@ -251,23 +302,14 @@
                     </a>
                     <div class="drop-down animated fadeIn dropdown-menu">
                         <div class="dropdown-content-heading d-flex justify-content-between">
-                            <span class="">3 New Messages</span>  
-                            <a href="javascript:void()" class="d-inline-block">
-                                <span class="badge badge-pill gradient-1"></span>
-                            </a>
+                            <span class="">사원 초대하기</span>  
+                            <div class="bootstrap-modal" style="display : inline-block;">
+                                 <!-- Button trigger modal -->
+                                 <a data-toggle="modal" href="#mod"><i class="fa fa-plus"></i></a>
+                             </div>
                         </div>
-                        <div class="dropdown-content-body">
+                        <div id="videoCall" class="dropdown-content-body">
                             <ul>
-                                <li class="notification-unread">
-                                    <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="bootstrap/images/avatar/1.jpg" alt="">
-                                        <div class="notification-content">
-                                            <div class="notification-heading">Saiful Islam</div>
-                                            <div class="notification-timestamp">08 Hours ago</div>
-                                            <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
-                                        </div>
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -355,6 +397,56 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="mod">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+			<div class="col-md-6 col-lg-12">
+		        <div class="card">
+		            <div class="card-body">
+		            	<p class="card-text d-inline"><small class="text-muted">사원 검색</small></p><br>
+		                <div class="input-group input-group-sm" style="width : 200px;">
+		                	<table id="searchTable">
+		                		<tr>
+		                			<td style="width: 500px;">
+		                				<div>
+		                    				<input id="emp_nm" type="text" class="form-control"/>
+		                				</div>
+		                    		</td>
+		                    		<td>
+		                    			<div>
+		                					<input type="button" id="searchBtn" class="btn btn-primary float-right" value="검색" style="margin-left: 5px;"/>
+		                    			</div>
+		                			</td>
+		                    	</tr>
+		                	</table>
+		                </div>
+		            </div>
+		            <div class="card-footer">
+		                <p class="card-text d-inline"><small class="text-muted empInfo">사원 정보</small></p><br>
+                        <table id="empTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>이름</th>
+                                    <th>부서</th>
+                                    <th>직책</th>
+                                	<th>선택</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+		            </div>
+		        </div>
+			</div>
+	        <div class="modal-footer">
+	             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	             <button type="button" id="inviteEmp1" class="btn btn-primary" data-dismiss="modal">초대하기</button>
+	        </div>
+	     </div>
+     </div>
+</div>
+                                  
 <button id="btnTest_timer" class="btn btn-warning btn sweet-confirm" style="display : none">confirm</button>
       <!--**********************************
           Header end ti-comment-alt

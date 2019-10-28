@@ -178,5 +178,16 @@ public interface IEmployeeService {
 	* Method 설명 : 아이디 중복 체크
 	 */
 	int idCheck(String emp_id);
+	
+	/**
+	 * 
+	* Method : videoEmpList
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param employee
+	* @return
+	* Method 설명 : 영상 사원 리스트 출력
+	 */
+	List<Map> videoEmpList(Employee employee);
 
 }

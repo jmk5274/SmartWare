@@ -9,7 +9,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.smartware.employee.model.Employee;
-import kr.or.ddit.smartware.post.model.Post;
 
 @Repository
 public class EmployeeDao implements IEmployeeDao {
@@ -113,6 +112,11 @@ public class EmployeeDao implements IEmployeeDao {
 	@Override
 	public int idCheck(String emp_id) {
 		return sqlSession.selectOne("employee.idCheck", emp_id);
+	}
+
+	@Override
+	public List<Map> videoEmpList(Employee employee) {
+		return sqlSession.selectList("employee.videoEmpList", employee);
 	}
 
 }

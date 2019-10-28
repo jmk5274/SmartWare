@@ -79,6 +79,8 @@ public class SocketChatHandler extends TextWebSocketHandler {
 				currentSession.sendMessage(new TextMessage(type + "^" + employees));
 			}else if(employee.getEmp_id().equals(employeee.getEmp_id()) && type.equals("mail")) {
 				currentSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_nm()));
+			}else if(employeee.getEmp_id().equals(str[1]) && type.equals("video")) {
+				currentSession.sendMessage(new TextMessage(type + "^" + employee.getEmp_nm()));
 			}
 		}
 	}

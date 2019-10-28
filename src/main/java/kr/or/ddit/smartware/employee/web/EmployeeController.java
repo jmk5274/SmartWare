@@ -566,6 +566,18 @@ public class EmployeeController {
 		}
 	}
 	
+	@PostMapping("videoEmpList")
+	public String videoEmpList(Model model, HttpSession session) {
+		
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
+		List<Map> employeeList = employeeService.videoEmpList(employee);
+		
+		model.addAttribute("employeeList", employeeList);
+		
+		return "jsonView";
+	}
+	
 	@RequestMapping("useForm")
 	public String getEmployee() {
 		

@@ -187,7 +187,7 @@
 		        success: function(data){
 		            if($.trim(data) == 0){
 		                $('#chkMsg').html("<font color='blue'>사용 가능한 아이디입니다.</font>");                
-		            }else{
+		            }else {
 		                $('#chkMsg').html("<font color='red'>중복된 아이디입니다.</font>");
 		            }
 		        },
@@ -237,7 +237,7 @@
 								<td><label class="col-sm control-label">사원 아이디</label></td>
 								<!-- 사원 아이디(emp_id) -->
 								<td>
-								<input placeholder="e0000" id="newEmp_id" type="text" name="emp_id" class="form-control" value=""/>
+								<input id="newEmp_id" type="text" name="emp_id" class="form-control" value=""/>
 								<span id = "chkMsg"></span>
 								</td>
 								<td><label class="col-sm control-label">비밀번호</label></td>

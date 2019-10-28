@@ -105,6 +105,11 @@ public class EmployeeService implements IEmployeeService{
 	@Override
 	public int idCheck(String emp_id) {
 		return employeeDao.idCheck(emp_id);
+	}
+
+	@Override
+	public List<Map> videoEmpList(Employee employee) {
+		return employeeDao.videoEmpList(employee);
 	}	
 
 }
