@@ -300,7 +300,6 @@ th {
 </style>
 </head>
 <body>
-
 	<div id="frame">
 		<div class="content">
 			<div class="contact-profile">
@@ -570,38 +569,46 @@ th {
 				<ul id="msg_ul">
 					<c:choose>
 						<c:when test="${messageList == null || messageList.size() == 0 }">
-
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${messageList }" var="message">
+							<c:forEach begin="0" end="${messageList.size()-1 }" var="i" step="1">
+								<fmt:formatDate value="${messageList[i].SEND_DT }" pattern="MMdd" var="date1" />
+								<fmt:formatDate value="${messageList[i+1].SEND_DT }" pattern="MMdd" var="date2" />
+								<c:if test="${i==0 }">
+									<li style="text-align:center; font-weight:bold;"><p><fmt:formatDate value="${messageList[i].SEND_DT }" pattern="yyyy년 MM월 dd일" /></p></li>
+								</c:if>
 								<c:choose>
-									<c:when test="${message.EMP_ID != S_EMPLOYEE.emp_id}">
-										<li class="sent msgList" data-msg_id=${message.MSG_ID }>
-											<img src="${cp }/employeePicture?emp_id=${message.EMP_ID}"
+									<c:when test="${messageList[i].EMP_ID != S_EMPLOYEE.emp_id}">
+										<li class="sent msgList" data-msg_id=${messageList[i].MSG_ID }>
+											<img src="${cp }/employeePicture?emp_id=${messageList[i].EMP_ID}"
 											alt="" />
-											<p style='background: none; color: black; font-weight: bold;'>${message.EMP_NM }</p>
+											<p style='background: none; color: black; font-weight: bold;'>${messageList[i].EMP_NM }</p>
 											<div>
-												<p>${message.MSG_CONT }</p>
-												<span style='margin-left: 2px;'><fmt:formatDate
-														value="${message.SEND_DT }" pattern="HH:mm" /></span>
+												<p>${messageList[i].MSG_CONT }</p>
+												<span style='margin-left: 2px;'>
+													<fmt:formatDate value="${messageList[i].SEND_DT }" pattern="HH:mm" />
+												</span>
 											</div>
 										</li>
 									</c:when>
 									<c:otherwise>
-										<li class="replies msgList" data-msg_id=${message.MSG_ID }>
-											<img src="${cp }/employeePicture?emp_id=${message.EMP_ID}"
-											alt="" />
-											<p style='background: none; font-weight: bold;'>${message.EMP_NM }</p>
-											<br>
-										<br>
-										<br>
-											<div>
-												<p>${message.MSG_CONT }</p>
-											</div> <span><fmt:formatDate value="${message.SEND_DT }"
-													pattern="HH:mm" /> </span>
+										<li class="replies msgList" data-msg_id=${messageList[i].MSG_ID }>
+											<img src="${cp }/employeePicture?emp_id=${messageList[i].EMP_ID}" alt="" />
+											<p>${messageList[i].MSG_CONT }</p> 
+											<span>
+												<fmt:formatDate value="${messageList[i].SEND_DT }" pattern="HH:mm" /> 
+											</span>
 										</li>
 									</c:otherwise>
 								</c:choose>
+								<c:if test="${date1!=date2 }">
+									<li style="text-align:center; font-weight:bold;"><p><fmt:formatDate value="${messageList[i+1].SEND_DT }" pattern="yyyy년 MM월 dd일" /></p></li>
+								</c:if>
+								<c:set var="now" value="<%=new java.util.Date()%>" />
+								<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="MMdd" /></c:set>
+								<c:if test="${date1!=sysDate }">
+									<li style="text-align:center; font-weight:bold;"><p><fmt:formatDate value="${now }" pattern="yyyy년 MM월 dd일" /></p></li>
+								</c:if>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
@@ -748,7 +755,7 @@ $("#status-options ul li").click(function() {
 				var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 				message += data.msg_id + "";
 				
-				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p style="background: none; font-weight: bold;">'+data.emp_nm+'</p><br><br><br><div><p>' + data.msg_cont + '</p> <span>'+ time +'</span></div></li>');
+				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
 				
 				$('.messages').animate({
 					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
@@ -811,7 +818,7 @@ $("#status-options ul li").click(function() {
 					var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 					message += data.msg_id + "";
 					
-					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p style="background: none; font-weight: bold;">'+data.emp_nm+'</p><br><br><br><div><p>' + data.msg_cont + '</p> <span>'+ time +'</span></div></li>');
+					$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
 					
 					$('.messages').animate({
 						scrollTop: $('.messages').get(0).scrollHeight}, 1000);
@@ -1030,7 +1037,7 @@ $("#status-options ul li").click(function() {
 			success : function(data){
 				var message = "msg^" + data.msg_cont + "^" + chat_id + "^";
 				message += data.msg_id + "";
-				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p style="background: none; font-weight: bold;">'+data.emp_nm+'</p><br><br><br><div><p>' + data.msg_cont + '</p> <span>'+ time +'</span></div></li>');
+				$(".messages ul").append('<li class="replies msgList" data-msg_id='+ data.msg_id +'><img src="${cp }/employeePicture?emp_id='+ data.emp_id +'" alt="" /><p>' + data.msg_cont + '</p> <span>'+ time +'</span></li>');
 				
 				$('.messages').animate({
 					scrollTop: $('.messages').get(0).scrollHeight}, 1000);
