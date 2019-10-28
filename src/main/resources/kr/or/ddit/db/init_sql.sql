@@ -30,6 +30,9 @@ drop sequence PROJECT_SEQ;
 CREATE SEQUENCE PROJECT_SEQ START WITH 1 INCREMENT BY 1 nocache;
 delete from project;
 
+--팝업노룩
+delete from popup_nolook;
+
 -- 팝업
 drop sequence POPUP_SEQ;
 CREATE SEQUENCE POPUP_SEQ START WITH 1 INCREMENT BY 1 nocache;
@@ -912,8 +915,8 @@ INSERT INTO TASK_HISTORY VALUES('hist' || LPAD(TASK_HISTORY_SEQ.NEXTVAL,4,0), 't
 
 --팝업
 
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, 'TESTTES', 'TESTESTSETSET', SYSDATE, 'e0015', '', 'T');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), NULL, NULL, NULL, NULL, NULL, 'TESTTES1', 'TESTESTSETSET1', SYSDATE, 'e0015', '', 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), sysdate, sysdate, 1, 1, 0, 0, 'TESTTES', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), sysdate, sysdate, 1, 1, 0, 0, 'TESTTES1', SYSDATE, 'e0015', empty_blob(), 'T');
 
 --------------------------------------------------------------------------------------------------------------------------------
 --채팅방
