@@ -7,12 +7,13 @@
 <div id="gantt"></div>
 
 <style>
+#chart_div {
+  overflow-x: scroll;
+}
+
 #chart_div svg {
-	overflow-x: scroll;
 	background: white;
-	/*   max-width: 1000px; */
-	width: 2000;
-	/* 	height: 4000px; */
+/* 	width: 2000; */
 	border-radius: .5rem;
 	padding: .5rem;
 	margin: 0 auto;
@@ -110,7 +111,8 @@ text:nth-child(2) {
 </script>
 <script type="text/javascript">
 	google.charts.load('current', {
-		'packages' : [ 'gantt' ]
+		'packages' : [ 'gantt' ],
+		'language' : 'ko'
 	});
 	google.charts.setOnLoadCallback(drawChart);
 
@@ -143,8 +145,6 @@ text:nth-child(2) {
 		data.addColumn('number', 'Percent Complete');
 		data.addColumn('string', 'Dependencies');
 
-		var ajaxArr = [];
-
 		$.ajax({
 			url : cp + "/getAllGantt",
 			type : "get",
@@ -153,59 +153,29 @@ text:nth-child(2) {
 			async : false,
 			success : function(datas) {
 				$.each(datas.taskList, function(idx, value) {
-					var a;
-					if (typeof value.PA_TASK_ID == "undefined") {
-						a = null;
-					} else {
-						a = value.PA_TASK_ID;
-					}
-					var ar = [ value.TASK_ID, value.TASK_CONT, value.RS,
-							new Date(value.ST_DT), new Date(value.END_DT),
-							null, value.PER, a ];
-					console.log(ar);
-					data.addRow(ar)
+					var ar = [ value.TASK_ID, value.TASK_CONT, value.RS, new Date(value.ST_DT), new Date(value.END_DT),
+								null, value.PER, value.PA_TASK_ID ];
+					data.addRow(ar);
 				});
 			}
 		})
-
-		console.log(ajaxArr);
-
+                    
 		var options = {
-			height : 5000,
-			gantt : {
-				criticalPathEnabled : false, // Critical path arrows will be the same as other arrows.
-				arrow : {
-					angle : 0,
-					width : 0,
-					color : 'dodgerblue',
-					radius : 0
+			
+			height: 3000,
+			width: 1000,
+			tooltip: {trigger:'none'},
+			gantt: {
+				shadowEnabled: false,
+				arrow: {
+					width: 0,
 				},
-				labelStyle : {
-					fontName : 'Roboto Mono',
-					fontSize : 12,
-					color : 'dodgerblue'
-				},
-				barCornerRadius : 2,
-				backgroundColor : {
-					fill : 'transparent',
-				},
-				innerGridHorizLine : {
-					stroke : '#ddd',
-					strokeWidth : 0,
-				},
-				innerGridTrack : {
-					fill : 'transparent'
-				},
-				innerGridDarkTrack : {
-					fill : 'transparent'
-				},
-				percentEnabled : true,
-				percentStyle: {
-				   fill:	'black',
-				},
-				shadowEnabled : false
-			}
+		        barHeight: 20,  
+				trackHeight: 30,
+		          criticalPathEnabled: false,
+			}		    
 		};
+        
 
 		var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
 
