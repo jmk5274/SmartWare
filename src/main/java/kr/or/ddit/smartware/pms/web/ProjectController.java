@@ -3,15 +3,15 @@ package kr.or.ddit.smartware.pms.web;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
+import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.pms.model.Project;
 import kr.or.ddit.smartware.pms.service.IProjectService;
@@ -19,7 +19,7 @@ import kr.or.ddit.smartware.pms.service.ITaskService;
 
 @Controller
 public class ProjectController {
-	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
+	
 	@Resource(name="projectService")
 	private IProjectService projectService;
 	
@@ -53,8 +53,15 @@ public class ProjectController {
 	* Method 설명 : 프로젝트 화면
 	*/
 	@PostMapping("pro")
-	public String proView(Model model, String pro_id) {
+	public String proView(Model model, String pro_id, HttpSession session) {
+		// 전체 간트 차트
+		
+		
+		// 사원 간트 차트
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
 		model.addAttribute("pro_id", pro_id);
+		
 		return "tiles2/pms/project";
 	}
 	

@@ -1,13 +1,11 @@
 package kr.or.ddit.smartware.pms.repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.smartware.employee.model.Employee;

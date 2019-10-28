@@ -47,4 +47,25 @@ public interface ITaskDao {
 	*/
 	List<Task> getEmpProjectTask(Map<String, String> map);
 
+	/**
+	* Method : getAllGantt
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pro_id
+	* @return
+	* Method 설명 : 프로젝트의 일감 반환(gantt) 
+	*/
+	List<Map<String, Object>> getAllGantt(String pro_id);
+
+	/**
+	* Method : getEmpGantt
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pro_id
+	* @param emp_id
+	* @return
+	* Method 설명 : 프로젝트의 사원 일감 반환(gantt)
+	*/
+	List<Map<String, Object>> getEmpGantt(String pro_id, String emp_id);
+
 }
