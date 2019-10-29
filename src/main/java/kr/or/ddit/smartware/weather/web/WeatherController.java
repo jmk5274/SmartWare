@@ -12,7 +12,7 @@ public class WeatherController {
 	
 	@GetMapping("weather")
 	public String weather() {
-		return "weather/weather";
+		return "weather/weather2";
 	}
 	
 }

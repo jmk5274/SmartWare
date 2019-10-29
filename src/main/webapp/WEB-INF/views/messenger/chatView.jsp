@@ -601,12 +601,12 @@ th {
 										</li>
 									</c:otherwise>
 								</c:choose>
-								<c:if test="${date1!=date2 }">
+								<c:if test="${date1!=date2 && i!=messageList.size()-1}">
 									<li style="text-align:center; font-weight:bold;"><p><fmt:formatDate value="${messageList[i+1].SEND_DT }" pattern="yyyy년 MM월 dd일" /></p></li>
 								</c:if>
 								<c:set var="now" value="<%=new java.util.Date()%>" />
 								<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="MMdd" /></c:set>
-								<c:if test="${date1!=sysDate }">
+								<c:if test="${date1!=sysDate && i==messageList.size()-1}">
 									<li style="text-align:center; font-weight:bold;"><p><fmt:formatDate value="${now }" pattern="yyyy년 MM월 dd일" /></p></li>
 								</c:if>
 							</c:forEach>
