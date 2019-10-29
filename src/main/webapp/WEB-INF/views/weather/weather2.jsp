@@ -100,8 +100,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			          }
 		        	  if(i!=0){
 				          icon = iconView(icon);
+				          $(".li:eq("+(i)+")").html('<h4>'+week+'</h4><div class="w3layouts_icon"><i style="font-size:30px; color:white;" class="wi '+icon+'"></i></div><h5>'+Math.round(maxTemp)+'° <span>'+Math.round(minTemp)+'°</span></h5>');
+		        	  }else{
+				          $(".li:eq("+(i)+")").html('<h4>'+week+'</h4><div class="w3layouts_icon"></div><h5>'+Math.round(maxTemp)+'° <span>'+Math.round(minTemp)+'°</span></h5>');
 		        	  }
-			          $(".li:eq("+(i)+")").html('<h4>'+week+'</h4><div class="w3layouts_icon"><i style="font-size:30px; color:white;" class="wi '+icon+'"></i></div><h5>'+Math.round(maxTemp)+'° <span>'+Math.round(minTemp)+'°</span></h5>');
 		          }
 		      });
 		}
