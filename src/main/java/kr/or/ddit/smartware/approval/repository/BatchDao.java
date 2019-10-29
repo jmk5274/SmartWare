@@ -29,4 +29,9 @@ public class BatchDao implements IBatchDao {
     public int setApprMem(String emp_id) {
         return sqlSession.insert("batch.setApprMem", emp_id);
     }
+
+    @Override
+    public int setCommute() {
+        return sqlSession.insert("batch.setCommute");
+    }
 }

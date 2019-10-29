@@ -58,4 +58,12 @@
 		AND CATEGORY_NM LIKE '%휴가%'))) a ) a, approval b
 		]]>
 	</insert>
+
+	<insert id="setCommute">
+		INSERT INTO COMMUTE (EMP_ID, DT, RES, REAS)
+		SELECT EMP_ID, TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS DT, '미출근' AS res, '미출근' as reas
+		FROM EMPLOYEE
+		WHERE emp_id NOT IN (SELECT EMP_ID FROM COMMUTE WHERE dt = SYSDATE)
+		AND RANK != 'ADMIN'
+	</insert>
 </mapper>

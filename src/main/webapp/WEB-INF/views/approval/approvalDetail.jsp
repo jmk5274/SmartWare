@@ -108,6 +108,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <h2 class="sub-header">결재문서 상세정보</h2>
                     <div class="email-center-box">
                         <div class="toolbar" role="toolbar">
                             <form id="frm" method="post" enctype="multipart/form-data">
