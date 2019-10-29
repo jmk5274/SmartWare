@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="utf-8">
 <title>Insert title here</title>
-<!-- Styles -->
 <!-- Styles -->
 <style>
 #chartdiv {
@@ -16,13 +15,16 @@
 <!-- Resources -->
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/moonrisekingdom.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="../../../plugin/amcharts/ko_KR.js"></script>
 
 <!-- Chart code -->
 <script>
 am4core.ready(function() {
 
 // Themes begin
+am4core.useTheme(am4themes_moonrisekingdom);
 am4core.useTheme(am4themes_animated);
 // Themes end
 
@@ -34,6 +36,8 @@ chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
 
 var colorSet = new am4core.ColorSet();
 colorSet.saturation = 0.4;
+
+chart.language.locale = am4lang_ko_KR;
 
 chart.data = [ {
   "category": "Module #1",
@@ -166,15 +170,19 @@ categoryAxis.renderer.grid.template.location = 0;
 categoryAxis.renderer.inversed = true;
 
 var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-dateAxis.renderer.minGridDistance = 70;
-dateAxis.baseInterval = { count: 1, timeUnit: "day" };
-// dateAxis.max = new Date(2018, 0, 1, 24, 0, 0, 0).getTime();
-//dateAxis.strictMinMax = true;
-dateAxis.renderer.tooltipLocation = 1;
+dateAxis.renderer.minGridDistance = 10;
+dateAxis.baseInterval = { "timeUnit": "second", "count": 1 };
+// dateAxis.strictMinMax = true;
+// dateAxis.renderer.tooltipLocation = 0;
+dateAxis.dateFormats.setKey("day", "dd");
+dateAxis.periodChangeDateFormats.setKey("day", "[bold]dd"); 
+
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
 var series1 = chart.series.push(new am4charts.ColumnSeries());
 series1.columns.template.height = am4core.percent(70);
-series1.columns.template.tooltipText = "{task}: [bold]{openDateX}[/] - [bold]{dateX}[/] 이찌방..";
+series1.columns.template.tooltipText = "{task}: [bold]{openDateX}[/] - [bold]{dateX}[/]";
 
 series1.dataFields.openDateX = "start";
 series1.dataFields.dateX = "end";
@@ -183,10 +191,11 @@ series1.columns.template.propertyFields.fill = "color"; // get color from data
 series1.columns.template.propertyFields.stroke = "color";
 series1.columns.template.strokeOpacity = 1;
 
-// chart.scrollbarX = new am4core.Scrollbar();
+chart.scrollbarX = new am4core.Scrollbar();
 
 }); // end am4core.ready()
 </script>
+
 
 
 </head>

@@ -1,184 +1,113 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<link href="${cp }/plugin/jquery-gantt/jquery-gantt.css"
-	rel="stylesheet" />
-
-<div id="gantt"></div>
+<script src="${cp }/plugin/dhtmlxgantt/dhtmlxgantt.js"></script>
+<script src="${cp }/plugin/dhtmlxgantt/locale_kr.js"></script>
+<script src="${cp }/plugin/dhtmlxgantt/dhtmlxgantt_marker.js"></script>
+<link href= "${cp }/plugin/dhtmlxgantt/dhtmlxgantt.css" rel="stylesheet"/>
 
 <style>
-#chart_div {
-  overflow-x: scroll;
-}
-
-#chart_div svg {
-	background: white;
-/* 	width: 2000; */
-	border-radius: .5rem;
-	padding: .5rem;
-	margin: 0 auto;
-	box-shadow: 0 2px 1rem rgba(0, 0, 0, .2);
-	/*Background Color*/
-	g: nth-child(2){ 
-    rect{fill: transparent;
-}
-
-}
-
-/* Chart Settings */
-g:nth-child(3) {
-	rect: nth-child(odd){fill: transparent;
-} /* Rows Odd */
-rect:nth-child(even) {
-	fill: transparent;
-} /* Rows Even */
-text {
-	/* Hotizontal Labels */
-	fill: dodgerblue;
-	font-family: 'Roboto Mono' !important;
-	font-weight: normal !important;
-	text-transform: uppercase;
-	letter-spacing: -.5px;
-}
-
-line {
-	/* Row Lines */
-	stroke: transparent;
-	stroke-width: 0;
-}
-
-}
-
-/* Arrows */
-g:nth-child(4) {path { stroke-width:1;
-	stroke: dodgerblue;
-}
-
-}
-
-/* Shadow */
-g:nth-child(6) {rect { fill:dodgerblue;
-	
-}
-
-}
-
-/* Bars */
-g:nth-child(7) {
-	rect {fill: dodgerblue;
-}
-
-}
-
-/* Percent Complete */
-g:nth-child(8) {
-	path {fill: rgba(0, 0, 0, .2);
-}
-
-}
-
-/* Side Labels */
-g:nth-child(9) {
-	text {fill: dodgerblue;
-}
-
-}
-
-/* Tooltips */
-g:nth-child(10) {rect { stroke:white;
-	
-}
-
-text {
-	fill: rgba(0, 0, 0, .6);
-	font-size: 12.5px !important;
-	letter-spacing: -.5px;
-	font-family: 'Roboto Mono' !important;
-}
-
-text:nth-child(2) {
-	fill: dodgerblue;
-}
-}
-}
+.weekend{
+			background: #F0DFE5 !important;
+		}
 </style>
 
-<div id="chart_div"></div>
+<div class="card">
+	<div class="card-body">
+		<div id="gantt_here" style='width:100%; height:100vh;'></div>
+	</div>
+</div>
 
-<script src="${cp }/plugin/google-gantt-charts/loader.js"></script>
 <script>
 	var cp = "${cp}";
+	var pro_id = "${pro_id}"
 </script>
-<script type="text/javascript">
-	google.charts.load('current', {
-		'packages' : [ 'gantt' ],
-		'language' : 'ko'
-	});
-	google.charts.setOnLoadCallback(drawChart);
 
-	var jsonData = []
-	function ajaxAllGantt() {
-		$.ajax({
-			url : cp + "/getAllGantt",
-			type : "get",
-			data : "pro_id=pj0003",
-			dataType : "JSON",
-			success : function(datas) {
-				console.log(datas);
-				return jsonData;
-			},
-			error : function() {
-			}
-		})
-	}
-
-	function drawChart() {
-		ajaxAllGantt();
-
-		var data = new google.visualization.DataTable();
-		data.addColumn('string', 'Task ID');
-		data.addColumn('string', 'Task Name');
-		data.addColumn('string', 'Resource');
-		data.addColumn('date', 'Start Date');
-		data.addColumn('date', 'End Date');
-		data.addColumn('number', 'Duration');
-		data.addColumn('number', 'Percent Complete');
-		data.addColumn('string', 'Dependencies');
-
-		$.ajax({
-			url : cp + "/getAllGantt",
-			type : "get",
-			data : "pro_id=pj0003",
-			dataType : "JSON",
-			async : false,
-			success : function(datas) {
-				$.each(datas.taskList, function(idx, value) {
-					var ar = [ value.TASK_ID, value.TASK_CONT, value.RS, new Date(value.ST_DT), new Date(value.END_DT),
-								null, value.PER, value.PA_TASK_ID ];
-					data.addRow(ar);
+<script>
+function getAllGantt(pro_id) {
+	$.ajax({
+		url : cp + "/getAllGantt",
+		type : "get",
+		async: false,
+		data : "pro_id=" + pro_id,
+		dataType : "JSON",
+		success: function(datas) {
+			var rtnData = [];
+			$.each(datas.taskList, function(idx, value) {
+				var taskColor;
+				if(value.PER !== 100 && value.END_DT < new Date()) { // 지연
+					taskColor = "#ff5e5e"; // red
+				} else if(value.PER === 100 && value.END_DT < new Date()) { // 완료
+					taskColor = "#6fd96f"; // green
+				} else if(value.ST_DT > new Date()) { // 시작전
+					taskColor = "#b6b8ba"; // gray
+				} else { // 진행중
+					taskColor = "#4d7cff"; // blue
+				}
+				if(value.PA_TASK_ID == null) {
+					taskColor = "black";
+				}
+				rtnData.push({
+					id: value.TASK_ID,
+					text: value.TASK_CONT,
+					start_date: new Date(value.ST_DT),
+					end_date: new Date(value.END_DT),
+					parent: value.PA_TASK_ID,
+					progress: value.PER / 100,
+					color: taskColor,
+					open: true
 				});
-			}
-		})
-                    
-		var options = {
-			
-			height: 3000,
-			width: 1000,
-			tooltip: {trigger:'none'},
-			gantt: {
-				shadowEnabled: false,
-				arrow: {
-					width: 0,
-				},
-		        barHeight: 20,  
-				trackHeight: 30,
-		          criticalPathEnabled: false,
-			}		    
-		};
-        
+			});
+			var a = [];
+			a.push({data: rtnData});
+			gantt.parse(a[0]);
+		}
+	})
+}
 
-		var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+var weekScaleTemplate = function (date) {
+	var dateToStr = gantt.date.date_to_str("%d %M");
+	var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+	return dateToStr(date) + " - " + dateToStr(endDate);
+};
 
-		chart.draw(data, options);
-	}
+var daysStyle = function(date){
+	var dateToStr = gantt.date.date_to_str("%D");
+	if (dateToStr(date) == "Sun"||dateToStr(date) == "Sat")  return "weekend";
+	return "";
+};
+gantt.config.min_column_width = 50;
+gantt.config.scale_height = 60;
+
+var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
+var today = new Date(moment(new Date()).format("YYYY,MM,DD"));
+gantt.addMarker({
+	start_date: today,
+	css: "today",
+	text: "Today",
+	title: "Today: " + date_to_str(today)
+});
+
+var start = new Date(moment(new Date()).subtract(7, 'day').format("YYYY,MM,DD"));
+gantt.addMarker({
+	start_date: start,
+	css: "status_line",
+	text: "Start project",
+	title: "Start project: " + date_to_str(start)
+});
+
+gantt.config.scales = [
+	{unit: "month", step: 1, format: "%Y년 %F"},
+	{unit: "day", step:1, format: "%j", css:daysStyle },
+	{unit: "day", step:1, format: "%D", css:daysStyle }
+];
+gantt.config.date_format = "%Y-%m-%d %H:%i";
+gantt.config.columns = [
+	{name: "wbs", label: "WBS", width: 40, template: gantt.getWBSCode},
+	{name: "text", tree: true, width: 170},
+	{name: "start_date", align: "center", width: 90},
+	{name: "end_date", align: "center", width: 90},
+	{name: "add", width: 40}
+];
+gantt.init("gantt_here");
+getAllGantt(pro_id);
 </script>
