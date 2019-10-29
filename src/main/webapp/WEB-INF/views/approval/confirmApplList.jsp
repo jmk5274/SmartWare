@@ -74,74 +74,18 @@
 							</table>
 						</div>
 				
-<%--						<div class="bootstrap-pagination">--%>
-<%--							<nav>--%>
-<%--					  --%>
-<%--								<ul class="pagination justify-content-center">--%>
-<%--								<!-- 이전 페이지 가기 : 지금 있는 페이지에서 한페이지 전으로 -->--%>
-<%--									--%>
-<%--									<c:choose>--%>
-<%--										<c:when test="${page == 1 }">--%>
-<%--											<li class="page-item  disabled"><a class="page-link" href="#" tabindex="-1">&laquo;</a></li>--%>
-<%--												<span aria-hidden="Previous"></span>--%>
-<%--										</c:when>--%>
-<%--										<c:otherwise>--%>
-<%--											<li class="page-item">--%>
-<%--								 				<a class="page-link" href="${cp }/post?page=1&board_id=${board_id}" aria-label="Previous">--%>
-<%--													<span aria-hidden="true">&laquo;</span>--%>
-<%--												</a>--%>
-<%--											</li>--%>
-<%--										</c:otherwise>--%>
-<%--									</c:choose>--%>
-<%--											--%>
-<%--											--%>
-<%--									<c:choose>--%>
-<%--										<c:when test="${page == 1 }">--%>
-<%--											<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">&lt;</a></li>--%>
-<%--										</c:when>--%>
-<%--										<c:otherwise>--%>
-<%--											<li class="page-item"><a class="page-link" href="${cp }/post?page=${page-1}&board_id=${board_id}" tabindex="-1">&lt;</a></li>--%>
-<%--										</c:otherwise>--%>
-<%--									</c:choose>--%>
-<%--									--%>
-<%--									<c:forEach begin="1" end="${paginationSize }" var="i">--%>
-<%--										<c:choose>--%>
-<%--											<c:when test="${i == page }">--%>
-<%--												 <li class="page-item disabled"><span class="page-link">${i }</span></li>--%>
-<%--											</c:when>--%>
-<%--											<c:otherwise>--%>
-<%--												 <li class="page-item"><a class="page-link" href="${cp }/post?page=${i }&board_id=${board_id}">${i }</a></li>--%>
-<%--											</c:otherwise>--%>
-<%--										</c:choose>--%>
-<%--									</c:forEach>--%>
-<%--									--%>
-<%--									<c:choose>--%>
-<%--										<c:when test="${page == paginationSize || paginationSize == 0}">--%>
-<%--											<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>--%>
-<%--										</c:when>--%>
-<%--										<c:otherwise>--%>
-<%--												<li class="page-item"><a class="page-link" href="${cp }/post?page=${page+1}&board_id=${board_id}">&gt;</a>--%>
-<%--                                            </li>--%>
-<%--										</c:otherwise>--%>
-<%--									</c:choose>--%>
-<%--									--%>
-<%--									<c:choose>--%>
-<%--										<c:when test="${page == paginationSize || paginationSize == 0}">--%>
-<%--											<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>--%>
-<%--												<span aria-hidden="Next"></span>--%>
-<%--										</c:when>--%>
-<%--										<c:otherwise>--%>
-<%--											<li class="page-item">--%>
-<%--								 				<a class="page-link" href="${cp }/post?page=${paginationSize }&board_id=${board_id}" aria-label="Previous">--%>
-<%--													<span aria-hidden="true">&raquo;</span>--%>
-<%--												</a>--%>
-<%--											</li>--%>
-<%--										</c:otherwise>--%>
-<%--									</c:choose>--%>
-<%--					--%>
-<%--								</ul>--%>
-<%--							</nav>--%>
-<%--						</div>--%>
+						<div class="bootstrap-pagination">
+							<nav>
+
+								<ul class="pagination justify-content-center">
+									<jsp:include page="confirmPagination.jsp">
+										<jsp:param name="url" value="${url}"/>
+										<jsp:param name="page" value="${page}"/>
+										<jsp:param name="paginationSize" value="${paginationSize}"/>
+									</jsp:include>
+								</ul>
+							</nav>
+						</div>
 					</div>
 				</div>
 			</div>

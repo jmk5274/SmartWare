@@ -33,12 +33,12 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${cp }/approval/approvalPage">결재문서 작성</a></li>
-                    <li><a href="${cp }/approval/sendApprovalList">결재문서(송신)함</a></li>
-                    <li><a href="${cp }/approval/sendApplCompleList">결재문서(송신) 완료함</a></li>
-                    <li><a href="${cp }/approval/sendApplReferList">결재문서(송신) 반려함</a></li>
-                    <li><a href="${cp }/approval/confirmApplList">결재문서(수신)함</a></li>
-                    <li><a href="${cp }/approval/confirmApplCompleList">결재문서(수신) 완료함</a></li>
-                    <li><a href="${cp }/approval/confirmReferCompleList">결재문서(수신) 반려함</a></li>
+                    <li><a href="${cp }/approval/send/applList">결재문서(송신)함</a></li>
+                    <li><a href="${cp }/approval/send/applCompleList">결재문서(송신) 완료함</a></li>
+                    <li><a href="${cp }/approval/send/applReferList">결재문서(송신) 반려함</a></li>
+                    <li><a href="${cp }/approval/confirm/applList">결재문서(수신)함</a></li>
+                    <li><a href="${cp }/approval/confirm/applCompleList">결재문서(수신) 완료함</a></li>
+                    <li><a href="${cp }/approval/confirm/referCompleList">결재문서(수신) 반려함</a></li>
                 </ul>
             </li>
             <li>

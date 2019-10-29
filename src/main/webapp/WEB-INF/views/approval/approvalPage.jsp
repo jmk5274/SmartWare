@@ -180,20 +180,13 @@
         }
 
         (function() {
-            <%--console.log('${refer.appl_id}');--%>
-            <%--console.log('${refer.cont}');--%>
-            <%--console.log('${refer.cont}');--%>
-            <%--if ('${refer.cont}' != null ) {--%>
-            <%--    $('.note-editable.panel-body').html('${refer.cont}');--%>
-            <%--}--%>
-            <%--var refer = '${refer}';--%>
-            <%--console.log(refer);--%>
             $.ajax({
                 url : "${cp}/approval/getRefer",
                 method : "post",
                 data : {appl_id : '${refer.appl_id}'},
                 dataType : "json",
                 success : function (data) {
+                    $('.note-editable.panel-body').html(data.appl.cont);
                     $('#checkBlock').remove();
                 }
             });
@@ -275,7 +268,7 @@
                                 </div> <br>
 
                             </div>
-                            <form id="frm" action="${cp}/approval/sendApprovalList" method="post" enctype="multipart/form-data">
+                            <form id="frm" action="${cp}/approval/send/approvalList" method="post" enctype="multipart/form-data">
                                 <input id="contents" name="cont" type="hidden" value="">
                                 <input id="form_id" name="form_id" type="hidden" value="">
                                 <div class="compose-content mt-5">

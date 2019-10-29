@@ -118,11 +118,48 @@ public class ApprovalController {
         return "jsonView";
     }
 
-    /* 송신한 결재 목록 */
-    @GetMapping("sendApprovalList")
-    public String getSendAppl(HttpServletRequest request, HttpSession session, Model model) {
+    /* 결재문서 송신 */
+    @GetMapping("send/{url}")
+    public String sendApprovalControl(@RequestParam(name = "page", defaultValue = "1") int page,
+                                       @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+                                       @PathVariable("url") String url, HttpServletRequest request, HttpSession session, Model model) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
-        List<Map> applications = approvalService.sendApplList(emp_id);
+        List<Map> applications = new ArrayList<>();
+        String returnJsp = "tiles/approval/";
+        int totalCnt = 0;
+
+        Map sqlData = new HashMap();
+        sqlData.put("emp_id", emp_id);
+        sqlData.put("page", page);
+        sqlData.put("pageSize", pageSize);
+
+        /* 송신한 결재 목록 */
+        if (url.equals("applList")) {
+            totalCnt = approvalService.sendApplListCnt(emp_id);
+            applications= approvalService.sendApplList(sqlData);
+            returnJsp += "sendApplList";
+
+            Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+            if (inputFlashMap != null) {
+                Boolean res = (Boolean) inputFlashMap.get("res");
+                model.addAttribute("res", res);
+            } else {
+                model.addAttribute("res", false);
+            }
+        }
+        /* 송신 후 완료된 결재 목록 */
+        else if (url.equals("applCompleList")) {
+            totalCnt = approvalService.sendApplCompleListCnt(emp_id);
+            applications = approvalService.sendApplCompleList(sqlData);
+            returnJsp += "sendApplCompleList";
+        }
+        /* 송신 후 반려된 결재 목록 */
+        else if (url.equals("applReferList")) {
+            totalCnt = approvalService.sendApplReferListCnt(emp_id);
+            applications = approvalService.sendApplReferList(sqlData);
+            returnJsp += "sendApplReferList";
+        }
+
         List<Map> applList = new ArrayList<>();
         for (Map application : applications) {
             List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
@@ -131,54 +168,17 @@ public class ApprovalController {
             data.put("applApprs", applApprs);
             applList.add(data);
         }
-        model.addAttribute("applList", applList );
 
-        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        if (inputFlashMap != null) {
-            Boolean res = (Boolean) inputFlashMap.get("res");
-            model.addAttribute("res", res);
-        } else {
-            model.addAttribute("res", false);
-        }
-        return "tiles/approval/sendApplList";
-    }
-
-    /* 송신 후 완료된 결재 목록 */
-    @GetMapping("sendApplCompleList")
-    public String getSendComple(HttpServletRequest request, HttpSession session, Model model) {
-        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
-        List<Map> applications = approvalService.sendApplCompleList(emp_id);
-        List<Map> applList = new ArrayList<>();
-        for (Map application : applications) {
-            List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
-            Map data = new HashMap();
-            data.put("application", application);
-            data.put("applApprs", applApprs);
-            applList.add(data);
-        }
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paginationSize", (int)Math.ceil((double) totalCnt / pageSize));
         model.addAttribute("applList", applList );
-        return "tiles/approval/sendApplCompleList";
-    }
-
-    /* 송신 후 반려된 결재 목록 */
-    @GetMapping("sendApplReferList")
-    public String getSendRefer(HttpServletRequest request, HttpSession session, Model model) {
-        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
-        List<Map> applications = approvalService.sendApplReferList(emp_id);
-        List<Map> applList = new ArrayList<>();
-        for (Map application : applications) {
-            List<ApplAppr> applApprs = approvalService.confirmStatus((String) application.get("APPL_ID"));
-            Map data = new HashMap();
-            data.put("application", application);
-            data.put("applApprs", applApprs);
-            applList.add(data);
-        }
-        model.addAttribute("applList", applList );
-        return "tiles/approval/sendApplReferList";
+        model.addAttribute("url", url);
+        return returnJsp;
     }
 
     /* 결재 등록 */
-    @PostMapping("sendApprovalList")
+    @PostMapping("send/approvalList")
     public String postSendAppl(@RequestParam Map param, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
         param.put("emp_id", emp_id);
@@ -198,15 +198,38 @@ public class ApprovalController {
             redirectAttributes.addFlashAttribute("res", false);
         }
 
-        return "redirect:/approval/sendApprovalList";
+        return "redirect:/approval/send/applList";
     }
 
-    /* 결재할 문서 목록*/
-    @GetMapping("confirmApplList")
-    public String confirmApplList(HttpServletRequest request, @RequestParam Map param, HttpSession session, Model model) {
+    /* 결재할 문서 관련 */
+    @GetMapping("confirm/{url}")
+    public String confirmControl(@RequestParam(name = "page", defaultValue = "1") int page,
+                                 @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+                                 @PathVariable("url") String url, HttpServletRequest request, HttpSession session, Model model) {
         String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
+        String returnJsp = "tiles/approval/";
+        int totalCnt = 0;
 
-        List<Map> applList = approvalService.confirmApplList(emp_id);
+        Map sqlData = new HashMap();
+        sqlData.put("emp_id", emp_id);
+        sqlData.put("page", page);
+        sqlData.put("pageSize", pageSize);
+
+        List<Map> applList = new ArrayList<>();
+        /* 결재할 문서 목록 */
+        if (url.equals("applList")) {
+            applList = approvalService.confirmApplList(sqlData);
+            totalCnt = approvalService.confirmApplListCnt(emp_id);
+            returnJsp += "confirmApplList";
+        } else if (url.equals("applCompleList")) {
+            applList = approvalService.confirmApplCompleList(sqlData);
+            totalCnt = approvalService.confirmApplCompleListCnt(emp_id);
+            returnJsp += "confirmApplCompleList";
+        } else if (url.equals("referCompleList")) {
+            applList = approvalService.confirmApplReferList(sqlData);
+            totalCnt = approvalService.confirmApplReferListCnt(emp_id);
+            returnJsp += "confirmApplReferList";
+        }
         if (applList != null) {
             model.addAttribute("applList", applList);
         }
@@ -219,47 +242,11 @@ public class ApprovalController {
             model.addAttribute("res", false);
         }
 
-        return "tiles/approval/confirmApplList";
-    }
-
-    @GetMapping("confirmApplCompleList")
-    public String confirmApplCompleList(HttpServletRequest request, @RequestParam Map param, HttpSession session, Model model) {
-        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
-
-        List<Map> applList = approvalService.confirmApplCompleList(emp_id);
-        if (applList != null) {
-            model.addAttribute("applList", applList);
-        }
-
-        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        if (inputFlashMap != null) {
-            Boolean res = (Boolean) inputFlashMap.get("res");
-            model.addAttribute("res", res);
-        } else {
-            model.addAttribute("res", false);
-        }
-
-        return "tiles/approval/confirmApplCompleList";
-    }
-
-    @GetMapping("confirmReferCompleList")
-    public String confirmReferCompleList(HttpServletRequest request, @RequestParam Map param, HttpSession session, Model model) {
-        String emp_id = ((Employee)session.getAttribute("S_EMPLOYEE")).getEmp_id();
-
-        List<Map> applList = approvalService.confirmApplReferList(emp_id);
-        if (applList != null) {
-            model.addAttribute("applList", applList);
-        }
-
-        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        if (inputFlashMap != null) {
-            Boolean res = (Boolean) inputFlashMap.get("res");
-            model.addAttribute("res", res);
-        } else {
-            model.addAttribute("res", false);
-        }
-
-        return "tiles/approval/confirmApplReferList";
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paginationSize", (int)Math.ceil((double) totalCnt / pageSize));
+        model.addAttribute("url", url);
+        return returnJsp;
     }
 
     /* 해당 결재문서 상세보기 */
@@ -290,7 +277,7 @@ public class ApprovalController {
             redirectAttributes.addFlashAttribute("res", true);
         }
 
-        return "redirect:/approval/confirmApplCompleList";
+        return "redirect:/approval/confirm/applCompleList";
     }
 
     /* 반려하기 */
@@ -300,7 +287,7 @@ public class ApprovalController {
         data.put("emp_id", employee.getEmp_id());
         int referAppl = approvalService.referAppl(data);
 
-        return "redirect:/approval/confirmApplList";
+        return "redirect:/approval/confirm/applList";
     }
 
     /* 반려된 문서 재송신 */

@@ -67,7 +67,8 @@ public interface IApprovalDao {
      * @return
      * Method 설명 : 본인이 송신한 신청서 목록
      */
-    List<Map> sendApplList(String emp_id);
+    List<Map> sendApplList(Map data);
+    int sendApplListCnt(String emp_id);
 
     /**
      * Method : sendApplCompleList
@@ -77,7 +78,8 @@ public interface IApprovalDao {
      * @return
      * Method 설명 : 본인이 송신한 신청서 완료 목록
      */
-    List<Map> sendApplCompleList(String emp_id);
+    List<Map> sendApplCompleList(Map data);
+    int sendApplCompleListCnt(String emp_id);
 
     /**
      * Method : sendApplReferList
@@ -87,7 +89,8 @@ public interface IApprovalDao {
      * @return
      * Method 설명 : 본인이 송신한 결재 반려 목록
      */
-    List<Map> sendApplReferList(String emp_id);
+    List<Map> sendApplReferList(Map data);
+    int sendApplReferListCnt(String emp_id);
 
     /**
      * Method : confirmStatus
@@ -107,7 +110,8 @@ public interface IApprovalDao {
      * @return
      * Method 설명 : 결재해줘야하는 결재목록
      */
-    List<Map> confirmApplList(String emp_id);
+    List<Map> confirmApplList(Map data);
+    int confirmApplListCnt(String emp_id);
 
     /**
      * Method : confirmApplCompleList
@@ -117,7 +121,8 @@ public interface IApprovalDao {
      * @return
      * Method 설명 : 결재한 문서 목록
      */
-    List<Map> confirmApplCompleList(String emp_id);
+    List<Map> confirmApplCompleList(Map data);
+    int confirmApplCompleListCnt(String emp_id);
 
     /**
      * Method : confirmApplReferList
@@ -127,7 +132,8 @@ public interface IApprovalDao {
      * @return
      * Method 설명 : 결재해줫던 목록 중 반려된 목록록
     */
-    List<Map> confirmApplReferList(String emp_id);
+    List<Map> confirmApplReferList(Map data);
+    int confirmApplReferListCnt(String emp_id);
 
     /**
      * Method : checkAppl

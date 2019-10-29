@@ -52,38 +52,80 @@
         AND appr_emp = #{appr_emp}
     </update>
 
-    <select id="sendApplList" parameterType="String" resultType="hashMap">
-        SELECT a.*, b.EMP_NM, c.FORM_NM
-        FROM APPLICATION a
-        LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
-        LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
-        WHERE a.emp_id = #{emp_id}
-        AND a.PROCEED = 'T'
-        AND a.REFER = 'F'
-        ORDER  BY a.APPL_ID
+    <select id="sendApplList" parameterType="hashMap" resultType="hashMap">
+        SELECT *
+        FROM (SELECT a.*, b.EMP_NM, c.FORM_NM, ROWNUM AS RN
+            FROM APPLICATION a
+            LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+            LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+            WHERE a.emp_id = #{emp_id}
+            AND a.PROCEED = 'T'
+            AND a.REFER = 'F'
+            ORDER  BY a.APPL_ID)
+        where rn between #{pageSize} * (#{page} - 1) + 1 and #{page} * #{pageSize}
     </select>
 
-    <select id="sendApplCompleList" parameterType="String" resultType="hashMap">
-        SELECT a.*, b.EMP_NM, c.FORM_NM
-        FROM APPLICATION a
-        LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
-        LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
-        WHERE a.emp_id = #{emp_id}
-        AND a.PROCEED = 'F'
-        AND a.REFER = 'F'
-        ORDER  BY a.APPL_ID
+    <select id="sendApplListCnt" parameterType="String" resultType="int">
+        SELECT count(*) as cnt
+            FROM APPLICATION a
+            LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+            LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+            WHERE a.emp_id = #{emp_id}
+            AND a.PROCEED = 'T'
+            AND a.REFER = 'F'
+            ORDER  BY a.APPL_ID
     </select>
 
-    <select id="sendApplReferList" parameterType="String" resultType="hashMap">
-        SELECT a.*, b.EMP_NM, c.FORM_NM, d.EMP_NM as REFER_NM
-        FROM APPLICATION a
-        LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
-        LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
-        LEFT OUTER JOIN EMPLOYEE d ON a.REFER_EMP = d.EMP_ID
-        WHERE a.emp_id = #{emp_id}
-        AND a.PROCEED = 'F'
-        AND a.REFER = 'T'
-        ORDER  BY a.APPL_ID
+    <select id="sendApplCompleList" parameterType="hashMap" resultType="hashMap">
+        SELECT *
+        FROM (
+            SELECT a.*, b.EMP_NM, c.FORM_NM, ROWNUM AS RN
+            FROM APPLICATION a
+            LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+            LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+            WHERE a.emp_id = #{emp_id}
+            AND a.PROCEED = 'F'
+            AND a.REFER = 'F'
+            ORDER  BY a.APPL_ID)
+        where rn between #{pageSize} * (#{page} - 1) + 1 and #{page} * #{pageSize}
+    </select>
+
+    <select id="sendApplCompleListCnt" parameterType="String" resultType="int">
+        SELECT count(*) as cnt
+            FROM APPLICATION a
+            LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+            LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+            WHERE a.emp_id = #{emp_id}
+            AND a.PROCEED = 'F'
+            AND a.REFER = 'F'
+            ORDER  BY a.APPL_ID
+    </select>
+
+    <select id="sendApplReferList" parameterType="hashMap" resultType="hashMap">
+        SELECT *
+        FROM (
+            SELECT a.*, b.EMP_NM, c.FORM_NM, d.EMP_NM as REFER_NM, ROWNUM AS RN
+            FROM APPLICATION a
+            LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+            LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+            LEFT OUTER JOIN EMPLOYEE d ON a.REFER_EMP = d.EMP_ID
+            WHERE a.emp_id = #{emp_id}
+            AND a.PROCEED = 'F'
+            AND a.REFER = 'T'
+            ORDER  BY a.APPL_ID)
+        where rn between #{pageSize} * (#{page} - 1) + 1 and #{page} * #{pageSize}
+    </select>
+
+    <select id="sendApplReferListCnt" parameterType="String" resultType="int">
+        SELECT count(*) as cnt
+            FROM APPLICATION a
+            LEFT OUTER JOIN EMPLOYEE b ON a.EMP_ID = b.EMP_ID
+            LEFT OUTER JOIN FORM c ON a.FORM_ID = c.FORM_ID
+            LEFT OUTER JOIN EMPLOYEE d ON a.REFER_EMP = d.EMP_ID
+            WHERE a.emp_id = #{emp_id}
+            AND a.PROCEED = 'F'
+            AND a.REFER = 'T'
+            ORDER  BY a.APPL_ID
     </select>
 
     <select id="confirmStatus" parameterType="String" resultType="applAppr">
@@ -94,63 +136,129 @@
     </select>
 
     <!-- 결재할 문서 -->
-    <select id="confirmApplList" parameterType="String" resultType="hashMap">
-        SELECT a.*, b.able, c.EMP_NM, d.FORM_NM
-        FROM APPLICATION a
-        RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
-                    NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
-                FROM APPL_APPR a, APPLICATION b
-                WHERE a.APPL_ID IN b.APPL_ID
-                AND a.appr_emp = #{emp_id}
-                ORDER BY a.APPL_ID) b
-        ON a.APPL_ID = b.APPL_ID
-        LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
-        LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
-        WHERE b.NEXT_ABLE = 'T'
-        AND a.PROCEED = 'T'
-        AND a.REFER = 'F'
-        AND b.able = 'F'
-        ORDER BY b.able, a.APPL_ID
+    <select id="confirmApplList" parameterType="hashMap" resultType="hashMap">
+        SELECT *
+        FROM (
+            SELECT a.*, b.able, c.EMP_NM, d.FORM_NM, ROWNUM AS RN
+            FROM APPLICATION a
+            RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                        NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                    FROM APPL_APPR a, APPLICATION b
+                    WHERE a.APPL_ID IN b.APPL_ID
+                    AND a.appr_emp = #{emp_id}
+                    ORDER BY a.APPL_ID) b
+            ON a.APPL_ID = b.APPL_ID
+            LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+            LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+            WHERE b.NEXT_ABLE = 'T'
+            AND a.PROCEED = 'T'
+            AND a.REFER = 'F'
+            AND b.able = 'F'
+            ORDER BY b.able, a.APPL_ID)
+        where rn between #{pageSize} * (#{page} - 1) + 1 and #{page} * #{pageSize}
+    </select>
+
+    <select id="confirmApplListCnt" parameterType="String" resultType="int">
+        SELECT count(*) as cnt
+            FROM APPLICATION a
+            RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                        NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                    FROM APPL_APPR a, APPLICATION b
+                    WHERE a.APPL_ID IN b.APPL_ID
+                    AND a.appr_emp = #{emp_id}
+                    ORDER BY a.APPL_ID) b
+            ON a.APPL_ID = b.APPL_ID
+            LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+            LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+            WHERE b.NEXT_ABLE = 'T'
+            AND a.PROCEED = 'T'
+            AND a.REFER = 'F'
+            AND b.able = 'F'
+            ORDER BY b.able, a.APPL_ID
     </select>
 
     <!-- 결재한 문서 -->
-    <select id="confirmApplCompleList" parameterType="String" resultType="hashMap">
-        SELECT a.*, b.able, c.EMP_NM, d.FORM_NM
-        FROM APPLICATION a
-        RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
-                    NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
-                FROM APPL_APPR a, APPLICATION b
-                WHERE a.APPL_ID IN b.APPL_ID
-                AND a.appr_emp = #{emp_id}
-                ORDER BY a.APPL_ID) b
-        ON a.APPL_ID = b.APPL_ID
-        LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
-        LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
-        WHERE b.NEXT_ABLE = 'T'
-        AND a.REFER = 'F'
-        AND b.able = 'T'
-        ORDER BY b.able, a.APPL_ID
+    <select id="confirmApplCompleList" parameterType="hashMap" resultType="hashMap">
+        SELECT *
+        FROM (
+            SELECT a.*, b.able, c.EMP_NM, d.FORM_NM, ROWNUM AS RN
+            FROM APPLICATION a
+            RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                        NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                    FROM APPL_APPR a, APPLICATION b
+                    WHERE a.APPL_ID IN b.APPL_ID
+                    AND a.appr_emp = #{emp_id}
+                    ORDER BY a.APPL_ID) b
+            ON a.APPL_ID = b.APPL_ID
+            LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+            LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+            WHERE b.NEXT_ABLE = 'T'
+            AND a.REFER = 'F'
+            AND b.able = 'T'
+            ORDER BY b.able, a.APPL_ID)
+        where rn between #{pageSize} * (#{page} - 1) + 1 and #{page} * #{pageSize}
+    </select>
+
+    <select id="confirmApplCompleListCnt" parameterType="String" resultType="int">
+        SELECT count(*) as cnt
+            FROM APPLICATION a
+            RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                        NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                    FROM APPL_APPR a, APPLICATION b
+                    WHERE a.APPL_ID IN b.APPL_ID
+                    AND a.appr_emp = #{emp_id}
+                    ORDER BY a.APPL_ID) b
+            ON a.APPL_ID = b.APPL_ID
+            LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+            LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+            WHERE b.NEXT_ABLE = 'T'
+            AND a.REFER = 'F'
+            AND b.able = 'T'
+            ORDER BY b.able, a.APPL_ID
     </select>
 
     <!-- 결재한 문서 반려 목록 -->
-    <select id="confirmApplReferList" parameterType="String" resultType="hashMap">
-        SELECT a.*, b.able, c.EMP_NM, e.EMP_NM AS REFER_NM, d.FORM_NM
-        FROM APPLICATION a
-        RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
-                    NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
-                FROM APPL_APPR a, APPLICATION b
-                WHERE a.APPL_ID IN b.APPL_ID
-                AND a.appr_emp = #{emp_id}
-                ORDER BY a.APPL_ID) b
-        ON a.APPL_ID = b.APPL_ID
-        LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
-        LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
-        LEFT OUTER JOIN EMPLOYEE e ON a.REFER_EMP = e.EMP_ID
-        WHERE b.NEXT_ABLE = 'T'
-        AND a.PROCEED = 'F'
-        AND a.REFER = 'T'
-        AND b.able = 'T'
-        ORDER BY b.able, a.APPL_ID
+    <select id="confirmApplReferList" parameterType="hashMap" resultType="hashMap">
+        SELECT *
+        FROM (
+            SELECT a.*, b.able, c.EMP_NM, e.EMP_NM AS REFER_NM, d.FORM_NM, ROWNUM AS RN
+            FROM APPLICATION a
+            RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                        NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                    FROM APPL_APPR a, APPLICATION b
+                    WHERE a.APPL_ID IN b.APPL_ID
+                    AND a.appr_emp = #{emp_id}
+                    ORDER BY a.APPL_ID) b
+            ON a.APPL_ID = b.APPL_ID
+            LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+            LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+            LEFT OUTER JOIN EMPLOYEE e ON a.REFER_EMP = e.EMP_ID
+            WHERE b.NEXT_ABLE = 'T'
+            AND a.PROCEED = 'F'
+            AND a.REFER = 'T'
+            AND b.able = 'T'
+            ORDER BY b.able, a.APPL_ID)
+        where rn between #{pageSize} * (#{page} - 1) + 1 and #{page} * #{pageSize}
+    </select>
+
+    <select id="confirmApplReferListCnt" parameterType="String" resultType="int">
+        SELECT count(*) as cnt
+            FROM APPLICATION a
+            RIGHT OUTER JOIN (SELECT a.APPL_ID, a.able,
+                        NVL((SELECT able FROM APPL_APPR WHERE APPL_ID IN b.APPL_ID AND AP_ORDER = a.AP_ORDER + 1), 'T') AS NEXT_ABLE
+                    FROM APPL_APPR a, APPLICATION b
+                    WHERE a.APPL_ID IN b.APPL_ID
+                    AND a.appr_emp = #{emp_id}
+                    ORDER BY a.APPL_ID) b
+            ON a.APPL_ID = b.APPL_ID
+            LEFT OUTER JOIN EMPLOYEE c ON a.EMP_ID = c.EMP_ID
+            LEFT OUTER JOIN form d ON a.FORM_ID = d.FORM_ID
+            LEFT OUTER JOIN EMPLOYEE e ON a.REFER_EMP = e.EMP_ID
+            WHERE b.NEXT_ABLE = 'T'
+            AND a.PROCEED = 'F'
+            AND a.REFER = 'T'
+            AND b.able = 'T'
+            ORDER BY b.able, a.APPL_ID
     </select>
 
     <update id="checkAppl" parameterType="hashMap">

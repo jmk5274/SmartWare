@@ -41,18 +41,33 @@ public class ApprovalDao implements IApprovalDao{
     }
 
     @Override
-    public List<Map> sendApplList(String emp_id) {
-        return sqlSession.selectList("appl.sendApplList", emp_id);
+    public List<Map> sendApplList(Map data) {
+        return sqlSession.selectList("appl.sendApplList", data);
     }
 
     @Override
-    public List<Map> sendApplCompleList(String emp_id) {
-        return sqlSession.selectList("appl.sendApplCompleList", emp_id);
+    public int sendApplListCnt(String emp_id) {
+        return sqlSession.selectOne("appl.sendApplListCnt", emp_id);
     }
 
     @Override
-    public List<Map> sendApplReferList(String emp_id) {
-        return sqlSession.selectList("appl.sendApplReferList", emp_id);
+    public List<Map> sendApplCompleList(Map data) {
+        return sqlSession.selectList("appl.sendApplCompleList", data);
+    }
+
+    @Override
+    public int sendApplCompleListCnt(String emp_id) {
+        return sqlSession.selectOne("appl.sendApplCompleListCnt", emp_id);
+    }
+
+    @Override
+    public List<Map> sendApplReferList(Map data) {
+        return sqlSession.selectList("appl.sendApplReferList", data);
+    }
+
+    @Override
+    public int sendApplReferListCnt(String emp_id) {
+        return sqlSession.selectOne("appl.sendApplReferListCnt", emp_id);
     }
 
     @Override
@@ -61,18 +76,33 @@ public class ApprovalDao implements IApprovalDao{
     }
 
     @Override
-    public List<Map> confirmApplList(String emp_id) {
-        return sqlSession.selectList("appl.confirmApplList", emp_id);
+    public List<Map> confirmApplList(Map data) {
+        return sqlSession.selectList("appl.confirmApplList", data);
     }
 
     @Override
-    public List<Map> confirmApplCompleList(String emp_id) {
-        return sqlSession.selectList("appl.confirmApplCompleList", emp_id);
+    public int confirmApplListCnt(String emp_id) {
+        return sqlSession.selectOne("appl.confirmApplListCnt", emp_id);
     }
 
     @Override
-    public List<Map> confirmApplReferList(String emp_id) {
-        return sqlSession.selectList("appl.confirmApplReferList", emp_id);
+    public List<Map> confirmApplCompleList(Map data) {
+        return sqlSession.selectList("appl.confirmApplCompleList", data);
+    }
+
+    @Override
+    public int confirmApplCompleListCnt(String emp_id) {
+        return sqlSession.selectOne("appl.confirmApplCompleListCnt", emp_id);
+    }
+
+    @Override
+    public List<Map> confirmApplReferList(Map data) {
+        return sqlSession.selectList("appl.confirmApplReferList", data);
+    }
+
+    @Override
+    public int confirmApplReferListCnt(String emp_id) {
+        return sqlSession.selectOne("appl.confirmApplReferListCnt", emp_id);
     }
 
     @Override

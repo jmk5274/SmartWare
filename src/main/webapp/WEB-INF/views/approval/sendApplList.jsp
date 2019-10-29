@@ -75,8 +75,19 @@
 								</c:forEach>
 							</table>
 						</div>
-
+						<div class="bootstrap-pagination">
+							<nav>
+								<ul class="pagination justify-content-center">
 						<%-- 페이지네이션 --%>
+									<jsp:include page="sendPagination.jsp">
+										<jsp:param name="url" value="${url}"/>
+										<jsp:param name="page" value="${page}"/>
+										<jsp:param name="paginationSize" value="${paginationSize}"/>
+									</jsp:include>
+
+								</ul>
+							</nav>
+						</div>
 
 					</div>
 				</div>

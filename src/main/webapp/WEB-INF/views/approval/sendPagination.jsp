@@ -6,9 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="bootstrap-pagination">
-    <nav>
-        <ul class="pagination justify-content-center">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- 이전 페이지 가기 : 지금 있는 페이지에서 한페이지 전으로 -->
 
             <c:choose>
@@ -18,7 +16,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="${cp }/appl?page=1&board_id=${board_id}" aria-label="Previous">
+                        <a class="page-link" href="${cp }/approval/send/${url}page=1" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -31,7 +29,7 @@
                     <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">&lt;</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li class="page-item"><a class="page-link" href="${cp }/appl?page=${page-1}" tabindex="-1">&lt;</a></li>
+                    <li class="page-item"><a class="page-link" href="${cp }/approval/send/${url}page=${page-1}" tabindex="-1">&lt;</a></li>
                 </c:otherwise>
             </c:choose>
 
@@ -41,7 +39,7 @@
                          <li class="page-item disabled"><span class="page-link">${i }</span></li>
                     </c:when>
                     <c:otherwise>
-                         <li class="page-item"><a class="page-link" href="${cp }/appl?page=${i }">${i }</a></li>
+                         <li class="page-item"><a class="page-link" href="${cp }/approval/send/${url}page=${i }">${i }</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
@@ -51,7 +49,7 @@
                     <li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
                 </c:when>
                 <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="${cp }/appl?page=${page+1}">&gt;</a>
+                        <li class="page-item"><a class="page-link" href="${cp }/approval/send/${url}page=${page+1}">&gt;</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -63,13 +61,11 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="${cp }/appl?page=${paginationSize }" aria-label="Previous">
+                        <a class="page-link" href="${cp }/approval/send/${url}page=${paginationSize }" aria-label="Previous">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </c:otherwise>
             </c:choose>
 
-        </ul>
-    </nav>
-</div>
+

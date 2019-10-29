@@ -41,18 +41,33 @@ public class ApprovalService implements IApprovalService{
     }
 
     @Override
-    public List<Map> sendApplList(String emp_id) {
-        return approvalDao.sendApplList(emp_id);
+    public List<Map> sendApplList(Map data) {
+        return approvalDao.sendApplList(data);
     }
 
     @Override
-    public List<Map> sendApplCompleList(String emp_id) {
-        return approvalDao.sendApplCompleList(emp_id);
+    public int sendApplListCnt(String emp_id) {
+        return approvalDao.sendApplListCnt(emp_id);
     }
 
     @Override
-    public List<Map> sendApplReferList(String emp_id) {
-        return approvalDao.sendApplReferList(emp_id);
+    public List<Map> sendApplCompleList(Map data) {
+        return approvalDao.sendApplCompleList(data);
+    }
+
+    @Override
+    public int sendApplCompleListCnt(String emp_id) {
+        return approvalDao.sendApplCompleListCnt(emp_id);
+    }
+
+    @Override
+    public List<Map> sendApplReferList(Map data) {
+        return approvalDao.sendApplReferList(data);
+    }
+
+    @Override
+    public int sendApplReferListCnt(String emp_id) {
+        return approvalDao.sendApplReferListCnt(emp_id);
     }
 
     @Override
@@ -61,18 +76,33 @@ public class ApprovalService implements IApprovalService{
     }
 
     @Override
-    public List<Map> confirmApplList(String emp_id) {
-        return approvalDao.confirmApplList(emp_id);
+    public List<Map> confirmApplList(Map data) {
+        return approvalDao.confirmApplList(data);
     }
 
     @Override
-    public List<Map> confirmApplCompleList(String emp_id) {
-        return approvalDao.confirmApplCompleList(emp_id);
+    public int confirmApplListCnt(String emp_id) {
+        return approvalDao.confirmApplListCnt(emp_id);
     }
 
     @Override
-    public List<Map> confirmApplReferList(String emp_id) {
-        return approvalDao.confirmApplReferList(emp_id);
+    public List<Map> confirmApplCompleList(Map data) {
+        return approvalDao.confirmApplCompleList(data);
+    }
+
+    @Override
+    public int confirmApplCompleListCnt(String emp_id) {
+        return approvalDao.confirmApplCompleListCnt(emp_id);
+    }
+
+    @Override
+    public List<Map> confirmApplReferList(Map data) {
+        return approvalDao.confirmApplReferList(data);
+    }
+
+    @Override
+    public int confirmApplReferListCnt(String emp_id) {
+        return approvalDao.confirmApplReferListCnt(emp_id);
     }
 
     @Override

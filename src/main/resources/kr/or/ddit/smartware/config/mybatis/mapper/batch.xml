@@ -61,9 +61,9 @@
 
 	<insert id="setCommute">
 		INSERT INTO COMMUTE (EMP_ID, DT, RES, REAS)
-		SELECT EMP_ID, TO_CHAR(SYSDATE, 'YYYY-MM-DD') AS DT, '미출근' AS res, '미출근' as reas
+		SELECT EMP_ID, TO_CHAR(SYSDATE-1, 'YYYY-MM-DD') AS DT, '미출근' AS res, '미출근' as reas
 		FROM EMPLOYEE
-		WHERE emp_id NOT IN (SELECT EMP_ID FROM COMMUTE WHERE dt = SYSDATE)
+		WHERE emp_id NOT IN (SELECT EMP_ID FROM COMMUTE WHERE dt = TO_CHAR(SYSDATE-1, 'YYYY-MM-DD'))
 		AND RANK != 'ADMIN'
 	</insert>
 </mapper>
