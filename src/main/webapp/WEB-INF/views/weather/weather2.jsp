@@ -133,14 +133,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		          var temp = Math.round(jsonData.main.temp-273.15);
 		          var condition = jsonData.weather[0].main
 		          var icon = iconView(jsonData.weather[0].icon);
+		          var bgIcon = jsonData.weather[0].icon;
 		          
-				  if(icon=="01d" || icon=="01n" || icon=="02d" || icon=="02n"){
+				  if(bgIcon=="01d" || bgIcon=="01n" || bgIcon=="02d" || bgIcon=="02n"){
 				  	  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid');
-				  }else if(icon=="03d" || icon=="03n" || icon=="04d" || icon=="04n"){
+				  }else if(bgIcon=="03d" || bgIcon=="03n" || bgIcon=="04d" || bgIcon=="04n"){
 					  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid1');
-				  }else if(icon=="09d" || icon=="09n" || icon=="10d" || icon=="10n"){
+				  }else if(bgIcon=="09d" || bgIcon=="09n" || bgIcon=="10d" || bgIcon=="10n"){
 					  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid2');
-				  }else if(icon=="11d" || icon=="11n" || icon=="13d" || icon=="13n"){
+				  }else if(bgIcon=="11d" || bgIcon=="11n" || bgIcon=="13d" || bgIcon=="13n"){
 					  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid3');
 				  }
 		          
