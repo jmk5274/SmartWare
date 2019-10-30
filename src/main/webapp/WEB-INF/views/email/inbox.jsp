@@ -81,6 +81,7 @@
 		
 		$(document).on('click', '.fa-trash', function() {
 			var msgNumber = new Array();
+			$("#mailCount").html("");
 // 			msgNumber = $(':checkbox:checked').data("id");
 			
 			$(':checkbox:checked').each(function(i, a){
@@ -216,7 +217,7 @@
 							</c:forEach>
 						<!-- panel -->
 						<div class="row">
-							<div class="col-7">
+							<div id="mailCount" class="col-7">
 								<c:choose>
 									<c:when test="${check eq 'T' || check eq 'F' }">
 										

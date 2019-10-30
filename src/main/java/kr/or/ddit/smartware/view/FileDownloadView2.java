@@ -27,15 +27,18 @@ public class FileDownloadView2 extends AbstractView{
 		
 		//info 객체를 받야아함
 		String name = (String) model.get("filename");
+		logger.debug("name - {}", name);
 		
 //		FileInfo info =  FileUtil.getFileInfo((String) model.get("filename"));
 		
 		response.setHeader("content-disposition", "attachment;filename="+ URLEncoder.encode(name,"UTF-8"));
 		response.setContentType("application/octet-stream");	//바이너리로 요청이 전송됨
 		
-		String path = getPath();
+		String realPath = request.getSession().getServletContext().getRealPath("/img/email/");
 		
-		File file = new File(path + "\\" + name);
+//		File ff = new File(realPath+ "/" +bodyPart.getFileName());
+		
+		File file = new File(realPath + "/" +name);
 		
 		FileInputStream fis = new FileInputStream(file);
 		ServletOutputStream sos = response.getOutputStream();
@@ -49,18 +52,18 @@ public class FileDownloadView2 extends AbstractView{
 		fis.close();
 	}
 	
-	private static String getPath() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-		String yyyyMM = sdf.format(new Date());
-		String yyyy = yyyyMM.substring(0,4);
-		String mm = yyyyMM.substring(4,6);
-		
-		String path = "c:\\springUpload\\" + yyyy + "\\" + mm;
-		File pathFile = new File(path);
-		
-		if(!pathFile.exists()) pathFile.mkdirs();
-		return path;
-	}
+//	private static String getPath() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+//		String yyyyMM = sdf.format(new Date());
+//		String yyyy = yyyyMM.substring(0,4);
+//		String mm = yyyyMM.substring(4,6);
+//		
+//		String path = "c:\\springUpload\\" + yyyy + "\\" + mm;
+//		File pathFile = new File(path);
+//		
+//		if(!pathFile.exists()) pathFile.mkdirs();
+//		return path;
+//	}
 	
 	
 }

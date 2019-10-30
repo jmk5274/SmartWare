@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,7 +97,7 @@ public class EmailController {
 	}
 	
 	@PostMapping(path = "sendEmail")
-    public String sendEmail(Model model, String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) throws IOException {
+    public String sendEmail(HttpServletRequest request, Model model, String email, String emailPass, String reci, String subject, String cont, @RequestPart("attatch") List<MultipartFile> attatch) throws IOException {
 		
 		logger.debug("email - {}", email);
 		logger.debug("emailpass - {}", emailPass);
@@ -159,21 +160,36 @@ public class EmailController {
             	
             	for(MultipartFile attachedFile : attatch) {
             		
-            		FileInfo fileInfo = FileUtil.getFileInfo(attachedFile.getOriginalFilename());
-            		//첨부된 파일이 있을 경우만 업로드 처리
-            		attachedFile.transferTo(fileInfo.getFile());
+//            		FileInfo fileInfo = FileUtil.getFileInfo(attachedFile.getOriginalFilename());
+//            		//첨부된 파일이 있을 경우만 업로드 처리
+//            		attachedFile.transferTo(fileInfo.getFile());
+            		String realPath = "C:/picture/email";
+            		
+            		File file = new File(realPath);
+            		if(!file.exists()) file.mkdirs();
+            		
+            		logger.debug("original - {}", attachedFile.getOriginalFilename());
 
     			    if(attachedFile.getSize() > 0) {
+    			    	File ff = new File(realPath + "/" + attachedFile.getOriginalFilename());
+    			    	if(ff.exists()) {
+    			    		ff.delete();
+    			    	}
 	            		
 	            		messageBodyPart = new MimeBodyPart();
-	            		DataSource fds = new FileDataSource(fileInfo.getFile());
+//	            		DataSource fds = new FileDataSource(fileInfo.getFile());
+	            		DataSource fds = new FileDataSource(ff);
 	            		messageBodyPart.setDataHandler(new DataHandler(fds));
 	            		
-	            		String fileName = fds.getName(); // 한글파일명은 영문으로 인코딩해야 첨부가 된다.
-	            		fileName = new String(fileName.getBytes("KSC5601"), "8859_1");
-//	            		messageBodyPart.setFileName(MimeUtility.encodeText(fds.getName(), "EUC-KR","B"));
-	            		messageBodyPart.setFileName(fileName);
+//	            		String fileName = fds.getNCame(); // 한글파일명은 영문으로 인코딩해야 첨부가 된다.
+//	            		fileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+//	            		MimeUtility.encodeText("파일명", "EUC-KR", "B")
+	            		messageBodyPart.setFileName(MimeUtility.encodeText(fds.getName(), "EUC-KR","B"));
+//	            		messageBodyPart.setFileName(fileName);
 	            		multipart.addBodyPart(messageBodyPart);
+	            		
+	            		ff = new File(realPath + "/" + attachedFile.getOriginalFilename());
+	            		attachedFile.transferTo(ff);
     			    }
             	}
             }
@@ -365,7 +381,7 @@ public class EmailController {
 	
 	
 	@PostMapping(path = "detailMail")
-	public String detailMail(HttpSession Hsession, Model model, String emailLabel, String msgNumber) throws MessagingException, IOException {
+	public String detailMail(HttpServletRequest request,HttpSession Hsession, Model model, String emailLabel, String msgNumber) throws MessagingException, IOException {
 		logger.debug("msgNumber - {}", msgNumber);
 		logger.debug("Integer.parseInt(msgNumber) - {}", Integer.parseInt(msgNumber));
 		
@@ -387,13 +403,23 @@ public class EmailController {
 	          
 	          Address[] froms = mes.getFrom();
 	          String personal = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
+	          String personal2 = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
+	          logger.debug("address - {}", personal2);
+	          Address[] recis = mes.getAllRecipients();
+	          String reci = recis == null ? null :  ((InternetAddress) recis[0]).getPersonal();
+	          String reci2 = recis == null ? null :  ((InternetAddress) recis[0]).getAddress();
+	          logger.debug("reci - {}", reci);
+	          logger.debug("reci2 - {}", reci2);
 	          
 	          
 	          model.addAttribute("personal", personal);
+	          model.addAttribute("address", personal2);
+	          model.addAttribute("reci2", reci2);
 	          
 	          Object content = mes.getContent();
 	          List<File> attachments = new ArrayList<File>();
 	          List<FileInfo> infos = new ArrayList<FileInfo>();
+	          List<String> fName = new ArrayList<String>();
 	          int bodyCount = 0;
 	          int attachmentCount = 0;
 	            MimeMultipart multiPart = null;
@@ -410,9 +436,19 @@ public class EmailController {
 	                			attachmentCount++;
 	                			DataHandler handler = bodyPart.getDataHandler();
 	                			
-	                			FileInfo info = FileUtil.getFileInfo(bodyPart.getFileName());
+	                			
+	                			String rr = MimeUtility.decodeText(bodyPart.getFileName());
+	                			logger.debug("rr - {}", rr);
+	                			
+	                			
+	                			String realPath = "C:picture/email";
+	                			
+	                			File ff = new File(realPath+ "/" +rr);
+	                			
+//	                			FileInfo info = FileUtil.getFileInfo(bodyPart.getFileName());
 	                			InputStream is = bodyPart.getInputStream();
-	                	        File f = info.getFile();
+//	                	        File f = info.getFile();
+	                	        File f = ff;
 	                	        FileOutputStream fos = new FileOutputStream(f);
 	                	        byte[] buf = new byte[4096];
 	                	        int bytesRead;
@@ -421,9 +457,8 @@ public class EmailController {
 	                	        }
 	                	        fos.close();
 	                	        
-	                	        infos.add(info);
+//	                	        infos.add(info);
 	                	        attachments.add(f);
-	                			
 	                			
 	                		} else {
 	                			model.addAttribute("textCont", bodyPart.getContent());
@@ -434,6 +469,8 @@ public class EmailController {
 	            if(emailLabel.equals("INBOX")) {
 	    			Hsession.setAttribute("cnt", folder.getMessageCount());
 	    		}
+	            
+	            model.addAttribute("fName", fName);
 	            model.addAttribute("emailLabel", emailLabel);
 	            model.addAttribute("msgNumber", msgNumber);
 	            model.addAttribute("infos", infos);
