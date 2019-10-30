@@ -62,6 +62,16 @@ public class SocketChatHandler extends TextWebSocketHandler {
 			}
 		}
 		
+		if(type.equals("project")) {
+			for(int i=0; i<str.length; i++) {
+				if(chatMap.get(str[i])!=null && !str[i].equals("project")) {
+					WebSocketSession webSession = chatMap.get(str[i]);
+					
+					webSession.sendMessage(new TextMessage(type + "^temp"));
+				}
+			}
+		}
+		
 		for (WebSocketSession currentSession : chatMap.values()) {
 			Employee employeee = getEmployee(currentSession);
 			if(employeee.getC_use().equals("true") && type.equals("close")) {

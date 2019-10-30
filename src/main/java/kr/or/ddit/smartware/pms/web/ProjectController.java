@@ -152,6 +152,8 @@ public class ProjectController {
 		
 		messengerService.insertChat(chat, allMemberArr);
 		
+		model.addAttribute("allMemberArr", allMemberArr);
+		
 		return jsonView;
 	}
 }

@@ -46,7 +46,12 @@ $(function() {
 			url: cp + "/insertProject",
 			type: "POST",
 			data: $("#projectForm").serialize() + "&start=" + (+start) + "&end=" + (+end),
-			success: function() {
+			success: function(data) {
+				var message = "project";
+				data.allMemberArr.forEach(function(id){
+					message += "^" + id;
+				})
+				socket.send(message);
 				console.log("성공");
 			}, error: function() {
 				console.log("실패");

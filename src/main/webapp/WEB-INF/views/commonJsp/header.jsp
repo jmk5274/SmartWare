@@ -200,8 +200,6 @@
 			  type: 'success',
 			  title: '메일이 왔습니다.'
 			})
-			
-			
 		}else if(str[0]===("video")){
 			const toast = Swal.mixin({
 				  toast: true,
@@ -212,6 +210,19 @@
 			toast({
 			  type: 'success',
 			  title: '<a href="javascript:void(window.open(\'https://192.168.0.116:8085\', \'영상통화방\',\'width=1280px, height=1024px\'))">영상통화 요청이 왔습니다</a>.',
+			})
+		}else if(str[0]===("project")){
+			getChatList();
+			const toast = Swal.mixin({
+				  toast: true,
+				  position: 'top-end',
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+
+			toast({
+			  type: 'success',
+			  title: '프로젝트 채팅방이 개설되었습니다'
 			})
 		}
 	};
