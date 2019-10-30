@@ -1,16 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8"%>
+
 <link href="${cp }/css/weather/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="${cp }/css/weather/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
 <link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
-<div class="container-fluid">
+<%--<div class="container-fluid">--%>
     <div class="row">
-        <div class="col-8">
+        <div class="col-4">
+			<h1>공지사항</h1>
             <div class="card">
                 <div class="card-body">
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
                 </div>
             </div>
+
+			<div class="card">
+				<div class="card-body">
+					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+				</div>
+			</div>
         </div>
+		<div class="col-4">
+			<h1>사내게시글</h1>
+			<div class="card">
+				<div class="card-body">
+					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-body">
+					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+				</div>
+			</div>
+		</div>
         <div class="col-4">
 			<div id="bg" class="wthree_main_grid agileinfo_main_grid">
 				<div class="w3ls_main_grid">
@@ -40,24 +64,22 @@
 					</ul>
 				</div>
 			</div>
+
+			<div class="card">
+				<div class="card-body">
+					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+				</div>
+			</div>
 		</div>
-        <div class="row">
-        <div class="col-8">
-            <div class="card">
-                <div class="card-body">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
-                </div>
-            </div>
-        </div>
+<%--        <div class="row">--%>
+<%--        <div class="col-8">--%>
+<%--            --%>
+<%--        </div>--%>
+<%--        <div class="col">--%>
+<%--            --%>
+<%--        </div>--%>
     </div>
-</div>
+<%--</div>--%>
 <script src="${cp }/js/weather/owl.carousel.js"></script>
 <script src="${cp }/js/moment.js"></script>
 <script>

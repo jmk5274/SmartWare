@@ -186,8 +186,8 @@
                 data : {appl_id : '${refer.appl_id}'},
                 dataType : "json",
                 success : function (data) {
-                    $('.note-editable.panel-body').html(data.appl.cont);
-                    $('#checkBlock').remove();
+                        $('.note-editable.panel-body').html(data.appl.cont);
+                        $('#checkBlock').remove();
                 }
             });
         }());
