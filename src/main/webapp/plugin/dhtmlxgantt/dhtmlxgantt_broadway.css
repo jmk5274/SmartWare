@@ -65,6 +65,8 @@
 .gantt_task .gantt_task_scale .gantt_scale_cell {
 	border-left: 1px solid #f6f6f6;
 	border-right: 1px solid #bababa;
+	border-top: 1px solid #f6f6f6;
+	border-bottom: 1px solid #bababa;
 	color: #494949;
 	font-size: 14px
 }
@@ -349,8 +351,8 @@
 	background-repeat: no-repeat;
 	cursor: pointer;
 	position: relative;
-	-moz-opacity: .3;
-	opacity: .3
+	-moz-opacity: 0;
+	opacity: 0
 }
 
 .gantt_grid_head_cell.gantt_grid_head_add {
