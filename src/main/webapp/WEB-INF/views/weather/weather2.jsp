@@ -5,12 +5,12 @@
 <head>
 <title>Mixed Weather Widget Flat Responsive Widget Template :: w3layouts</title>
 <!-- custom-theme -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Mixed Weather Widget Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+<!-- <meta name="keywords" content="Mixed Weather Widget Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,  -->
+<!-- Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" /> -->
+<!-- <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); -->
+<!--  		function hideURLbar(){ window.scrollTo(0,1); } </script> -->
 <!-- //custom-theme -->
 <link href="${cp }/css/weather/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="${cp }/css/weather/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
@@ -63,16 +63,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		$(document).ready(function() { 
 			currParseWeather();
 			parseWeather();
-
-			$("#owl-demo,#owl-demo1,#owl-demo3,#owl-demo4").owlCarousel({ 
-			  autoPlay: 3000, //Set AutoPlay to 3 seconds
-		 
-			  items : 4,
-			  itemsDesktop : [768,3],
-			  itemsDesktopSmall : [414,2]
-		 
-			});
 		}); 
+
+		$("#owl-demo,#owl-demo1,#owl-demo3,#owl-demo4").owlCarousel({ 
+		  autoPlay: 3000, //Set AutoPlay to 3 seconds
+	 
+		  items : 4,
+		  itemsDesktop : [768,3],
+		  itemsDesktopSmall : [414,2]
+	 
+		});
+		
 		moment.lang('ko', {
 		    weekdays: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 		});
