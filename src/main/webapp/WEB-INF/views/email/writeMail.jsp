@@ -53,8 +53,26 @@
 			
 		});
 		
-		$("#emailCheck").click(function(){
-			$("#validator").submit();
+		$("#emailCheck").click(function(evt){
+// 			$("#validator").submit();
+			evt.preventDefault();
+			
+			var checkEmail = $("#reci").val();
+			var checkArr = checkEmail.split(" ").filter(e => e.replace(/ +/g, ''));
+	
+			var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			
+			if(checkArr.length > 0){
+				for(var i = 0; i < checkArr.length; i++){
+					if (checkArr[i].match(regExp) != null) {
+					   $("#emailSpan").text("사용할수 있는 이메일(들)").css("color", "lightgreen");
+					}
+					else {
+					   $("#emailSpan").text("사용할수 없는 이메일").css("color", "red");
+					}
+				}
+			}
+	
 		});
 		
 		$(document).on('click', '.select', function() {
@@ -136,6 +154,7 @@ function checkEmail(){
 														                                            		<c:forEach items="${employeeList }" var="employee">
 															                                            		<c:forEach items="${positionList }" var="position">
 															                                            				<c:if test="${depart.depart_id == employee.DEPART_ID && position.posi_id == employee.POSI_ID}">
+															                                            					<c:if test="${employee.EMP_ID != 'admin' }">
 																		                                                        <li class="dd-item select" data-id="${depart.depart_id }">
 																		                                                            <div class="dd-handle"><input value="${employee.EMAIL }" type="checkbox" class="listCheck" style="display: inline-block;"/>
 																			                                                             &nbsp;&nbsp;&nbsp;${employee.EMP_NM } &nbsp;
@@ -144,6 +163,7 @@ function checkEmail(){
 																			                                                             /&nbsp;${employee.JOB_NM }&nbsp;
 																		                                                             </div>
 																		                                                        </li>
+																	                                                        </c:if>
 																		                                                </c:if>
 																		                                         </c:forEach>
 															                                                </c:forEach>
@@ -176,9 +196,10 @@ function checkEmail(){
 									style="width: 400px; height: 43px;"> &nbsp;&nbsp;
 								<a id="validator" href="javascript:checkEmail();">
 									<button type="button" id="emailCheck" class="btn btn-outline-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10">유효성 검사</button>
-								</a> <font color="red"> &nbsp;&nbsp;
+								</a> 
 								<button type="button" class="btn btn-outline-success m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" data-toggle="modal" data-target="#basicModal">주소록</button><br>
-								<form:errors path="email.email"/></font>
+<%-- 								<form:errors path="email.email"/> --%>
+								<span id="emailSpan"></span>
 								<br>
 									<input type="hidden" id="email" name="email"
 									value="${S_EMPLOYEE.email }" /> <input type="hidden"

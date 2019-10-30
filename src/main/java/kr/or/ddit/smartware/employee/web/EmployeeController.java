@@ -103,7 +103,7 @@ public class EmployeeController {
 	
 	@RequestMapping(path = "employeeSearch", method = RequestMethod.GET)
 	public String employeeSearch(Employee employee, @RequestParam(name = "page", defaultValue = "1") Integer page,
-			@RequestParam(name = "pagesize", defaultValue = "30") Integer pagesize, HttpSession session, Model model) {
+			@RequestParam(name = "pagesize", defaultValue = "20") Integer pagesize, HttpSession session, Model model) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("page", page);
