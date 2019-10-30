@@ -22,7 +22,6 @@
 		<div id="ganttController" style="border: 1px solid black;">
 			<button type="button" class="btn mb-1 btn-outline-dark" onclick="gantt.collapseAll()"><i class="fa fa-angle-up"></i>접기</button>
 			<button type="button" class="btn mb-1 btn-outline-dark" onclick="gantt.expandAll()"><i class="fa fa-angle-down"></i>펼치기</button>
-			<button type="button" class="btn mb-1 btn-outline-dark" onclick="gantt.refreshData()"><i class="fa fa-angle-down"></i>TEST</button>
 			<button type="button" class="">export</button>
 			<button type="button" class="">zoom in</button>
 			<button type="button" class="">zoom out</button>
@@ -41,7 +40,7 @@
 				<option value="delay">지연된 업무</option>
 				<option value="before">시작전 업무</option>
 			</select>
-			<button type="button" onclick="gantt.refreshData()">적용</button>
+			<button type="button" onclick="filtering()">적용</button>
 		</div>
 		<br>
 		<div id="gantt_here" style='width:100%; height:90vh;'></div>
@@ -54,6 +53,14 @@
 </script>
 
 <script>
+function filtering() {
+	gantt.refreshData();
+	gantt.collapseAll();
+	gantt.expandAll();
+}
+$(function() {
+	
+});
 function getAllGantt(pro_id) {
 	$.ajax({
 		url : cp + "/getAllGantt",
