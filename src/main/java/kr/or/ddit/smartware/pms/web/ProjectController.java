@@ -13,6 +13,8 @@ import org.springframework.web.servlet.View;
 
 import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IDepartmentService;
+import kr.or.ddit.smartware.messenger.model.Chat;
+import kr.or.ddit.smartware.messenger.service.IMessengerService;
 import kr.or.ddit.smartware.pms.model.Project;
 import kr.or.ddit.smartware.pms.service.IProjectService;
 import kr.or.ddit.smartware.pms.service.ITaskService;
@@ -28,6 +30,9 @@ public class ProjectController {
 	
 	@Resource(name="departmentService")
 	private IDepartmentService departmentservice;
+	
+	@Resource(name="messengerService")
+	private IMessengerService messengerService; 
 	
 	@Resource(name="jsonView")
 	private View jsonView;
@@ -127,12 +132,25 @@ public class ProjectController {
 	@PostMapping("insertProject")
 	public View insertProject(Model model, String pro_nm, long start, long end, String leader, String member) {
 		
+		String[] memberArr = member.split(",");
+		
 		Project project = new Project();
 		project.setPro_nm(pro_nm);
 		project.setSt_dt(new Date(start));
 		project.setEnd_dt(new Date(end));
 		
-		model.addAttribute("pro_id", projectService.insertProject(project, leader, member.split(",")));
+		model.addAttribute("pro_id", projectService.insertProject(project, leader, memberArr));
+		
+		Chat chat = new Chat();
+		chat.setChat_nm(pro_nm);
+		
+		String[] allMemberArr = new String[memberArr.length+1];  
+		for(int i=0; i<memberArr.length; i++) {
+			allMemberArr[i] = memberArr[i];
+		}
+		allMemberArr[memberArr.length] = leader;
+		
+		messengerService.insertChat(chat, allMemberArr);
 		
 		return jsonView;
 	}

@@ -192,13 +192,13 @@ public class MessengerController {
 	* Method 설명 : 채팅방 개설
 	*/
 	@PostMapping("chatAdd")
-	public String chatAdd(Chat chat, ChatEmp chatEmp, HttpSession session, HttpServletRequest request) {
+	public String chatAdd(Chat chat, HttpSession session, HttpServletRequest request) {
 		
 		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
 		
-		chatEmp.setEmp_id(employee.getEmp_id());
+		String[] emp_id = {employee.getEmp_id()};
 		
-		String chat_id = messengerService.insertChat(chat, chatEmp);
+		String chat_id = messengerService.insertChat(chat, emp_id);
 		
 		if(chat_id == null || chat_id.equals("")) {
 			return "messenger/chatAdd";

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.smartware.employee.model.Employee;
@@ -87,6 +89,7 @@ public class MessengerService implements IMessengerService{
 		return message.getMsg_id();
 	}
 
+	private static final Logger logger = LoggerFactory.getLogger(MessengerService.class);
 	/**
 	* Method : insertChat
 	* 작성자 : JEON MIN GYU
@@ -97,16 +100,13 @@ public class MessengerService implements IMessengerService{
 	* Method 설명 : 채팅방 추가
 	*/
 	@Override
-	public String insertChat(Chat chat, ChatEmp chatEmp) {
-		String chat_id = messengerDao.insertChat(chat);
+	public String insertChat(Chat chat, String[] emp_id) {
+		messengerDao.insertChat(chat);
 		
-		chatEmp.setChat_id(chat.getChat_id());
-		
-		int cnt = 0;
-		if(chat_id==null || chat_id.equals("")) {
-			cnt = 0;
-		}else {
-			cnt = messengerDao.insertChatEmp(chatEmp);
+		for(String id : emp_id) {
+			ChatEmp chatEmp = new ChatEmp(chat.getChat_id(), id, null, null);
+			
+			messengerDao.insertChatEmp(chatEmp);
 		}
 		
 		return chat.getChat_id();

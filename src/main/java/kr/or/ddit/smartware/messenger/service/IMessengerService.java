@@ -69,7 +69,7 @@ public interface IMessengerService {
 	* @return
 	* Method 설명 : 채팅방 추가
 	*/
-	String insertChat(Chat chat, ChatEmp chatEmp);
+	String insertChat(Chat chat, String[] emp_id);
 
 	/**
 	* Method : deleteChat
