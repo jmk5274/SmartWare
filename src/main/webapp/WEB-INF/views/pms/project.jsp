@@ -4,6 +4,7 @@
 <script src="${cp }/plugin/dhtmlxgantt/locale_kr.js"></script>
 <script src="${cp }/plugin/dhtmlxgantt/dhtmlxgantt_marker.js"></script>
 <link href= "${cp }/plugin/dhtmlxgantt/dhtmlxgantt.css" rel="stylesheet"/>
+<link href= "${cp }/plugin/dhtmlxgantt/dhtmlxgantt_broadway.css" rel="stylesheet"/>
 
 <style>
 .weekend{
@@ -13,6 +14,15 @@
 
 <div class="card">
 	<div class="card-body">
+		<div id="btns" style="border: 1px solid black;">
+			<button type="button" class="btn mb-1 btn-outline-dark" onclick="gantt.collapseAll()"><i class="fa fa-angle-up"></i>접기</button>
+			<button type="button" class="btn mb-1 btn-outline-dark" onclick="gantt.expandAll()"><i class="fa fa-angle-down"></i>펼치기</button>
+			<button type="button" class="">export</button>
+			<button type="button" class="">zoom in</button>
+			<button type="button" class="">zoom out</button>
+			<button type="button" class="">zoom to fit</button>
+			<button type="button" class="">fullscreen</button>
+		</div>
 		<div id="gantt_here" style='width:100%; height:100vh;'></div>
 	</div>
 </div>
@@ -44,7 +54,7 @@ function getAllGantt(pro_id) {
 					taskColor = "#4d7cff"; // blue
 				}
 				if(value.PA_TASK_ID == null) {
-					taskColor = "black";
+// 					taskColor = "black";
 				}
 				rtnData.push({
 					id: value.TASK_ID,
@@ -79,20 +89,27 @@ gantt.config.min_column_width = 50;
 gantt.config.scale_height = 60;
 
 var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
+
+gantt.collapseAll = function(){
+	gantt.eachTask(function(task){
+		task.$open = false;
+	});
+	gantt.render();
+}
+
+gantt.expandAll = function(){
+	gantt.eachTask(function(task){
+		task.$open = true;
+	});
+	gantt.render();
+}
+	
 var today = new Date(moment(new Date()).format("YYYY,MM,DD"));
 gantt.addMarker({
 	start_date: today,
 	css: "today",
 	text: "Today",
-	title: "Today: " + date_to_str(today)
-});
-
-var start = new Date(moment(new Date()).subtract(7, 'day').format("YYYY,MM,DD"));
-gantt.addMarker({
-	start_date: start,
-	css: "status_line",
-	text: "Start project",
-	title: "Start project: " + date_to_str(start)
+	title: "Today: " + moment(today).format("YYYY-MM-DD")
 });
 
 gantt.config.scales = [
@@ -102,8 +119,8 @@ gantt.config.scales = [
 ];
 gantt.config.date_format = "%Y-%m-%d %H:%i";
 gantt.config.columns = [
-	{name: "wbs", label: "WBS", width: 40, template: gantt.getWBSCode},
-	{name: "text", tree: true, width: 170},
+// 	{name: "wbs", label: "WBS", width: 40, template: gantt.getWBSCode},
+	{name: "text", tree: true, width: 300},
 	{name: "start_date", align: "center", width: 90},
 	{name: "end_date", align: "center", width: 90},
 	{name: "add", width: 40}
