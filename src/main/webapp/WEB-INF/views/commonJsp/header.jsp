@@ -387,27 +387,27 @@
         <div class="modal-content">
 			<div class="col-md-6 col-lg-12">
 		        <div class="card">
-		            <div class="card-body">
-		            	<p class="card-text d-inline"><small class="text-muted">사원 검색</small></p><br>
-		                <div class="input-group input-group-sm" style="width : 200px;">
-		                	<table id="searchTable">
-		                		<tr>
-		                			<td style="width: 500px;">
-		                				<div>
-		                    				<input id="emp_nm" type="text" class="form-control"/>
-		                				</div>
-		                    		</td>
-		                    		<td>
-		                    			<div>
-		                					<input type="button" id="searchBtn" class="btn btn-primary float-right" value="검색" style="margin-left: 5px;"/>
-		                    			</div>
-		                			</td>
-		                    	</tr>
-		                	</table>
-		                </div>
-		            </div>
+<!-- 		            <div class="card-body"> -->
+<!-- 		            	<p class="card-text d-inline"><small class="text-muted">사원 검색</small></p><br> -->
+<!-- 		                <div class="input-group input-group-sm" style="width : 200px;"> -->
+<!-- 		                	<table id="searchTable"> -->
+<!-- 		                		<tr> -->
+<!-- 		                			<td style="width: 500px;"> -->
+<!-- 		                				<div> -->
+<!-- 		                    				<input id="emp_nm" type="text" class="form-control"/> -->
+<!-- 		                				</div> -->
+<!-- 		                    		</td> -->
+<!-- 		                    		<td> -->
+<!-- 		                    			<div> -->
+<!-- 		                					<input type="button" id="searchBtn" class="btn btn-primary float-right" value="검색" style="margin-left: 5px;"/> -->
+<!-- 		                    			</div> -->
+<!-- 		                			</td> -->
+<!-- 		                    	</tr> -->
+<!-- 		                	</table> -->
+<!-- 		                </div> -->
+<!-- 		            </div> -->
 		            <div class="card-footer">
-		                <p class="card-text d-inline"><small class="text-muted empInfo">사원 정보</small></p><br>
+<!-- 		                <p class="card-text d-inline"><small class="text-muted empInfo">사원 정보</small></p><br> -->
                         <table id="empTable" class="table table-hover">
                             <thead>
                                 <tr>
