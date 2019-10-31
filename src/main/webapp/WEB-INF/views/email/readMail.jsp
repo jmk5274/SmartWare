@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style>
 	.hpanel .panel-body {
@@ -139,11 +140,11 @@
 								<span class="float-right"><fmt:formatDate value="${message.getReceivedDate() }" pattern="hh:mm a"/></span>
 								<h4 class="m-0 text-primary">${message.subject }</h4>
 								<c:choose>
-									<c:when test="${message.getAllRecipients()[0] == S_EMPLOYEE.email }">
+									<c:when test="${reci2 == S_EMPLOYEE.email }">
 										<small class="text-muted">To: 나에게</small>
 									</c:when>
 									<c:otherwise>
-										<small class="text-muted">To: ${message.getAllRecipients()[0] }</small>
+										<small class="text-muted">To: ${reci2 }</small>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -165,23 +166,32 @@
 						</h6>
 						<div class="row m-b-30">
 							<div class="col-auto"></div>
-							<c:forEach items="${infos }" var="info">
+							<c:forEach items="${attachments }" var="info">
 								<div class="hpanel">
 			                        <div class="panel-body file-body incon-ctn-view" style="text-align: center;">
-										<a href="${cp }/fileDownloadView2?filename=${info.originalFileName} ">
-										<i class="fa fa-file-pdf-o text-info fa-3x" style="display: block"></i>
+										<a href="${cp }/fileDownloadView2?filename=${info.getName() }">
+										<c:choose>
+												 <c:when test="${fn:split(info.getName(),'.')[1] eq 'jpg' || fn:split(info.getName(),'.')[1] eq 'JPG' || 
+		                                             fn:split(info.getName(),'.')[1] eq 'png' || fn:split(info.getName(),'.')[1] eq 'png' ||
+		                                             fn:split(info.getName(),'.')[1] eq 'gif' || fn:split(info.getName(),'.')[1] eq 'GIF'}">
+			                                     <i class="fa fa-picture-o fa-3x" aria-hidden="true" style="display: block; color: #9D7E79"></i>
+			                                	 </c:when>
+												<c:otherwise>
+													<i class="fa fa-file-pdf-o text-info fa-3x" style="display: block"></i>
+												</c:otherwise>
+										</c:choose>
 			                        </div>
 			                        <div class="panel-footer">
-										<span>${info.originalFileName }</span>&nbsp;&nbsp;&nbsp;</a>
+										<span>${info.getName() }</span>&nbsp;&nbsp;&nbsp;</a>
 			                        </div>
-		                      </div>
+		                      </div>&nbsp;&nbsp;
 							</c:forEach>
 						</div>
 						<hr>
 
 					</div>
 					<div class="text-right">
-						<a href="${cp }/writeMail?email=${message.getAllRecipients()[0] }"><button id="sendWrite" class="btn btn-primaryw-md m-b-30" type="button">Send</button></a>
+						<a href="${cp }/writeMail?email=${address }"><button id="sendWrite" class="btn btn-primaryw-md m-b-30" type="button">Send</button></a>
 						<button class="btn btn-primaryw-md m-b-30" type="button" onclick="goBack()">cancel</button>
 					</div>
 				</div>

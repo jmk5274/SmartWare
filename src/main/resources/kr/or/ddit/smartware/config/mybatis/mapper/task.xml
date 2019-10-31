@@ -57,25 +57,14 @@
 
 	<!-- 프로젝트의 전체 일감 반환(gantt) -->
 	<select id="getAllGantt" parameterType="String" resultType="hashmap" resultMap="clobmap">
-		select task.*, connect_by_root(task_cont) rs 
-		  from task
-		 start with pro_id = #{pro_id}
-		   and pa_task_id is null
-	   connect by prior task_id = pa_task_id
-		 order siblings by task_id
+		select a.*, b.emp_id, c.emp_nm
+		  from task a, pro_task b, employee c
+		 where a.task_id = b.task_id
+		   and b.emp_id = c.emp_id
+		 start with a.pro_id = #{pro_id}
+		   and a.pa_task_id is null
+		connect by prior a.task_id = a.pa_task_id
+		 order siblings by a.task_id
 	</select>
-	 
-	<!-- 프로젝트의 사원 일감 반환(gantt) -->
-	<select id="getEmpGantt" parameterType="map" resultType="hashmap" resultMap="clobmap">
-		select task.*, connect_by_root(task_cont) rs 
-		  from task
-		 where task_id in (select task_id
-		                     from pro_task
-		                    where pro_id = #{pro_id}
-		                      and emp_id = #{emp_id})
-		 start with pro_id = #{pro_id}
-		   and pa_task_id is null
-	   connect by prior task_id = pa_task_id
-		 order siblings by task_id
-	</select>
+	<!-- connect_by_root(task_cont) rs  -->
 </mapper>
