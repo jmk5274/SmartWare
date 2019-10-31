@@ -406,12 +406,30 @@ public class EmailController {
 	          String personal2 = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
 	          logger.debug("address - {}", personal2);
 	          Address[] recis = mes.getAllRecipients();
+	          logger.debug("recis - {}", recis);
+	        
+	          List<String> addreList = new ArrayList<String>();
+	          String ad = "";
+	          
+	          
+	          for(int i = 0; i < recis.length; i++) {
+	        	  String addre = ((InternetAddress)recis[i]).getAddress();
+	        	  addreList.add(addre);
+	        	  if(i == recis.length-1) {
+	        		  ad += addre;
+	        	  }else {
+	        		  ad += addre + " ";
+	        	  }
+	        	  logger.debug("addre - {}", addre);
+	          }
+	          
 	          String reci = recis == null ? null :  ((InternetAddress) recis[0]).getPersonal();
 	          String reci2 = recis == null ? null :  ((InternetAddress) recis[0]).getAddress();
 	          logger.debug("reci - {}", reci);
 	          logger.debug("reci2 - {}", reci2);
 	          
-	          
+	          model.addAttribute("ad", ad);
+	          model.addAttribute("addreList", addreList);
 	          model.addAttribute("personal", personal);
 	          model.addAttribute("address", personal2);
 	          model.addAttribute("reci2", reci2);
