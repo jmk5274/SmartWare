@@ -27,6 +27,7 @@
 			var emailLabel = $("#emailLabel").val();
 			var msgNumber = $("#msgNumber").val();
 			
+			//ajax
 			$.ajax({
 			      url : "${cp}/spambox",
 			      async: false,
@@ -45,13 +46,14 @@
 					  title: '스팸메일함으로 이동됬습니다.'
 					})
 					
-					setTimeout("location.href='${cp}/mailbox?emailLabel=[Gmail]/스팸함'",1000);
+					setTimeout("location.href='${cp}/mailbox?emailLabel=[Gmail]/스팸함'",2000);
 					
 			      },
 			      error : function(xhr){
 			    	  console.log("실패");
 			      }
 			   });
+			   //ajax
 		});
 		
 		
@@ -144,7 +146,18 @@
 										<small class="text-muted">To: 나에게</small>
 									</c:when>
 									<c:otherwise>
-										<small class="text-muted">To: ${reci2 }</small>
+										<small class="text-muted">To:
+										<c:forEach items="${addreList }" var="addre">
+											<c:choose>
+												<c:when test="${addre == reci2 }">
+													<span>${addre }</span>
+												</c:when>
+												<c:otherwise>
+													<span>, ${addre }</span>											
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										</small>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -182,7 +195,7 @@
 										</c:choose>
 			                        </div>
 			                        <div class="panel-footer">
-										<span>${info.getName() }</span>&nbsp;&nbsp;&nbsp;</a>
+										<i class="fa fa-download fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;<span>${info.getName() }</span>&nbsp;&nbsp;&nbsp;</a>
 			                        </div>
 		                      </div>&nbsp;&nbsp;
 							</c:forEach>
@@ -191,7 +204,14 @@
 
 					</div>
 					<div class="text-right">
-						<a href="${cp }/writeMail?email=${address }"><button id="sendWrite" class="btn btn-primaryw-md m-b-30" type="button">Send</button></a>
+						<c:choose>
+							<c:when test="${emailLabel == '[Gmail]/보낸편지함' }">
+								<a href="${cp }/writeMail?email=${ad }"><button id="sendWrite" class="btn btn-primaryw-md m-b-30" type="button">Send</button></a>
+							</c:when>
+							<c:otherwise>
+								<a href="${cp }/writeMail?email=${address }"><button id="sendWrite" class="btn btn-primaryw-md m-b-30" type="button">Send</button></a>
+							</c:otherwise>
+						</c:choose>
 						<button class="btn btn-primaryw-md m-b-30" type="button" onclick="goBack()">cancel</button>
 					</div>
 				</div>
