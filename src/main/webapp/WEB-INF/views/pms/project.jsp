@@ -8,6 +8,12 @@
 <link href= "${cp }/plugin/dhtmlxgantt/dhtmlxgantt.css" rel="stylesheet"/>
 <link href= "${cp }/plugin/dhtmlxgantt/dhtmlxgantt_broadway.css" rel="stylesheet"/>
 
+<!-- tui-date-picker css -->
+<link href= "${cp }/plugin/tui-date-picker/tui-date-picker.css" rel="stylesheet"/>
+
+<!-- rangeSlider css -->
+<link href= "${cp }/plugin/rangeSlider/ion.rangeSlider.min.css" rel="stylesheet"/>
+
 <style>
 /* weekend css */
 .weekend {
@@ -20,6 +26,12 @@
 /* progress, drag */
 .no_drag_progress .gantt_task_progress_drag{
 	display:none !important;
+}
+
+/* modal css */
+.col-sm-2.col-form-label {
+	text-align: right;
+	font-size: 20px;
 }
 </style>
 
@@ -53,6 +65,84 @@
 		<div id="gantt_here" style='width:100%; height:90vh;'></div>
 	</div>
 </div>
+
+<!-- task modal -->
+<div class="bootstrap-modal">
+    <div class="modal fade" id="taskModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><i class='fa fa-file-text fa-lg' style='color: black;'> </i> 일감</h3>
+                </div>
+                <div class="modal-body basic-form">
+                	<form id="taskForm">
+                		<div class="form-group row">
+                			<div class="col-sm-1"></div>
+		                    <label class="col-sm-2 col-form-label">일감 명</label>
+		                    <div class="col-sm-8">
+		                    	<input type="text" class="form-control" id="task_nm" name="task_nm">
+		                    </div>
+	                    </div>
+	                    
+	                    <div class="form-group row">
+	                     	<div class="col-sm-1"></div>
+		                    <label class="col-sm-2 col-form-label">시작일</label>
+		                    <div class="col-sm-3">
+								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
+									<input id="startpicker-input" type="text" aria-label="Date" name="st_dt">
+									<span class="tui-ico-date"></span>
+									<div id="startpicker-container" style="margin-left: -1px;"></div>
+								</div>
+		                    </div>
+		                    <label class="col-sm-2 col-form-label">종료일</label>
+		                    <div class="col-sm-3">
+								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
+									<input id="endpicker-input" type="text" aria-label="Date" name="end_dt">
+									<span class="tui-ico-date"></span>
+									<div id="endpicker-container" style="margin-left: -1px;"></div>
+								</div>
+		                    </div>
+		                </div>
+						
+	                    <div class="form-group row">
+	                    	<div class="col-sm-1"></div>
+		                    <label class="col-sm-2 col-form-label">담당자</label>
+		                    <div class="col-sm-8">
+		                    	<select class="form-control" id="emp_id" style="width: 100%" name="emp_id">
+		                    		<c:forEach items="${employeeList }" var="employee">
+										<option value="${employee.emp_id }">${employee.emp_nm }</option>
+									</c:forEach>
+		                    	</select>
+		                    </div>
+	                    </div>
+	                    
+	                    <div class="form-group row">
+                			<div class="col-sm-1"></div>
+		                    <label class="col-sm-2 col-form-label" style="line-height: 3.2;">진척도</label>
+		                    <div class="col-sm-8">
+		                    	<input type="text" id="per">
+		                    </div>
+	                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="display: inline-block;">
+                    <button type="button" class="btn mb-1 btn-dark" data-dismiss="modal" style="float: right;">취소</button>
+                    <button type="button" class="btn mb-1 btn-dark" id="updateTask" style="float: right;">수정</button>
+                    <button type="button" class="btn mb-1 btn-dark" id="insertTask" style="float: right;">생성</button>
+                    <button type="button" class="btn mb-1 btn-danger" id="deleteTask" style="float: left;">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- tui-date-picker 관련 js -->
+<script src="${cp }/plugin/tui-date-picker/tui-code-snippet.js"></script>
+<script src="${cp }/plugin/tui-date-picker/tui-dom.js"></script>
+<script src="${cp }/plugin/tui-date-picker/tui-date-picker.js"></script>
+
+<!-- rangeSlider js -->
+<script src="${cp }/plugin/rangeSlider/ion.rangeSlider.min.js"></script>
 
 <script>
 	var cp = "${cp}";
@@ -412,6 +502,78 @@ gantt.attachEvent("onAfterTaskUpdate", function(id,item){
 gantt.attachEvent("onAfterTaskDelete", function(id,item){
     //any custom logic here
 });
+
+
+// lightbox
+var taskId = null;
+gantt.showLightbox = function(id) {
+    taskId = id;
+    var task = gantt.getTask(id);
+    $("#task_nm").val(task.text);
+ 	picker._startpicker.setDate(task.start_date);
+ 	picker._endpicker.setDate(task.end_date);
+ 	slider.update({from: task.progress * 100});
+ 	$("#emp_id").val(task.emp_id);
+ 	$("#taskModal").modal("show");
+//     var form = getForm();
+//     var input = form.querySelector("[name='description']");
+//     input.focus();
+//     input.value = task.text;
+ 
+//     form.style.display = "block";
+ 
+//     form.querySelector("[name='save']").onclick = save;
+//     form.querySelector("[name='close']").onclick = cancel;
+//     form.querySelector("[name='delete']").onclick = remove;
+};
+
+gantt.hideLightbox = function(){
+    taskId = null;
+}
+
+function save() {
+//     var task = gantt.getTask(taskId);
+ 
+//     task.text = getForm().querySelector("[name='description']").value;
+ 
+//     if(task.$new){
+//         delete task.$new;
+//         gantt.addTask(task,task.parent);
+//     }else{
+//         gantt.updateTask(task.id);
+//     }
+	if($("#emp_id").val() === null) 
+ 		alert("스왈");
+    gantt.hideLightbox();
+}
+
+$(function() {
+	$("#taskModal").on("hide.bs.modal", function(event){
+	    var task = gantt.getTask(taskId);
+	    
+	    if(task.$new)
+	    gantt.deleteTask(task.id);
+	    gantt.hideLightbox();
+	});
+})
+function cancel() {
+    var task = gantt.getTask(taskId);
+ 
+    if(task.$new)
+    gantt.deleteTask(task.id);
+    gantt.hideLightbox();
+}
+ 
+function remove() {
+    gantt.deleteTask(taskId);
+    gantt.hideLightbox();
+}
+//
+
+gantt.config.lightbox.sections = [
+	{name: "description", height: 80, map_to: "text", type: "textarea", focus: true},
+	{name: "time", type: "dhx_calendar", map_to: "auto", skin: '', date_format: '%d %M %Y'}
+];
 	
 var today = new Date(moment(new Date()).format("YYYY,MM,DD"));
 gantt.addMarker({
@@ -436,4 +598,32 @@ gantt.config.columns = [
 ];
 gantt.init("gantt_here");
 getAllGantt(pro_id);
+
+var picker = tui.DatePicker.createRangePicker({
+	language: 'ko',
+    startpicker: {
+        date: new Date(),
+        input: '#startpicker-input',
+        container: '#startpicker-container'
+    },
+    endpicker: {
+        date: new Date(),
+        input: '#endpicker-input',
+        container: '#endpicker-container'
+    },
+    type: 'date',
+    format: 'yyyy-MM-dd'
+});
+
+$("#per").ionRangeSlider({
+	min: 0,
+	max: 100,
+	step: 5,
+	grid: true,
+    skin: "round",
+    hide_min_max: true
+});
+
+var slider = $("#per").data("ionRangeSlider");
+
 </script>
