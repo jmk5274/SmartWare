@@ -77,7 +77,6 @@
 <script src="${cp }/js/moment.js"></script>
 <script>
 	$(document).ready(function() { 
-		currParseWeather();
 		parseWeather();
 		popupView();
 		getTodayCalendar();
@@ -123,6 +122,7 @@
 			          $(".li:eq("+(i)+")").html('<h4>'+week+'</h4><div class="w3layouts_icon"></div><h5>'+Math.round(maxTemp)+'° <span>'+Math.round(minTemp)+'°</span></h5>');
 	        	  }
 	          }
+	          currParseWeather();
 	      });
 	}
 
