@@ -206,6 +206,24 @@
 													<c:when test="${empty personal }">
 														<span class="col-2">나</span>
 													</c:when>
+													<c:when test="${personal eq 'bshn940419@gmail.com' }">
+														<span class="col-2">배상현(부장)</span>
+													</c:when>
+													<c:when test="${personal eq 'mingsoocode@gmail.com' }">
+														<span class="col-2">조민수(과장)</span>
+													</c:when>
+													<c:when test="${personal eq 'testhong@gmail.com' }">
+														<span class="col-2">홍다은(사원)</span>
+													</c:when>
+													<c:when test="${personal eq 'jmk5274@gmail.com' }">
+														<span class="col-2">전민규(대리)</span>
+													</c:when>
+													<c:when test="${personal eq 'testhoon1217@gmail.com' }">
+														<span class="col-2">김도훈(사원)</span>
+													</c:when>
+													<c:when test="${personal eq 'no-reply@accounts.google.com' }">
+														<span class="col-2">Google</span>
+													</c:when>
 													<c:otherwise>
 														<span class="col-2">${personal}</span>
 													</c:otherwise>

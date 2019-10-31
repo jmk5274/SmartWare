@@ -69,7 +69,8 @@ import kr.or.ddit.smartware.util.file.FileUtil;
 import kr.or.ddit.smartware.util.file.model.FileInfo;
 
 @Controller
-public class EmailController {
+public class EmailController{
+
 	private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
 	
 	@Resource(name = "departmentService")
@@ -163,7 +164,7 @@ public class EmailController {
 //            		FileInfo fileInfo = FileUtil.getFileInfo(attachedFile.getOriginalFilename());
 //            		//첨부된 파일이 있을 경우만 업로드 처리
 //            		attachedFile.transferTo(fileInfo.getFile());
-            		String realPath = "C:/picture/email";
+            		String realPath = "C:\\picture\\email";
             		
             		File file = new File(realPath);
             		if(!file.exists()) file.mkdirs();
@@ -171,9 +172,12 @@ public class EmailController {
             		logger.debug("original - {}", attachedFile.getOriginalFilename());
 
     			    if(attachedFile.getSize() > 0) {
-    			    	File ff = new File(realPath + "/" + attachedFile.getOriginalFilename());
+    			    	File ff = new File(realPath + "\\" + attachedFile.getOriginalFilename().trim());
+    			    	logger.debug("ff - {}", ff);
+    			    	
     			    	if(ff.exists()) {
-    			    		ff.delete();
+    			    		boolean result = ff.delete();
+    			    		logger.debug("deleteResult : {}", result);
     			    	}
 	            		
 	            		messageBodyPart = new MimeBodyPart();
@@ -329,6 +333,7 @@ public class EmailController {
 	          model.addAttribute("messagesCount", folder.getMessageCount());
 	          
 	          List<String> personal = new ArrayList<String>();
+	          List<String> address = new ArrayList<String>();
 	          
 	          
 	          for (int i=0; i < messages.length; i++) 
@@ -339,9 +344,12 @@ public class EmailController {
 	            subject = msg.getSubject();
 	            
 	            Address[] froms = msg.getFrom();
-	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
+	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
+	            String reFrom3 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
+	            logger.debug("reFrom2 - {}", reFrom2);
 	            
 	            personal.add(reFrom2);
+	            address.add(reFrom3);
 	            
 	            Object content = msg.getContent();
 	            MimeMultipart multiPart = null;
@@ -474,6 +482,7 @@ public class EmailController {
 	                	            fos.write(buf, 0, bytesRead);
 	                	        }
 	                	        fos.close();
+	                	        is.close();
 	                	        
 //	                	        infos.add(info);
 	                	        attachments.add(f);

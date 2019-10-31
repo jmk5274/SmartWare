@@ -124,11 +124,26 @@
 							<div class="media-body">
 								
 								<c:choose>
-									<c:when test="${empty personal }">
+									<c:when test="${empty address }">
 										<h5 class="m-b-3">나</h5>
 									</c:when>
+									<c:when test="${address eq 'bshn940419@gmail.com' }">
+										<h5 class="m-b-3">배상현(부장)</h5>
+									</c:when>
+									<c:when test="${address eq 'mingsoocode@gmail.com' }">
+										<h5 class="m-b-3">조민수(과장)</h5>
+									</c:when>
+									<c:when test="${address eq 'testhong@gmail.com' }">
+										<h5 class="m-b-3">홍다은(사원)</h5>
+									</c:when>
+									<c:when test="${address eq 'jmk5274@gmail.com' }">
+										<h5 class="m-b-3">전민규(대리)</h5>
+									</c:when>
+									<c:when test="${address eq 'testhoon1217@gmail.com' }">
+										<h5 class="m-b-3">김도훈(사원)</h5>
+									</c:when>
 									<c:otherwise>
-										<h5 class="m-b-3">${personal }</h5>
+										<h5 class="m-b-3">${address }</h5>
 									</c:otherwise>
 								</c:choose>
 							
