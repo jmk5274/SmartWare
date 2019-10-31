@@ -206,4 +206,13 @@ public class CalendarController {
 		
 		return map;
 	}
+	
+	@PostMapping("getTodayCalendar")
+	public View getTodayCalendar(HttpSession session, Model model) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		
+		model.addAttribute("calList", calendarService.getTodayCalendar(employee.getEmp_id()));
+		
+		return jsonView;
+	}
 }

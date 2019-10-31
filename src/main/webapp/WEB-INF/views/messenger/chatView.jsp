@@ -851,7 +851,12 @@ $("#status-options ul li").click(function() {
 	 
 	$(window).bind("beforeunload", function (e){
 		var param={};
-		var msg_id = $('.messages ul li:last-child').data('msg_id'); 
+		var msgList = Array.from($('.messages ul li')).filter(e => e.dataset.msg_id);
+		if(msgList.length != 0){
+			var msg_id = msgList.slice(-1)[0].dataset.msg_id;	
+		}else{
+			var msg_id = "";
+		}
 		var chat_id = "${chat_id}";
 		
 		param.chat_id = chat_id;

@@ -93,4 +93,17 @@ public class CalendarDao implements ICalendarDao {
 		return sqlSession.delete("calendar.deleteCateCalendar", category_id);
 	}
 
+	/**
+	* Method : getTodayCalendar
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 사원의 오늘 일정 내용 조회 
+	*/
+	@Override
+	public List<Calendar> getTodayCalendar(String emp_id) {
+		return sqlSession.selectList("calendar.getTodayCalendar", emp_id);
+	}
+
 }
