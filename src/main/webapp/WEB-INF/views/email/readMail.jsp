@@ -142,6 +142,12 @@
 									<c:when test="${address eq 'testhoon1217@gmail.com' }">
 										<h5 class="m-b-3">김도훈(사원)</h5>
 									</c:when>
+									<c:when test="${address eq 'no-reply@accounts.google.com' }">
+										<h5 class="m-b-3">Google</h5>
+									</c:when>
+									<c:when test="${address eq 'notifications@github.com' }">
+										<h5 class="m-b-3">GitHub</h5>
+									</c:when>
 									<c:otherwise>
 										<h5 class="m-b-3">${address }</h5>
 									</c:otherwise>

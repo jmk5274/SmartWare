@@ -344,6 +344,8 @@ public class EmailController{
 	            subject = msg.getSubject();
 	            
 	            Address[] froms = msg.getFrom();
+	            logger.debug("froms - {}", froms);
+	            logger.debug("((InternetAddress) froms[0]).getAddress() - {}", ((InternetAddress) froms[0]).getAddress());
 	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
 	            String reFrom3 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
 	            logger.debug("reFrom2 - {}", reFrom2);

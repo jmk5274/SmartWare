@@ -203,7 +203,7 @@
 											
 										</span>
 												<c:choose>
-													<c:when test="${empty personal }">
+													<c:when test="${personal eq S_EMPLOYEE.email }">
 														<span class="col-2">나</span>
 													</c:when>
 													<c:when test="${personal eq 'bshn940419@gmail.com' }">
@@ -223,6 +223,9 @@
 													</c:when>
 													<c:when test="${personal eq 'no-reply@accounts.google.com' }">
 														<span class="col-2">Google</span>
+													</c:when>
+													<c:when test="${personal eq 'notifications@github.com' }">
+														<span class="col-2">GitHub</span>
 													</c:when>
 													<c:otherwise>
 														<span class="col-2">${personal}</span>
