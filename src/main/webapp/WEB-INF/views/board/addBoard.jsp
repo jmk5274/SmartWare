@@ -23,6 +23,22 @@
 			
 			$("#frm").submit();
 		});
+		
+// 		$("#modify").on("click", function(event){
+// 			var newBoard_nm = $("#newBoard_nm").val();
+			
+// 			if(newBoard_nm == '' || newBoard_nm.length == 0){
+// 				event.preventDefault();
+// 				Swal({
+// 					type: 'warning', // success, error, warning, info, question
+// 					title: '필수 사항',
+// 					text: '게시판 이름을 입력해주세요.'
+// 				})
+// 				return;
+// 			}
+			
+// 			$("#dawin").submit();
+// 		});
 	});
 </script>
 <style>
@@ -101,7 +117,7 @@
 							
 							<td>
 <!-- 							<div class="col-sm-2"> -->
-								<input type="submit" name="btnValue" class="btn btn-dark" value="수정">
+								<input id="modify" type="submit" name="btnValue" class="btn btn-dark" value="수정">
 <!-- 							</div> -->
 							</td>
  						</div>

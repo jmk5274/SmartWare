@@ -20,74 +20,8 @@ ol {
 </style>
 <script>
 $(document).ready(function () {
-    $(document).on("click", ".delCmt", function (event) {
-    	var com_id = $(this).data('com_id')
-    	
-        Swal({
-            title: '삭제 요청',
-            text: "해당 댓글을 삭제하시겠습니까?",
-            type: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '네',
-            cancelButtonText: '아니오'
-        }).then(result => {
-            if (result.value) {
-                $.ajax({
-                    type: "POST",
-                    url: "${cp}/deleteComments",
-                    data: {
-                    	com_id: com_id,
-                    	post_id: '${post_id}'
-                    },
-                    dataType: 'json',
-                    success: function (res) {
-                        console.log(res);
-                        /* var code = "<div class='replyDiv'>"
-                        code += "<span>"
-                        if (res.comments.able == "T") {
-                            code += "<font color='silver'>삭제된 댓글입니다.</font>"
-                        }
-                        code += "</span>"
-                        code += "</div>"
-                        code += "<br>" */
-                        $("#"+com_id).html("<font color='silver'>삭제된 댓글입니다.</font>");
-
-                        Swal({
-                            title: '삭제 완료',
-                            text: '삭제되었습니다.',
-                            type: 'success',
-                            confirmButtonText: '확인'
-                        })
-                        $.getJSON('${cp}/getCommentList?post_id=${comments.post_id}', function(data) {
-                        	var code = '~~~' // data갖고 알아서 잘
-                        	$('#commentList').html(code);
-                        });
-                        $(document).append(code);
-//                         var com_id = $(this).data("com_id");
-//                         $("#com_id").val(com_id);
-// 						   $("#hiddenFrm").submit();
-                    },
-                    error:function(request,status,error){
-                        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-                    }
-                });
-
-            };
-        });
-    });
-    // 			var result = confirm("해당 댓글을 삭제하시겠습니까?");
-
-    // 			if(result){
-    // 				var com_id = $(this).data("com_id");
-    // 				$("#com_id").val(com_id);
-    // 				$("#hiddenFrm").submit();
-
-    // 			}
-    // 		})
-7
-    $("#save").on("click", function () {
+	
+	$("#save").on("click", function () {
 
         var cont = $("#cont").val();
         if (cont == '' || cont.length == 0) {
@@ -157,49 +91,120 @@ $(document).ready(function () {
         });
 
         // 			$("#cmtFrm").submit();
-        // 		})
+        //
 
-        $("#btnDelPost").on("click", function () {
-            // 			var result = confirm("해당 게시글을 삭제하시겠습니까?");
-
-            // 			if(result) {
-            // 				$('#hiddenBtnV').val($(this).val());
-            // 				$("#selectPost").val('${post_id}');
-            // 				$("#frm").prop("action", "${cp}/modifyPost");
-            // 				$("#frm").submit(); 
-
-            // 				console.log(result)
-
-            // 			}
-            // 		})
-
-            Swal({
-                title: '삭제 요청',
-                text: "해당 게시글을 삭제하시겠습니까?",
-                type: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '네',
-                cancelButtonText: '아니오'
-            }).then((result) => {
-                if (result.value) {
-                    Swal({
-                        title: '삭제 완료',
-                        text: "삭제되었습니다.",
-                        type: 'success',
-                        confirmButtonText: '확인'
-                    })
-
-                    $('#hiddenBtnV').val($(this).val());
-                    $("#selectPost").val('${post_id}');
-                    $("#frm").prop("action", "${cp}/modifyPost");
-                    $("#frm").submit();
-                }
-            });
-        });
+        
 
     });
+	
+	$("#btnDelPost").on("click", function () {
+        // 			var result = confirm("해당 게시글을 삭제하시겠습니까?");
+
+        // 			if(result) {
+        // 				$('#hiddenBtnV').val($(this).val());
+        // 				$("#selectPost").val('${post_id}');
+        // 				$("#frm").prop("action", "${cp}/modifyPost");
+        // 				$("#frm").submit(); 
+
+        // 				console.log(result)
+
+        // 			}
+        // 		
+
+        Swal({
+            title: '삭제 요청',
+            text: "해당 게시글을 삭제하시겠습니까?",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '네',
+            cancelButtonText: '아니오'
+        }).then((result) => {
+            if (result.value) {
+                Swal({
+                    title: '삭제 완료',
+                    text: "삭제되었습니다.",
+                    type: 'success',
+                    confirmButtonText: '확인'
+                })
+
+                $('#hiddenBtnV').val($(this).val());
+                $("#selectPost").val('${post_id}');
+                $("#frm").prop("action", "${cp}/modifyPost");
+                $("#frm").submit();
+            }
+        });
+    });
+	
+    $(document).on("click", ".delCmt", function (event) {
+    	var com_id = $(this).data('com_id')
+    	
+        Swal({
+            title: '삭제 요청',
+            text: "해당 댓글을 삭제하시겠습니까?",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '네',
+            cancelButtonText: '아니오'
+        }).then(result => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "${cp}/deleteComments",
+                    data: {
+                    	com_id: com_id,
+                    	post_id: '${post_id}'
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        console.log(res);
+                        /* var code = "<div class='replyDiv'>"
+                        code += "<span>"
+                        if (res.comments.able == "T") {
+                            code += "<font color='silver'>삭제된 댓글입니다.</font>"
+                        }
+                        code += "</span>"
+                        code += "</div>"
+                        code += "<br>" */
+                        $("#"+com_id).html("<font color='silver'>삭제된 댓글입니다.</font>");
+
+                        Swal({
+                            title: '삭제 완료',
+                            text: '삭제되었습니다.',
+                            type: 'success',
+                            confirmButtonText: '확인'
+                        })
+                        $.getJSON('${cp}/getCommentList?post_id=${comments.post_id}', function(data) {
+                        	var code = '~~~' // data갖고 알아서 잘
+                        	$('#commentList').html(code);
+                        });
+                        $(document).append(code);
+//                         var com_id = $(this).data("com_id");
+//                         $("#com_id").val(com_id);
+// 						   $("#hiddenFrm").submit();
+                    },
+                    error:function(request,status,error){
+                        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+                    }
+                });
+
+            };
+        });
+    });
+    // 			var result = confirm("해당 댓글을 삭제하시겠습니까?");
+
+    // 			if(result){
+    // 				var com_id = $(this).data("com_id");
+    // 				$("#com_id").val(com_id);
+    // 				$("#hiddenFrm").submit();
+
+    // 			}
+    // 		})
+
+    
 });
 	
 </script>
