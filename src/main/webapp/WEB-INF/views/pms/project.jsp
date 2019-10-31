@@ -4,10 +4,12 @@
 <script src="${cp }/plugin/dhtmlxgantt/dhtmlxgantt.js"></script>
 <script src="${cp }/plugin/dhtmlxgantt/locale_kr.js"></script>
 <script src="${cp }/plugin/dhtmlxgantt/dhtmlxgantt_marker.js"></script>
+<script src="${cp }/plugin/dhtmlxgantt/dhtmlxgantt_api.js"></script>
 <link href= "${cp }/plugin/dhtmlxgantt/dhtmlxgantt.css" rel="stylesheet"/>
 <link href= "${cp }/plugin/dhtmlxgantt/dhtmlxgantt_broadway.css" rel="stylesheet"/>
 
 <style>
+/* weekend css */
 .weekend {
 	background: #f4f7f4 !important;
 }
@@ -15,32 +17,55 @@
 .gantt_selected .weekend {
 	background: #FFF3A1 !important;
 }
+
+/* fullscreen css */
+.gantt-fullscreen {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 30px;
+	height: 30px;
+	padding: 2px;
+	font-size: 32px;
+	background: transparent;
+	cursor: pointer;
+	opacity: 0.5;
+	text-align: center;
+	-webkit-transition: background-color 0.5s, opacity 0.5s;
+	transition: background-color 0.5s, opacity 0.5s;
+}
+
+.gantt-fullscreen:hover {
+	background: rgba(150, 150, 150, 0.5);
+	opacity: 1;
+}
 </style>
 
 <div class="card">
 	<div class="card-body">
 		<div id="ganttController" style="border: 1px solid black;">
-			<button type="button" class="btn mb-1 btn-outline-dark" onclick="gantt.collapseAll()"><i class="fa fa-angle-up"></i>접기</button>
-			<button type="button" class="btn mb-1 btn-outline-dark" onclick="gantt.expandAll()"><i class="fa fa-angle-down"></i>펼치기</button>
-			<button type="button" class="">export</button>
-			<button type="button" class="">zoom in</button>
-			<button type="button" class="">zoom out</button>
-			<button type="button" class="">zoom to fit</button>
-			<button type="button" class="">fullscreen</button>
-			<select id="empFilter">
+			<button class="btn mb-1 btn-outline-dark" onclick="gantt.collapseAll()"><i class="fa fa-angle-up"></i>접기</button>
+			<button class="btn mb-1 btn-outline-dark" onclick="gantt.expandAll()"><i class="fa fa-angle-down"></i>펼치기</button>
+			<button class="btn mb-1 btn-outline-dark" onclick='gantt.exportToPDF()' style='margin-left:20px;'>Export to PDF</button>
+			<button class="btn mb-1 btn-outline-dark" onclick='gantt.exportToPNG()' style='margin-left:20px;'>Export to PNG</button>
+			<button class="btn mb-1 btn-outline-dark" onclick='gantt.exportToExcel()' style='margin-left:20px;'>Export to Excel</button>
+
+			<button class="btn mb-1 btn-outline-dark" onclick="toggleMode(this)">Zoom to Fit</button>
+			
+			<select id="empFilter" class="form-control" style="width: 100px; display: inline;">
 				<option>전체</option>
 				<c:forEach items="${employeeList }" var="employee">
 					<option value="${employee.emp_id }">${employee.emp_nm }</option>
 				</c:forEach>
 			</select>
-			<select id="statusFilter">
+			<select id="statusFilter" class="form-control" style="width: 100px; display: inline;">
 				<option>전체</option>
 				<option value="complete">완료된 업무</option>
 				<option value="running">진행중인 업무</option>
 				<option value="delay">지연된 업무</option>
 				<option value="before">시작전 업무</option>
 			</select>
-			<button type="button" onclick="filtering()">적용</button>
+			<button class="btn mb-1 btn-outline-dark" onclick="filtering()">적용</button>
 		</div>
 		<br>
 		<div id="gantt_here" style='width:100%; height:90vh;'></div>
@@ -53,14 +78,188 @@
 </script>
 
 <script>
+// 필터링 적용
 function filtering() {
 	gantt.refreshData();
 	gantt.collapseAll();
 	gantt.expandAll();
 }
-$(function() {
-	
-});
+
+// zoom to fit 시작
+function toggleMode(toggle) {
+	toggle.enabled = !toggle.enabled;
+	if (toggle.enabled) {
+		toggle.innerHTML = "Set default Scale";
+		//Saving previous scale state for future restore
+		saveConfig();
+		zoomToFit();
+	} else {
+
+		toggle.innerHTML = "Zoom to Fit";
+		//Restore previous scale state
+		restoreConfig();
+		gantt.render();
+	}
+}
+
+var cachedSettings = {};
+
+function saveConfig() {
+	var config = gantt.config;
+	cachedSettings = {};
+	cachedSettings.scales = config.scales;
+	cachedSettings.template = gantt.templates.date_scale;
+	cachedSettings.start_date = config.start_date;
+	cachedSettings.end_date = config.end_date;
+}
+
+function restoreConfig() {
+	applyConfig(cachedSettings);
+}
+
+function applyConfig(config, dates) {
+	if (config.scales[0].date) {
+		gantt.templates.date_scale = null;
+	}
+	else {
+		gantt.templates.date_scale = config.scales[0].template;
+	}
+
+	gantt.config.scales = config.scales;
+
+	if (dates && dates.start_date && dates.start_date) {
+		gantt.config.start_date = gantt.date.add(dates.start_date, -1, config.scales[0].subscale_unit);
+		gantt.config.end_date = gantt.date.add(gantt.date[config.scales[0].subscale_unit + "_start"](dates.end_date), 2, config.scales[0].subscale_unit);
+	} else {
+		gantt.config.start_date = gantt.config.end_date = null;
+	}
+}
+
+
+function zoomToFit() {
+	var project = gantt.getSubtaskDates(),
+		areaWidth = gantt.$task.offsetWidth;
+
+	for (var i = 0; i < scaleConfigs.length; i++) {
+		var columnCount = getUnitsBetween(project.start_date, project.end_date, scaleConfigs[i].scales[0].subscale_unit, scaleConfigs[i].scales[0].step);
+		if ((columnCount + 2) * gantt.config.min_column_width <= areaWidth) {
+			break;
+		}
+	}
+
+	if (i == scaleConfigs.length) {
+		i--;
+	}
+
+	applyConfig(scaleConfigs[i], project);
+	gantt.render();
+}
+
+// get number of columns in timeline
+function getUnitsBetween(from, to, unit, step) {
+	var start = new Date(from),
+		end = new Date(to);
+	var units = 0;
+	while (start.valueOf() < end.valueOf()) {
+		units++;
+		start = gantt.date.add(start, step, unit);
+	}
+	return units;
+}
+
+//Setting available scales
+var scaleConfigs = [
+	// minutes
+	{
+		scales: [
+			{subscale_unit: "minute", unit: "hour", step: 1, format: "%H"},
+			{unit: "minute", step: 1, format: "%H:%i"}
+		]
+	},
+	// hours
+	{
+		scales: [
+			{subscale_unit: "hour", unit: "day", step: 1, format: "%j %M"},
+			{unit: "hour", step: 1, format: "%H:%i"}
+
+		]
+	},
+	// days
+	{
+		scales: [
+			{subscale_unit: "day", unit: "month", step: 1, format: "%F"},
+			{unit: "day", step: 1, format: "%j"}
+		]
+	},
+	// weeks
+	{
+		scales: [
+			{subscale_unit: "week", unit: "month", step: 1, date: "%F"},
+			{
+				unit: "week", step: 1, template: function (date) {
+					var dateToStr = gantt.date.date_to_str("%d %M");
+					var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+					return dateToStr(date) + " - " + dateToStr(endDate);
+				}
+			}
+		]
+	},
+	// months
+	{
+		scales: [
+			{subscale_unit: "month", unit: "year", step: 1, format: "%Y"},
+			{unit: "month", step: 1, format: "%M"}
+		]
+	},
+	// quarters
+	{
+		scales: [
+			{subscale_unit: "month", unit: "year", step: 3, format: "%Y"},
+			{
+				unit: "month", step: 3, template: function (date) {
+					var dateToStr = gantt.date.date_to_str("%M");
+					var endDate = gantt.date.add(gantt.date.add(date, 3, "month"), -1, "day");
+					return dateToStr(date) + " - " + dateToStr(endDate);
+				}
+			}
+		]
+	},
+	// years
+	{
+		scales: [
+			{subscale_unit: "year", unit: "year", step: 1, date: "%Y"},
+			{
+				unit: "year", step: 5, template: function (date) {
+					var dateToStr = gantt.date.date_to_str("%Y");
+					var endDate = gantt.date.add(gantt.date.add(date, 5, "year"), -1, "day");
+					return dateToStr(date) + " - " + dateToStr(endDate);
+				}
+			}
+		]
+	},
+	// decades
+	{
+		scales: [
+			{
+				subscale_unit: "year", unit: "year", step: 10, template: function (date) {
+					var dateToStr = gantt.date.date_to_str("%Y");
+					var endDate = gantt.date.add(gantt.date.add(date, 10, "year"), -1, "day");
+					return dateToStr(date) + " - " + dateToStr(endDate);
+				}
+			},
+			{
+				unit: "year", step: 100, template: function (date) {
+					var dateToStr = gantt.date.date_to_str("%Y");
+					var endDate = gantt.date.add(gantt.date.add(date, 100, "year"), -1, "day");
+					return dateToStr(date) + " - " + dateToStr(endDate);
+				}
+			}
+		]
+	}
+];
+//zoom to fit 끝
+
+// ajax
 function getAllGantt(pro_id) {
 	$.ajax({
 		url : cp + "/getAllGantt",
@@ -157,6 +356,35 @@ gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
 
 var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
 
+gantt.attachEvent("onTemplatesReady", function () {
+	var toggle = document.createElement("i");
+	toggle.className = "fa fa-expand gantt-fullscreen";
+	gantt.toggleIcon = toggle;
+	gantt.$container.appendChild(toggle);
+	toggle.onclick = function () {
+		if (!gantt.getState().fullscreen) {
+			gantt.expand();
+		}
+		else {
+			gantt.collapse();
+		}
+	};
+});
+gantt.attachEvent("onExpand", function () {
+	var icon = gantt.toggleIcon;
+	if (icon) {
+		icon.className = icon.className.replace("fa-expand", "fa-compress");
+	}
+
+});
+gantt.attachEvent("onCollapse", function () {
+	var icon = gantt.toggleIcon;
+	if (icon) {
+		icon.className = icon.className.replace("fa-compress", "fa-expand");
+	}
+});
+
+// 닫기
 gantt.collapseAll = function(){
 	gantt.eachTask(function(task){
 		task.$open = false;
@@ -164,6 +392,7 @@ gantt.collapseAll = function(){
 	gantt.render();
 }
 
+// 펼치기
 gantt.expandAll = function(){
 	gantt.eachTask(function(task){
 		task.$open = true;
