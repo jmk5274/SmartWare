@@ -102,4 +102,17 @@ public class TaskDao implements ITaskDao {
 		return sqlSession.selectList("task.getEmpGantt", map);
 	}
 
+	/**
+	* Method : insertTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task
+	* @return
+	* Method 설명 : 일정 추가
+	*/
+	@Override
+	public int insertTask(Task task) {
+		return sqlSession.insert("task.insertTask", task);
+	}
+
 }

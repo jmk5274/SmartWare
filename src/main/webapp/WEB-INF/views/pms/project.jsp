@@ -13,31 +13,13 @@
 .weekend {
 	background: #f4f7f4 !important;
 }
-
 .gantt_selected .weekend {
 	background: #FFF3A1 !important;
 }
 
-/* fullscreen css */
-.gantt-fullscreen {
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
-	width: 30px;
-	height: 30px;
-	padding: 2px;
-	font-size: 32px;
-	background: transparent;
-	cursor: pointer;
-	opacity: 0.5;
-	text-align: center;
-	-webkit-transition: background-color 0.5s, opacity 0.5s;
-	transition: background-color 0.5s, opacity 0.5s;
-}
-
-.gantt-fullscreen:hover {
-	background: rgba(150, 150, 150, 0.5);
-	opacity: 1;
+/* progress, drag */
+.no_drag_progress .gantt_task_progress_drag{
+	display:none !important;
 }
 </style>
 
@@ -284,6 +266,7 @@ function getAllGantt(pro_id) {
 // 					taskColor = "black";
 				}
 				rtnData.push({
+					type: gantt.config.types.project,
 					id: value.TASK_ID,
 					text: value.TASK_CONT,
 					start_date: new Date(value.ST_DT),
@@ -299,6 +282,7 @@ function getAllGantt(pro_id) {
 			var a = [];
 			a.push({data: rtnData});
 			gantt.parse(a[0]);
+			console.log(a[0]);
 		}
 	})
 }
@@ -353,7 +337,7 @@ gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
 		return true;
 	}
 });
-
+gantt.config.show_progress = true;
 var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
 
 gantt.attachEvent("onTemplatesReady", function () {
@@ -384,6 +368,12 @@ gantt.attachEvent("onCollapse", function () {
 	}
 });
 
+gantt.templates.task_class = function(start, end, task){
+	var css = [];
+    css.push("no_drag_progress");
+	return css.join(" ");
+}
+	
 // 닫기
 gantt.collapseAll = function(){
 	gantt.eachTask(function(task){
@@ -399,6 +389,29 @@ gantt.expandAll = function(){
 	});
 	gantt.render();
 }
+
+// https://docs.dhtmlx.com/gantt/api__refs__gantt_events.html
+// task insert
+gantt.attachEvent("onAfterTaskAdd", function(id,item){
+	console.log(+item.start_date);
+	var _item = Object.assign({}, item);
+	_item.start_date = (+item.start_date);
+	_item.end_date = (+item.end_date - 6000);
+	_item.pro_id = pro_id;
+    $.post(cp + "/insertTask", _item, function( data ) {
+    	  console.log(data);
+   	});
+});
+
+// task update
+gantt.attachEvent("onAfterTaskUpdate", function(id,item){
+    //any custom logic here
+});
+
+// task delete
+gantt.attachEvent("onAfterTaskDelete", function(id,item){
+    //any custom logic here
+});
 	
 var today = new Date(moment(new Date()).format("YYYY,MM,DD"));
 gantt.addMarker({
@@ -415,7 +428,7 @@ gantt.config.scales = [
 ];
 gantt.config.date_format = "%Y-%m-%d %H:%i";
 gantt.config.columns = [
-// 	{name: "wbs", label: "WBS", width: 40, template: gantt.getWBSCode},
+	{name: "wbs", label: "#", width: 40, template: gantt.getWBSCode},
 	{name: "text", tree: true, width: 300},
 	{name: "start_date", align: "center", width: 90},
 	{name: "end_date", align: "center", width: 90},

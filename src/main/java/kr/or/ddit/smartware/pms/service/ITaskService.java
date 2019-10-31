@@ -47,4 +47,14 @@ public interface ITaskService {
 	* Method 설명 : 프로젝트의 사원 일감 반환(gantt)
 	*/
 	List<Map<String, Object>> getEmpGantt(String pro_id, String emp_id);
+
+	/**
+	* Method : insertTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task
+	* @return
+	* Method 설명 : 일정 추가
+	*/
+	String insertTask(Task task);
 }

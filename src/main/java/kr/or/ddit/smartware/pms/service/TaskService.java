@@ -69,4 +69,18 @@ public class TaskService implements ITaskService {
 		return taskDao.getEmpGantt(pro_id, emp_id);
 	}
 
+	/**
+	* Method : insertTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task
+	* @return
+	* Method 설명 : 일정 추가
+	*/
+	@Override
+	public String insertTask(Task task) {
+		taskDao.insertTask(task);
+		return task.getTask_id();
+	}
+
 }

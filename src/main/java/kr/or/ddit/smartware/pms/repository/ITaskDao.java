@@ -68,4 +68,14 @@ public interface ITaskDao {
 	*/
 	List<Map<String, Object>> getEmpGantt(String pro_id, String emp_id);
 
+	/**
+	* Method : insertTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task
+	* @return
+	* Method 설명 : 일정 추가
+	*/
+	int insertTask(Task task);
+
 }

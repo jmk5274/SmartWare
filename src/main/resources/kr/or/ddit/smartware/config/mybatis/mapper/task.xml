@@ -68,4 +68,14 @@
 		     and b.emp_id = c.emp_id
 	</select>
 	<!-- connect_by_root(task_cont) rs  -->
+	
+	<!-- 일정 추가 -->
+	<insert id="insertTask" parameterType="project">
+		insert into task(task_id, task_cont, st_dt, end_dt, pro_id, pa_task_id, per)
+			values('task' || lpad(task_seq.nextval, 4, 0), #{task_cont}, 
+				   #{st_dt}, #{end_dt}, #{pro_id}, #{pa_task_id}, #{per})
+		<selectKey order="AFTER" resultType="String" keyProperty="task_id" >
+			select 'task' || lpad(task_seq.currval, 4, 0) from dual
+		</selectKey>
+	</insert>
 </mapper>
