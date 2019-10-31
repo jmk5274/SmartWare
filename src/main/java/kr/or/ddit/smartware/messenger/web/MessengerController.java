@@ -142,6 +142,7 @@ public class MessengerController {
 				
 				downloadFile = new File("C:/picture/file/"+fileName);
 				file.transferTo(downloadFile);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -529,5 +530,5 @@ public class MessengerController {
 		}
 
 		  return "Firefox";
-		}
+	}
 }

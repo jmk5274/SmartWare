@@ -65,19 +65,12 @@
 				</div>
 			</div>
 
-			<div class="card">
-				<div class="card-body">
-					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
-				</div>
+			<div class="card card-widget">
+				<div id="todayCal" class="card-body">
+                    <h4 class="card-title">오늘 할 일</h4>
+                </div>
 			</div>
 		</div>
-<%--        <div class="row">--%>
-<%--        <div class="col-8">--%>
-<%--            --%>
-<%--        </div>--%>
-<%--        <div class="col">--%>
-<%--            --%>
-<%--        </div>--%>
     </div>
 <%--</div>--%>
 <script src="${cp }/js/weather/owl.carousel.js"></script>
@@ -86,6 +79,8 @@
 	$(document).ready(function() { 
 		currParseWeather();
 		parseWeather();
+		popupView();
+		getTodayCalendar();
 	}); 
 	
 	$("#owl-demo,#owl-demo1,#owl-demo3,#owl-demo4").owlCarousel({ 
@@ -213,5 +208,61 @@
 			i = "wi-snow";
 		}
 		return i;
+	}
+	
+	function popupView(){
+		var date = moment(new Date()).format('YYYYMMDD');
+		
+		$.ajax({
+			url : "${cp}/getAllPopupList",
+			dataType : "json",
+			method : "post",
+			success : function(data){
+				var popupList = data.popupList;
+				var popupNolookList = data.popupNolookList;
+				
+				popupList.forEach(function(popup){
+					var stDate = moment(new Date(popup.pop_st_dt)).format('YYYYMMDD');
+					var endDate = moment(new Date(popup.pop_end_dt)).format('YYYYMMDD');
+					
+					popupNolookList.forEach(function(nolook){
+						console.log(popup.pop_id);
+						console.log(nolook.POP_ID);
+						if(popup.pop_id===nolook.POP_ID){
+							stDate = moment(new Date(nolook.NL_DT)).format('YYYYMMDD');
+						}
+					});
+					
+					if(stDate <= date && date <= endDate){
+						var popupX = (popup.pop_left);
+						var popupY= (popup.pop_top);
+						
+						window.open('${cp }/popupView?pop_id='+popup.pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
+					}
+				});
+			}
+		});
+	}
+	
+	function getTodayCalendar(){
+		$.ajax({
+			url : "${cp}/getTodayCalendar",
+			contentType : "application/json",
+			dataType : "json",
+			method : "post",
+			success : function(data){
+				var html = "";
+				data.calList.forEach(function(cal){
+                    html += '<div class="media border-bottom-1 pt-3 pb-3">';
+	                html +=     '<img width="35" src="${cp }/employeePicture?emp_id=${S_EMPLOYEE.emp_id}" class="mr-3 rounded-circle">';
+	                html +=     '<div class="media-body">';
+	                html +=         '<h5>'+cal.cal_title+'</h5>';
+	                html +=         '<p class="mb-0">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</p>';
+	                html +=     '</div>';
+	                html += '</div>';
+				})
+				$("#todayCal").append(html);
+			}
+		});
 	}
 </script>  

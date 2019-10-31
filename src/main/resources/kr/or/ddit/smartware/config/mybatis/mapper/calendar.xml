@@ -60,4 +60,13 @@
 		delete from calendar
 		 where category_id = #{category_id}
 	</delete>
+	
+	<!-- emp_id에 해당하는 사원의 오늘 일정 내용 조회 -->
+	<select id="getTodayCalendar" parameterType="String" resultType="calendar">
+		select *
+		  from calendar
+		 where emp_id = #{emp_id}
+		   and st_dt <![CDATA[<]]> sysdate
+		   and end_dt > sysdate
+	</select>
 </mapper>

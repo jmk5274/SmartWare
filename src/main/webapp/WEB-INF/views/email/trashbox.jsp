@@ -26,8 +26,6 @@
 			
 			var emailLabel = $("#emailLabel").val();
 			
-			
-			
 			Swal.fire({
 				  title: '해당메일을 삭제하시겠습니까?',
 				  text: "지금 삭제시키면 복원할수 없습니다",
