@@ -90,7 +90,7 @@ public class TaskController {
 	* @param model
 	* @param map
 	* @return
-	* Method 설명 : 일감 추가 / 담당자 추가
+	* Method 설명 : 일감 추가, 담당자 추가
 	*/
 	@PostMapping("insertTask")
 	public View insertTask(Model model, @RequestParam Map<String, Object> map) {
@@ -109,6 +109,37 @@ public class TaskController {
 		String task_id = taskService.insertTask(task, map.get("emp_id") + "");
 
 		model.addAttribute("task_id", task_id);
+		
+		return jsonView;
+	}
+	
+	/**
+	* Method : updateTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param map
+	* @return
+	* Method 설명 : 일정 수정, 일정 담당자 수정
+	*/
+	@PostMapping("updateTask")
+	public View updateTask(Model model, @RequestParam Map<String, Object> map) {
+		// 일감 수정
+		Task task = new Task();
+		if(map.get("pa_task_id").equals("0")) 
+			task.setPa_task_id(null);
+		else 
+			task.setPa_task_id(map.get("pa_task_id") + "");
+		task.setTask_id(map.get("task_id") + "");
+		task.setPro_id(map.get("pro_id") + "");
+		task.setTask_cont(map.get("task_cont") + "");
+		task.setPer(Integer.parseInt(map.get("per") + ""));
+		task.setSt_dt(new Date(Long.parseLong(map.get("start") + "")));
+		task.setEnd_dt(new Date(Long.parseLong(map.get("end") + "")));
+		
+		taskService.updateTask(task, map.get("emp_id") + "");
+
+		model.addAttribute("task_id", task.getTask_id());
 		
 		return jsonView;
 	}

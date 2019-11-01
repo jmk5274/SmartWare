@@ -100,6 +100,24 @@ public interface ITaskDao {
 	int insertProTask(ProTask proTask);
 
 	/**
+	* Method : updateTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @return
+	* Method 설명 : 일감 수정
+	*/
+	int updateTask(Task task);
+
+	/**
+	* Method : updateProTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @return
+	* Method 설명 : 일감 담당자 수정
+	*/
+	int updateProTask(ProTask proTask);
+	
+	/**
 	* Method : deleteTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -128,4 +146,5 @@ public interface ITaskDao {
 	* Method 설명 : 일감 히스토리 삭제
 	*/
 	int deleteTaskHistory(String task_id);
+
 }

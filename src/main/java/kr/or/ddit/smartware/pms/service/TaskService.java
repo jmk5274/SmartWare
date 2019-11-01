@@ -96,7 +96,25 @@ public class TaskService implements ITaskService {
 		taskDao.insertTask(task); // 일감 추가
 		ProTask proTask = new ProTask(emp_id, task.getPro_id(), task.getTask_id());
 		taskDao.insertProTask(proTask); // 일감 담당자 추가 
+		
 		return task.getTask_id();
+	}
+	
+	/**
+	* Method : updateTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task
+	* @param emp_id
+	* @return
+	* Method 설명 : 일정 수정, 일정 담당자 수정 
+	*/
+	@Override
+	public int updateTask(Task task, String emp_id) {
+		ProTask proTask = new ProTask(emp_id, task.getPro_id(), task.getTask_id());
+		taskDao.updateProTask(proTask);
+
+		return taskDao.updateTask(task);
 	}
 
 	/**
@@ -111,6 +129,7 @@ public class TaskService implements ITaskService {
 	public int deleteTask(String task_id) {
 		taskDao.deleteTaskHistory(task_id);
 		taskDao.deleteProTask(task_id);
+		
 		return taskDao.deleteTask(task_id);
 	}
 

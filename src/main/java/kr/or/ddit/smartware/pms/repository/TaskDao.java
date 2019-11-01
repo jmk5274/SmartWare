@@ -143,6 +143,30 @@ public class TaskDao implements ITaskDao {
 	}
 
 	/**
+	* Method : updateTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @return
+	* Method 설명 : 일감 수정
+	*/
+	@Override
+	public int updateTask(Task task) {
+		return sqlSession.update("task.updateTask", task);
+	}
+
+	/**
+	* Method : updateProTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @return
+	* Method 설명 : 일감 담당자 수정
+	*/
+	@Override
+	public int updateProTask(ProTask proTask) {
+		return sqlSession.update("task.updateProTask", proTask);
+	}
+	
+	/**
 	* Method : deleteTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :

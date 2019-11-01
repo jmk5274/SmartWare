@@ -71,6 +71,17 @@ public interface ITaskService {
 	String insertTask(Task task, String emp_id);
 	
 	/**
+	* Method : updateTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task
+	* @param emp_id
+	* @return
+	* Method 설명 : 일정 수정, 일정 담당자 수정 
+	*/
+	int updateTask(Task task, String emp_id);
+	
+	/**
 	* Method : deleteTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -79,4 +90,5 @@ public interface ITaskService {
 	* Method 설명 : 일감 삭제, 일감담당자 삭제, 일감히스토리 삭제 
 	*/
 	int deleteTask(String task_id);
+
 }
