@@ -46,7 +46,7 @@
 					  title: '스팸메일함으로 이동됬습니다.'
 					})
 					
-					setTimeout("location.href='${cp}/mailbox?emailLabel=[Gmail]/스팸함'",2000);
+					setTimeout("location.href='${cp}/mailbox?emailLabel=[Gmail]/스팸함'",3000);
 					
 			      },
 			      error : function(xhr){
@@ -82,7 +82,7 @@
 					  title: '휴지통 으로 이동됬습니다.'
 					})
 					
-					setTimeout("location.href='${cp}/mailbox?emailLabel=[Gmail]/휴지통'",1000);
+					setTimeout("location.href='${cp}/mailbox?emailLabel=[Gmail]/휴지통'",3000);
 					
 			      },
 			      error : function(xhr){

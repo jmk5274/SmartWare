@@ -100,6 +100,11 @@ function checkEmail(){
 		$("#checkEmail").val(checkEmail);
 		$("#emailCheckFrm").submit();
 }	
+	
+	
+function goBack() {
+    window.history.back();
+}
 </script>
 
 
@@ -235,12 +240,10 @@ function checkEmail(){
 							type="button">
 							<i class="fa fa-paper-plane m-r-5"></i> Send
 						</button>
-						<a href="${cp }/main">
 						<button id = "discard" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20"
-							type="button">
+							type="button" onclick="goBack()">
 							<i class="ti-close m-r-5 f-s-12"></i> Discard
 						</button>
-						</a>
 					</div>
 				</div>
 			</div>

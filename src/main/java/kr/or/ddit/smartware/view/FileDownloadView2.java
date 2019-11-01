@@ -34,11 +34,11 @@ public class FileDownloadView2 extends AbstractView{
 		response.setHeader("content-disposition", "attachment;filename="+ URLEncoder.encode(name,"UTF-8"));
 		response.setContentType("application/octet-stream");	//바이너리로 요청이 전송됨
 		
-		String realPath = "C:picture/email";
+		String realPath = "C:\\picture\\email";
 		
 //		File ff = new File(realPath+ "/" +bodyPart.getFileName());
 		
-		File file = new File(realPath + "/" +name);
+		File file = new File(realPath+ "\\" +name);
 		
 		FileInputStream fis = new FileInputStream(file);
 		ServletOutputStream sos = response.getOutputStream();

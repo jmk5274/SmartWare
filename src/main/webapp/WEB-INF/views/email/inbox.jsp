@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -33,8 +35,20 @@
 			      type : "post",
 			      data : "emailLabel=" + emailLabel + '&msgNumber=' + msgNumber,
 			      success : function(data){
+			    	  console.log(data.descount);
 			    	  descount = data.descount;
 				      emailLabel = data.emailLabel;
+				      
+			    	  $.ajax({
+			    		 url : "${cp}/starIdSave",
+			    		 async: false,
+			    		 type: "post",
+			    		 data : "msgNumber=" + msgNumber + '&descount=' + descount,
+			    		 success : function(data){
+			    			 console.log(data);
+			    		 }
+			    		  
+			    	  });
 			    	  
 			    	  const toast = Swal.mixin({
 						  toast: true,
@@ -56,10 +70,27 @@
 		
 		$(document).on('click', '.fa-star', function() {
 			$(this).attr('class','fa fa-star-o').css("color", "black");
+					var mN = $(this).data("id");
+					var des
+					
+					$.ajax({
+						url : "${cp}/starIdCall",
+						type: "post",
+						async: false,
+						data: "msgNumber="+mN,
+						success: function(data){
+							des = data.descount;
+						}
+						
+					});
+					
+					
+			
 					$.ajax({
 					      url : "${cp}/removeStarbox",
 					      type : "post",
-					      data : "emailLabel=" + emailLabel + '&descount=' + descount,
+// 					      data : "emailLabel=" + emailLabel + '&descount=' + descount,
+					      data : "emailLabel=" + emailLabel + '&descount=' + des,
 					      success : function(data){
 					    	  const toast = Swal.mixin({
 								  toast: true,

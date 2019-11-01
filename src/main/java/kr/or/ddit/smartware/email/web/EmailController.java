@@ -172,12 +172,10 @@ public class EmailController{
             		logger.debug("original - {}", attachedFile.getOriginalFilename());
 
     			    if(attachedFile.getSize() > 0) {
-    			    	File ff = new File(realPath + "\\" + attachedFile.getOriginalFilename().trim());
-    			    	logger.debug("ff - {}", ff);
+    			    	File ff = new File("C:/picture/email/"+attachedFile.getOriginalFilename());
     			    	
     			    	if(ff.exists()) {
-    			    		boolean result = ff.delete();
-    			    		logger.debug("deleteResult : {}", result);
+    			    		ff.delete();
     			    	}
 	            		
 	            		messageBodyPart = new MimeBodyPart();
@@ -380,6 +378,7 @@ public class EmailController{
 	        	jspName="inbox";
 	        }
 	        
+	        
 	        return  "tiles/email/" + jspName;
 	}
 	          
@@ -469,15 +468,15 @@ public class EmailController{
 	                			logger.debug("rr - {}", rr);
 	                			
 	                			
-	                			String realPath = "C:picture/email";
+	                			String realPath = "C:\\picture\\email";
 	                			
-	                			File ff = new File(realPath+ "/" +rr);
+	                			File ff = new File(realPath+ "\\" +rr);
 	                			
 //	                			FileInfo info = FileUtil.getFileInfo(bodyPart.getFileName());
 	                			InputStream is = bodyPart.getInputStream();
 //	                	        File f = info.getFile();
-	                	        File f = ff;
-	                	        FileOutputStream fos = new FileOutputStream(f);
+//	                	        File f = ff;
+	                	        FileOutputStream fos = new FileOutputStream(ff);
 	                	        byte[] buf = new byte[4096];
 	                	        int bytesRead;
 	                	        while((bytesRead = is.read(buf))!=-1) {
@@ -487,7 +486,7 @@ public class EmailController{
 	                	        is.close();
 	                	        
 //	                	        infos.add(info);
-	                	        attachments.add(f);
+	                	        attachments.add(ff);
 	                			
 	                		} else {
 	                			model.addAttribute("textCont", bodyPart.getContent());
@@ -540,12 +539,17 @@ public class EmailController{
     	 Message[] tempMessageArray = tempList.toArray(new Message[tempList.size()]);
     	 folder.copyMessages(tempMessageArray, desFolder);
     	 int descount = desFolder.getMessageCount();
+    	 
+    	 
+    	 
     	 logger.debug("descount - {}", descount);
 		
     	 if(emailLabel.equals("INBOX")) {
  			Hsession.setAttribute("cnt", folder.getMessageCount());
  		}
-		 model.addAttribute("descount", descount);
+		 
+    	 
+    	 model.addAttribute("descount", descount);
 		 model.addAttribute("emailLabel", emailLabel);
 		
 	     return  "jsonView";
@@ -757,9 +761,9 @@ public class EmailController{
 			  
 			  FlagTerm ft;
 			  if(check.equals("T")) {
-				  ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
-			  }else {
 				  ft = new FlagTerm(new Flags(Flags.Flag.SEEN), true);
+			  }else {
+				  ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
 			  }
 			  
 			  Message[] msg = folder.search(ft);
@@ -786,6 +790,7 @@ public class EmailController{
 	          model.addAttribute("messagesCount", folder.getMessageCount());
 	          
 	          List<String> personal = new ArrayList<String>();
+	          List<String> address = new ArrayList<String>();
 	          
 	          for (int i=0; i < msg.length; i++) 
 	          {
@@ -793,7 +798,9 @@ public class EmailController{
 	            
 	            Address[] froms = ms.getFrom();
 	            String reFrom2 = froms == null ? null : ((InternetAddress) froms[0]).getPersonal();
+	            String address2 = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
 	            personal.add(reFrom2);
+	            address.add(address2);
 	            
 	            Object content = ms.getContent();
 	            MimeMultipart multiPart = null;
@@ -819,7 +826,8 @@ public class EmailController{
 	          
 	        model.addAttribute("starMail", smm);
 	        model.addAttribute("check", check);
-	        model.addAttribute("personalList", personal);
+	        model.addAttribute("personalList", address);
+//	        model.addAttribute("addressList", address);
 	        
 	        String jspName = "";
 	        if(emailLabel.equals("[Gmail]/스팸함")) {
@@ -843,6 +851,48 @@ public class EmailController{
 		model.addAttribute("filename", filename);
 		
 		return "fileDownloadView2";
+	}
+	
+	@PostMapping("starIdSave")
+	public String starIdSave(Integer msgNumber, Integer descount, HttpSession Hsession) {
+		
+		logger.debug("SavemsgNumber - {}", msgNumber);
+		logger.debug("Savedescount - {}", descount);
+		
+		 List<Map<Object, Integer>> starId = new ArrayList<Map<Object,Integer>>();
+    	 Map<Object, Integer> map = new HashMap<Object, Integer>();
+    	 if(Hsession.getAttribute("starId") == null) {
+    		 map.put((Object)msgNumber, descount);
+    		 starId.add(map);
+    		 Hsession.setAttribute("starId", starId);
+    	 }else {
+    		 starId = (List<Map<Object, Integer>>) Hsession.getAttribute("starId");
+    		 map.put((Object)msgNumber, descount);
+    		 starId.add(map);
+    		 Hsession.setAttribute("starId", starId);
+    	 }
+		
+		
+		return "jsonView";
+	}
+	
+	@PostMapping("starIdCall")
+	public String starIdCall(Model model, HttpSession Hsession, Integer msgNumber) {
+		logger.debug("CallmsgNumber - {}", msgNumber);
+		
+		List<Map<Object, Integer>> list = (List<Map<Object, Integer>>)Hsession.getAttribute("starId");
+		Integer descount = 0;
+		
+		if(list != null) {
+			for(int i = 0; i < list.size(); i++) {
+				if(list.get(i).get(msgNumber) != null) {
+					descount = list.get(i).get(msgNumber);
+				}
+			}
+			model.addAttribute("descount", descount);
+		}
+		
+		return "jsonView";
 	}
 	
 	
