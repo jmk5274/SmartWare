@@ -11673,8 +11673,10 @@ table.dataTable thead .sorting::after {
   .social-graph-wrapper.widget-googleplus {
     background-color: #db4439; }
   .social-graph-wrapper .s-icon {
-    font-size: 2.1875rem;
+    font-size: 1.5rem;
     position: relative;
+    float: left;
+    margin-left: 20px;
     top: 0.625rem;
     padding: 0 10px; }
 

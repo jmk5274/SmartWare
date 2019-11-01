@@ -71,9 +71,40 @@
 				</div>
 			</div>
 			<!-- 오늘 일정 -->
-			<div class="card card-widget">
+			<div class="card card-widget" style="margin-top: 20px;">
+				<div class="social-graph-wrapper widget-facebook">
+               		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> TODAY</span>
+                </div>
 				<div id="todayCal" class="card-body">
-                    <h4 class="card-title"><i class="fa fa-clock-o" aria-hidden="true"></i> 오늘 할 일 </h4>
+                    
+                </div>
+			</div>
+			<!-- 결재 현황 -->
+			<div class="card card-widget" style="margin-top: 20px;">
+				<div class="social-graph-wrapper widget-facebook">
+               		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> 결재현황</span>
+                </div>
+				<div class="row">
+                    <div class="col-6 border-right">
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">89k</h4>
+                            <p class="m-0">결재문서</p>
+                        </div>
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">89k</h4>
+                            <p class="m-0">진행문서</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">119k</h4>
+                            <p class="m-0">수신문서</p>
+                        </div>
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">119k</h4>
+                            <p class="m-0">반려문서</p>
+                        </div>
+                    </div>
                 </div>
 			</div>
 		</div>
