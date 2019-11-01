@@ -164,4 +164,25 @@ public interface IApprovalDao {
      * Method 설명 : 결재상태 Ture변경
      */
     int checkAble(ApplAppr applAppr);
+
+    /**
+     * @param appl_id
+     * @return
+     * 결재문서 송신 시 처음 결재해줄 멤버에게 알람 (해당 결재문서 결재멤버중 우선순의가 가장 낮은자)
+     */
+    String sendApplMember(String appl_id);
+
+    /**
+     * @param applAppr
+     * @return
+     * 결재멤버가 결재 후 자신보다 우선순위가 1단계 높은 사람에게 알림
+     */
+    String sendToNextMember(ApplAppr applAppr);
+
+    /**
+     * @param applAppr
+     * @return
+     * 반려 시 알람 받을 멤버들 모두 출력
+     */
+    String referAlarm(ApplAppr applAppr);
 }

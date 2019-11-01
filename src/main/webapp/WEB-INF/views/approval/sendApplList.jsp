@@ -10,6 +10,8 @@
 	$(function () {
 		var flag = ${res};
 		if (flag) {
+			<%--socket.send("appl^${emp_id}");--%>
+			<%--socket.send("refer^${emp_id}");--%>
 			Swal({
 				    title: '전송 성공',
 				    text: '전송 되었습니다.',
