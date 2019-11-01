@@ -80,6 +80,7 @@
         padding: 0;
     }
 </style>
+<!-- http://localhost:8081/stt/testStt.html -->
 <!--<h1 class="center" id="headline">
     <a href="http://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html">
         Web Speech API</a> Demonstration</h1>
@@ -268,16 +269,16 @@
                 return;
             }
             // showInfo('');
-            if (window.getSelection) {
-                window.getSelection().removeAllRanges();
-                var range = document.createRange();
-                range.selectNode(document.getElementById('final_span'));
-                window.getSelection().addRange(range);
-            }
-            if (create_email) {
-                create_email = false;
-                createEmail();
-            }
+            // if (window.getSelection) {
+            //     window.getSelection().removeAllRanges();
+            //     var range = document.createRange();
+            //     range.selectNode(document.getElementById('final_span'));
+            //     window.getSelection().addRange(range);
+            // }
+            // if (create_email) {
+            //     create_email = false;
+            //     createEmail();
+            // }
         };
 
         recognition.onresult = function(event) {
@@ -296,6 +297,11 @@
             // if (final_transcript || interim_transcript) {
             //     showButtons('inline-block');
             // }
+            if (final_transcript || !interim_transcript) {
+                console.log("지금이니!");
+                start_img.src = 'mic.gif';
+                ignore_onend = true;
+            }
         };
     }
 
@@ -362,7 +368,7 @@
         interim_span.innerHTML = '';
         start_img.src = 'mic-slash.gif';
         // showInfo('info_allow');
-        showButtons('none');
+        // showButtons('none');
         start_timestamp = event.timeStamp;
     }
 
