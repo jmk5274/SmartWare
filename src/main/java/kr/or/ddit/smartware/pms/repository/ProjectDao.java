@@ -17,6 +17,11 @@ public class ProjectDao implements IProjectDao {
 	@Resource(name="sqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
 	
+	@Override
+	public Project getProject(String pro_id) {
+		return sqlSession.selectOne("project.getProject", pro_id);
+	}
+	
 	/**
 	* Method : getAllPastProject
 	* 작성자 : JO MIN SOO
@@ -119,5 +124,4 @@ public class ProjectDao implements IProjectDao {
 	public int insertProjectMember(Map<String, String> map) {
 		return sqlSession.insert("insertProjectMember", map);
 	}
-
 }
