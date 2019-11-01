@@ -134,6 +134,17 @@ public interface IEmployeeDao {
 	 * @return Method 설명 : 사원 직책 수정
 	 */
 	int updateEmployeeJob(Employee employee);
+	
+	/**
+	 * 
+	* Method : updateManageEmp
+	* 작성자 : Hong Da Eun
+	* 변경이력 :
+	* @param employee
+	* @return 
+	* Method 설명 : 사원 관리 정보 수정
+	 */
+	int updateManageEmp(Employee employee);
 
 	/**
 	 * 

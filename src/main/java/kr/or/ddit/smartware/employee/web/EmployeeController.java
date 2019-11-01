@@ -210,34 +210,11 @@ public class EmployeeController {
 				employee.setAble("F");
 			}
 		
-			int cnt = employeeService.updateEmployeeAble(employee);
+			if(posi_id != null) employee.setPosi_id(posi_id);
+			if(depart_id != null) employee.setDepart_id(depart_id);
+			if(job_id != null) employee.setJob_id(job_id);
 			
-		// 직급 변경
-		} else if(updateBtn2.equals("modifyPosition")) {
-		
-			if(posi_id.equals(posi_id)) {
-				employee.setPosi_id(posi_id);
-			}
-			
-			int cnt = employeeService.updateEmployeePosition(employee);
-			
-		// 부서 변경
-		} else if(updateBtn3.equals("modifyDepartment")) {
-			
-			if(depart_id.equals(depart_id)) {
-				employee.setDepart_id(depart_id);
-			}
-			
-			int cnt = employeeService.updateEmployeeDepartment(employee);
-			
-		// 직책 변경
-		} else if(updateBtn4.equals("modifyJob")) {
-			
-			if(job_id.equals(job_id)) {
-				employee.setJob_id(job_id);
-			}
-			
-			int cnt = employeeService.updateEmployeeJob(employee);
+			int cnt = employeeService.updateManageEmp(employee);
 		}
 
 		request.getServletContext().setAttribute("A_EMPLOYEELIST", employeeService.allEmployeeList()); 

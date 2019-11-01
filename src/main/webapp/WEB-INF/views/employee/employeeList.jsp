@@ -47,41 +47,17 @@
 // 	});
 	
 	$(".updateBtn").on("click", function(){
-		
 		$("#selectEmp").val(($(this).parents("tr")).attr("id"));
 		$("#updateBtn").val($(this).attr("value"));
 		var emp_id = ($(this).parents("tr")).attr("id");
 		$("#updateAble").val($("#updateAble"+emp_id + " option:selected").val());
+		$("#updateRank").val($("#updateRank"+emp_id + " option:selected").val());
+		$("#updateDepart").val($("#updateDepart"+emp_id + " option:selected").val());
+		$("#updateJob").val($("#updateJob"+emp_id + " option:selected").val());
 		console.log($("#updateBtn").val());
 		$("#frm").submit();
 	})
 	
-	$(".updateBtn2").on("click", function(){
-		$("#selectEmp").val(($(this).parents("tr")).attr("id"));
-		$("#updateBtn2").val($(this).attr("value"));
-		var emp_id = ($(this).parents("tr")).attr("id");
-		$("#updateRank").val($("#updateRank"+emp_id + " option:selected").val());
-		console.log($("#updateRank"+emp_id + " option:selected").val());
-		$("#frm").submit();
-	})
-	
-	$(".updateBtn3").on("click", function(){
-		$("#selectEmp").val(($(this).parents("tr")).attr("id"));
-		$("#updateBtn3").val($(this).attr("value"));
-		var emp_id = ($(this).parents("tr")).attr("id");
-		$("#updateDepart").val($("#updateDepart"+emp_id + " option:selected").val());
-		console.log($("#updateDepart"+emp_id + " option:selected").val());
-		$("#frm").submit();
-	});
-	
-	$(".updateBtn4").on("click", function(){
-		$("#selectEmp").val(($(this).parents("tr")).attr("id"));
-		$("#updateBtn4").val($(this).attr("value"));
-		var emp_id = ($(this).parents("tr")).attr("id");
-		$("#updateJob").val($("#updateJob"+emp_id + " option:selected").val());
-		console.log($("#updateJob"+emp_id + " option:selected").val());
-		$("#frm").submit();
-	});
 	
 	$("#createEmp").on("click", function() {
 		var newEmp_id = $("#newEmp_id").val();
@@ -209,20 +185,22 @@
 	
 
 </script>
+<style>
+/* 	.updateBtn { */
+/* 		margin : 10px; */
+/* 	} */
+</style>
 
 <%-- <form id="frm" action="${cp }/user/user" method="get"> --%>
 <!-- 	<input type="hidden" id="emp_id" name="emp_id" /> -->
 <!-- </form> -->
 
-	<div class="container-fluid">
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col">
 			<div class="card">
 				<div class="card-body">
 
-			<div class="col-sm-11 col-sm-offset-5 col-md-12 col-md-offset-4 main">
-
-				<div class="row">
+			<div class="col-sm-15 col-sm-offset-5 col-md-15 col-md-offset-5 main">
 					<div class="col-sm- blog-main">
 					<h2 class="sub-header">사원 등록</h2>
 					<br>
@@ -322,9 +300,6 @@
 				<form id="frm" class="form-horizontal" action="${cp }/updateEmployee" method="post">
 					<input id="selectEmp" name="emp_id" type="hidden"/>
 					<input id="updateBtn" name="updateBtn" type="hidden"/>
-					<input id="updateBtn2" name="updateBtn2" type="hidden"/>
-					<input id="updateBtn3" name="updateBtn3" type="hidden"/>
-					<input id="updateBtn4" name="updateBtn4" type="hidden"/>
 					<input id="updateRank" name="posi_id" type="hidden"/>
 					<input id="updateAble" name="able" type="hidden"/>
 					<input id="updateDepart" name="depart_id" type="hidden"/>
@@ -343,6 +318,8 @@
 									<th>직급</th>
 									<th>직책</th>
 									<th>입사일</th>
+									<th></th>
+									<th></th>
 								</tr>
 								<c:forEach items="${employeeList }" var="employee">
 									<tr id="${employee.EMP_ID}" class="employeeTr" data-emp_id="${employee.EMP_ID}">
@@ -474,27 +451,9 @@
 										
 										<!-- 버튼 -->
 										<td>
-										<button id="update${employee.EMP_ID}" type="button" name="updateBtn" class="updateBtn btn mb-1 btn-outline-success" value="modify">수정</button>
 <%-- 										<a href="${cp }/deleteEmployee?emp_id=${employee.EMP_ID}" id="deleteEmp" class="deleteEmp btn mb-1 btn-outline-dark pull-right">삭제</a> --%>
 										<button id="delete${employee.EMP_ID}" data-emp_id="${employee.EMP_ID}" type="button" name="deleteBtn" class="deleteBtn btn mb-1 btn-outline-dark pull-right" value="delete">삭제</button>
-										<c:if test="${employee.ABLE == 'T' }">
-										<button id="updateDepart${employee.EMP_ID }" type="button" name="updateBtn3" class="updateBtn3 btn mb-1 btn-outline-primary" value="modifyDepartment">부서변경</button>
-										</c:if>
-										<c:if test="${employee.ABLE == 'F' }">
-										<button id="updateDepart${employee.EMP_ID }" type="button" name="updateBtn3" class="updateBtn3 btn mb-1 btn-outline-primary" value="modifyDepartment" disabled="disabled">부서변경</button>
-										</c:if>
-										<c:if test="${employee.ABLE == 'T' }">
-										<button id="updateRank${employee.EMP_ID }" type="button" name="updateBtn2" class="updateBtn2 btn mb-1 btn-outline-primary" value="modifyPosition">직급변경</button>
-										</c:if>
-										<c:if test="${employee.ABLE == 'F' }">
-										<button id="updateRank${employee.EMP_ID }" type="button" name="updateBtn2" class="updateBtn2 btn mb-1 btn-outline-primary" value="modifyPosition" disabled="disabled">직급변경</button>
-										</c:if>
-										<c:if test="${employee.ABLE == 'T' }">
-										<button id="updateJob${employee.EMP_ID }" type="button" name="updateBtn4" class="updateBtn4 btn mb-1 btn-outline-primary" value="modifyJob">직책변경</button>
-										</c:if>
-										<c:if test="${employee.ABLE == 'F' }">
-										<button id="updateJob${employee.EMP_ID }" type="button" name="updateBtn4" class="updateBtn4 btn mb-1 btn-outline-primary" value="modifyJob" disabled="disabled">직책변경</button>
-										</c:if>
+										<button id="update${employee.EMP_ID}" type="button" name="updateBtn" class="updateBtn btn mb-1 btn-outline-success pull-right" value="modify">수정</button>
 										</td>
 									</tr>
 								</c:forEach>
@@ -570,7 +529,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 			</div>
 		</div>

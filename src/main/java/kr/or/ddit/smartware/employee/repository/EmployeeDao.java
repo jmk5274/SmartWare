@@ -88,6 +88,11 @@ public class EmployeeDao implements IEmployeeDao {
 	public int updateEmployeeJob(Employee employee) {
 		return sqlSession.update("employee.updateEmployeeJob", employee);
 	}
+	
+	@Override
+	public int updateManageEmp(Employee employee) {
+		return sqlSession.update("employee.updateManageEmp", employee);
+	}
 
 	@Override
 	public List<Map> getDepartEmpDetail(String depart_id) {
@@ -118,5 +123,6 @@ public class EmployeeDao implements IEmployeeDao {
 	public List<Map> videoEmpList(Employee employee) {
 		return sqlSession.selectList("employee.videoEmpList", employee);
 	}
+
 
 }
