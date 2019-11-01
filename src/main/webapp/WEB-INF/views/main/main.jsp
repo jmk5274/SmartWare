@@ -13,12 +13,15 @@
 	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
-			<h1>공지사항</h1>
-            <div class="card">
-                <div class="card-body">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+			<!-- 오늘 일정 -->
+			<div class="card card-widget" style="margin-top: 20px;">
+				<div class="social-graph-wrapper widget-facebook">
+               		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;TODAY</span>
                 </div>
-            </div>
+				<div id="todayCal" class="card-body">
+                    
+                </div>
+			</div>
 
 			<div class="card">
 				<div class="card-body">
@@ -40,8 +43,36 @@
 				</div>
 			</div>
 		</div>
-		<!-- 날씨 -->
-        <div class="col-4">
+		 <div class="col-4">
+			<!-- 결재 현황 -->
+			<div class="card card-widget" style="margin-top: 20px;">
+				<div class="social-graph-wrapper widget-facebook">
+               		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;결재현황</span>
+                </div>
+				<div class="row">
+                    <div class="col-6 border-right">
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">89k</h4>
+                            <p class="m-0">결재문서</p>
+                        </div>
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">89k</h4>
+                            <p class="m-0">진행문서</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">119k</h4>
+                            <p class="m-0">수신문서</p>
+                        </div>
+                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                            <h4 class="m-1">119k</h4>
+                            <p class="m-0">반려문서</p>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<!-- 날씨 -->
 			<div id="bg" class="wthree_main_grid agileinfo_main_grid">
 				<div class="w3ls_main_grid">
 					<div class="agileits_main_grid_left">
@@ -69,43 +100,6 @@
 						</li>
 					</ul>
 				</div>
-			</div>
-			<!-- 오늘 일정 -->
-			<div class="card card-widget" style="margin-top: 20px;">
-				<div class="social-graph-wrapper widget-facebook">
-               		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> TODAY</span>
-                </div>
-				<div id="todayCal" class="card-body">
-                    
-                </div>
-			</div>
-			<!-- 결재 현황 -->
-			<div class="card card-widget" style="margin-top: 20px;">
-				<div class="social-graph-wrapper widget-facebook">
-               		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> 결재현황</span>
-                </div>
-				<div class="row">
-                    <div class="col-6 border-right">
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">89k</h4>
-                            <p class="m-0">결재문서</p>
-                        </div>
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">89k</h4>
-                            <p class="m-0">진행문서</p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">119k</h4>
-                            <p class="m-0">수신문서</p>
-                        </div>
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">119k</h4>
-                            <p class="m-0">반려문서</p>
-                        </div>
-                    </div>
-                </div>
 			</div>
 		</div>
     </div>
@@ -291,7 +285,7 @@
 				var html = "";
 				data.calList.forEach(function(cal){
                     html += '<div class="media border-bottom-1 pt-3 pb-3">';
-	                html +=     '<img width="35" src="${cp }/employeePicture?emp_id=${S_EMPLOYEE.emp_id}" class="mr-3 rounded-circle">';
+	                html += 	'<i class="fa fa-calendar menu-icon"></i>'
 	                html +=     '<div class="media-body">';
 	                html +=         '<h5>'+cal.cal_title+'</h5>';
 	                html +=         '<p class="mb-0">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</p>';

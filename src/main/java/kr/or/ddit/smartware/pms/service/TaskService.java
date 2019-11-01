@@ -1,5 +1,7 @@
 package kr.or.ddit.smartware.pms.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +10,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.smartware.pms.model.ProTask;
+import kr.or.ddit.smartware.pms.model.Project;
 import kr.or.ddit.smartware.pms.model.Task;
+import kr.or.ddit.smartware.pms.repository.IProjectDao;
 import kr.or.ddit.smartware.pms.repository.ITaskDao;
 
 @Service
@@ -16,6 +20,9 @@ public class TaskService implements ITaskService {
 
 	@Resource(name="taskDao")
 	private ITaskDao taskDao;
+	
+	@Resource(name="projectDao")
+	private IProjectDao projectDao;
 	
 	/**
 	* Method : getWeekTask
@@ -83,6 +90,99 @@ public class TaskService implements ITaskService {
 		return taskDao.getEmpGantt(pro_id, emp_id);
 	}
 
+	/**
+	* Method : getAllDelayTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 지연업무 조회 
+	*/
+	@Override
+	public List<Map<String, Object>> getAllDelayTask(String emp_id) {
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		
+		List<Task> taskList = taskDao.getAllDelayTask(emp_id);
+		
+		for(Task task : taskList) {
+			Map<String, Object> subMap = new HashMap<String, Object>();
+			subMap.put("task_id", task.getTask_id());
+			subMap.put("task_cont", task.getTask_cont());
+			subMap.put("st_dt", task.getSt_dt());
+			subMap.put("end_dt", task.getEnd_dt());
+			subMap.put("pa_task_id", task.getPa_task_id());
+			subMap.put("per", task.getPer());
+			subMap.put("pro_id", task.getPro_id());
+			subMap.put("pro_nm", projectDao.getProject(task.getPro_id()));
+			
+			list.add(subMap);
+		}
+		
+		return list;
+	}
+
+	/**
+	* Method : getAllTodayTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 일간업무 조회 
+	*/
+	@Override
+	public List<Map<String, Object>> getAllTodayTask(String emp_id) {
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		
+		List<Task> taskList = taskDao.getAllTodayTask(emp_id);
+		
+		for(Task task : taskList) {
+			Map<String, Object> subMap = new HashMap<String, Object>();
+			subMap.put("task_id", task.getTask_id());
+			subMap.put("task_cont", task.getTask_cont());
+			subMap.put("st_dt", task.getSt_dt());
+			subMap.put("end_dt", task.getEnd_dt());
+			subMap.put("pa_task_id", task.getPa_task_id());
+			subMap.put("per", task.getPer());
+			subMap.put("pro_id", task.getPro_id());
+			subMap.put("pro_nm", projectDao.getProject(task.getPro_id()));
+			
+			list.add(subMap);
+		}
+		
+		return list;
+	}
+
+	/**
+	* Method : getAllWeekTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 주간업무 조회
+	*/
+	@Override
+	public List<Map<String, Object>> getAllWeekTask(String emp_id) {
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		
+		List<Task> taskList = taskDao.getAllWeekTask(emp_id);
+		
+		for(Task task : taskList) {
+			Map<String, Object> subMap = new HashMap<String, Object>();
+			subMap.put("task_id", task.getTask_id());
+			subMap.put("task_cont", task.getTask_cont());
+			subMap.put("st_dt", task.getSt_dt());
+			subMap.put("end_dt", task.getEnd_dt());
+			subMap.put("pa_task_id", task.getPa_task_id());
+			subMap.put("per", task.getPer());
+			subMap.put("pro_id", task.getPro_id());
+			subMap.put("pro_nm", projectDao.getProject(task.getPro_id()));
+			
+			list.add(subMap);
+		}
+		
+		return list;
+	}
+	
 	/**
 	* Method : insertTask
 	* 작성자 : JO MIN SOO
