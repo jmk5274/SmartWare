@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.smartware.pms.model.ProTask;
 import kr.or.ddit.smartware.pms.model.Task;
 
 @Repository
@@ -77,11 +78,24 @@ public class TaskDao implements ITaskDao {
 	* 변경이력 :
 	* @param pro_id
 	* @return
-	* Method 설명 : 프로젝트의 일감 반환(gantt)
+	* Method 설명 : 프로젝트의 전체 일감 반환(gantt)
 	*/
 	@Override
-	public List<Map<String, Object>> getAllGantt(String pro_id) {
-		return sqlSession.selectList("task.getAllGantt", pro_id);
+	public List<Map<String, Object>> getAllTask(String pro_id) {
+		return sqlSession.selectList("task.getAllTask", pro_id);
+	}
+	
+	/**
+	* Method : getTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 반환
+	*/
+	@Override
+	public List<Map<String, Object>> getTask(String task_id) {
+		return sqlSession.selectList("task.getTask", task_id);
 	}
 
 	/**
@@ -113,6 +127,58 @@ public class TaskDao implements ITaskDao {
 	@Override
 	public int insertTask(Task task) {
 		return sqlSession.insert("task.insertTask", task);
+	}
+
+	/**
+	* Method : insertProTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param proTask
+	* @return
+	* Method 설명 : 일정의 담당자 추가
+	*/
+	@Override
+	public int insertProTask(ProTask proTask) {
+		return sqlSession.insert("task.insertProTask", proTask);
+	}
+
+	/**
+	* Method : deleteTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 삭제
+	*/
+	@Override
+	public int deleteTask(String task_id) {
+		return sqlSession.delete("task.deleteTask", task_id);
+	}
+
+	/**
+	* Method : deleteProTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 담당자 삭제
+	*/
+	@Override
+	public int deleteProTask(String task_id) {
+		return sqlSession.delete("task.deleteProTask", task_id);
+	}
+
+	/**
+	* Method : deleteTaskHistory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 히스토리 삭제
+	*/
+	@Override
+	public int deleteTaskHistory(String task_id) {
+		return sqlSession.delete("task.deleteTaskHistory", task_id);
 	}
 
 }

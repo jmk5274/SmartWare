@@ -26,6 +26,7 @@
 		<typeAlias alias="popup" 		type="kr.or.ddit.smartware.popup.model.Popup"/>
 		<typeAlias alias="project" 		type="kr.or.ddit.smartware.pms.model.Project"/>
 		<typeAlias alias="task" 		type="kr.or.ddit.smartware.pms.model.Task"/>
+		<typeAlias alias="proTask" 		type="kr.or.ddit.smartware.pms.model.ProTask"/>
 		<typeAlias alias="taskHistory"	type="kr.or.ddit.smartware.pms.model.TaskHistory"/>
 	</typeAliases>
 	

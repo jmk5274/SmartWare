@@ -56,26 +56,59 @@
 	</select>
 
 	<!-- 프로젝트의 전체 일감 반환(gantt) -->
-	<select id="getAllGantt" parameterType="String" resultType="hashmap" resultMap="clobmap">
-          select a.*, b.emp_id, c.emp_nm
-            from (select task.*
-                    from task
-                   start with pro_id = #{pro_id}
-                     and pa_task_id is null
-			     connect by prior task_id = pa_task_id
-			       order siblings by task_id) a, pro_task b, employee c
-           where a.task_id = b.task_id
-		     and b.emp_id = c.emp_id
+	<select id="getAllTask" parameterType="String" resultType="hashmap" resultMap="clobmap">
+    	select a.*, b.emp_id, c.emp_nm
+    	  from (select task.*
+    			  from task
+				 start with pro_id = #{pro_id}
+				   and pa_task_id is null
+			   connect by prior task_id = pa_task_id
+				 order siblings by task_id) a, pro_task b, employee c
+		 where a.task_id = b.task_id
+		   and b.emp_id = c.emp_id
 	</select>
 	<!-- connect_by_root(task_cont) rs  -->
 	
-	<!-- 일정 추가 -->
+	<!-- 프로젝트의 일감 반환(gantt) -->
+	<select id="getTask" parameterType="String" resultType="hashmap" resultMap="clobmap">
+        select a.*, b.emp_id, c.emp_nm
+		  from task a, pro_task b, employee c
+		 where a.task_id = #{task_id}
+		   and a.task_id = b.task_id
+		   and b.emp_id = c.emp_id
+	</select>
+		
+	<!-- 일감 추가 -->
 	<insert id="insertTask" parameterType="project">
 		insert into task(task_id, task_cont, st_dt, end_dt, pro_id, pa_task_id, per)
 			values('task' || lpad(task_seq.nextval, 4, 0), #{task_cont}, 
-				   #{st_dt}, #{end_dt}, #{pro_id}, #{pa_task_id}, #{per})
+				   #{st_dt}, #{end_dt}, #{pro_id}, #{pa_task_id, jdbcType=VARCHAR}, #{per})
 		<selectKey order="AFTER" resultType="String" keyProperty="task_id" >
 			select 'task' || lpad(task_seq.currval, 4, 0) from dual
 		</selectKey>
 	</insert>
+	
+	<!-- 일감 담당자 추가  -->
+	<insert id="insertProTask" parameterType="proTask">
+		insert into pro_task(emp_id, task_id, pro_id)
+			values(#{emp_id}, #{task_id}, #{pro_id})
+	</insert>
+	
+	<!-- 일감 삭제 -->
+	<delete id="deleteTask">
+		delete from task
+		 where task_id = #{task_id}
+	</delete>
+	
+	<!-- 일감 담당자 삭제 -->
+	<delete id="deleteProTask">
+		delete from pro_task
+		 where task_id = #{task_id}
+	</delete>
+	
+	<!-- 일감 히스토리 삭제 -->
+	<delete id="deleteTaskHistory">
+		delete from task_history
+		 where task_id = #{task_id}
+	</delete>
 </mapper>

@@ -3,6 +3,7 @@ package kr.or.ddit.smartware.pms.repository;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.smartware.pms.model.ProTask;
 import kr.or.ddit.smartware.pms.model.Task;
 
 public interface ITaskDao {
@@ -48,15 +49,25 @@ public interface ITaskDao {
 	List<Task> getEmpProjectTask(Map<String, String> map);
 
 	/**
-	* Method : getAllGantt
+	* Method : getAllTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param pro_id
 	* @return
-	* Method 설명 : 프로젝트의 일감 반환(gantt) 
+	* Method 설명 : 프로젝트의 전체 일감 반환(gantt) 
 	*/
-	List<Map<String, Object>> getAllGantt(String pro_id);
+	List<Map<String, Object>> getAllTask(String pro_id);
 
+	/**
+	* Method : getTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 반환(gantt)
+	*/
+	List<Map<String, Object>> getTask(String task_id);
+	
 	/**
 	* Method : getEmpGantt
 	* 작성자 : JO MIN SOO
@@ -78,4 +89,43 @@ public interface ITaskDao {
 	*/
 	int insertTask(Task task);
 
+	/**
+	* Method : insertProTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param proTask
+	* @return
+	* Method 설명 : 일정의 담당자 추가 
+	*/
+	int insertProTask(ProTask proTask);
+
+	/**
+	* Method : deleteTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 삭제
+	*/
+	int deleteTask(String task_id);
+	
+	/**
+	* Method : deleteProTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 담당자 삭제
+	*/
+	int deleteProTask(String task_id);
+	
+	/**
+	* Method : deleteTaskHistory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 히스토리 삭제
+	*/
+	int deleteTaskHistory(String task_id);
 }

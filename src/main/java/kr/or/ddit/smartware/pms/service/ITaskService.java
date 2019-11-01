@@ -3,6 +3,7 @@ package kr.or.ddit.smartware.pms.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.smartware.pms.model.ProTask;
 import kr.or.ddit.smartware.pms.model.Task;
 
 public interface ITaskService {
@@ -28,17 +29,27 @@ public interface ITaskService {
 	List<Task> getDelayTask(Map<String, String> map);
 
 	/**
-	* Method : getAllGantt
+	* Method : getAllTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param pro_id
 	* @return
 	* Method 설명 : 프로젝트의 전체 일감 반환(gantt)
 	*/
-	List<Map<String, Object>> getAllGantt(String pro_id);
+	List<Map<String, Object>> getAllTask(String pro_id);
 	
 	/**
-	* Method : getAllGantt
+	* Method : getTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 반환
+	*/
+	List<Map<String, Object>> getTask(String task_id);
+	
+	/**
+	* Method : getEmpGantt
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param pro_id
@@ -53,8 +64,19 @@ public interface ITaskService {
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param task
+	* @param emp_id
 	* @return
 	* Method 설명 : 일정 추가
 	*/
-	String insertTask(Task task);
+	String insertTask(Task task, String emp_id);
+	
+	/**
+	* Method : deleteTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 삭제, 일감담당자 삭제, 일감히스토리 삭제 
+	*/
+	int deleteTask(String task_id);
 }

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.smartware.pms.model.ProTask;
 import kr.or.ddit.smartware.pms.model.Task;
 import kr.or.ddit.smartware.pms.repository.ITaskDao;
 
@@ -43,7 +44,7 @@ public class TaskService implements ITaskService {
 	}
 
 	/**
-	* Method : getAllGantt
+	* Method : getAllTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param pro_id
@@ -51,8 +52,21 @@ public class TaskService implements ITaskService {
 	* Method 설명 : 프로젝트의 전체 일감 반환(gantt)
 	*/
 	@Override
-	public List<Map<String, Object>> getAllGantt(String pro_id) {
-		return taskDao.getAllGantt(pro_id);
+	public List<Map<String, Object>> getAllTask(String pro_id) {
+		return taskDao.getAllTask(pro_id);
+	}
+	
+	/**
+	* Method : getTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 반환
+	*/
+	@Override
+	public List<Map<String, Object>> getTask(String task_id) {
+		return taskDao.getTask(task_id);
 	}
 
 	/**
@@ -78,9 +92,26 @@ public class TaskService implements ITaskService {
 	* Method 설명 : 일정 추가
 	*/
 	@Override
-	public String insertTask(Task task) {
-		taskDao.insertTask(task);
+	public String insertTask(Task task, String emp_id) {
+		taskDao.insertTask(task); // 일감 추가
+		ProTask proTask = new ProTask(emp_id, task.getPro_id(), task.getTask_id());
+		taskDao.insertProTask(proTask); // 일감 담당자 추가 
 		return task.getTask_id();
+	}
+
+	/**
+	* Method : deleteTask
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param task_id
+	* @return
+	* Method 설명 : 일감 삭제, 일감담당자 삭제, 일감히스토리 삭제 
+	*/
+	@Override
+	public int deleteTask(String task_id) {
+		taskDao.deleteTaskHistory(task_id);
+		taskDao.deleteProTask(task_id);
+		return taskDao.deleteTask(task_id);
 	}
 
 }

@@ -68,7 +68,7 @@
 
 <!-- task modal -->
 <div class="bootstrap-modal">
-    <div class="modal fade" id="taskModal">
+    <div class="modal fade" id="taskModal" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -76,11 +76,13 @@
                 </div>
                 <div class="modal-body basic-form">
                 	<form id="taskForm">
+                		<input type="hidden" id="task_id" name="task_id" value=""/>
+                		<input type="hidden" id="pa_task_id" name="pa_task_id" value=""/>
                 		<div class="form-group row">
                 			<div class="col-sm-1"></div>
 		                    <label class="col-sm-2 col-form-label">일감 명</label>
 		                    <div class="col-sm-8">
-		                    	<input type="text" class="form-control" id="task_nm" name="task_nm">
+		                    	<input type="text" class="form-control" id="task_cont" name="task_cont">
 		                    </div>
 	                    </div>
 	                    
@@ -89,7 +91,7 @@
 		                    <label class="col-sm-2 col-form-label">시작일</label>
 		                    <div class="col-sm-3">
 								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
-									<input id="startpicker-input" type="text" aria-label="Date" name="st_dt">
+									<input id="startpicker-input" type="text" aria-label="Date">
 									<span class="tui-ico-date"></span>
 									<div id="startpicker-container" style="margin-left: -1px;"></div>
 								</div>
@@ -97,7 +99,7 @@
 		                    <label class="col-sm-2 col-form-label">종료일</label>
 		                    <div class="col-sm-3">
 								<div class="form-control tui-datepicker-input tui-datetime-input tui-has-focus">
-									<input id="endpicker-input" type="text" aria-label="Date" name="end_dt">
+									<input id="endpicker-input" type="text" aria-label="Date">
 									<span class="tui-ico-date"></span>
 									<div id="endpicker-container" style="margin-left: -1px;"></div>
 								</div>
@@ -126,7 +128,7 @@
                     </form>
                 </div>
                 <div class="modal-footer" style="display: inline-block;">
-                    <button type="button" class="btn mb-1 btn-dark" data-dismiss="modal" style="float: right;">취소</button>
+                    <button type="button" class="btn mb-1 btn-dark" id="cancelTask" style="float: right;">취소</button>
                     <button type="button" class="btn mb-1 btn-dark" id="updateTask" style="float: right;">수정</button>
                     <button type="button" class="btn mb-1 btn-dark" id="insertTask" style="float: right;">생성</button>
                     <button type="button" class="btn mb-1 btn-danger" id="deleteTask" style="float: left;">삭제</button>
@@ -150,6 +152,7 @@
 </script>
 
 <script>
+
 // 필터링 적용
 function filtering() {
 	gantt.refreshData();
@@ -332,10 +335,10 @@ var scaleConfigs = [
 //zoom to fit 끝
 
 // ajax
-function getAllGantt(pro_id) {
+function getAllTask(pro_id) {
 	$.ajax({
-		url : cp + "/getAllGantt",
-		type : "get",
+		url : cp + "/getAllTask",
+		type : "post",
 		async: false,
 		data : "pro_id=" + pro_id,
 		dataType : "JSON",
@@ -488,9 +491,9 @@ gantt.attachEvent("onAfterTaskAdd", function(id,item){
 	_item.start_date = (+item.start_date);
 	_item.end_date = (+item.end_date - 6000);
 	_item.pro_id = pro_id;
-    $.post(cp + "/insertTask", _item, function( data ) {
-    	  console.log(data);
-   	});
+//     $.post(cp + "/insertTask", _item, function( data ) {
+//     	  console.log(data);
+//    	});
 });
 
 // task update
@@ -509,22 +512,25 @@ var taskId = null;
 gantt.showLightbox = function(id) {
     taskId = id;
     var task = gantt.getTask(id);
-    $("#task_nm").val(task.text);
+    $("#task_id").val(taskId);
+    $("#task_cont").val(task.text);
  	picker._startpicker.setDate(task.start_date);
  	picker._endpicker.setDate(task.end_date);
  	slider.update({from: task.progress * 100});
  	$("#emp_id").val(task.emp_id);
+ 	$("#pa_task_id").val(task.parent);
+ 	
+ 	if(gantt.getTask(taskId).$new) {
+ 		$("#insertTask").show();
+ 		$("#deleteTask").hide();
+ 		$("#updateTask").hide();
+ 	} else {
+ 		$("#insertTask").hide();
+ 		$("#deleteTask").show();
+ 		$("#updateTask").show();
+ 	}
+ 	
  	$("#taskModal").modal("show");
-//     var form = getForm();
-//     var input = form.querySelector("[name='description']");
-//     input.focus();
-//     input.value = task.text;
- 
-//     form.style.display = "block";
- 
-//     form.querySelector("[name='save']").onclick = save;
-//     form.querySelector("[name='close']").onclick = cancel;
-//     form.querySelector("[name='delete']").onclick = remove;
 };
 
 gantt.hideLightbox = function(){
@@ -548,12 +554,116 @@ function save() {
 }
 
 $(function() {
-	$("#taskModal").on("hide.bs.modal", function(event){
-	    var task = gantt.getTask(taskId);
+	// insert
+	$("#insertTask").on("click", function() {
+		if($("#task_cont").val() === null) {
+			Swal({
+				title: '일감 명을 입력하세요.',
+				type: 'error',
+				timer: 1500,
+				showConfirmButton: false,
+			});
+			return; 
+		} else if(picker._endpicker.getDate() === null) {
+			Swal({
+				title: '종료일을 선택하세요.',
+				type: 'error',
+				timer: 1500,
+				showConfirmButton: false,
+			});
+			return; 
+		} else if($("#emp_id").val() === null) {
+			Swal({
+				title: '담당자를 선택하세요.',
+				type: 'error',
+				timer: 1500,
+				showConfirmButton: false,
+			});
+			return; 
+		}
 	    
+		start = +picker._startpicker.getDate();
+		end = +picker._endpicker.getDate() + 86340000; // 23시 59분 더해줌
+		$.post({
+			url: cp + "/insertTask",
+			type: "post",
+			data: $("#taskForm").serialize() + "&per=" + slider.old_from + "&pro_id=" + pro_id
+				  + "&start=" + start + "&end=" + end,
+			success: function(data) {
+				Swal({
+					title: '일감이 추가되었습니다.',
+					type: 'success',
+					timer: 1500,
+					showConfirmButton: false,
+				});
+				$.post({
+					url: cp + "/getTask",
+					type: "post",
+					data: "task_id=" + data.task_id,
+					success: function(data) {
+						console.log(data.task.TASK_ID);
+						$("#task_id").val(data.task.TASK_ID);
+		 				gantt.changeTaskId(taskId, data.task.TASK_ID); // 자동생성된 id를 db에 생성한 id로 교체
+		 				gantt.getTask(data.task.TASK_ID).$new = false;
+		 				gantt.getTask(data.task.TASK_ID).text = data.task.TASK_CONT;
+		 				gantt.getTask(data.task.TASK_ID).start_date = new Date(data.task.ST_DT);
+		 				gantt.getTask(data.task.TASK_ID).end_date = new Date(data.task.END_DT);
+		 				gantt.getTask(data.task.TASK_ID).progress = data.task.PER / 100;
+		 				gantt.getTask(data.task.TASK_ID).parent = data.task.PA_TASK_ID;
+		 				gantt.getTask(data.task.TASK_ID).emp_id = data.task.EMP_ID;
+		 				gantt.getTask(data.task.TASK_ID).emp_nm = data.task.EMP_NM;
+		 				gantt.getTask(data.task.TASK_ID).color = "black";
+		 				
+		 				if(data.task.PER !== 100 && new Date(data.task.END_DT) < new Date()) { // 지연
+		 					gantt.getTask(data.task.TASK_ID).color = "#ff5e5e"; // red
+		 				} else if(data.task.PER === 100 && new Date(data.task.END_DT) < new Date()) { // 완료
+		 					gantt.getTask(data.task.TASK_ID).color = "#6fd96f"; // green
+		 				} else if(new Date(data.task.ST_DT) > new Date()) { // 시작전
+		 					gantt.getTask(data.task.TASK_ID).color = "#b6b8ba"; // gray
+		 				} else { // 진행중
+		 					gantt.getTask(data.task.TASK_ID).color = "#4d7cff"; // blue
+		 				}
+		 				
+						$("#taskModal").modal("hide");
+					}
+				})
+			}
+		});
+	});
+	
+	// update
+	$("#updateTask").on("click", function() {
+		
+	});
+	
+	// delete
+	$("#deleteTask").on("click", function() {
+		$.ajax({
+			url: cp + "/deleteTask",
+			type: "post",
+			data: "task_id=" + taskId,
+			success: function() {
+				gantt.deleteTask(taskId);
+			    gantt.hideLightbox();
+			    $("#taskModal").modal("hide");
+			    Swal({
+					title: '삭제되었습니다.',
+					type: 'success',
+					timer: 1500,
+					showConfirmButton: false,
+				});
+			}
+		});
+		
+	});
+	
+	$("#cancelTask").on("click", function(event){
+	    var task = gantt.getTask(taskId);
+	    console.log(task);
 	    if(task.$new)
-	    gantt.deleteTask(task.id);
-	    gantt.hideLightbox();
+	    	gantt.deleteTask(task.id);
+// 	    gantt.hideLightbox();
+		$("#taskModal").modal("hide");
 	});
 })
 function cancel() {
@@ -597,7 +707,7 @@ gantt.config.columns = [
 	{name: "add", width: 40}
 ];
 gantt.init("gantt_here");
-getAllGantt(pro_id);
+getAllTask(pro_id);
 
 var picker = tui.DatePicker.createRangePicker({
 	language: 'ko',
