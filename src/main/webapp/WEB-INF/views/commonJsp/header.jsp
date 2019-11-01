@@ -224,6 +224,32 @@
 			  type: 'success',
 			  title: '프로젝트 채팅방이 개설되었습니다'
 			})
+		}else if(str[0]===("appr")){
+			getChatList();
+			const toast = Swal.mixin({
+				  toast: true,
+				  position: 'top-end',
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+
+			toast({
+			  type: 'success',
+			  title: str[1]
+			})
+		}else if(str[0]===("refer")){
+			getChatList();
+			const toast = Swal.mixin({
+				  toast: true,
+				  position: 'top-end',
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+
+			toast({
+			  type: 'success',
+			  title: str[1]
+			})
 		}
 	};
 	

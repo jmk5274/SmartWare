@@ -80,6 +80,36 @@ public interface ITaskDao {
 	List<Map<String, Object>> getEmpGantt(String pro_id, String emp_id);
 
 	/**
+	* Method : getAllDelayTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 지연업무 조회 
+	*/
+	List<Task> getAllDelayTask(String emp_id);
+
+	/**
+	* Method : getAllTodayTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 일간업무 조회 
+	*/
+	List<Task> getAllTodayTask(String emp_id);
+	
+	/**
+	* Method : getAllWeekTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 주간업무 조회
+	*/
+	List<Task> getAllWeekTask(String emp_id);
+	
+	/**
 	* Method : insertTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :

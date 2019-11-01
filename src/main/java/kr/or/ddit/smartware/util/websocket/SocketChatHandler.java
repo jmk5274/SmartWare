@@ -62,6 +62,7 @@ public class SocketChatHandler extends TextWebSocketHandler {
 			}
 		}
 		
+		//프로젝트 관련 send 이벤트
 		if(type.equals("project")) {
 			for(int i=0; i<str.length; i++) {
 				if(chatMap.get(str[i])!=null && !str[i].equals("project")) {
@@ -71,6 +72,32 @@ public class SocketChatHandler extends TextWebSocketHandler {
 				}
 			}
 		}
+		
+		//결재문서 반려 관련 send 이벤트
+		if(type.equals("refer")) {
+			String[] employees = str[1].split(", ");
+			for(int i=0; i<employees.length; i++) {
+				if(chatMap.get(str[i].trim())!=null) {
+					WebSocketSession webSession = chatMap.get(str[i].trim());
+					
+					if(i==0) {
+						webSession.sendMessage(new TextMessage(type + "^기안한 결재문서가 반려되었습니다."));
+					}else {
+						webSession.sendMessage(new TextMessage(type + "^승인한 결재문서가 반려되었습니다."));
+					}
+				}
+			}
+		}
+		
+		//결재문서 기안 관련 send 이벤트
+		if(type.equals("appr")) {
+			if(chatMap.get(str[1].trim())!=null){
+				WebSocketSession webSession = chatMap.get(str[1].trim());
+				
+				webSession.sendMessage(new TextMessage(type + "^결재문서가 도착했습니다."));
+			}
+		}
+		
 		
 		for (WebSocketSession currentSession : chatMap.values()) {
 			Employee employeee = getEmployee(currentSession);

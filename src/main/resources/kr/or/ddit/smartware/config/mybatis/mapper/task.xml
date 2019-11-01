@@ -78,6 +78,44 @@
 		   and b.emp_id = c.emp_id
 	</select>
 		
+	<!-- emp_id에 해당하는 모든 프로젝트의 지연업무 조회 -->
+	<select id="getAllDelayTask" parameterType="String" resultType="task">
+		select *
+		  from task
+		 where task_id in (select task_id
+		                     from pro_task
+		                    where emp_id = #{emp_id}
+		                      and pa_task_id is not null)
+		   and end_dt <![CDATA[<=]]> sysdate
+		   and per <![CDATA[<]]> 100
+		 order by st_dt, end_dt
+	</select>	
+		
+	<!-- emp_id에 해당하는 모든 프로젝트의 일간업무 조회 -->
+	<select id="getAllTodayTask" parameterType="String" resultType="task">
+		select *
+		  from task
+		 where task_id in (select task_id
+		                     from pro_task
+		                     where emp_id = #{emp_id}
+		                      and pa_task_id is not null)
+		   and sysdate between st_dt and end_dt
+		 order by st_dt, end_dt
+	</select>
+
+	<!-- emp_id에 해당하는 프로젝트의 주간업무 조회 -->
+	<select id="getAllWeekTask" parameterType="String" resultType="task">
+		select *
+		  from task
+		 where task_id in (select task_id
+		                     from pro_task
+		                     where emp_id = #{emp_id}
+		                      and pa_task_id is not null)
+		   and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
+		   and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
+		 order by st_dt, end_dt;
+	</select>
+
 	<!-- 일감 추가 -->
 	<insert id="insertTask" parameterType="project">
 		insert into task(task_id, task_cont, st_dt, end_dt, pro_id, pa_task_id, per)
@@ -135,4 +173,5 @@
 		delete from task_history
 		 where task_id = #{task_id}
 	</delete>
+	
 </mapper>
