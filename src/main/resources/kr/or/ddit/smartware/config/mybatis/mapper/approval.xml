@@ -288,4 +288,35 @@
         where appl_id = #{appl_id}
         and appr_emp = #{appr_emp}
     </update>
+
+    <select id="sendApplMember" parameterType="String" resultType="String">
+        select appr_emp
+        from appl_appr
+        where appl_id = #{appl_id}
+        and ap_order = (select max(ap_order)
+                        from appl_appr
+                        where appl_id = #{appl_id})
+    </select>
+    
+    <select id="sendToNextMember" parameterType="applAppr" resultType="String">
+        select appr_emp
+        from appl_appr
+        where appl_id = #{appl_id}
+        and ap_order = (select ap_order - 1
+                        from appl_appr
+                        where appl_id = #{appl_id}
+                        and appr_emp = #{appr_emp})
+    </select>
+
+    <select id="referAlarm" parameterType="applAppr" resultType="String">
+        select a.emp_id || ', ' || listagg(b.appr_emp, ', ') within group(order by b.appr_emp) as appr_emp
+        from application a
+        right outer join appl_appr b on a.appl_id = b.appl_id
+        where a.appl_id = #{appl_id}
+        and b.ap_order > (select ap_order
+                        from appl_appr
+                        where appl_id = #{appl_id}
+                        and appr_emp = #{appr_emp})
+        group by a.emp_id
+    </select>
 </mapper>

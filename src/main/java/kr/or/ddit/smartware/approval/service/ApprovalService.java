@@ -119,4 +119,19 @@ public class ApprovalService implements IApprovalService{
     public int checkAble(ApplAppr applAppr) {
         return approvalDao.checkAble(applAppr);
     }
+
+    @Override
+    public String sendApplMember(String appl_id) {
+        return approvalDao.sendApplMember(appl_id);
+    }
+
+    @Override
+    public String sendToNextMember(ApplAppr applAppr) {
+        return approvalDao.sendToNextMember(applAppr);
+    }
+
+    @Override
+    public String referAlarm(ApplAppr applAppr) {
+        return approvalDao.referAlarm(applAppr);
+    }
 }

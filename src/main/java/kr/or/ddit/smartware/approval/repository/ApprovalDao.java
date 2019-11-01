@@ -119,4 +119,19 @@ public class ApprovalDao implements IApprovalDao{
     public int checkAble(ApplAppr applAppr) {
         return sqlSession.update("appl.checkAble", applAppr);
     }
+
+    @Override
+    public String sendApplMember(String appl_id) {
+        return sqlSession.selectOne("appl.sendApplMember", appl_id);
+    }
+
+    @Override
+    public String sendToNextMember(ApplAppr applAppr) {
+        return sqlSession.selectOne("appl.sendToNextMember", applAppr);
+    }
+
+    @Override
+    public String referAlarm(ApplAppr applAppr) {
+        return sqlSession.selectOne("appl.referAlarm", applAppr);
+    }
 }

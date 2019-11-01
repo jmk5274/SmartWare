@@ -142,6 +142,7 @@
             })
         }
 
+        /* 결재 분기점 */
         $('#sendBtn').click(function () {
             Swal({
                 title: '결재를 올리시겠습니까?',

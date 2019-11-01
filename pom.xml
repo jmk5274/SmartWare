@@ -264,6 +264,6 @@
             <artifactId>spring-websocket</artifactId>
             <version>4.3.25.RELEASE</version>
 		</dependency>
-		
-	</dependencies>
+
+    </dependencies>
 </project>
