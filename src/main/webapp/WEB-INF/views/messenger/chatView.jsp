@@ -823,24 +823,23 @@ $("#status-options ul li").click(function() {
 					$('.messages').animate({
 						scrollTop: $('.messages').get(0).scrollHeight}, 1000);
 					
-						$.ajax({
-							url : "${cp}/getChatInfo",
-							contentType : "application/json",
-							dataType : "json",
-							method : "get",
-							data : "chat_id="+chat_id,
-							success : function(data){
-								
-								var chatEmpList = data.chatEmpList
-								
-								chatEmpList.forEach(function(chatEmp){
-									message += "^" + chatEmp.emp_id
-								});
-								
-								socket.send(message);
-							}
-						});
-					
+					$.ajax({
+						url : "${cp}/getChatInfo",
+						contentType : "application/json",
+						dataType : "json",
+						method : "get",
+						data : "chat_id="+chat_id,
+						success : function(data){
+							
+							var chatEmpList = data.chatEmpList
+							
+							chatEmpList.forEach(function(chatEmp){
+								message += "^" + chatEmp.emp_id
+							});
+							
+							socket.send(message);
+						}
+					});
 					messageFrm.reset();
 					$(".message-input #msg_cont").focus();
 				}
@@ -1061,10 +1060,9 @@ $("#status-options ul li").click(function() {
 						chatEmpList.forEach(function(chatEmp){
 							message += "^" + chatEmp.emp_id
 						});
-						console.log(message);
 					}
 				});
-				console.log(message);
+				
 				socket.send(message);
 				messageFrm.reset();
 				$(".message-input #msg_cont").focus();

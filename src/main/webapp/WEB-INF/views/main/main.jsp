@@ -5,7 +5,12 @@
 <link href="${cp }/css/weather/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
 <link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
-<%--<div class="container-fluid">--%>
+<style>
+	table{
+		border: solid 2px black;
+	}
+</style>
+	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
 			<h1>공지사항</h1>
@@ -35,6 +40,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- 날씨 -->
         <div class="col-4">
 			<div id="bg" class="wthree_main_grid agileinfo_main_grid">
 				<div class="w3ls_main_grid">
@@ -64,10 +70,10 @@
 					</ul>
 				</div>
 			</div>
-
+			<!-- 오늘 일정 -->
 			<div class="card card-widget">
 				<div id="todayCal" class="card-body">
-                    <h4 class="card-title">오늘 할 일</h4>
+                    <h4 class="card-title"><i class="fa fa-clock-o" aria-hidden="true"></i> 오늘 할 일 </h4>
                 </div>
 			</div>
 		</div>
@@ -78,6 +84,7 @@
 <script>
 	$(document).ready(function() { 
 		parseWeather();
+		currParseWeather();
 		popupView();
 		getTodayCalendar();
 	}); 
@@ -122,7 +129,6 @@
 			          $(".li:eq("+(i)+")").html('<h4>'+week+'</h4><div class="w3layouts_icon"></div><h5>'+Math.round(maxTemp)+'° <span>'+Math.round(minTemp)+'°</span></h5>');
 	        	  }
 	          }
-	          currParseWeather();
 	      });
 	}
 
@@ -206,6 +212,8 @@
 			i = "wi-thunderstorm";
 		}else if(icon=="13d" || icon=="13n"){
 			i = "wi-snow";
+		}else if(icon=="50d"){
+			i = "wi-fog";
 		}
 		return i;
 	}
@@ -226,8 +234,6 @@
 					var endDate = moment(new Date(popup.pop_end_dt)).format('YYYYMMDD');
 					
 					popupNolookList.forEach(function(nolook){
-						console.log(popup.pop_id);
-						console.log(nolook.POP_ID);
 						if(popup.pop_id===nolook.POP_ID){
 							stDate = moment(new Date(nolook.NL_DT)).format('YYYYMMDD');
 						}

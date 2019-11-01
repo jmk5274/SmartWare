@@ -921,23 +921,38 @@ INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), sysdate, sysdate,
 --------------------------------------------------------------------------------------------------------------------------------
 --채팅방
  
-INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), 'TESTCHAT1', 'T');
-INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), 'TESTCHAT2', 'T');
+INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '영화관 예매 시스템', 'T');
+INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '유기동물 입양 시스템', 'T');
+INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '스마트 웨어', 'T');
 
 ------------------------------------------------------------------------------------------------------------
 --메세지
 
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', 'TESTSET', 'e0013', SYSDATE);
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', 'TESTSET12', 'e0016', SYSDATE);
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', 'TESTSET3232', 'e0020', SYSDATE);
-INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0002', 'chat2 TESTSET3232', 'e0021', SYSDATE);
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', '<a href=''chatFile?path=C:/picture/file/수행계획서_영화관 예매 시스템.hwp'' download><i class=''fa fa-download''></i>수행계획서_영화관 예매 시스템.hwp</a>', 'e0002', to_date('20190612 13:20:00', 'YYYYMMDD HH24:MI:SS'));
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0001', '<a href=''chatFile?path=C:/picture/file/요구사항정의서_영화관 예매 시스템.xlsx'' download><i class=''fa fa-download''></i>요구사항정의서_영화관 예매 시스템.xlsx</a>', 'e0002', to_date('20190612 13:20:00', 'YYYYMMDD HH24:MI:SS'));
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0002', '<a href=''chatFile?path=C:/picture/file/수행계획서_유기동물 입양 시스템.hwp'' download><i class=''fa fa-download''></i>수행계획서_유기동물 입양 시스템.hwp</a>', 'e0002', to_date('20190819 10:15:00', 'YYYYMMDD HH24:MI:SS'));
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0002', '<a href=''chatFile?path=C:/picture/file/요구사항정의서_유기동물 입양 시스템.xlsx'' download><i class=''fa fa-download''></i>요구사항정의서_유기동물 입양 시스템.xlsx</a>', 'e0002', to_date('20190819 10:15:00', 'YYYYMMDD HH24:MI:SS'));
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0003', '<a href=''chatFile?path=C:/picture/file/수행계획서_스마트 웨어.hwp'' download><i class=''fa fa-download''></i>수행계획서_스마트 웨어.hwp</a>', 'e0005', trunc(sysdate, 'iw')-14+10/24+111/1440);
+INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0003', '<a href=''chatFile?path=C:/picture/file/요구사항정의서_스마트 웨어.xlsx'' download><i class=''fa fa-download''></i>요구사항정의서_스마트 웨어.xlsx</a>', 'e0005', trunc(sysdate, 'iw')-14+10/24+111/1440);
 
 ---------------------------------------------------------------------------------------------------------
 --참가자
 
-INSERT INTO CHAT_EMP VALUES ('e0003', 'ch0001', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0004', 'ch0001', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0003', 'ch0002', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0002', 'ch0001', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0005', 'ch0001', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0001', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0013', 'ch0001', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0015', 'ch0001', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0002', 'ch0002', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0005', 'ch0002', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0002', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0013', 'ch0002', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0015', 'ch0002', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0005', 'ch0003', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0003', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0013', 'ch0003', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0014', 'ch0003', null, null);
+INSERT INTO CHAT_EMP VALUES ('e0015', 'ch0003', null, null);
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --카테고리
