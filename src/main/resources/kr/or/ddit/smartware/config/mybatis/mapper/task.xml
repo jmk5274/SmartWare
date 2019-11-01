@@ -94,6 +94,30 @@
 			values(#{emp_id}, #{task_id}, #{pro_id})
 	</insert>
 	
+	<!-- 일감 히스토리 추가 -->
+	<insert id="insertTaskHistory" parameterType="taskHistory">
+		insert into task_history(history_id, task_id, emp_id, history, change_dt)
+			values(#{history_id}, #{task_id}, #{emp_id}, #{history}, #{change_dt})
+	</insert>
+	
+	<!-- 일감 수정 -->
+	<update id="updateTask" parameterType="task">
+		update task
+		   set task_cont = #{task_cont},
+		   	   st_dt = #{st_dt},
+		   	   end_dt = #{end_dt},
+		   	   pa_task_id = #{pa_task_id, jdbcType=VARCHAR},
+		   	   per = #{per}
+		 where task_id = #{task_id}
+	</update>
+	
+	<!-- 일감 담당자 수정 -->
+	<update id="updateProTask" parameterType="proTask">
+		update pro_task
+		   set emp_id = #{emp_id}
+		 where task_id = #{task_id}
+	</update>
+	
 	<!-- 일감 삭제 -->
 	<delete id="deleteTask">
 		delete from task
