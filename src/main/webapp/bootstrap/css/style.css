@@ -11657,6 +11657,13 @@ table.dataTable thead .sorting::after {
   .stat-widget-one .progress-bar {
     box-shadow: none; }
 
+.social-graph-wrapper1 {
+  text-align: center;
+  padding-bottom: 20px;
+  position: relative;
+  color: black;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem; }
 .social-graph-wrapper {
   text-align: center;
   padding-bottom: 20px;
@@ -11673,6 +11680,13 @@ table.dataTable thead .sorting::after {
   .social-graph-wrapper.widget-googleplus {
     background-color: #db4439; }
   .social-graph-wrapper .s-icon {
+    font-size: 1.5rem;
+    position: relative;
+    float: left;
+    margin-left: 20px;
+    top: 0.625rem;
+    padding: 0 10px; }
+  .social-graph-wrapper1 .s-icon {
     font-size: 1.5rem;
     position: relative;
     float: left;

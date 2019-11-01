@@ -6,73 +6,58 @@
 <link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
 <style>
-	table{
-		border: solid 2px black;
+	.weekDiv{
+		height: 400px;
+	}
+	.todayDiv{
+		height: 400px;
+	}
+	.apprDiv{
+		height: 250px;
 	}
 </style>
 	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
+			
+			<div class="card weekDiv">
+				<div class="social-graph-wrapper1">
+               		<span class="s-icon"><i class="fa fa-clock-o"></i> &nbsp;주간 일정</span>
+                </div>
+				<div id="weekCal" class="card-body">
+				</div>
+			</div>
+			
 			<!-- 오늘 일정 -->
-			<div class="card card-widget" style="margin-top: 20px;">
-				<div class="social-graph-wrapper widget-facebook">
-               		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;TODAY</span>
+			<div class="card card-widget todayDiv" style="margin-top: 20px;">
+				<div class="social-graph-wrapper1">
+               		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;일간 일정</span>
                 </div>
 				<div id="todayCal" class="card-body">
                     
                 </div>
 			</div>
-
-			<div class="card">
-				<div class="card-body">
-					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
-				</div>
-			</div>
         </div>
 		<div class="col-4">
-			<h1>사내게시글</h1>
-			<div class="card">
-				<div class="card-body">
-					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+			<div class="card weekDiv">
+				<div class="social-graph-wrapper1">
+               		<span class="s-icon"><i class="fa fa-tasks"></i> &nbsp;주간 업무</span>
+                </div>
+				<div id="weekTask" class="card-body">
 				</div>
 			</div>
 
-			<div class="card">
-				<div class="card-body">
-					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+			<!-- 오늘 업무 -->
+			<div  class="card todayDiv">
+				<div class="social-graph-wrapper1">
+               		<span class="s-icon"><i class="fa fa-tasks"></i> &nbsp;일간 업무</span>
+                </div>
+				<div id="todayTask" class="card-body">
 				</div>
 			</div>
 		</div>
 		 <div class="col-4">
-			<!-- 결재 현황 -->
-			<div class="card card-widget" style="margin-top: 20px;">
-				<div class="social-graph-wrapper widget-facebook">
-               		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;결재현황</span>
-                </div>
-				<div class="row">
-                    <div class="col-6 border-right">
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">89k</h4>
-                            <p class="m-0">결재문서</p>
-                        </div>
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">89k</h4>
-                            <p class="m-0">진행문서</p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">119k</h4>
-                            <p class="m-0">수신문서</p>
-                        </div>
-                        <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                            <h4 class="m-1">119k</h4>
-                            <p class="m-0">반려문서</p>
-                        </div>
-                    </div>
-                </div>
-			</div>
-			<!-- 날씨 -->
+		 	<!-- 날씨 -->
 			<div id="bg" class="wthree_main_grid agileinfo_main_grid">
 				<div class="w3ls_main_grid">
 					<div class="agileits_main_grid_left">
@@ -101,6 +86,34 @@
 					</ul>
 				</div>
 			</div>
+			<!-- 결재 현황 -->
+			<div class="card card-widget apprDiv" style="margin-top: 20px;">
+				<div class="social-graph-wrapper widget-facebook">
+               		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;결재현황</span>
+                </div>
+				<div class="row">
+                    <div class="col-6 border-right">
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
+                            <h4 class="m-1">89k</h4>
+                            <p class="m-0">결재문서</p>
+                        </div>
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center">
+                            <h4 class="m-1">89k</h4>
+                            <p class="m-0">진행문서</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
+                            <h4 class="m-1">119k</h4>
+                            <p class="m-0">수신문서</p>
+                        </div>
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center">
+                            <h4 class="m-1">119k</h4>
+                            <p class="m-0">반려문서</p>
+                        </div>
+                    </div>
+                </div>
+			</div>
 		</div>
     </div>
 <%--</div>--%>
@@ -111,6 +124,17 @@
 		parseWeather();
 		popupView();
 		getTodayCalendar();
+		
+		$.ajax({
+			url : "${cp}/getMainTask",
+			dataType : "json",
+			method : "post",
+			success : function(data){
+				todayTask(data);
+				weekTask(data);
+				weekCal(data);
+			}
+		});
 	}); 
 	
 	$("#owl-demo,#owl-demo1,#owl-demo3,#owl-demo4").owlCarousel({ 
@@ -125,6 +149,73 @@
 	    weekdays: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 	});
 
+	function weekCal(data){
+		var html = "";
+		data.weekCalList.forEach(function(cal){
+            html += '<div class="media border-bottom-1 pt-3 pb-3">';
+            html += 	'<i style="font-size:1.3em;" class="fa fa-calendar menu-icon"></i>'
+            html +=     '<div class="media-body">';
+            html +=         '<h5>&nbsp;&nbsp;'+cal.cal_title;
+            html +=         	'<span class="float-right" style="color:gray;">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</span>';
+            html += 		'</h5>';
+            html +=     '</div>';
+            html += '</div>';
+		})
+		$("#weekCal").html(html);
+	}
+	
+	function weekTask(data){
+		var html = "";
+		html += '<div class="taskList">';
+		
+		// 주간 업무
+		$.each(data.weekList, function(index, week) {
+			console.log(week);
+			html += '</span><h5 class="mt-3">' + week.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ week.pro_nm.pro_nm + '</span><span class="float-right">' + week.per + '%</span></h5>';
+			html += '<div class="progress" style="height: 15px">';
+			html += '   <div class="progress-bar ';
+			if(week.per === 100)
+				html += 'bg-success';
+			else if(week.end_dt < new Date() && week.per < 100)
+				html += 'bg-danger';
+			else
+				html += 'bg-info';
+			html += ' wow  progress-" style="width: ' + week.per + '%;" role="progressbar">';
+			html += '   </div>';
+			html += '</div>';
+		});
+		
+		html += '</div>';
+		$("#weekTask").html(html);
+	}
+	
+	function todayTask(data){
+		var html = "";
+		
+	    html += '<div class="taskList">';
+		
+		//지연업무
+		$.each(data.todayDelayList, function(idx, delay) {
+			html += '</span><h5 class="mt-3">' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
+			html += '<div class="progress" style="height: 15px">';
+			html += '   <div class="progress-bar bg-danger wow  progress-" style="width: ' + delay.per + '%;" role="progressbar">';
+			html += '   </div>';
+			html += '</div>';
+		});
+		
+		//일간업무
+		$.each(data.todayList, function(idx, today) {
+			html += '</span><h5 class="mt-3">' + today.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ today.pro_nm.pro_nm + '</span><span class="float-right">' + today.per + '%</span></h5>';
+			html += '<div class="progress" style="height: 15px">';
+			html += '   <div class="progress-bar bg-success wow  progress-" style="width: ' + today.per + '%;" role="progressbar">';
+			html += '   </div>';
+			html += '</div>';
+		});
+		
+		html +=	'</div>';
+		$("#todayTask").html(html);
+	}
+	
 	function parseWeather() 
 	{ 
 	      loadJSON(function(data) 
@@ -285,14 +376,15 @@
 				var html = "";
 				data.calList.forEach(function(cal){
                     html += '<div class="media border-bottom-1 pt-3 pb-3">';
-	                html += 	'<i class="fa fa-calendar menu-icon"></i>'
+	                html += 	'<i style="font-size:1.3em;" class="fa fa-calendar menu-icon"></i>'
 	                html +=     '<div class="media-body">';
-	                html +=         '<h5>'+cal.cal_title+'</h5>';
-	                html +=         '<p class="mb-0">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</p>';
+	                html +=         '<h5>&nbsp;&nbsp;'+cal.cal_title;
+	                html +=         	'<span class="float-right" style="color:gray;">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</span>';
+	                html += 		'</h5>';
 	                html +=     '</div>';
 	                html += '</div>';
 				})
-				$("#todayCal").append(html);
+				$("#todayCal").html(html);
 			}
 		});
 	}

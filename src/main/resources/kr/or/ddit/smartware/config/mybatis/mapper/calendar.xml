@@ -69,4 +69,12 @@
 		   and st_dt <![CDATA[<]]> sysdate
 		   and end_dt > sysdate
 	</select>
+	
+	<select id="getWeekCalendar" parameterType="String" resultType="calendar">
+		select *
+		  from calendar
+		 where emp_id = 'e0009'
+           and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
+           and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
+	</select>
 </mapper>

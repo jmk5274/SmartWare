@@ -42,6 +42,32 @@ public class CalendarDao implements ICalendarDao {
 	}
 
 	/**
+	* Method : getTodayCalendar
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 사원 일간 일정 내용 조회
+	*/
+	@Override
+	public List<Calendar> getTodayCalendar(String emp_id) {
+		return sqlSession.selectList("calendar.getTodayCalendar", emp_id);
+	}
+
+	/**
+	* Method : getWeekCalendar
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 사원 주간 일정 내용 조회
+	*/
+	@Override
+	public List<Calendar> getWeekCalendar(String emp_id) {
+		return sqlSession.selectList("calendar.getWeekCalendar", emp_id);
+	}
+	
+	/**
 	* Method : insertCalendar
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -91,19 +117,6 @@ public class CalendarDao implements ICalendarDao {
 	@Override
 	public int deleteCateCalendar(String category_id) {
 		return sqlSession.delete("calendar.deleteCateCalendar", category_id);
-	}
-
-	/**
-	* Method : getTodayCalendar
-	* 작성자 : JEON MIN GYU
-	* 변경이력 :
-	* @param emp_id
-	* @return
-	* Method 설명 : emp_id에 해당하는 사원의 오늘 일정 내용 조회 
-	*/
-	@Override
-	public List<Calendar> getTodayCalendar(String emp_id) {
-		return sqlSession.selectList("calendar.getTodayCalendar", emp_id);
 	}
 
 }
