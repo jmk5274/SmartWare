@@ -81,6 +81,11 @@ public class EmployeeService implements IEmployeeService{
 	public int updateEmployeeJob(Employee employee) {
 		return employeeDao.updateEmployeeJob(employee);
 	}
+	
+	@Override
+	public int updateManageEmp(Employee employee) {
+		return employeeDao.updateManageEmp(employee);
+	}	
 
 	@Override
 	public List<Map> getDepartEmpDetail(String depart_id) {
@@ -110,6 +115,7 @@ public class EmployeeService implements IEmployeeService{
 	@Override
 	public List<Map> videoEmpList(Employee employee) {
 		return employeeDao.videoEmpList(employee);
-	}	
+	}
+
 
 }

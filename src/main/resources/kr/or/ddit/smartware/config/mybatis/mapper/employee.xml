@@ -167,6 +167,15 @@
 		 where emp_id = #{emp_id}
 	</update>
 	
+	<!-- 사원관리 수정 -->
+	<update id="updateManageEmp" parameterType="employee">
+		update employee set able = #{able},
+							posi_id = #{posi_id},
+							depart_id = #{depart_id},
+							job_id = #{job_id}
+		 where emp_id = #{emp_id}			
+	</update>
+	
 	<!-- 사원 아이디 중복체크 -->
 	<select id = "idCheck" parameterType = "String" resultType = "int">
     	select count(*) from employee 
