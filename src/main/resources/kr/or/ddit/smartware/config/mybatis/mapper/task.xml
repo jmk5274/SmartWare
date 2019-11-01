@@ -113,7 +113,7 @@
 		                      and pa_task_id is not null)
 		   and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
 		   and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
-		 order by st_dt, end_dt;
+		 order by st_dt, end_dt
 	</select>
 
 	<!-- 일감 추가 -->
