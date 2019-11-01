@@ -7,15 +7,20 @@
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
 <style>
 	.weekDiv{
-		height: 400px;
+		height: 327px;
 	}
 	.todayDiv{
-		height: 400px;
+		height: 300px;
 	}
 	.apprDiv{
 		height: 250px;
 	}
+	
+	img{
+		margin-bottom : 20px;
+	}
 </style>
+	<img src="../img/mainimg/voiceware.png">
 	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
@@ -29,7 +34,7 @@
 			</div>
 			
 			<!-- 오늘 일정 -->
-			<div class="card card-widget todayDiv" style="margin-top: 20px;">
+			<div class="card card-widget todayDiv">
 				<div class="social-graph-wrapper1">
                		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;일간 일정</span>
                 </div>
@@ -87,7 +92,7 @@
 				</div>
 			</div>
 			<!-- 결재 현황 -->
-			<div class="card card-widget apprDiv" style="margin-top: 20px;">
+			<div class="card card-widget apprDiv" style="margin-top: 28px;">
 				<div class="social-graph-wrapper widget-facebook">
                		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;결재현황</span>
                 </div>
