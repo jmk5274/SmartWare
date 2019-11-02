@@ -38,7 +38,7 @@
 							title: '메일이 전송 되었습니다',
 						});
 			    	  
-			    	  setTimeout("location.href='${cp}/main'",2000);
+			    	  setTimeout("location.href='${cp}/mailbox?emailLabel=[Gmail]/보낸편지함'",1500);
 			      },
 			      error : function(xhr){
 			    	  Swal({

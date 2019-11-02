@@ -262,11 +262,11 @@ public class EmailController{
 	        logger.debug("store - {}", store);
 			  
 		
-	          IMAPFolder imapFolder = null;
-	          Folder[] folders1 = store.getDefaultFolder().list("*");
-	          for (Folder folder1 : folders1) {
-	            imapFolder = (IMAPFolder) folder1;
-	          }
+//	          IMAPFolder imapFolder = null;
+//	          Folder[] folders1 = store.getDefaultFolder().list("*");
+//	          for (Folder folder1 : folders1) {
+//	            imapFolder = (IMAPFolder) folder1;
+//	          }
 	          
 	          if(emailLabel.equals("INBOX")) {
 	        	  folder = (IMAPFolder)store.getFolder(emailLabel);
@@ -284,10 +284,10 @@ public class EmailController{
 	          if(!folder.isOpen())
 	          folder.open(Folder.READ_WRITE);
 	          
-	          boolean ff= folder.hasNewMessages();
-	          logger.debug("ff- {}", ff);
-	          int nn = folder.getNewMessageCount();
-	          logger.debug("nn - {}", nn);
+//	          boolean ff= folder.hasNewMessages();
+//	          logger.debug("ff- {}", ff);
+//	          int nn = folder.getNewMessageCount();
+//	          logger.debug("nn - {}", nn);
 	          
 	          
 	          IMAPFolder starfolder = (IMAPFolder) store.getFolder("[Gmail]/별표편지함");
@@ -610,7 +610,7 @@ public class EmailController{
 		
 	    Store store = (Store) Hsession.getAttribute("store");
 		
-		folder = (IMAPFolder) store.getFolder(emailLabel); 
+		folder = (IMAPFolder) store.getFolder(emailLabel);
 		
 		if(!folder.isOpen())
 			folder.open(Folder.READ_WRITE);
