@@ -298,9 +298,16 @@
             //     showButtons('inline-block');
             // }
             if (final_transcript || !interim_transcript) {
-                console.log("지금이니!");
-                start_img.src = 'mic.gif';
-                ignore_onend = true;
+                // start_img.src = 'mic.gif';
+                // ignore_onend = true;
+                // startButton();
+                if (final_transcript.indexOf('이동') !== -1) {
+                    if (final_transcript.indexOf('메인 페이지') !== -1 || final_transcript.indexOf('메인페이지') !== -1) {
+                        location.href = "http://localhost:8081/main";
+                    }
+                }
+                startButton(event);
+                startButton(event);
             }
         };
     }
