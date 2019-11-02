@@ -143,6 +143,19 @@ public class TaskDao implements ITaskDao {
 	}
 	
 	/**
+	* Method : getAllWeekDlayTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 주간 지연업무 조회
+	*/
+	@Override
+	public List<Task> getAllWeekDlayTask(String emp_id) {
+		return sqlSession.selectList("task.getAllWeekDlayTask", emp_id);
+	}
+	
+	/**
 	* Method : getAllWeekTask
 	* 작성자 : JEON MIN GYU
 	* 변경이력 :

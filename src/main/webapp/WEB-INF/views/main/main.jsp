@@ -173,6 +173,15 @@
 		var html = "";
 		html += '<div class="taskList">';
 		
+		//지연업무
+		$.each(data.weekDelayList, function(idx, delay) {
+			html += '</span><h5 class="mt-3">' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
+			html += '<div class="progress" style="height: 15px">';
+			html += '   <div class="progress-bar bg-danger wow  progress-" style="width: ' + delay.per + '%;" role="progressbar">';
+			html += '   </div>';
+			html += '</div>';
+		});
+		
 		// 주간 업무
 		$.each(data.weekList, function(index, week) {
 			console.log(week);

@@ -78,7 +78,7 @@
 		   and b.emp_id = c.emp_id
 	</select>
 		
-	<!-- emp_id에 해당하는 모든 프로젝트의 지연업무 조회 -->
+	<!-- emp_id에 해당하는 모든 프로젝트의 일간기준 지연업무 조회 -->
 	<select id="getAllDelayTask" parameterType="String" resultType="task">
 		select *
 		  from task
@@ -100,6 +100,18 @@
 		                     where emp_id = #{emp_id}
 		                      and pa_task_id is not null)
 		   and sysdate between st_dt and end_dt
+		 order by st_dt, end_dt
+	</select>
+
+	<select id="getAllWeekDlayTask" parameterType="String" resultType="task">
+		select *
+		  from task
+		 where task_id in (select task_id
+		                     from pro_task
+		                    where emp_id = #{emp_id}
+		                      and pa_task_id is not null)
+		   and end_dt <![CDATA[<=]]> trunc(sysdate, 'iw')
+		   and per <![CDATA[<]]> 100
 		 order by st_dt, end_dt
 	</select>
 
