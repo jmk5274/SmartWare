@@ -80,6 +80,16 @@ public interface ITaskService {
 	List<Map<String, Object>> getAllTodayTask(String emp_id);
 	
 	/**
+	* Method : getAllWeekDlayTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 주간 지연업무 조회
+	*/
+	List<Map<String, Object>> getAllWeekDlayTask(String emp_id);
+	
+	/**
 	* Method : getAllWeekTask
 	* 작성자 : JEON MIN GYU
 	* 변경이력 :

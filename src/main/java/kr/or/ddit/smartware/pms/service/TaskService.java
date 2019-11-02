@@ -153,6 +153,37 @@ public class TaskService implements ITaskService {
 	}
 
 	/**
+	* Method : getAllWeekDlayTask
+	* 작성자 : JEON MIN GYU
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : emp_id에 해당하는 모든 프로젝트의 주간 지연업무 조회
+	*/
+	@Override
+	public List<Map<String, Object>> getAllWeekDlayTask(String emp_id) {
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		
+		List<Task> taskList = taskDao.getAllWeekDlayTask(emp_id);
+		
+		for(Task task : taskList) {
+			Map<String, Object> subMap = new HashMap<String, Object>();
+			subMap.put("task_id", task.getTask_id());
+			subMap.put("task_cont", task.getTask_cont());
+			subMap.put("st_dt", task.getSt_dt());
+			subMap.put("end_dt", task.getEnd_dt());
+			subMap.put("pa_task_id", task.getPa_task_id());
+			subMap.put("per", task.getPer());
+			subMap.put("pro_id", task.getPro_id());
+			subMap.put("pro_nm", projectDao.getProject(task.getPro_id()));
+			
+			list.add(subMap);
+		}
+		
+		return list;
+	}
+	
+	/**
 	* Method : getAllWeekTask
 	* 작성자 : JEON MIN GYU
 	* 변경이력 :
