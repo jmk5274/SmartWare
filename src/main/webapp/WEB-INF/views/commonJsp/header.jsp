@@ -382,8 +382,8 @@
                                   <a href="${cp }/mypage"><i class="icon-user"></i>마이페이지</a>
                                 </li>
                                 <li>
-                                    <a href="${cp }/mailbox?emailLabel=INBOX">
-                                        <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1"><%=real %></div>
+                                    <a href="javascript:void()">
+                                        <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1">3</div>
                                     </a>
                                 </li>
                                 
