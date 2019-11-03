@@ -99,8 +99,8 @@
                             location.href = "${cp}/mypage";
                         }
                     } else if (final_transcript.indexOf('알려 줘') !== -1 ) {
-                        if (final_transcript.indexOf('오늘 일정') !== -1 || final_transcript.indexOf('오늘일정') !== -1) {
-                            if ('speechSynthesis' in window) {
+                        if ('speechSynthesis' in window) {
+                            if (final_transcript.indexOf('오늘 일정') !== -1 || final_transcript.indexOf('오늘일정') !== -1) {
                                 $.ajax({
                                     url : "${cp}/getTodayCalendar",
                                     contentType : "application/json",
@@ -120,12 +120,19 @@
                                         window.speechSynthesis.speak(msg);
                                     }
                                 });
+                            } else if (final_transcript.indexOf('오늘 날씨') !== -1 || final_transcript.indexOf('오늘날씨') !== -1) {
+                                var whether;
+                                if (condition === 'Clear') whether = '맑음';
+                                else if (condition === 'Cloud') whether = '흐림';
+                                else if (condition === 'Rainy') whether = '비';
+                                var msg = new SpeechSynthesisUtterance('오늘 기온은 ' + temp + '도 이고 날씨는 ' + whether + '입니다');
+                                window.speechSynthesis.speak(msg);
                             }
                         }
                     }
                 }
                 startButton(event);
-                // startButton(event);
+                console.log(location, temp, condition);
             }
         };
     }
@@ -145,7 +152,6 @@
     function startButton(event) {
         // if (recognizing) {
         //     recognition.stop();
-        //     return;
         // }
         final_transcript = '';
         // recognition.lang = select_dialect.value;
