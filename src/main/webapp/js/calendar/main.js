@@ -86,12 +86,17 @@ $(function() {
 
 	// 개인 일정 카테고리 불러오기
 	$.getJSON(cp + "/getEmpCategoryList").done(function(data) {
-		getDisplayCategory(data.categoryList, $("#empCategory"));
+		getDisplayCategory(data.categoryList, $("#empCategory"), "emp");
 	});
 	
 	// 부서 일정 카테고리 불러오기
 	$.getJSON(cp + "/getDepCategoryList").done(function(data) {
-		getDisplayCategory(data.categoryList, $("#depCategory"));
+		getDisplayCategory(data.categoryList, $("#depCategory"), "dep");
+	});
+	
+	// 프로젝트 일정 카테고리 불러오기
+	$.getJSON(cp + "/getProCategoryList").done(function(data) {
+		getDisplayCategory(data.categoryList, $("#proCategory"), "pro");
 	});
 	
 	// 카테고리 체크박스 클릭
@@ -132,7 +137,7 @@ $(function() {
 	
 });
 
-function getDisplayCategory(data, loc) {
+function getDisplayCategory(data, loc, type) {
 	var res = "";
 	
 	// 카테고리 리스트 출력
@@ -149,14 +154,22 @@ function getDisplayCategory(data, loc) {
 		res += "</button>";
 		res += "</div>";
 	});
+	
 	// 카테고리 추가 버튼 출력
-	res += "<hr>";
-	if(loc.attr("id") === "empCategory")
+	if(type === "emp") {
+		res += "<hr>";
 		res += "<span id='addEmpCategory'>";
-	else if(loc.attr("id") === "depCategory")
-		res += "<span id='addDepCategory'>";
-	res += "<i class='fa fa-lg fa-plus-circle' style='width: 20px;'></i>";
-	res += "<span data-toggle='modal' data-target='#categoryModal'> 새로운 카테고리</span>";
+		res += "<i class='fa fa-lg fa-plus-circle' style='width: 20px;'></i>";
+		res += "<span data-toggle='modal' data-target='#categoryModal'> 새로운 카테고리</span>";
+	} else if(type === "dep") {
+		if(emp_posi_id === "posi0001" || emp_posi_id === "posi0002" || emp_posi_id === "posi0003") {
+			res += "<hr>";
+			res += "<span id='addDepCategory'>";
+			res += "<i class='fa fa-lg fa-plus-circle' style='width: 20px;'></i>";
+			res += "<span data-toggle='modal' data-target='#categoryModal'> 새로운 카테고리</span>";
+		}
+	} 
+	
 	// 위에서 저장한 HTML태그를 document에 출력
 	loc.append(res);
 }

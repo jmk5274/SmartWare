@@ -63,6 +63,25 @@ public class CategoryController {
 	}
 	
 	/**
+	* Method : getProCalendarList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param session
+	* @return
+	* Method 설명 : 사원의 프로젝트 리스트 반환 
+	*/
+	@RequestMapping("getProCategoryList")
+	public View getProCalendarList(Model model, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+		String emp_id = employee.getEmp_id();
+		
+		model.addAttribute(categoryService.getProCategoryList(emp_id));
+		
+		return jsonView;
+	}
+	
+	/**
 	* Method : insertCategory
 	* 작성자 : JO MIN SOO
 	* 변경이력 :

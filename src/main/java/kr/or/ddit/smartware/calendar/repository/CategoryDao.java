@@ -53,6 +53,19 @@ public class CategoryDao implements ICategoryDao {
 	public List<Category> getDepCategoryList(String emp_id) {
 		return sqlSession.selectList("category.getDepCategoryList", emp_id);
 	}
+	
+	/**
+	* Method : getProCategoryList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 사원의 프로젝트 일정을 가져온다.
+	*/
+	@Override
+	public List<Category> getProCategoryList(String emp_id) {
+		return sqlSession.selectList("category.getProCategoryList", emp_id);
+	}
 
 	/**
 	* Method : insertCategory
@@ -92,5 +105,5 @@ public class CategoryDao implements ICategoryDao {
 	public int deleteCategory(String category_id) {
 		return sqlSession.delete("category.deleteCategory", category_id);
 	}
-	
+
 }

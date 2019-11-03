@@ -33,35 +33,72 @@
 	text-align: right;
 	font-size: 20px;
 }
+
+/* ganttController */
+#ganttTitle {
+	padding: 10px;
+	margin: 0px;
+	background-color: #3d3d3d;
+	color: white;
+}
+
+#ganttController {
+	border-top: 1px solid #bababa;
+	border-right: 1px solid #bababa;
+	border-left: 1px solid #bababa;
+	background-color: #f5f5f5;
+	font-size: 17px;
+}
+
+#ganttController > button {
+	padding: 8px;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+#ganttController .form-control {
+	padding: 3px 6px;
+	width: 150px;
+	height: 20px;
+	display: inline;
+}
+
 </style>
 
 <div class="card">
 	<div class="card-body">
-		<div id="ganttController" style="border: 1px solid black;">
-			<button class="btn mb-1 btn-outline-dark" onclick="gantt.collapseAll()"><i class="fa fa-angle-up"></i>접기</button>
-			<button class="btn mb-1 btn-outline-dark" onclick="gantt.expandAll()"><i class="fa fa-angle-down"></i>펼치기</button>
-			<button class="btn mb-1 btn-outline-dark" onclick='gantt.exportToPDF()' style='margin-left:20px;'>Export to PDF</button>
-			<button class="btn mb-1 btn-outline-dark" onclick='gantt.exportToPNG()' style='margin-left:20px;'>Export to PNG</button>
-			<button class="btn mb-1 btn-outline-dark" onclick='gantt.exportToExcel()' style='margin-left:20px;'>Export to Excel</button>
-
-			<button class="btn mb-1 btn-outline-dark" onclick="toggleMode(this)">Zoom to Fit</button>
-			
-			<select id="empFilter" class="form-control" style="width: 100px; display: inline;">
-				<option>전체</option>
-				<c:forEach items="${employeeList }" var="employee">
-					<option value="${employee.emp_id }">${employee.emp_nm }</option>
-				</c:forEach>
-			</select>
-			<select id="statusFilter" class="form-control" style="width: 100px; display: inline;">
-				<option>전체</option>
-				<option value="complete">완료된 업무</option>
-				<option value="running">진행중인 업무</option>
-				<option value="delay">지연된 업무</option>
-				<option value="before">시작전 업무</option>
-			</select>
-			<button class="btn mb-1 btn-outline-dark" onclick="filtering()">적용</button>
+		<h2 id="ganttTitle"><i class="fa fa-asterisk"></i> ${pro_nm }</h2>
+		<div id="ganttController">
+			<button onclick="gantt.collapseAll()"><i class="fa fa-angle-up fa-lg"></i> 접기</button>
+			<button onclick="gantt.expandAll()"><i class="fa fa-angle-down fa-lg"></i> 펼치기</button>
+			<button onclick="toggleMode(this)"><i class="fa fa-search-minus"></i> 축소</button>
+			<button type="button" data-toggle="dropdown"><i class="fa fa-download"></i> 다운로드</button>
+			<div class="dropdown-menu">
+				<button class="dropdown-item" onclick="gantt.exportToPDF()">PDF</button>
+				<button class="dropdown-item" onclick="gantt.exportToPNG()">PNG</button>
+				<button class="dropdown-item" onclick="gantt.exportToExcel()">Excel</button>
+			</div>
+		
+			<span id="ganttFilter" style="float: right">
+				<span>필터</span>
+				<select class="form-control" id="empFilter">
+					<option value="" disabled selected>담당자</option>
+					<option>전체</option>
+					<c:forEach items="${employeeList }" var="employee">
+						<option value="${employee.emp_id }">${employee.emp_nm }</option>
+					</c:forEach>
+				</select>
+				<select class="form-control" id="statusFilter">
+					<option value="" disabled selected>업무상태</option>
+					<option>전체</option>
+					<option value="complete">완료된 업무</option>
+					<option value="running">진행중인 업무</option>
+					<option value="delay">지연된 업무</option>
+					<option value="before">시작전 업무</option>
+				</select>
+			</span>
 		</div>
-		<br>
 		<div id="gantt_here" style='width:100%; height:90vh;'></div>
 	</div>
 </div>
@@ -153,24 +190,26 @@
 
 <script>
 
-// 필터링 적용
-function filtering() {
-	gantt.refreshData();
-	gantt.collapseAll();
-	gantt.expandAll();
-}
+$(function() {
+	// 필터링 적용
+	$("#empFilter, #statusFilter").on("change", function() {
+		gantt.refreshData();
+		gantt.collapseAll();
+		gantt.expandAll();
+	});
+});
 
 // zoom to fit 시작
 function toggleMode(toggle) {
 	toggle.enabled = !toggle.enabled;
 	if (toggle.enabled) {
-		toggle.innerHTML = "Set default Scale";
+		toggle.innerHTML = "<i class='fa fa-search-plus'></i> 확대";
 		//Saving previous scale state for future restore
 		saveConfig();
 		zoomToFit();
 	} else {
 
-		toggle.innerHTML = "Zoom to Fit";
+		toggle.innerHTML = "<i class='fa fa-search-minus'></i> 축소";
 		//Restore previous scale state
 		restoreConfig();
 		gantt.render();
@@ -409,7 +448,7 @@ gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
 	var empFilterValue = $("#empFilter").val();
 	var statusFilterValue = $("#statusFilter").val();
 	// 담당자 비교
-    if ( !(empFilterValue === task.emp_id || empFilterValue === "전체") ){
+    if ( !(empFilterValue === task.emp_id || empFilterValue === "전체" || empFilterValue === null) ){
         return false;
     } 
 
@@ -509,10 +548,6 @@ gantt.showLightbox = function(id) {
  	$("#taskModal").modal("show");
 };
 
-gantt.hideLightbox = function(){
-    taskId = null;
-}
-
 $(function() {
 	// insert
 	$("#insertTask").on("click", function() {
@@ -547,6 +582,7 @@ $(function() {
 		$.ajax({
 			url: cp + "/insertTask",
 			type: "post",
+			async: false,
 			data: $("#taskForm").serialize() + "&per=" + slider.old_from + "&pro_id=" + pro_id
 				  + "&start=" + start + "&end=" + end,
 			success: function(data) {
@@ -559,9 +595,9 @@ $(function() {
 				$.ajax({
 					url: cp + "/getTask",
 					type: "post",
+					async: false,
 					data: "task_id=" + data.task_id,
 					success: function(data) {
-						console.log(data.task.TASK_ID);
 						$("#task_id").val(data.task.TASK_ID);
 		 				gantt.changeTaskId(taskId, data.task.TASK_ID); // 자동생성된 id를 db에 생성한 id로 교체
 		 				gantt.getTask(data.task.TASK_ID).$new = false;
@@ -582,8 +618,9 @@ $(function() {
 		 				} else { // 진행중
 		 					gantt.getTask(data.task.TASK_ID).color = "#4d7cff"; // blue
 		 				}
-		 				
+		 				console.log(gantt.getTask(data.task.TASK_ID));
 						$("#taskModal").modal("hide");
+						taskId = null;
 					}
 				})
 			}
@@ -673,7 +710,7 @@ $(function() {
 			data: "task_id=" + taskId,
 			success: function() {
 				gantt.deleteTask(taskId);
-			    gantt.hideLightbox();
+				taskId = null;
 			    $("#taskModal").modal("hide");
 			    Swal({
 					title: '삭제되었습니다.',
@@ -686,27 +723,15 @@ $(function() {
 		
 	});
 	
+	// cancel
 	$("#cancelTask").on("click", function(event){
 	    var task = gantt.getTask(taskId);
-	    console.log(task);
 	    if(task.$new)
 	    	gantt.deleteTask(task.id);
-// 	    gantt.hideLightbox();
+	    taskId = null;
 		$("#taskModal").modal("hide");
 	});
 })
-function cancel() {
-    var task = gantt.getTask(taskId);
- 
-    if(task.$new)
-    gantt.deleteTask(task.id);
-    gantt.hideLightbox();
-}
- 
-function remove() {
-    gantt.deleteTask(taskId);
-    gantt.hideLightbox();
-}
 //
 
 gantt.config.lightbox.sections = [

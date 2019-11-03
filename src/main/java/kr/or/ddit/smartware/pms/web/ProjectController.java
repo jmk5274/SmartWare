@@ -3,7 +3,6 @@ package kr.or.ddit.smartware.pms.web;
 import java.util.Date;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
-import kr.or.ddit.smartware.employee.model.Employee;
 import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.messenger.model.Chat;
 import kr.or.ddit.smartware.messenger.service.IMessengerService;
@@ -47,7 +45,7 @@ public class ProjectController {
 	@RequestMapping("pms")
 	public String pmsView() {
 		
-		return "tiles2/pms/main";
+		return "tiles/pms/main";
 	}
 	
 	/**

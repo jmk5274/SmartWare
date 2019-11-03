@@ -27,6 +27,16 @@ public interface ICategoryService {
 	List<Category> getDepCategoryList(String emp_id);
 
 	/**
+	* Method : getProCategoryList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 사원의 프로젝트 일정을 가져온다.
+	*/
+	List<Category> getProCategoryList(String emp_id);
+	
+	/**
 	* Method : getCategory
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -66,5 +76,4 @@ public interface ICategoryService {
 	*/
 	int deleteCategory(String category_id);
 
-	
 }

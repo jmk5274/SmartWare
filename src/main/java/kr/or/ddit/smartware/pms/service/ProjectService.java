@@ -23,6 +23,19 @@ public class ProjectService implements IProjectService {
 	private ITaskDao taskDao;
 	
 	/**
+	* Method : getProject
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pro_id
+	* @return
+	* Method 설명 : 프로젝트 반환
+	*/
+	@Override
+	public Project getProject(String pro_id) {
+		return projectDao.getProject(pro_id);
+	}
+	
+	/**
 	* Method : getAllPastProject
 	* 작성자 : JO MIN SOO
 	* 변경이력 :

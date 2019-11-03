@@ -7,6 +7,7 @@ public class Category {
 	private String color;       // 색상
 	private String depart_id;	// 부서 아이디
 	private String emp_id;		// 사원 아이디
+	private String pro_id;		// 프로젝트 아이디
 	
 	public Category() {	}
 
@@ -47,6 +48,12 @@ public class Category {
 	}
 	public void setEmp_id(String emp_id) {
 		this.emp_id = emp_id;
+	}
+	public String getPro_id() {
+		return pro_id;
+	}
+	public void setPro_id(String pro_id) {
+		this.pro_id = pro_id;
 	}
 
 	@Override

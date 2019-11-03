@@ -13,49 +13,11 @@
 
 <!-- body 시작 -->
 <div class="row">
-	<!-- filter -->
-	<div class="col-3">
-	    <div class="card">
-            <div class="card-body">
-                <div class="text-center">
-                    <img alt="" class="rounded-circle mt-4" src="${cp }/bootstrap/images/users/5.jpg">
-                    <h4 class="card-widget__title text-dark mt-3">${S_EMPLOYEE.emp_nm }</h4>
-                    <p class="text-muted">${S_EMPLOYEE.depart_id }</p>
-                    <a class="btn gradient-4 btn-lg border-0 btn-rounded px-5" href="javascript:void()">Folllow</a>
-                </div>
-            </div>
-            <div class="card-footer border-0 bg-transparent">
-                <div class="row">
-                    <div class="col-4 border-right-1 pt-3">
-                        <a class="text-center d-block text-muted" href="javascript:void()">
-                            <i class="fa fa-star gradient-1-text" aria-hidden="true"></i><br>
-                            Star
-                        </a>
-                    </div>
-                    <div class="col-4 border-right-1 pt-3"><a class="text-center d-block text-muted" href="javascript:void()">
-                        <i class="fa fa-heart gradient-3-text"></i><br>
-                            Like
-                        </a>
-                    </div>
-                    <div class="col-4 pt-3"><a class="text-center d-block text-muted" href="javascript:void()">
-                        <i class="fa fa-envelope gradient-4-text"></i><br>
-                            Email
-                        </a>
-                    </div>
-                </div>
-            </div>
-   		</div>
-		<div class="card">
-			<div class="card-body">
-				<button type="button" id="btnInsertProject" class="btn mb-1 btn-outline-dark btn-lg">
-					<i class="fa fa-plus" aria-hidden="true"></i> 신규 프로젝트 생성
-				</button>
-				
-			</div>
-		</div>
-	</div>
 	<!-- project list -->
-	<div class="col-9">
+	<button type="button" id="btnInsertProject" class="btn mb-1 btn-outline-dark btn-lg">
+		<i class="fa fa-plus" aria-hidden="true"></i> 신규 프로젝트 생성
+	</button>
+	<div class="col-12">
 		<div class="card">
 			<div id="runningProject" class="card-body">
 				<h2><i class="fa fa-file-text"></i> 진행중인 프로젝트</h2>

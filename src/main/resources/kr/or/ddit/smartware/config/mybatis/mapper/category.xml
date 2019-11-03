@@ -19,6 +19,15 @@
 		 order by category_id
 	</select>
 	
+	<!-- 사원의 프로젝트 리스트 반환 -->
+	<select id="getProCategoryList" parameterType="String" resultType="category">
+		select *
+		  from category
+		 where pro_id in (select pro_id
+		 					from pro_position
+		 				   where emp_id = #{emp_id})
+	</select>
+	
 	<!-- 사원의 부서일정 리스트 반환 -->
 	<select id="getDepCategoryList" parameterType="String" resultType="category">
 		select *

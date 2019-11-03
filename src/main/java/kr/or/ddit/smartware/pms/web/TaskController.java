@@ -6,19 +6,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.View;
 
-import kr.or.ddit.smartware.employee.model.Employee;
-import kr.or.ddit.smartware.pms.model.ProTask;
 import kr.or.ddit.smartware.pms.model.Task;
-import kr.or.ddit.smartware.pms.repository.TaskDao;
 import kr.or.ddit.smartware.pms.service.IProjectService;
 import kr.or.ddit.smartware.pms.service.ITaskService;
 
@@ -43,9 +37,8 @@ public class TaskController {
 	*/
 	@PostMapping("pro")
 	public String proView(Model model, String pro_id, HttpSession session) {
-		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
-		
 		model.addAttribute("pro_id", pro_id);
+		model.addAttribute("pro_nm", projectService.getProject(pro_id).getPro_nm());
 		model.addAttribute("employeeList", projectService.getProjectEmployee(pro_id));
 		
 		return "tiles2/pms/project";

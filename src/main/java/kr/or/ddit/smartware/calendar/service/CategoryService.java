@@ -46,6 +46,19 @@ public class CategoryService implements ICategoryService {
 	}
 	
 	/**
+	* Method : getProCategoryList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param emp_id
+	* @return
+	* Method 설명 : 사원의 프로젝트 일정을 가져온다.
+	*/
+	@Override
+	public List<Category> getProCategoryList(String emp_id) {
+		return categoryDao.getProCategoryList(emp_id);
+	}
+	
+	/**
 	* Method : getCategory
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -98,5 +111,5 @@ public class CategoryService implements ICategoryService {
 		calendarDao.deleteCateCalendar(category_id);
 		return categoryDao.deleteCategory(category_id);
 	}
-	
+
 }
