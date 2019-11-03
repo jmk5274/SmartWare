@@ -36,9 +36,11 @@
                     <li><a href="${cp }/approval/send/applList">결재문서(송신)함</a></li>
                     <li><a href="${cp }/approval/send/applCompleList">결재문서(송신) 완료함</a></li>
                     <li><a href="${cp }/approval/send/applReferList">결재문서(송신) 반려함</a></li>
-                    <li><a href="${cp }/approval/confirm/applList">결재문서(수신)함</a></li>
-                    <li><a href="${cp }/approval/confirm/applCompleList">결재문서(수신) 완료함</a></li>
-                    <li><a href="${cp }/approval/confirm/referCompleList">결재문서(수신) 반려함</a></li>
+                    <c:if test="${S_EMPLOYEE.job_id != null && S_EMPLOYEE.job_id != 'job0004'}">
+                        <li><a href="${cp }/approval/confirm/applList">결재문서(수신)함</a></li>
+                        <li><a href="${cp }/approval/confirm/applCompleList">결재문서(수신) 완료함</a></li>
+                        <li><a href="${cp }/approval/confirm/referCompleList">결재문서(수신) 반려함</a></li>
+                    </c:if>
                 </ul>
             </li>
             <li>

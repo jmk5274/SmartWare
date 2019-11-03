@@ -63,6 +63,7 @@
                 // start_img.src = 'mic.gif';
                 // ignore_onend = true;
                 // startButton();
+                var job_id = '${S_EMPLOYEE.job_id}';
                 if (final_transcript.indexOf('보이스') !== -1) {
                     if (final_transcript.indexOf('이동') !== -1 || final_transcript.indexOf('보여 줘') !== -1 || final_transcript.indexOf('가 줘') !== -1) {
                         if (final_transcript.indexOf('메인') !== -1) {
@@ -77,13 +78,15 @@
                                 location.href = "${cp}/approval/send/applCompleList";
                             } else if (final_transcript.indexOf('송신 반려') !== -1 || final_transcript.indexOf('송신반려') !== -1) {
                                 location.href = "${cp}/approval/send/applReferList";
-                            } else if (final_transcript.indexOf('수신함') !== -1 || final_transcript.indexOf('수신 함') !== -1) {
-                                location.href = "${cp}/approval/confirm/applList";
-                            } else if (final_transcript.indexOf('수신완료') !== -1 || final_transcript.indexOf('수신 완료') !== -1 ||
-                                        final_transcript.indexOf('수신 완료 함') !== -1 || final_transcript.indexOf('수신 완료함') !== -1) {
-                                location.href = "${cp}/approval/confirm/applCompleList";
-                            } else if (final_transcript.indexOf('수신 반려') !== -1 || final_transcript.indexOf('수신 반려 함') !== -1 || final_transcript.indexOf('수신 반려함') !== -1) {
-                                location.href = "${cp}/approval/confirm/referCompleList";
+                            } else if (job_id != null && job_id !== 'job0004') {
+                                if (final_transcript.indexOf('수신함') !== -1 || final_transcript.indexOf('수신 함') !== -1) {
+                                    location.href = "${cp}/approval/confirm/applList";
+                                } else if (final_transcript.indexOf('수신완료') !== -1 || final_transcript.indexOf('수신 완료') !== -1 ||
+                                    final_transcript.indexOf('수신 완료 함') !== -1 || final_transcript.indexOf('수신 완료함') !== -1) {
+                                    location.href = "${cp}/approval/confirm/applCompleList";
+                                } else if (final_transcript.indexOf('수신 반려') !== -1 || final_transcript.indexOf('수신 반려 함') !== -1 || final_transcript.indexOf('수신 반려함') !== -1) {
+                                    location.href = "${cp}/approval/confirm/referCompleList";
+                                }
                             }
                         } else if(final_transcript.indexOf('공지사항') !== -1 || final_transcript.indexOf('공지 사항') !== -1) {
                             location.href = "${cp}/post?board_id=board0001&board_nm=공지사항";

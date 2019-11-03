@@ -149,7 +149,7 @@
                                 </button>
                                 <button id = "returnBtn" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20"
                                         type="button">
-                                    <i class="ti-close m-r-5 f-s-12"></i> 기각
+                                    <i class="ti-close m-r-5 f-s-12"></i> 반려
                                 </button>
                             </div>
                         </c:if>
