@@ -293,7 +293,7 @@
 	          
 			  if(bgIcon=="01d" || bgIcon=="01n" || bgIcon=="02d" || bgIcon=="02n"){
 			  	  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid');
-			  }else if(bgIcon=="03d" || bgIcon=="03n" || bgIcon=="04d" || bgIcon=="04n"){
+			  }else if(bgIcon=="03d" || bgIcon=="03n" || bgIcon=="04d" || bgIcon=="04n" || bgIcon=="50d" || bgIcon=="50n"){
 				  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid1');
 			  }else if(bgIcon=="09d" || bgIcon=="09n" || bgIcon=="10d" || bgIcon=="10n"){
 				  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid2');
@@ -342,7 +342,7 @@
 			i = "wi-thunderstorm";
 		}else if(icon=="13d" || icon=="13n"){
 			i = "wi-snow";
-		}else if(icon=="50d"){
+		}else if(icon=="50d" || icon=="50n"){
 			i = "wi-fog";
 		}
 		return i;
