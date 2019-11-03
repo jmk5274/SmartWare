@@ -3,6 +3,7 @@ package kr.or.ddit.smartware.main.web;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.smartware.approval.service.IApprovalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ public class MainController {
 		model.addAttribute("weekDelayList", taskService.getAllWeekDlayTask(employee.getEmp_id()));
 		model.addAttribute("weekList", taskService.getAllWeekTask(employee.getEmp_id()));
 		model.addAttribute("weekCalList", calendarService.getWeekCalendar(employee.getEmp_id()));
-		
+
 		return jsonView;
 	}
 	

@@ -217,6 +217,9 @@
     //     }
     //     select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
     // }
+    document.addEventListener('DOMContentLoaded', function (evt) {
+        startButton(event);
+    }, false);
 
     var create_email = false;
     var final_transcript = '';
@@ -239,7 +242,7 @@
 
         recognition.onerror = function(event) {
             if (event.error == 'no-speech') {
-                start_img.src = 'mic.gif';
+                start_img.src = 'mic.gif';4296
                 // showInfo('info_no_speech');
                 ignore_onend = true;
             }
@@ -301,9 +304,18 @@
                 // start_img.src = 'mic.gif';
                 // ignore_onend = true;
                 // startButton();
-                if (final_transcript.indexOf('이동') !== -1) {
-                    if (final_transcript.indexOf('메인 페이지') !== -1 || final_transcript.indexOf('메인페이지') !== -1) {
-                        location.href = "http://localhost:8081/main";
+                if (final_transcript.indexOf('보이스웨어') !== -1) {
+                    if (final_transcript.indexOf('이동') !== -1 || final_transcript.indexOf('보여 줘') !== -1) {
+                        if (final_transcript.indexOf('메인 페이지') !== -1 || final_transcript.indexOf('메인페이지') !== -1) {
+                            location.href = "http://localhost:8081/main";
+                        } else if (final_transcript.indexOf('전자결재 페이지') !== -1 || final_transcript.indexOf('전자결재페이지') !== -1
+                                    || final_transcript.indexOf('전자 결재 페이지') !== -1 || final_transcript.indexOf('전자 결제 페이지') !== -1) {
+                            location.href = "http://localhost:8081/approval/approvalPage";
+                        } else if(final_transcript.indexOf('캘린더') !== -1) {
+                            location.href = "http://localhost:8081/calendar";
+                        } else if (final_transcript.indexOf('프로젝트') !== -1) {
+                            location.href = "http://localhost:8081/pms";
+                        }
                     }
                 }
                 startButton(event);
@@ -362,15 +374,16 @@
     // }
 
     function startButton(event) {
-        if (recognizing) {
-            recognition.stop();
-            return;
-        }
+        // if (recognizing) {
+        //     recognition.stop();
+        //     return;
+        // }
         final_transcript = '';
         // recognition.lang = select_dialect.value;
         recognition.lang = ['ko-KR'];
         recognition.start();
         ignore_onend = false;
+        // recognition.continuous = true;
         final_span.innerHTML = '';
         interim_span.innerHTML = '';
         start_img.src = 'mic-slash.gif';

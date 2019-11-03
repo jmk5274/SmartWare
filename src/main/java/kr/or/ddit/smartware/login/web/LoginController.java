@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.smartware.approval.service.IApprovalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,9 @@ public class LoginController {
 	
 	@Resource(name = "boardService")
 	private IBoardService boardService;
+
+	@Resource(name = "approvalService")
+	private IApprovalService approvalService;
 	
 	/**
 	 * 
@@ -193,7 +197,14 @@ public class LoginController {
 	* Method 설명 : 메인창
 	 */
 	@RequestMapping(path = "main")
-	private String mainView() {
+	private String mainView(Model model, HttpSession session) {
+		Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+
+		model.addAttribute("sendApplCnt", approvalService.sendApplListCnt(employee.getEmp_id()));
+		model.addAttribute("sendApplCompleCnt", approvalService.sendApplCompleListCnt(employee.getEmp_id()));
+		model.addAttribute("confirmApplCnt", approvalService.confirmApplListCnt(employee.getEmp_id()));
+		model.addAttribute("sendApplReferCnt", approvalService.sendApplReferListCnt(employee.getEmp_id()));
+
 		return "tiles/main/main";
 	}
 	

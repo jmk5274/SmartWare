@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="${cp }/css/weather/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="${cp }/css/weather/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
 <link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+
 <style>
 	.weekDiv{
 		height: 327px;
@@ -99,21 +100,21 @@
 				<div class="row">
                     <div class="col-6 border-right">
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1">89k</h4>
+                            <h4 class="m-1"><c:if test="${sendApplCnt == null}">0</c:if>${sendApplCnt}</h4>
                             <p class="m-0">결재문서</p>
                         </div>
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1">89k</h4>
-                            <p class="m-0">진행문서</p>
+                            <h4 class="m-1"><c:if test="${sendApplCompleCnt == null}">0</c:if>${sendApplCompleCnt}</h4>
+                            <p class="m-0">완료문서</p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1">119k</h4>
+                            <h4 class="m-1"><c:if test="${confirmApplCnt == null}">0</c:if>${confirmApplCnt}</h4>
                             <p class="m-0">수신문서</p>
                         </div>
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1">119k</h4>
+                            <h4 class="m-1"><c:if test="${sendApplReferCnt == null}">0</c:if>${sendApplReferCnt}</h4>
                             <p class="m-0">반려문서</p>
                         </div>
                     </div>
