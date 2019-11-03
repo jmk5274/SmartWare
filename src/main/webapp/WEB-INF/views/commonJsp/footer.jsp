@@ -72,9 +72,18 @@
                                 location.href = "${cp}/approval/approvalPage";
                             } else if (final_transcript.indexOf('송신 함') !== -1 || final_transcript.indexOf('송신함') !== -1 || final_transcript.indexOf('보낸') !== -1) {
                                 location.href = "${cp}/approval/send/applList";
-                            } else if (final_transcript.indexOf('송신 반려') !== -1 || final_transcript.indexOf('송신반려') !== -1
-                                    || final_transcript.indexOf('반려') !== -1) {
+                            } else if (final_transcript.indexOf('송신완료') !== -1 || final_transcript.indexOf('송신 완료') !== -1 ||
+                                        final_transcript.indexOf('송신 완료함') !== -1 || final_transcript.indexOf('송신 완료 함') !== -1) {
+                                location.href = "${cp}/approval/send/applCompleList";
+                            } else if (final_transcript.indexOf('송신 반려') !== -1 || final_transcript.indexOf('송신반려') !== -1) {
                                 location.href = "${cp}/approval/send/applReferList";
+                            } else if (final_transcript.indexOf('수신함') !== -1 || final_transcript.indexOf('수신 함') !== -1) {
+                                location.href = "${cp}/approval/confirm/applList";
+                            } else if (final_transcript.indexOf('수신완료') !== -1 || final_transcript.indexOf('수신 완료') !== -1 ||
+                                        final_transcript.indexOf('수신 완료 함') !== -1 || final_transcript.indexOf('수신 완료함') !== -1) {
+                                location.href = "${cp}/approval/confirm/applCompleList";
+                            } else if (final_transcript.indexOf('수신 반려') !== -1 || final_transcript.indexOf('수신 반려 함') !== -1 || final_transcript.indexOf('수신 반려함') !== -1) {
+                                location.href = "${cp}/approval/confirm/referCompleList";
                             }
                         } else if(final_transcript.indexOf('공지사항') !== -1 || final_transcript.indexOf('공지 사항') !== -1) {
                             location.href = "${cp}/post?board_id=board0001&board_nm=공지사항";
@@ -120,7 +129,6 @@
             }
         };
     }
-
 
     var two_line = /\n\n/g;
     var one_line = /\n/g;
