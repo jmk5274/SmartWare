@@ -80,8 +80,8 @@
 
         $('#reSend').on('click', function () {
             Swal({
-                title: '결재 반려',
-                text: "반려하시겠습니까?",
+                title: '결재 재송신',
+                text: "재송신하시겠습니까?",
                 type: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
