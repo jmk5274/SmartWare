@@ -272,13 +272,13 @@
 <!--**********************************
     Nav header start
 ***********************************-->
-<div class="nav-header">
-    <div class="brand-logo">
+<div class="nav-header style="background: #224D77;">
+    <div class="brand-logo" style="background: #224D77;">
         <a href="${cp }/main">
-            <b class="logo-abbr"><img src="bootstrap/images/logo.png" alt=""> </b>
-            <span class="logo-compact"><img src="${cp }/bootstrap/images/logo-compact.png" alt=""></span>
+            <b class="logo-abbr"><img src="${cp }/bootstrap/images/log.png" alt=""> </b>
+            <span class="logo-compact"><img src="${cp }/bootstrap/images/logo3.png" alt=""></span>
             <span class="brand-title">
-                <img src="bootstrap/images/logo-text.png" alt="">
+                <img src="${cp }/bootstrap/images/logo3.png" alt="">
             </span>
         </a>
     </div>
