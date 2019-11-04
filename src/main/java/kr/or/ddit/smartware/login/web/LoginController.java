@@ -179,7 +179,7 @@ public class LoginController {
 //			if (store != null) { store.close(); }
 //		}
 //		
-//		session.invalidate();	// 세션에 저장된 모든 속성을 제거
+		session.invalidate();	// 세션에 저장된 모든 속성을 제거
 //		
 //		GmailConnector.getStore();
 		//요기

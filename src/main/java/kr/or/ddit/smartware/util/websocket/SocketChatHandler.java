@@ -78,9 +78,10 @@ public class SocketChatHandler extends TextWebSocketHandler {
 			String[] employees = str[1].split(", ");
 			for(int i=0; i<employees.length; i++) {
 				if(chatMap.get(employees[i].trim())!=null) {
+					logger.debug("name : {}", employee.getEmp_id());
 					if (employees[i].trim().equals(employee.getEmp_id())) continue;
 					WebSocketSession webSession = chatMap.get(employees[i].trim());
-					
+					if (!webSession.isOpen()) continue;
 					if(i==0) {
 						webSession.sendMessage(new TextMessage(type + "^기안한 결재문서가 반려되었습니다."));
 					}else {
