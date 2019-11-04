@@ -21,6 +21,7 @@
 
 <%
 // 	Integer cnt = (Integer) session.getAttribute("cnt");
+
 // 	Store store = (Store)session.getAttribute("store");
 	
 // 	int real = 0;
@@ -36,7 +37,6 @@
 %>
 <script src="${cp }/js/moment.js"></script>
 <script>
-	var audio = new Audio('${cp}/audio/카톡.mp3');
 
 	function getVideoEmpList(){
 		$.ajax({
@@ -176,7 +176,9 @@
 		
 		if(str[0]===("msg")){
 			getChatList();
+			var audio = new Audio('${cp}/audio/Telepathy.ogg');
 			audio.play();
+			
 			const toast = Swal.mixin({
 				  toast: true,
 				  position: 'top-end',
@@ -189,6 +191,8 @@
 			  title: '메시지가 왔습니다.'
 			})
 		}else if(str[0]===("mail")){
+			var audio = new Audio('${cp}/audio/Ding-Dong.ogg');
+			audio.play();
 			const toast = Swal.mixin({
 				  toast: true,
 				  position: 'top-end',
@@ -213,11 +217,13 @@
 			})
 		}else if(str[0]===("project")){
 			getChatList();
+			var audio = new Audio('${cp}/audio/Prism.ogg');
+			audio.play();
 			const toast = Swal.mixin({
 				  toast: true,
 				  position: 'top-end',
 				  showConfirmButton: false,
-				  timer: 1500
+				  timer: 2500
 				});
 
 			toast({
@@ -226,6 +232,8 @@
 			})
 		}else if(str[0]===("appr")){
 			getChatList();
+			var audio = new Audio('${cp}/audio/Ding-Dong.ogg');
+			audio.play();
 			const toast = Swal.mixin({
 				  toast: true,
 				  position: 'top-end',
@@ -239,6 +247,8 @@
 			})
 		}else if(str[0]===("refer")){
 			getChatList();
+			var audio = new Audio('${cp}/audio/Ding-Dong.ogg');
+			audio.play();
 			const toast = Swal.mixin({
 				  toast: true,
 				  position: 'top-end',
