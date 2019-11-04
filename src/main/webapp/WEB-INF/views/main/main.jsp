@@ -23,7 +23,7 @@
 		margin-bottom : 20px;
 	}
 </style>
-	<img src="../img/mainimg/voiceware.png">
+	<img src="${cp }/img/mainimg/voiceware.png">
 	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
