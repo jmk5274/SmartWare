@@ -8,10 +8,10 @@
 
 <style>
 	.weekDiv{
- 		height: 500px; 
+ 		height: 380px; 
 	}
 	.todayDiv{
- 		height: 300px;
+ 		height: 350px;
 	}
 	.apprDiv{
 		height: 250px;
@@ -20,50 +20,95 @@
 	img{
 		margin-bottom : 20px;
 	}
+	
+	.card .card-body {
+    	padding: 1.25rem;
+	}
+	
+	.progress{
+		margin-top: 0.3rem;
+		margin-bottom: 0.7rem;
+	}
 </style>
 	<img src="${cp }/img/mainimg/smartware.png">
 	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
-			
 			<div class="card weekDiv">
-				<div class="social-graph-wrapper1">
+				<div class="social-graph-wrapper widget-facebook">
                		<span class="s-icon"><i class="fa fa-clock-o"></i> &nbsp;주간 일정</span>
                 </div>
-				<div id="weekCal" class="card-body" style="overflow:auto;">
+				<div class="card-body" style="overflow:auto;">
+					<div id="weekCal">
+					</div>
 				</div>
 			</div>
 			
 			<!-- 오늘 일정 -->
 			<div class="card card-widget todayDiv">
-				<div class="social-graph-wrapper1">
+				<div class="social-graph-wrapper widget-facebook">
                		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;일간 일정</span>
                 </div>
-				<div id="todayCal" class="card-body" style="overflow:auto;">
-                    
-                </div>
+				<div class="card-body" style="overflow:auto;">
+					<div id="todayCal">
+	                    
+	                </div>
+				</div>
 			</div>
         </div>
 		<div class="col-4">
 			<div class="card weekDiv">
-				<div class="social-graph-wrapper1">
+				<div class="social-graph-wrapper widget-facebook">
                		<span class="s-icon"><i class="fa fa-tasks"></i> &nbsp;주간 업무</span>
                 </div>
-				<div id="weekTask" class="card-body" style="overflow:auto;">
+				<div class="card-body" style="overflow:auto;">
+					<div id="weekTask">
+					</div>
 				</div>
 			</div>
 
 			<!-- 오늘 업무 -->
 			<div  class="card todayDiv">
-				<div class="social-graph-wrapper1">
+				<div class="social-graph-wrapper widget-facebook">
                		<span class="s-icon"><i class="fa fa-tasks"></i> &nbsp;일간 업무</span>
                 </div>
-				<div id="todayTask" class="card-body" style="overflow:auto;">
+				<div class="card-body" style="overflow:auto;">
+					<div id="todayTask">
+					</div>
 				</div>
 			</div>
 		</div>
 		 <div class="col-4">
-		 	<!-- 날씨 -->
+			<!-- 결재 현황 -->
+			<div class="card card-widget apprDiv">
+				<div class="social-graph-wrapper widget-facebook">
+               		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;결재현황</span>
+                </div>
+				<div class="row">
+                    <div class="col-6 border-right">
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
+                            <h4 class="m-1"><c:if test="${sendApplCnt == null}">0</c:if>${sendApplCnt}</h4>
+                            <p class="m-0">결재문서</p>
+                        </div>
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center">
+                            <h4 class="m-1"><c:if test="${sendApplCompleCnt == null}">0</c:if>${sendApplCompleCnt}</h4>
+                            <p class="m-0">완료문서</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
+                            <h4 class="m-1"><c:if test="${confirmApplCnt == null}">0</c:if>${confirmApplCnt}</h4>
+                            <p class="m-0">수신문서</p>
+                        </div>
+                        <div class="pt-4 pb-4 pl-0 pr-0 text-center">
+                            <h4 class="m-1"><c:if test="${sendApplReferCnt == null}">0</c:if>${sendApplReferCnt}</h4>
+                            <p class="m-0">반려문서</p>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			
+			<!-- 날씨 -->
 			<div id="bg" class="wthree_main_grid agileinfo_main_grid">
 				<div class="w3ls_main_grid">
 					<div class="agileits_main_grid_left">
@@ -92,37 +137,8 @@
 					</ul>
 				</div>
 			</div>
-			<!-- 결재 현황 -->
-			<div class="card card-widget apprDiv" style="margin-top: 28px;">
-				<div class="social-graph-wrapper widget-facebook">
-               		<span class="s-icon"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;결재현황</span>
-                </div>
-				<div class="row">
-                    <div class="col-6 border-right">
-                        <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1"><c:if test="${sendApplCnt == null}">0</c:if>${sendApplCnt}</h4>
-                            <p class="m-0">결재문서</p>
-                        </div>
-                        <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1"><c:if test="${sendApplCompleCnt == null}">0</c:if>${sendApplCompleCnt}</h4>
-                            <p class="m-0">완료문서</p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1"><c:if test="${confirmApplCnt == null}">0</c:if>${confirmApplCnt}</h4>
-                            <p class="m-0">수신문서</p>
-                        </div>
-                        <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1"><c:if test="${sendApplReferCnt == null}">0</c:if>${sendApplReferCnt}</h4>
-                            <p class="m-0">반려문서</p>
-                        </div>
-                    </div>
-                </div>
-			</div>
 		</div>
     </div>
-<%--</div>--%>
 <script src="${cp }/js/weather/owl.carousel.js"></script>
 <script src="${cp }/js/moment.js"></script>
 <script>
@@ -139,8 +155,12 @@
 				weekTask(data);
 				weekCal(data);
 				var html = "";
-				data.calList.forEach(function(cal){
-                    html += '<div class="media border-bottom-1 pt-3 pb-3">';
+				data.calList.forEach(function(cal, idx){
+					if(idx!=0){
+		            	html += '<div class="media border-top-1 pt-3 pb-3">';
+					}else{
+						html += '<div class="media pt-1 pb-3">';
+					}
 	                html += 	'<i style="font-size:1.3em;" class="fa fa-calendar menu-icon"></i>'
 	                html +=     '<div class="media-body">';
 	                html +=         '<h5>&nbsp;&nbsp;'+cal.cal_title;
@@ -166,10 +186,15 @@
 	    weekdays: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 	});
 
+	//주간 일정
 	function weekCal(data){
 		var html = "";
-		data.weekCalList.forEach(function(cal){
-            html += '<div class="media border-bottom-1 pt-3 pb-3">';
+		data.weekCalList.forEach(function(cal, idx){
+			if(idx!=0){
+            	html += '<div class="media border-top-1 pt-3 pb-3">';
+			}else{
+				html += '<div class="media pt-1 pb-3">';
+			}
             html += 	'<i style="font-size:1.3em;" class="fa fa-calendar menu-icon"></i>'
             html +=     '<div class="media-body">';
             html +=         '<h5>&nbsp;&nbsp;'+cal.cal_title;
@@ -187,7 +212,7 @@
 		
 		//지연업무
 		$.each(data.weekDelayList, function(idx, delay) {
-			html += '</span><h5 class="mt-3">' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
+			html += '<h5>' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
 			html += '   <div class="progress-bar bg-danger wow  progress-" style="width: ' + delay.per + '%;" role="progressbar">';
 			html += '   </div>';
@@ -196,7 +221,7 @@
 		
 		// 주간 업무
 		$.each(data.weekList, function(index, week) {
-			html += '</span><h5 class="mt-3">' + week.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ week.pro_nm.pro_nm + '</span><span class="float-right">' + week.per + '%</span></h5>';
+			html += '<h5>' + week.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ week.pro_nm.pro_nm + '</span><span class="float-right">' + week.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
 			html += '   <div class="progress-bar ';
 			if(week.per === 100)
@@ -221,7 +246,7 @@
 		
 		//지연업무
 		$.each(data.todayDelayList, function(idx, delay) {
-			html += '</span><h5 class="mt-3">' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
+			html += '<h5>' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
 			html += '   <div class="progress-bar bg-danger wow  progress-" style="width: ' + delay.per + '%;" role="progressbar">';
 			html += '   </div>';
@@ -230,7 +255,7 @@
 		
 		//일간업무
 		$.each(data.todayList, function(idx, today) {
-			html += '</span><h5 class="mt-3">' + today.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ today.pro_nm.pro_nm + '</span><span class="float-right">' + today.per + '%</span></h5>';
+			html += '<h5>' + today.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ today.pro_nm.pro_nm + '</span><span class="float-right">' + today.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
 			html += '   <div class="progress-bar ';
 			if(today.per === 100)
@@ -394,29 +419,6 @@
 						window.open('${cp }/popupView?pop_id='+popup.pop_id, '팝업창', 'width=500px, height=650px, left='+ popupX + ', top='+ popupY);
 					}
 				});
-			}
-		});
-	}
-	
-	function getTodayCalendar(){
-		$.ajax({
-			url : "${cp}/getTodayCalendar",
-			contentType : "application/json",
-			dataType : "json",
-			method : "post",
-			success : function(data){
-				var html = "";
-				data.calList.forEach(function(cal){
-                    html += '<div class="media border-bottom-1 pt-3 pb-3">';
-	                html += 	'<i style="font-size:1.3em;" class="fa fa-calendar menu-icon"></i>'
-	                html +=     '<div class="media-body">';
-	                html +=         '<h5>&nbsp;&nbsp;'+cal.cal_title;
-	                html +=         	'<span class="float-right" style="color:gray;">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</span>';
-	                html += 		'</h5>';
-	                html +=     '</div>';
-	                html += '</div>';
-				})
-				$("#todayCal").html(html);
 			}
 		});
 	}

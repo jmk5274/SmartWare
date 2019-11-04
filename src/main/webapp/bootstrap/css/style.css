@@ -11690,9 +11690,7 @@ table.dataTable thead .sorting::after {
     font-size: 1.5rem;
     position: relative;
     float: left;
-    margin-left: 20px;
-    top: 0.625rem;
-    padding: 0 10px; }
+    }
 
 .tdl-holder {
   margin: 0 auto; }
