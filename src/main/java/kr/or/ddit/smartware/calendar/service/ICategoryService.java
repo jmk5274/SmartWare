@@ -47,6 +47,16 @@ public interface ICategoryService {
 	Category getCategory(String category_id);
 
 	/**
+	* Method : getProCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param string
+	* @return
+	* Method 설명 : 프로젝트의 카테고리를 가져온다.
+	*/
+	Category getProCategory(String pro_id);
+	
+	/**
 	* Method : insertCategory
 	* 작성자 : JO MIN SOO
 	* 변경이력 :

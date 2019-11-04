@@ -40,8 +40,8 @@
 	<!-- 일정 추가 -->
 	<insert id="insertCalendar" parameterType="calendar">
 		insert into calendar(cal_id, cal_title, cal_cont, st_dt, end_dt, allDay, depart_id, emp_id, category_id)
-			values('cal' || lpad(calendar_seq.nextval, 4, 0), #{cal_title}, #{cal_cont},
-					#{st_dt}, #{end_dt}, #{allDay}, #{depart_id}, #{emp_id}, #{category_id})
+			values('cal' || lpad(calendar_seq.nextval, 4, 0), #{cal_title}, #{cal_cont, jdbcType=VARCHAR},
+					#{st_dt}, #{end_dt}, #{allDay}, #{depart_id, jdbcType=VARCHAR}, #{emp_id, jdbcType=VARCHAR}, #{category_id})
 		<selectKey order="AFTER" resultType="String" keyProperty="cal_id" >
 			select 'cal' || lpad(calendar_seq.currval, 4, 0) from dual
 		</selectKey>

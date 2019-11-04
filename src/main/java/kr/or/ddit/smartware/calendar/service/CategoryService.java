@@ -70,6 +70,20 @@ public class CategoryService implements ICategoryService {
 	public Category getCategory(String category_id) {
 		return categoryDao.getCategory(category_id);
 	}
+	
+	/**
+	* Method : getProCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pro_id
+	* @return
+	* Method 설명 : 프로젝트의 카테고리를 가져온다.
+	*/
+	@Override
+	public Category getProCategory(String pro_id) {
+		return categoryDao.getProCategory(pro_id);
+	}
+
 
 	/**
 	* Method : insertCategory

@@ -6,12 +6,17 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.View;
 
+import kr.or.ddit.smartware.calendar.model.Calendar;
+import kr.or.ddit.smartware.calendar.service.ICalendarService;
+import kr.or.ddit.smartware.calendar.service.ICategoryService;
 import kr.or.ddit.smartware.pms.model.Task;
 import kr.or.ddit.smartware.pms.service.IProjectService;
 import kr.or.ddit.smartware.pms.service.ITaskService;
@@ -19,11 +24,19 @@ import kr.or.ddit.smartware.pms.service.ITaskService;
 @Controller
 public class TaskController {
 
+	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+	
 	@Resource(name="taskService")
 	private ITaskService taskService;
 	
 	@Resource(name="projectService")
 	private IProjectService projectService;
+	
+	@Resource(name="categoryService")
+	private ICategoryService categoryService;
+	
+	@Resource(name="calendarService")
+	private ICalendarService calendarService;
 	
 	@Resource(name="jsonView")
 	private View jsonView;
@@ -102,6 +115,18 @@ public class TaskController {
 		String task_id = taskService.insertTask(task, map.get("emp_id") + "");
 
 		model.addAttribute("task_id", task_id);
+		logger.debug("task: {}", task);
+		// 일정 추가
+		Calendar calendar = new Calendar();
+		calendar.setCal_title(task.getTask_cont());
+		calendar.setSt_dt(task.getSt_dt());
+		calendar.setEnd_dt(task.getEnd_dt());
+		calendar.setAllDay("T");
+		calendar.setEmp_id(map.get("emp_id") + "");
+		String category_id = categoryService.getProCategory(map.get("pro_id") + "").getCategory_id();
+		calendar.setCategory_id(category_id);
+
+		calendarService.insertCalendar(calendar);
 		
 		return jsonView;
 	}

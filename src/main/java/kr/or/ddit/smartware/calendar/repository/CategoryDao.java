@@ -16,19 +16,6 @@ public class CategoryDao implements ICategoryDao {
 	private SqlSessionTemplate sqlSession;
 	
 	/**
-	* Method : getCategory
-	* 작성자 : JO MIN SOO
-	* 변경이력 :
-	* @param category_id
-	* @return
-	* Method 설명 : 카테고리를 가져온다.
-	*/
-	@Override
-	public Category getCategory(String category_id) {
-		return sqlSession.selectOne("category.getCategory", category_id);
-	}
-
-	/**
 	* Method : getEmpCategoryList
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -65,6 +52,32 @@ public class CategoryDao implements ICategoryDao {
 	@Override
 	public List<Category> getProCategoryList(String emp_id) {
 		return sqlSession.selectList("category.getProCategoryList", emp_id);
+	}
+	
+	/**
+	* Method : getCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param category_id
+	* @return
+	* Method 설명 : 카테고리를 가져온다.
+	*/
+	@Override
+	public Category getCategory(String category_id) {
+		return sqlSession.selectOne("category.getCategory", category_id);
+	}
+	
+	/**
+	* Method : getProCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pro_id
+	* @return
+	* Method 설명 : 프로젝트의 카테고리를 가져온다.
+	*/
+	@Override
+	public Category getProCategory(String pro_id) {
+		return sqlSession.selectOne("category.getProCategory", pro_id);
 	}
 
 	/**

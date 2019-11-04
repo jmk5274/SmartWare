@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
+import kr.or.ddit.smartware.calendar.model.Category;
+import kr.or.ddit.smartware.calendar.service.ICategoryService;
 import kr.or.ddit.smartware.employee.service.IDepartmentService;
 import kr.or.ddit.smartware.messenger.model.Chat;
 import kr.or.ddit.smartware.messenger.service.IMessengerService;
@@ -27,11 +29,14 @@ public class ProjectController {
 	private ITaskService taskService;
 	
 	@Resource(name="departmentService")
-	private IDepartmentService departmentservice;
+	private IDepartmentService departmentService;
 	
 	@Resource(name="messengerService")
 	private IMessengerService messengerService; 
 	
+	@Resource(name="categoryService")
+	private ICategoryService categoryService;
+
 	@Resource(name="jsonView")
 	private View jsonView;
 	
@@ -91,9 +96,9 @@ public class ProjectController {
 	@RequestMapping("getAllDepartEmpList")
 	public View getAllDepartEmpList(Model model) {
 		// 부서 리스트
-		model.addAttribute("departmentList", departmentservice.getAllDepartment());
+		model.addAttribute("departmentList", departmentService.getAllDepartment());
 		// key: depart_id, value: List<Employee>
-		model.addAttribute("allDepartEmpList", departmentservice.getAllDepartEmpList());
+		model.addAttribute("allDepartEmpList", departmentService.getAllDepartEmpList());
 		
 		return jsonView;
 	}
@@ -117,7 +122,8 @@ public class ProjectController {
 		project.setSt_dt(new Date(start));
 		project.setEnd_dt(new Date(end));
 		
-		model.addAttribute("pro_id", projectService.insertProject(project, leader, memberArr));
+		String pro_id = projectService.insertProject(project, leader, memberArr);
+		model.addAttribute("pro_id", pro_id);
 		
 		Chat chat = new Chat();
 		chat.setChat_nm(pro_nm);
@@ -131,6 +137,13 @@ public class ProjectController {
 		messengerService.insertChat(chat, allMemberArr);
 		
 		model.addAttribute("allMemberArr", allMemberArr);
+		
+		// 카테고리 추가(일정의 카테고리)
+		Category category = new Category();
+		category.setCategory_nm(pro_nm);
+		category.setColor("#FC4BFC");
+		category.setPro_id(pro_id);
+		categoryService.insertCategory(category);
 		
 		return jsonView;
 	}

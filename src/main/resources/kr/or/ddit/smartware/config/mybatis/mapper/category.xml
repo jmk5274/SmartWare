@@ -10,6 +10,13 @@
 		 where category_id = #{category_id}
 	</select>
 	
+	<!-- 프로젝트 ID에 해당하는 카테고리 객체를 반환 -->
+	<select id="getProCategory" parameterType="String" resultType="category">
+		select *
+		  from category
+		 where pro_id = #{pro_id}
+	</select>
+	
 	<!-- 사원의 개인일정 리스트 반환 -->
 	<select id="getEmpCategoryList" parameterType="String" resultType="category">
 		select *
@@ -40,8 +47,9 @@
 	
 	<!-- 카테고리 생성 -->
 	<insert id="insertCategory" parameterType="category">
-		insert into category(category_id, category_nm, color, depart_id, emp_id)
-			values('cate' || lpad(category_seq.nextval, 4, 0), #{category_nm}, #{color}, #{depart_id}, #{emp_id})
+		insert into category(category_id, category_nm, color, depart_id, emp_id, pro_id)
+			values('cate' || lpad(category_seq.nextval, 4, 0), #{category_nm}, #{color},
+				   #{depart_id, jdbcType=VARCHAR}, #{emp_id, jdbcType=VARCHAR}, #{pro_id, jdbcType=VARCHAR})
 		<selectKey order="AFTER" resultType="String" keyProperty="category_id" >
 			select 'cate' || lpad(category_seq.currval, 4, 0) from dual
 		</selectKey>

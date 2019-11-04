@@ -47,6 +47,16 @@ public interface ICategoryDao {
 	Category getCategory(String category_id);
 
 	/**
+	* Method : getProCategory
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pro_id
+	* @return
+	* Method 설명 : 프로젝트의 카테고리를 가져온다.
+	*/
+	Category getProCategory(String pro_id);
+	
+	/**
 	* Method : insertCategory
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -75,5 +85,5 @@ public interface ICategoryDao {
 	* Method 설명 : 카테고리 삭제(일정 삭제 후 카테고리 삭제)
 	*/
 	int deleteCategory(String category_id);
-	
+
 }
