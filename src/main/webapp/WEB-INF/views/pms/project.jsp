@@ -529,7 +529,7 @@ gantt.collapseAll = function(){
 gantt.expandAll = function(){
 	gantt.eachTask(function(task){
 		task.$open = true;
-	});M
+	});
 	gantt.render();
 }
 
