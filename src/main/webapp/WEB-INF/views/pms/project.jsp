@@ -75,9 +75,9 @@
 			<button onclick="toggleMode(this)"><i class="fa fa-search-minus"></i> 축소</button>
 			<button type="button" data-toggle="dropdown"><i class="fa fa-download"></i> 다운로드</button>
 			<div class="dropdown-menu">
-				<button class="dropdown-item" onclick="gantt.exportToPDF()">PDF</button>
-				<button class="dropdown-item" onclick="gantt.exportToPNG()">PNG</button>
-				<button class="dropdown-item" onclick="gantt.exportToExcel()">Excel</button>
+				<input class="dropdown-item" onclick="gantt.exportToPDF()" type="button" value="PDF"/>
+				<input class="dropdown-item" onclick="gantt.exportToPNG()" type="button" value="PNG">
+				<input class="dropdown-item" onclick="gantt.exportToExcel()" type="button" value="Excel">
 			</div>
 		
 			<span id="ganttFilter" style="float: right">
@@ -387,7 +387,7 @@ function getAllTask(pro_id) {
 				var taskColor;
 				if(value.PER !== 100 && value.END_DT < new Date()) { // 지연
 					taskColor = "#ff5e5e"; // red
-				} else if(value.PER === 100 && value.END_DT < new Date()) { // 완료
+				} else if(value.PER === 100) { // 완료
 					taskColor = "#6fd96f"; // green
 				} else if(value.ST_DT > new Date()) { // 시작전
 					taskColor = "#b6b8ba"; // gray
@@ -611,7 +611,7 @@ $(function() {
 		 				
 		 				if(data.task.PER !== 100 && new Date(data.task.END_DT) < new Date()) { // 지연
 		 					gantt.getTask(data.task.TASK_ID).color = "#ff5e5e"; // red
-		 				} else if(data.task.PER === 100 && new Date(data.task.END_DT) < new Date()) { // 완료
+		 				} else if(data.task.PER === 100) { // 완료
 		 					gantt.getTask(data.task.TASK_ID).color = "#6fd96f"; // green
 		 				} else if(new Date(data.task.ST_DT) > new Date()) { // 시작전
 		 					gantt.getTask(data.task.TASK_ID).color = "#b6b8ba"; // gray
@@ -685,11 +685,11 @@ $(function() {
 		 				gantt.getTask(data.task.TASK_ID).emp_id = data.task.EMP_ID;
 		 				gantt.getTask(data.task.TASK_ID).emp_nm = data.task.EMP_NM;
 		 				
-		 				if(data.task.PER !== 100 && new Date(data.task.END_DT) < new Date()) { // 지연
-		 					gantt.getTask(data.task.TASK_ID).color = "#ff5e5e"; // red
-		 				} else if(data.task.PER === 100 && new Date(data.task.END_DT) < new Date()) { // 완료
+		 				if(data.task.PER === 100) { // 완료
 		 					gantt.getTask(data.task.TASK_ID).color = "#6fd96f"; // green
-		 				} else if(new Date(data.task.ST_DT) > new Date()) { // 시작전
+		 				} else if(data.task.PER !== 100 && new Date(data.task.END_DT) < new Date()) { // 지연
+			 				gantt.getTask(data.task.TASK_ID).color = "#ff5e5e"; // red
+			 			} else if(new Date(data.task.ST_DT) > new Date()) { // 시작전
 		 					gantt.getTask(data.task.TASK_ID).color = "#b6b8ba"; // gray
 		 				} else { // 진행중
 		 					gantt.getTask(data.task.TASK_ID).color = "#4d7cff"; // blue
