@@ -99,7 +99,11 @@
                     html +=         '<div class="notification-content">'
                     html +=             '<span class="notification-heading">'+chat.CHAT_NM+' / '+chat.EMP_CNT+'명</span>'	
                     html +=             '<i class="fa fa-times x" style="float : right; visibility:hidden;" data-chat_id="'+chat.CHAT_ID+'"></i>'
-                    html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+moment(new Date(chat.SEND_DT)).format('YYYY/MM/DD HH:mm')+'</div>'
+                    if(chat.MSG_CONT!=null||chat.MSG_CONT!=undefined){
+                    	html +=             '<div class="notification-timestamp">'+chat.MSG_CONT+'<br>'+moment(new Date(chat.SEND_DT)).format('YYYY/MM/DD HH:mm')+'</div>'
+                    }else{
+                    	html += 			'<div class="notification-timestamp">'+'대화방이 개설되었습니다.'+'<br></div>'
+                    }
                     html +=         '</div>'
 	                html +=         '<span id="'+msg_cnt+'" class="badge badge-pill gradient-1">'+msg_cnt+'</span>'
                     html +=     '</a>'

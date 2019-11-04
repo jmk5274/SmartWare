@@ -134,7 +134,7 @@ public class MessengerController {
 				if(extName.equals(".jpg")||extName.equals(".JPG")||extName.equals(".jpeg")||extName.equals(".JPEG")||
 						extName.equals(".png")||extName.equals(".PNG")||extName.equals(".gif")||extName.equals(".GIF")||
 						extName.equals(".bmp")||extName.equals(".BMP")) {
-					message.setMsg_cont("<img src='chatImgFile?path=C:picture/file/"+fileName+"' style='width:150px; height:150px; border-radius: 30%;'><br><br><br>"+
+					message.setMsg_cont("<img src='chatImgFile?path=C:picture/file/"+fileName+"' style='width:150px; height:150px; border-radius: 30%;'>"+
 							"<a href='chatFile?path=C:/picture/file/"+fileName+"' download><i class='fa fa-download'></i>"+fileName+"</a>");
 				}else {
 					message.setMsg_cont("<a href='chatFile?path=C:/picture/file/"+fileName+"' download><i class='fa fa-download'></i>"+fileName+"</a>");

@@ -975,12 +975,12 @@ INSERT INTO TASK_HISTORY VALUES('hist' || LPAD(TASK_HISTORY_SEQ.NEXTVAL,4,0), 't
 
 --팝업
 
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190701', 'YYYYMMDD'), to_date('20190724', 'YYYYMMDD'), 1, 1, 0, 0, 'TESTTES1', SYSDATE, 'e0015', empty_blob(), 'T');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190803', 'YYYYMMDD'), to_date('20190829', 'YYYYMMDD'), 1, 1, 0, 0, 'TESTTES1', SYSDATE, 'e0015', empty_blob(), 'T');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190917', 'YYYYMMDD'), to_date('20190927', 'YYYYMMDD'), 1, 1, 0, 0, '아아아아', SYSDATE, 'e0015', empty_blob(), 'T');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191007', 'YYYYMMDD'), to_date('20191013', 'YYYYMMDD'), 1, 1, 0, 0, '아아아앙ㅇㄴㅇ', SYSDATE, 'e0015', empty_blob(), 'T');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191014', 'YYYYMMDD'), to_date('20191017', 'YYYYMMDD'), 1, 1, 0, 0, 'Tㄴㅇㄹㄴㅇㄹ1', SYSDATE, 'e0015', empty_blob(), 'T');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191023', 'YYYYMMDD'), to_date('20191103', 'YYYYMMDD'), 1, 1, 0, 0, 'TESTTㄴㅇㄹㄴㅇㄹES1', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20181008', 'YYYYMMDD'), to_date('20181102', 'YYYYMMDD'), 710, 215, 0, 0, '시민 아이디어 공모전', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190201', 'YYYYMMDD'), to_date('20190331', 'YYYYMMDD'), 715, 220, 0, 0, 'ICT융합 프로젝트 공모전', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190516', 'YYYYMMDD'), to_date('20190618', 'YYYYMMDD'), 600, 300, 0, 0, '공공데이터 활용 아이디어 공모전', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191009', 'YYYYMMDD'), to_date('20191009', 'YYYYMMDD'), 800, 250, 0, 0, '한글날 기념 포스터', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191014', 'YYYYMMDD'), to_date('20191017', 'YYYYMMDD'), 710, 215, 0, 0, 'ㅇㅇ공모전', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191023', 'YYYYMMDD'), to_date('20191103', 'YYYYMMDD'), 710, 215, 0, 0, 'ㅇㅇ공모전', SYSDATE, 'e0015', empty_blob(), 'T');
 
 --------------------------------------------------------------------------------------------------------------------------------
 --채팅방
@@ -1004,7 +1004,7 @@ Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0004','부
 Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0004','아 있었네.. 죄송합니다','e0014',to_date('2019/11/04 18:31:08','YYYY/MM/DD HH24:MI:SS'));
 Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0004','부장님 사랑합니다','e0013',to_date('2019/11/04 18:31:25','YYYY/MM/DD HH24:MI:SS'));
 Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0005','오늘 저녁 회식 장소입니다 참고해주세요','e0013',to_date('2019/11/04 18:33:33','YYYY/MM/DD HH24:MI:SS'));
-Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0005','<img src=''chatImgFile?path=C:picture/file/회식장소.PNG'' style=''width:150px; height:150px; border-radius: 30%;''><br><br><br><a href=''chatFile?path=C:/picture/file/회식장소.PNG'' download><i class=''fa fa-download''></i>회식장소.PNG</a>','e0013',to_date('2019/11/04 18:40:38','YYYY/MM/DD HH24:MI:SS'));
+Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0005','<img src=''chatImgFile?path=C:picture/file/회식장소.PNG'' style=''width:150px; height:150px; border-radius: 30%;''><a href=''chatFile?path=C:/picture/file/회식장소.PNG'' download><i class=''fa fa-download''></i>회식장소.PNG</a>','e0013',to_date('2019/11/04 18:40:38','YYYY/MM/DD HH24:MI:SS'));
 
 ---------------------------------------------------------------------------------------------------------
 --참가자
