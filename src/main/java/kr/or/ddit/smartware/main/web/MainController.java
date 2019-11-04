@@ -45,7 +45,8 @@ public class MainController {
 		model.addAttribute("weekDelayList", taskService.getAllWeekDlayTask(employee.getEmp_id()));
 		model.addAttribute("weekList", taskService.getAllWeekTask(employee.getEmp_id()));
 		model.addAttribute("weekCalList", calendarService.getWeekCalendar(employee.getEmp_id()));
-
+		model.addAttribute("calList", calendarService.getTodayCalendar(employee.getEmp_id()));
+		
 		return jsonView;
 	}
 	

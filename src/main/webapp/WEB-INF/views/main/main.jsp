@@ -8,9 +8,11 @@
 
 <style>
 	.weekDiv{
-		height: 327px;
+/* 		height: 327px; */
+		height: 550px;
 	}
 	.todayDiv{
+/* 		height: 300px; */
 		height: 300px;
 	}
 	.apprDiv{
@@ -139,6 +141,18 @@
 				todayTask(data);
 				weekTask(data);
 				weekCal(data);
+				var html = "";
+				data.calList.forEach(function(cal){
+                    html += '<div class="media border-bottom-1 pt-3 pb-3">';
+	                html += 	'<i style="font-size:1.3em;" class="fa fa-calendar menu-icon"></i>'
+	                html +=     '<div class="media-body">';
+	                html +=         '<h5>&nbsp;&nbsp;'+cal.cal_title;
+	                html +=         	'<span class="float-right" style="color:gray;">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</span>';
+	                html += 		'</h5>';
+	                html +=     '</div>';
+	                html += '</div>';
+				})
+				$("#todayCal").html(html);
 			}
 		});
 	}); 
@@ -185,7 +199,7 @@
 		
 		// 주간 업무
 		$.each(data.weekList, function(index, week) {
-			console.log(week);
+// 			console.log(week);
 			html += '</span><h5 class="mt-3">' + week.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ week.pro_nm.pro_nm + '</span><span class="float-right">' + week.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
 			html += '   <div class="progress-bar ';
