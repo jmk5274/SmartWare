@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link href="${cp }/css/weather/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="${cp }/css/weather/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
 <link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
@@ -304,14 +304,14 @@
 	          var date = moment(new Date()).format('YYYY-MM-DD');
 	          var weekDay = moment(new Date()).format('dddd');
 	          var location = jsonData.name;
-	          temp = Math.round(jsonData.main.temp-273.15);
-	          condition = jsonData.weather[0].main
+	          var temp = Math.round(jsonData.main.temp-273.15);
+	          var condition = jsonData.weather[0].main
 	          var icon = iconView(jsonData.weather[0].icon);
 	          var bgIcon = jsonData.weather[0].icon;
 	          
 			  if(bgIcon=="01d" || bgIcon=="01n" || bgIcon=="02d" || bgIcon=="02n"){
 			  	  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid');
-			  }else if(bgIcon=="03d" || bgIcon=="03n" || bgIcon=="04d" || bgIcon=="04n" || bgIcon=="50d" || bgIcon=="50n"){
+			  }else if(bgIcon=="03d" || bgIcon=="03n" || bgIcon=="04d" || bgIcon=="04n"){
 				  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid1');
 			  }else if(bgIcon=="09d" || bgIcon=="09n" || bgIcon=="10d" || bgIcon=="10n"){
 				  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid2');
@@ -360,7 +360,7 @@
 			i = "wi-thunderstorm";
 		}else if(icon=="13d" || icon=="13n"){
 			i = "wi-snow";
-		}else if(icon=="50d" || icon=="50n"){
+		}else if(icon=="50d"){
 			i = "wi-fog";
 		}
 		return i;
