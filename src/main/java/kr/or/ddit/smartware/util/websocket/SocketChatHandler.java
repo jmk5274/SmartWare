@@ -78,6 +78,7 @@ public class SocketChatHandler extends TextWebSocketHandler {
 			String[] employees = str[1].split(", ");
 			for(int i=0; i<employees.length; i++) {
 				if(chatMap.get(employees[i].trim())!=null) {
+					if (employees[i].trim().equals(employee.getEmp_id())) continue;
 					WebSocketSession webSession = chatMap.get(employees[i].trim());
 					
 					if(i==0) {

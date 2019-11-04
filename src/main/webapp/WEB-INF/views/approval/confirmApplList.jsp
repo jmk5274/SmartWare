@@ -8,8 +8,8 @@
 <script src="${cp }/js/jquery-3.4.1.min.js"></script>
 <script>
 	$( function () {
-		var flag = ${res};
-		if (flag) {
+		var flag = '${res}';
+		if (flag === 'true') {
 			Swal({
 				title: '승인 성공',
 				text: '승인 하였습니다.',
@@ -17,6 +17,19 @@
 				confirmButtonText: '확인'
 			});
 		}
+		var refer = '${refer}';
+		if (refer === 'true') {
+            Swal({
+                title: '반려 성공',
+                text: '반려 하였습니다.',
+                type: 'success',
+                confirmButtonText: '확인'
+            });
+            setTimeout(function() {
+                console.log("refer^${appr_emp}");
+                socket.send("refer^${appr_emp}");
+            }, 500);
+        }
 
 		$('.applTr').on('click', function () {
 			$('#frm').attr('action', "${cp}/approval/" + $(this).data("appl_id")).submit();

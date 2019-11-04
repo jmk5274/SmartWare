@@ -42,6 +42,12 @@
             startButton(event);
         };
 
+        recognition.onend = function() {
+            recognizing = false;
+            if (ignore_onend) {
+                return;
+            }
+        };
 
         recognition.onresult = function(event) {
             var interim_transcript = '';
@@ -159,7 +165,9 @@
         final_transcript = '';
         // recognition.lang = select_dialect.value;
         recognition.lang = ['ko-KR'];
-        recognition.start();
+        if (!recognizing) {
+            recognition.start();
+        }
         ignore_onend = false;
         // recognition.continuous = true;
         final_span.innerHTML = '';

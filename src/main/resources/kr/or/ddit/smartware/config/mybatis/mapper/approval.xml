@@ -313,7 +313,7 @@
         from application a
         right outer join appl_appr b on a.appl_id = b.appl_id
         where a.appl_id = #{appl_id}
-        and b.ap_order > (select ap_order
+        and b.ap_order >= (select ap_order
                         from appl_appr
                         where appl_id = #{appl_id}
                         and appr_emp = #{appr_emp})

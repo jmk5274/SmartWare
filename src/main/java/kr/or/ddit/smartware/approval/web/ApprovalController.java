@@ -218,15 +218,35 @@ public class ApprovalController {
         sqlData.put("pageSize", pageSize);
 
         List<Map> applList = new ArrayList<>();
+
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (inputFlashMap != null) {
+            Boolean res = (Boolean) inputFlashMap.get("res");
+            model.addAttribute("res", res);
+        } else {
+            model.addAttribute("res", false);
+        }
+
         /* 결재할 문서 목록 */
         if (url.equals("applList")) {
             applList = approvalService.confirmApplList(sqlData);
             totalCnt = approvalService.confirmApplListCnt(emp_id);
             returnJsp += "confirmApplList";
+
+            if (inputFlashMap != null) {
+                model.addAttribute("appr_emp", inputFlashMap.get("appr_emp"));
+                model.addAttribute("refer", true);
+            }
         } else if (url.equals("applCompleList")) {
             applList = approvalService.confirmApplCompleList(sqlData);
             totalCnt = approvalService.confirmApplCompleListCnt(emp_id);
             returnJsp += "confirmApplCompleList";
+
+            if (inputFlashMap != null) {
+                logger.debug("appr_emp : {}", inputFlashMap.get("appr_emp"));
+                model.addAttribute("appr_emp", inputFlashMap.get("appr_emp"));
+            }
         } else if (url.equals("referCompleList")) {
             applList = approvalService.confirmApplReferList(sqlData);
             totalCnt = approvalService.confirmApplReferListCnt(emp_id);
@@ -236,13 +256,7 @@ public class ApprovalController {
             model.addAttribute("applList", applList);
         }
 
-        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        if (inputFlashMap != null) {
-            Boolean res = (Boolean) inputFlashMap.get("res");
-            model.addAttribute("res", res);
-        } else {
-            model.addAttribute("res", false);
-        }
+
 
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
@@ -277,6 +291,7 @@ public class ApprovalController {
 
         if (checkAble != 0 && checkAppl != 0) {
             redirectAttributes.addFlashAttribute("res", true);
+            redirectAttributes.addFlashAttribute("appr_emp", approvalService.sendToNextMember(applAppr));
         }
 
         return "redirect:/approval/confirm/applCompleList";
@@ -288,6 +303,14 @@ public class ApprovalController {
         Employee employee = (Employee)session.getAttribute("S_EMPLOYEE");
         data.put("emp_id", employee.getEmp_id());
         int referAppl = approvalService.referAppl(data);
+
+        ApplAppr applAppr = new ApplAppr();
+        applAppr.setAppl_id((String) data.get("appl_id"));
+        applAppr.setAppr_emp(employee.getEmp_id());
+
+        if (referAppl != 0 ) {
+            redirectAttributes.addFlashAttribute("appr_emp", approvalService.referAlarm(applAppr));
+        }
 
         return "redirect:/approval/confirm/applList";
     }

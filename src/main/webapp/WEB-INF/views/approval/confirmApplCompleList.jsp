@@ -11,6 +11,14 @@
 		$('.applTr').on('click', function () {
 			$('#frm').attr('action', "${cp}/approval/" + $(this).data("appl_id")).submit();
 		});
+
+		var msg = "appr^${appr_emp}";
+		if (msg) {
+			setTimeout(function() {
+				console.log(msg);
+				socket.send(msg);
+			}, 500);
+		}
 	});
 </script>
 
