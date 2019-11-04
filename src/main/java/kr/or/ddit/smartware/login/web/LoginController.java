@@ -185,7 +185,7 @@ public class LoginController {
 		//요기
 		
 		// 로그인 화면으로 이동
-		return "redirect:/main";
+		return "redirect:/login";
 	}
 	
 	/**
