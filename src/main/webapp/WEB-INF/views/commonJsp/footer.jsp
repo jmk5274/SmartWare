@@ -66,7 +66,7 @@
                 var job_id = '${S_EMPLOYEE.job_id}';
                 if (final_transcript.indexOf('보이스') !== -1) {
                     if (final_transcript.indexOf('이동') !== -1 || final_transcript.indexOf('보여 줘') !== -1 || final_transcript.indexOf('가 줘') !== -1) {
-                        if (final_transcript.indexOf('메인') !== -1) {
+                        if (final_transcript.indexOf('메인 화면') !== -1 || final_transcript.indexOf('메인화면') !== -1 || final_transcript.indexOf('메인') !== -1) {
                             location.href = "${cp}/main";
                         } else if (final_transcript.indexOf('결제') !== -1 || final_transcript.indexOf('결재') !== -1) {
                             if (final_transcript.indexOf('작성') !== -1) {
@@ -105,7 +105,7 @@
                         if ('speechSynthesis' in window) {
                             if (final_transcript.indexOf('오늘 일정') !== -1 || final_transcript.indexOf('오늘일정') !== -1) {
                                 $.ajax({
-                                    url : "${cp}/getTodayCalendar",
+                                    url : "${cp}/getMainTask",
                                     contentType : "application/json",
                                     dataType : "json",
                                     method : "post",

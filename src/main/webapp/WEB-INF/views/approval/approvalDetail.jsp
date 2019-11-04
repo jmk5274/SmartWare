@@ -73,6 +73,7 @@
                         }
                     }).then((result) => {
                             $('#frm').attr('action', "${cp}/approval/checkRefer").submit();
+                        // console.log('asdfasdfasdf');
                     });
                 }
             });

@@ -5,11 +5,14 @@
 <link href="${cp }/css/weather/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
 <link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+
 <style>
 	.weekDiv{
-		height: 327px;
+/* 		height: 327px; */
+		height: 550px;
 	}
 	.todayDiv{
+/* 		height: 300px; */
 		height: 300px;
 	}
 	.apprDiv{
@@ -20,7 +23,7 @@
 		margin-bottom : 20px;
 	}
 </style>
-	<img src="../img/mainimg/smartware.png">
+	<img src="${cp }/img/mainimg/voiceware.png">
 	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
@@ -99,21 +102,21 @@
 				<div class="row">
                     <div class="col-6 border-right">
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1">89k</h4>
+                            <h4 class="m-1"><c:if test="${sendApplCnt == null}">0</c:if>${sendApplCnt}</h4>
                             <p class="m-0">결재문서</p>
                         </div>
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1">89k</h4>
-                            <p class="m-0">진행문서</p>
+                            <h4 class="m-1"><c:if test="${sendApplCompleCnt == null}">0</c:if>${sendApplCompleCnt}</h4>
+                            <p class="m-0">완료문서</p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1">119k</h4>
+                            <h4 class="m-1"><c:if test="${confirmApplCnt == null}">0</c:if>${confirmApplCnt}</h4>
                             <p class="m-0">수신문서</p>
                         </div>
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1">119k</h4>
+                            <h4 class="m-1"><c:if test="${sendApplReferCnt == null}">0</c:if>${sendApplReferCnt}</h4>
                             <p class="m-0">반려문서</p>
                         </div>
                     </div>
@@ -128,7 +131,6 @@
 	$(document).ready(function() { 
 		parseWeather();
 		popupView();
-		getTodayCalendar();
 		
 		$.ajax({
 			url : "${cp}/getMainTask",
@@ -138,6 +140,18 @@
 				todayTask(data);
 				weekTask(data);
 				weekCal(data);
+				var html = "";
+				data.calList.forEach(function(cal){
+                    html += '<div class="media border-bottom-1 pt-3 pb-3">';
+	                html += 	'<i style="font-size:1.3em;" class="fa fa-calendar menu-icon"></i>'
+	                html +=     '<div class="media-body">';
+	                html +=         '<h5>&nbsp;&nbsp;'+cal.cal_title;
+	                html +=         	'<span class="float-right" style="color:gray;">'+moment(new Date(cal.st_dt)).format('YYYY-MM-DD')+' ~ '+moment(new Date(cal.end_dt)).format('YYYY-MM-DD')+'</span>';
+	                html += 		'</h5>';
+	                html +=     '</div>';
+	                html += '</div>';
+				})
+				$("#todayCal").html(html);
 			}
 		});
 	}); 
@@ -173,9 +187,18 @@
 		var html = "";
 		html += '<div class="taskList">';
 		
+		//지연업무
+		$.each(data.weekDelayList, function(idx, delay) {
+			html += '</span><h5 class="mt-3">' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
+			html += '<div class="progress" style="height: 15px">';
+			html += '   <div class="progress-bar bg-danger wow  progress-" style="width: ' + delay.per + '%;" role="progressbar">';
+			html += '   </div>';
+			html += '</div>';
+		});
+		
 		// 주간 업무
 		$.each(data.weekList, function(index, week) {
-			console.log(week);
+// 			console.log(week);
 			html += '</span><h5 class="mt-3">' + week.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ week.pro_nm.pro_nm + '</span><span class="float-right">' + week.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
 			html += '   <div class="progress-bar ';

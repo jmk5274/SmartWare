@@ -76,17 +76,59 @@
 	<!-- emp_id에 해당하는 사원의 오늘 일정 내용 조회 -->
 	<select id="getTodayCalendar" parameterType="String" resultType="calendar">
 		select *
-		  from calendar
-		 where emp_id = #{emp_id}
-		   and st_dt <![CDATA[<]]> sysdate
-		   and end_dt > sysdate
+		  from         (select *
+                          from calendar
+                         where depart_id is null
+                           and emp_id = #{emp_id}
+                           and category_id in (select category_id
+                                                from category
+                                               where pro_id is null)
+                          UNION ALL
+                        select *
+                          from calendar
+                         where depart_id = (select depart_id 
+                                              from employee
+                                             where emp_id = #{emp_id})
+                         UNION ALL
+                        select *
+                          from calendar
+                         where category_id in (select category_id
+                                                 from category
+                                                where pro_id in (select pro_id
+                                                                   from pro_position
+                                                                  where emp_id = #{emp_id}))
+                           and emp_id = #{emp_id})
+          where st_dt <![CDATA[<=]]> sysdate
+		    and end_dt >= sysdate
+          order by st_dt, end_dt
 	</select>
 	
 	<select id="getWeekCalendar" parameterType="String" resultType="calendar">
-		select *
-		  from calendar
-		 where emp_id = #{emp_id}
-           and to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
-           and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
+        select *
+		  from         (select *
+                          from calendar
+                         where depart_id is null
+                           and emp_id = #{emp_id}
+                           and category_id in (select category_id
+                                                from category
+                                               where pro_id is null)
+                          UNION ALL
+                        select *
+                          from calendar
+                         where depart_id = (select depart_id 
+                                              from employee
+                                             where emp_id = #{emp_id})
+                         UNION ALL
+                        select *
+                          from calendar
+                         where category_id in (select category_id
+                                                 from category
+                                                where pro_id in (select pro_id
+                                                                   from pro_position
+                                                                  where emp_id = #{emp_id}))
+                           and emp_id = #{emp_id})
+          where to_number(to_char(trunc(st_dt, 'iw'),'WW')) <![CDATA[<=]]> to_number(to_char(trunc(sysdate, 'iw'),'WW')) 
+            and to_number(to_char(trunc(end_dt, 'iw'),'WW')) >= to_number(to_char(trunc(sysdate, 'iw'),'WW'))
+          order by st_dt, end_dt
 	</select>
 </mapper>
