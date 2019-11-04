@@ -130,6 +130,12 @@ $(function() {
 		} else if(selectedId  === "depCategoryOff") {	// 부서 일정 전체 해제
 			$("#depCategory div.categoryList > i").addClass("fa-square-o off");
 			$("#depCategory div.categoryList > i").removeClass("fa-check-square-o on");
+		} else if(selectedId  === "proCategoryOn") {		// 프로젝트 일정 전체 선택
+			$("#proCategory div.categoryList > i").addClass("fa-check-square-o on");
+			$("#proCategory div.categoryList > i").removeClass("fa-square-o off");
+		} else if(selectedId  === "proCategoryOff") {	// 프로젝트 일정 전체 해제
+			$("#proCategory div.categoryList > i").addClass("fa-square-o off");
+			$("#proCategory div.categoryList > i").removeClass("fa-check-square-o on");
 		}
 		
 		calendar.rerenderEvents();

@@ -81,7 +81,7 @@
 }
 
 .categoryList, #addEmpCategory, #addDepCategory, #empCategoryOn,
-	#empCategoryOff, #depCategoryOn, #depCategoryOff {
+	#empCategoryOff, #depCategoryOn, #depCategoryOff, #proCategoryOn, #proCategoryOff {
 	cursor: pointer;
 }
 
@@ -120,4 +120,10 @@
 
 button:focus {
 	outline: 0;
+}
+
+/* 일정 크기 */
+.fc-day-grid-event .fc-content {
+    height: 20px;
+    font-size: 15px;
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- tui-date-picker css -->
 <link href= "${cp }/plugin/tui-date-picker/tui-date-picker.css" rel="stylesheet"/>
@@ -14,9 +15,18 @@
 <!-- body 시작 -->
 <div class="row">
 	<!-- project list -->
-	<button type="button" id="btnInsertProject" class="btn mb-1 btn-outline-dark btn-lg">
-		<i class="fa fa-plus" aria-hidden="true"></i> 신규 프로젝트 생성
-	</button>
+	<c:if test="${S_EMPLOYEE.posi_id eq 'posi0001' or S_EMPLOYEE.posi_id eq 'posi0002' or S_EMPLOYEE.posi_id eq 'posi0003' }">
+		<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<button type="button" id="btnInsertProject" class="btn mb-1 btn-outline-dark btn-lg">
+					<i class="fa fa-plus" aria-hidden="true"></i> 신규 프로젝트 생성
+				</button>
+			</div>
+		</div>
+	</div>
+	</c:if>
+	
 	<div class="col-12">
 		<div class="card">
 			<div id="runningProject" class="card-body">
