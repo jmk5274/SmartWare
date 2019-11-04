@@ -288,7 +288,8 @@
             <b class="logo-abbr"><img src="${cp }/bootstrap/images/log.png" alt=""> </b>
             <span class="logo-compact"><img src="${cp }/bootstrap/images/logo3.png" alt=""></span>
             <span class="brand-title">
-                <img src="${cp }/bootstrap/images/logo3.png" alt="">
+                <img src="${cp }/bootstrap/images/logo3.png" alt="" style="margin-bottom: 20px;
+    max-width: 100%;">
             </span>
         </a>
     </div>
