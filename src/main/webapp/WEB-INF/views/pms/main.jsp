@@ -15,22 +15,15 @@
 <!-- body 시작 -->
 <div class="row">
 	<!-- project list -->
-	<c:if test="${S_EMPLOYEE.posi_id eq 'posi0001' or S_EMPLOYEE.posi_id eq 'posi0002' or S_EMPLOYEE.posi_id eq 'posi0003' }">
-		<div class="col-12">
-		<div class="card">
-			<div class="card-body">
-				<button type="button" id="btnInsertProject" class="btn mb-1 btn-outline-dark btn-lg">
-					<i class="fa fa-plus" aria-hidden="true"></i> 신규 프로젝트 생성
-				</button>
-			</div>
-		</div>
-	</div>
-	</c:if>
-	
 	<div class="col-12">
 		<div class="card">
 			<div id="runningProject" class="card-body">
-				<h2><i class="fa fa-file-text"></i> 진행중인 프로젝트</h2>
+				<h2 style="display: inline;"><i class="fa fa-file-text"></i> 진행중인 프로젝트</h2>
+				<c:if test="${S_EMPLOYEE.posi_id eq 'posi0001' or S_EMPLOYEE.posi_id eq 'posi0002' or S_EMPLOYEE.posi_id eq 'posi0003' }">
+					<button type="button" id="btnInsertProject" class="btn mb-1 btn-outline-dark btn-lg" style="float: right;">
+						<i class="fa fa-plus" aria-hidden="true"></i> 신규 프로젝트 생성
+					</button>
+				</c:if>
 			</div>
 		</div>
 		<div class="card">

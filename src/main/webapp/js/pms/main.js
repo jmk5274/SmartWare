@@ -1,36 +1,5 @@
 $(function() {
-	// 진행중인 프로젝트 리스트
-	$.ajax({
-		url: cp + "/getAllRunningProject",
-		type: "POST",
-		data: "emp_id=" + emp_id,
-		success: function(datas) {
-			$.each(datas.hashMap, function(idx, data) {
-				$("#runningProject").append(printProject(idx, data));
-				printChart(idx, data.allProjectChart, data.project.pro_id); // 전체 현황
-				printChart(idx, data.empProjectChart, data.project.pro_id + '_' + emp_id); // 나의 현황 
-			});
-		}
-	});
-	
-	// 지난 프로젝트 리스트
-	$.ajax({
-		url: cp + "/getAllPastProject",
-		type: "POST",
-		data: "emp_id=" + emp_id,
-		success: function(datas) {
-			$.each(datas.hashMap, function(idx, data) {
-				$("#pastProject").append(printProject(idx, data));
-				printChart(idx, data.allProjectChart, data.project.pro_id); // 전체 현황
-				printChart(idx, data.empProjectChart, data.project.pro_id + '_' + emp_id); // 나의 현황 
-			});
-			$.each($("#pastProject .projectTitle"), function(idx, data) {
-				$(this).children("i").removeClass("fa-angle-right on");
-				$(this).children("i").addClass("fa-angle-down off");	
-				$(this).parent().next().hide();
-			});
-		}
-	});
+	initProject();
 	
 	// 부서의 사원 리스트
 	$.ajax({
@@ -58,10 +27,49 @@ $(function() {
 		picker._startpicker.setDate(new Date());
 		picker._endpicker.setDate(new Date());
 		select2.val(null).trigger("change");
+		
+		$("#deleteProject").hide();
+		$("#updateProject").hide();
+		
 		$("#projectModal").modal("show");
 	});
 	
 });
+
+function initProject() {
+	// 진행중인 프로젝트 리스트
+	$.ajax({
+		url: cp + "/getAllRunningProject",
+		type: "POST",
+		data: "emp_id=" + emp_id,
+		success: function(datas) {
+			$.each(datas.hashMap, function(idx, data) {
+				$("#runningProject").append(printProject(idx, data));
+				printChart(idx, data.allProjectChart, data.project.pro_id); // 전체 현황
+				printChart(idx, data.empProjectChart, data.project.pro_id + '_' + emp_id); // 나의 현황 
+			});
+		}
+	});
+
+	// 지난 프로젝트 리스트
+	$.ajax({
+		url: cp + "/getAllPastProject",
+		type: "POST",
+		data: "emp_id=" + emp_id,
+		success: function(datas) {
+			$.each(datas.hashMap, function(idx, data) {
+				$("#pastProject").append(printProject(idx, data));
+				printChart(idx, data.allProjectChart, data.project.pro_id); // 전체 현황
+				printChart(idx, data.empProjectChart, data.project.pro_id + '_' + emp_id); // 나의 현황 
+			});
+			$.each($("#pastProject .projectTitle"), function(idx, data) {
+				$(this).children("i").removeClass("fa-angle-right on");
+				$(this).children("i").addClass("fa-angle-down off");	
+				$(this).parent().next().hide();
+			});
+		}
+	});
+}
 
 function printProject(idx, data) {
 	var html = "";
