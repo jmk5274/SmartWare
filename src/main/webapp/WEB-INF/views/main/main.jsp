@@ -131,7 +131,6 @@
 	$(document).ready(function() { 
 		parseWeather();
 		popupView();
-		getTodayCalendar();
 		
 		$.ajax({
 			url : "${cp}/getMainTask",
