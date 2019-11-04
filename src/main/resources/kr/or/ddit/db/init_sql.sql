@@ -975,8 +975,12 @@ INSERT INTO TASK_HISTORY VALUES('hist' || LPAD(TASK_HISTORY_SEQ.NEXTVAL,4,0), 't
 
 --팝업
 
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), sysdate, sysdate, 1, 1, 0, 0, 'TESTTES', SYSDATE, 'e0015', empty_blob(), 'T');
-INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), sysdate, sysdate, 1, 1, 0, 0, 'TESTTES1', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190701', 'YYYYMMDD'), to_date('20190724', 'YYYYMMDD'), 1, 1, 0, 0, 'TESTTES1', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190803', 'YYYYMMDD'), to_date('20190829', 'YYYYMMDD'), 1, 1, 0, 0, 'TESTTES1', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20190917', 'YYYYMMDD'), to_date('20190927', 'YYYYMMDD'), 1, 1, 0, 0, '아아아아', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191007', 'YYYYMMDD'), to_date('20191013', 'YYYYMMDD'), 1, 1, 0, 0, '아아아앙ㅇㄴㅇ', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191014', 'YYYYMMDD'), to_date('20191017', 'YYYYMMDD'), 1, 1, 0, 0, 'Tㄴㅇㄹㄴㅇㄹ1', SYSDATE, 'e0015', empty_blob(), 'T');
+INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0),  to_date('20191023', 'YYYYMMDD'), to_date('20191103', 'YYYYMMDD'), 1, 1, 0, 0, 'TESTTㄴㅇㄹㄴㅇㄹES1', SYSDATE, 'e0015', empty_blob(), 'T');
 
 --------------------------------------------------------------------------------------------------------------------------------
 --채팅방
@@ -984,6 +988,8 @@ INSERT INTO POPUP VALUES('pop' || LPAD(POPUP_SEQ.NEXTVAL,4,0), sysdate, sysdate,
 INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '영화관 예매 시스템', 'T');
 INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '유기동물 입양 시스템', 'T');
 INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '스마트 웨어', 'T');
+INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '최종프로젝트 젊은이 모임', 'T');
+INSERT INTO CHAT VALUES('ch' || LPAD(CHAT_SEQ.NEXTVAL,4,0), '오늘 저녁 회식 단톡방 ', 'T');
 
 ------------------------------------------------------------------------------------------------------------
 --메세지
@@ -994,25 +1000,56 @@ INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0002', '<a
 INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0002', '<a href=''chatFile?path=C:/picture/file/요구사항정의서_유기동물 입양 시스템.xlsx'' download><i class=''fa fa-download''></i>요구사항정의서_유기동물 입양 시스템.xlsx</a>', 'e0002', to_date('20190819 10:15:00', 'YYYYMMDD HH24:MI:SS'));
 INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0003', '<a href=''chatFile?path=C:/picture/file/수행계획서_스마트 웨어.hwp'' download><i class=''fa fa-download''></i>수행계획서_스마트 웨어.hwp</a>', 'e0005', trunc(sysdate, 'iw')-14+10/24+111/1440);
 INSERT INTO MESSAGE VALUES('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0), 'ch0003', '<a href=''chatFile?path=C:/picture/file/요구사항정의서_스마트 웨어.xlsx'' download><i class=''fa fa-download''></i>요구사항정의서_스마트 웨어.xlsx</a>', 'e0005', trunc(sysdate, 'iw')-14+10/24+111/1440);
+Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0004','부장 배상현을 제외한 최종프로젝트 젊은이 모임 단톡방입니다','e0014',to_date('2019/11/04 18:31:00','YYYY/MM/DD HH24:MI:SS'));
+Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0004','아 있었네.. 죄송합니다','e0014',to_date('2019/11/04 18:31:08','YYYY/MM/DD HH24:MI:SS'));
+Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0004','부장님 사랑합니다','e0013',to_date('2019/11/04 18:31:25','YYYY/MM/DD HH24:MI:SS'));
+Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0005','오늘 저녁 회식 장소입니다 참고해주세요','e0013',to_date('2019/11/04 18:33:33','YYYY/MM/DD HH24:MI:SS'));
+Insert into MESSAGE values ('msg' || LPAD(MESSAGE_SEQ.NEXTVAL,4,0),'ch0005','<img src=''chatImgFile?path=C:picture/file/회식장소.PNG'' style=''width:150px; height:150px; border-radius: 30%;''><br><br><br><a href=''chatFile?path=C:/picture/file/회식장소.PNG'' download><i class=''fa fa-download''></i>회식장소.PNG</a>','e0013',to_date('2019/11/04 18:40:38','YYYY/MM/DD HH24:MI:SS'));
 
 ---------------------------------------------------------------------------------------------------------
 --참가자
 
-INSERT INTO CHAT_EMP VALUES ('e0002', 'ch0001', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0005', 'ch0001', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0001', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0013', 'ch0001', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0015', 'ch0001', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0002', 'ch0002', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0005', 'ch0002', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0002', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0013', 'ch0002', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0015', 'ch0002', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0005', 'ch0003', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0009', 'ch0003', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0013', 'ch0003', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0014', 'ch0003', null, null);
-INSERT INTO CHAT_EMP VALUES ('e0015', 'ch0003', null, null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0002','ch0001',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0005','ch0001',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0009','ch0001',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0013','ch0001',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0015','ch0001',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0002','ch0002',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0005','ch0002',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0009','ch0002',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0013','ch0002',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0015','ch0002',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0005','ch0003',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0009','ch0003',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0013','ch0003',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0014','ch0003',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0015','ch0003',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0013','ch0004','msg0009',null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0013','ch0005','msg0015',null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0014','ch0004','msg0009',null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0014','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0009','ch0004',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0005','ch0004',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0012','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0022','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0024','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0015','ch0004',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0016','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0010','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0019','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0017','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0007','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0020','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0008','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0005','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0011','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0006','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0009','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0021','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0018','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0023','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0001','ch0005',null,null);
+Insert into CHAT_EMP (EMP_ID,CHAT_ID,LAST_MSG,INVITE_ID) values ('e0015','ch0005',null,null);
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --카테고리

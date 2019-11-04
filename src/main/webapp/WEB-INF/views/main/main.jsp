@@ -329,8 +329,8 @@
 	          var date = moment(new Date()).format('YYYY-MM-DD');
 	          var weekDay = moment(new Date()).format('dddd');
 	          var location = jsonData.name;
-	          var temp = Math.round(jsonData.main.temp-273.15);
-	          var condition = jsonData.weather[0].main
+	          temp = Math.round(jsonData.main.temp-273.15);
+	          condition = jsonData.weather[0].main
 	          var icon = iconView(jsonData.weather[0].icon);
 	          var bgIcon = jsonData.weather[0].icon;
 	          

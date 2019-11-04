@@ -353,32 +353,6 @@
                         </div>
                     </div>
                 </li>
-                <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                        <i class="mdi mdi-bell-outline"></i>
-                        <span class="badge badge-pill gradient-2">3</span>
-                    </a>
-                    <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
-                        <div class="dropdown-content-heading d-flex justify-content-between">
-                            <span class="">2 New Notifications</span>  
-                            <a href="javascript:void()" class="d-inline-block">
-                                <span class="badge badge-pill gradient-2">5</span>
-                            </a>
-                        </div>
-                        <div class="dropdown-content-body">
-                            <ul>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-                                        <div class="notification-content">
-                                            <h6 class="notification-heading">Events near you</h6>
-                                            <span class="notification-text">Within next 5 days</span> 
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
                 </c:if>
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
