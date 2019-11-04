@@ -284,26 +284,26 @@ INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_I
 INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0001', '사원 규칙사항', '모든 사원들은 첨부된 파일의 규칙사항을 확인하여 꼭 숙지해주시길 바랍니다. 감사합니다.', 'admin', SYSDATE, 'F', NULL);
 
 -- 사내 게시판
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '홍보의 중요성', '홍보팀들 다 모입시다!! 장소는 추후 공지하겠습니다!', 'e0004', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '개발의 중요성이 더..', '홍보팀의 중요성도 좋지만 개발이 더 중요하지 않을까요?', 'e0002', SYSDATE, 'T', 'post0022');
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '저희 인원 모집은 언제 하나요?', '개발팀들 이러다 죽겠어요.. 개발팀 인원 모집 시급합니다.', 'e0002', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '인원 모집은 공지 올렸으니 확인해보세요', 'TEST', 'e0004', SYSDATE, 'T', 'post0024');
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '홍보팀 여러분 그거 아시나요?', '저희 좀 있으면 휴가입니다~ 야호 푹 쉬다 옵시다^^', 'e0018', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '않이.. 통통버스때문에 죽겠어요..', '지금 통통버스 개발하는 중인데 같이 개발하실 개발원 분들 도와주시면 감사합니다.', 'e0005', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '이거 결재선 되는 거 맞아요?', '수정 필요할 거 같은데..', 'e0015', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '개발1팀 회식', '공지 올라왔어요 확인해보시고 연락주세요.', 'e0009', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '홍보팀 회식 공지는 언제..', '홍보팀 회식 공지 언제 올라오나요?', 'e0018', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '배로로의 역습 영화 어떤가요?', '혹시 보신 분 있으신가요? 사장님이랑 개발팀 직원들이랑 다 같이 보러 가기로 했는데 어떤지 몰라서..', 'e0015', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '별로..', '그 영화 별로예요. 그냥 그 날은 년차내시는 게..', 'e0005', SYSDATE, 'T', 'post0031');
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '않이 버스가 자꾸 통통 거려요..', '후.. 진짜.. 미치겠네.. 이거 어떻게 하죠?', 'e0005', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '곧 있으면 점심시간인데..', '개발1팀 점심메뉴 정했어요?', 'e0015', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '요우란', '요우란 거기 튀김집인데 진짜 맛있더라구요. 회사에서 그리 멀지 않으니까 거기로 가서 점심식사 하세요^^', 'e0005', SYSDATE, 'T', 'post0034');
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '홍보의 중요성', '홍보팀들 다 모입시다!! 장소는 추후 공지하겠습니다!', 'e0004', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '개발의 중요성이 더..', '홍보팀의 중요성도 좋지만 개발이 더 중요하지 않을까요?', 'e0002', SYSDATE, 'F', 'post0022');
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '저희 인원 모집은 언제 하나요?', '개발팀들 이러다 죽겠어요.. 개발팀 인원 모집 시급합니다.', 'e0002', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '인원 모집은 공지 올렸으니 확인해보세요', 'TEST', 'e0004', SYSDATE, 'F', 'post0024');
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '홍보팀 여러분 그거 아시나요?', '저희 좀 있으면 휴가입니다~ 야호 푹 쉬다 옵시다^^', 'e0018', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '않이.. 통통버스때문에 죽겠어요..', '지금 통통버스 개발하는 중인데 같이 개발하실 개발원 분들 도와주시면 감사합니다.', 'e0005', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '이거 결재선 되는 거 맞아요?', '수정 필요할 거 같은데..', 'e0015', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '개발1팀 회식', '공지 올라왔어요 확인해보시고 연락주세요.', 'e0009', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '홍보팀 회식 공지는 언제..', '홍보팀 회식 공지 언제 올라오나요?', 'e0018', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '배로로의 역습 영화 어떤가요?', '혹시 보신 분 있으신가요? 사장님이랑 개발팀 직원들이랑 다 같이 보러 가기로 했는데 어떤지 몰라서..', 'e0015', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '별로..', '그 영화 별로예요. 그냥 그 날은 년차내시는 게..', 'e0005', SYSDATE, 'F', 'post0031');
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '않이 버스가 자꾸 통통 거려요..', '후.. 진짜.. 미치겠네.. 이거 어떻게 하죠?', 'e0005', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '곧 있으면 점심시간인데..', '개발1팀 점심메뉴 정했어요?', 'e0015', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0002', '요우란', '요우란 거기 튀김집인데 진짜 맛있더라구요. 회사에서 그리 멀지 않으니까 거기로 가서 점심식사 하세요^^', 'e0005', SYSDATE, 'F', 'post0034');
 
 -- 자료실
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '임원 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '개발1팀 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '개발2팀 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'T', NULL);
-INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '개발3팀 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'T', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '임원 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '개발1팀 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '개발2팀 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'F', NULL);
+INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '개발3팀 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'F', NULL);
 INSERT INTO POST(POST_ID, BOARD_ID, TITLE, CONT, EMP_ID, REG_DT, ABLE, PA_POST_ID) VALUES ('post' || LPAD(POST_SEQ.NEXTVAL,4,0), 'board0003', '홍보팀 자료', '첨부파일 확인바랍니다.', 'e0002', SYSDATE, 'T', NULL);
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -331,12 +331,12 @@ INSERT INTO POST_FILE(FILE_ID, POST_ID, FILE_NM, REALFILEPATH) VALUES ('f' || LP
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --댓글
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0022', 'e0002', SYSDATE, 'TEST', 'T', NULL);
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0023', 'e0002', SYSDATE, 'TEST', 'T', NULL);
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0024', 'e0002', SYSDATE, 'TEST', 'T', NULL);
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0025', 'e0002', SYSDATE, 'TEST', 'T', NULL);
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0026', 'e0002', SYSDATE, 'TEST', 'T', NULL);
-INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0027', 'e0002', SYSDATE, 'TEST', 'T', NULL);
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0022', 'e0002', SYSDATE, 'TEST', 'F', NULL);
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0023', 'e0002', SYSDATE, 'TEST', 'F', NULL);
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0024', 'e0002', SYSDATE, 'TEST', 'F', NULL);
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0025', 'e0002', SYSDATE, 'TEST', 'F', NULL);
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0026', 'e0002', SYSDATE, 'TEST', 'F', NULL);
+INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0027', 'e0002', SYSDATE, 'TEST', 'F', NULL);
 INSERT INTO COMMENTS(COM_ID, POST_ID, EMP_ID, REG_DT, CONT, ABLE, PA_COM_ID) VALUES ('com' || LPAD(COMMENTS_SEQ.NEXTVAL,4,0), 'post0028', 'e0002', SYSDATE, 'TEST', 'T', NULL);
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
