@@ -25,6 +25,7 @@ import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.NoSuchProviderException;
 import javax.mail.Part;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -84,7 +85,7 @@ public class EmailController{
 	
 	
 	@GetMapping(path = "writeMail")
-	public String writeMail(Model model) {
+	public String writeMail(Model model, HttpSession session) throws MessagingException {
 		List<Department> departList = departmentService.getAllDepartment();
 		List<Map> employeeList = employeeService.getDetailEmpList();
 		List<Position> positionList = positionService.getAllPosition();
@@ -93,6 +94,38 @@ public class EmailController{
 		model.addAttribute("departList", departList);
 		model.addAttribute("employeeList", employeeList);
 		model.addAttribute("positionList", positionList);
+		
+		IMAPFolder folder = null;
+        Store store = null;
+        String subject = null;
+        Flag flag = null;
+        
+        Employee employee = (Employee) session.getAttribute("S_EMPLOYEE");
+        
+        //여기서
+        //5 , 9, 13, 14, 15
+        //메일을 못가져온다는 권한오류가 뜨면 Gmail -> 톱니바퀴 -> 설정 -> 전달 및 POP/IMAP -> IMAP 허용만 해주시면됨
+        //email_pass 넣어줘야함
+        //email 비밀번호 를 암호화해야함..
+        if(!(employee.getEmp_id().equals("e0005") || employee.getEmp_id().equals("e0009") || employee.getEmp_id().equals("e0013")
+        		|| employee.getEmp_id().equals("e0014") || employee.getEmp_id().equals("e0015"))) {
+        		employee.setEmail("testhoon1217@gmail.com");
+        		employee.setEmail_pass("ewqdsa556");
+        }
+        	Properties props = System.getProperties();
+        	props.setProperty("mail.store.protocol", "imaps");
+        	Session mailSession = Session.getDefaultInstance(props, null);
+        	
+        	store = mailSession.getStore("imaps");
+        	store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
+        	folder = (IMAPFolder) store.getFolder("INBOX");
+        	if(!folder.isOpen())
+       		 folder.open(Folder.READ_ONLY);
+        	
+        	int cnt = folder.getMessageCount();
+        	session.setAttribute("cnt", cnt);
+        	
+        	session.setAttribute("store", store);
 		
 		return "tiles/email/writeMail";
 	}
