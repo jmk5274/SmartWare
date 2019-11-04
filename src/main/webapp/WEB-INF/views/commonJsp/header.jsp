@@ -272,7 +272,7 @@
 <!--**********************************
     Nav header start
 ***********************************-->
-<div class="nav-header style="background: #224D77;">
+<div class="nav-header" style="background: #224D77;">
     <div class="brand-logo" style="background: #224D77;">
         <a href="${cp }/main">
             <b class="logo-abbr"><img src="${cp }/bootstrap/images/log.png" alt=""> </b>
