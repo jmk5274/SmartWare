@@ -96,35 +96,35 @@ public class LoginController {
 			
 			employee.setC_use("false");
 			
-//			IMAPFolder folder = null;
-//	        Store store = null;
-//	        String subject = null;
-//	        Flag flag = null;
-//	        
-//	        //여기서
-//	        //5 , 9, 13, 14, 15
-//	        //메일을 못가져온다는 권한오류가 뜨면 Gmail -> 톱니바퀴 -> 설정 -> 전달 및 POP/IMAP -> IMAP 허용만 해주시면됨
-//	        //email_pass 넣어줘야함
-//	        //email 비밀번호 를 암호화해야함..
-//	        if(!(employee.getEmp_id().equals("e0005") || employee.getEmp_id().equals("e0009") || employee.getEmp_id().equals("e0013")
-//	        		|| employee.getEmp_id().equals("e0014") || employee.getEmp_id().equals("e0015"))) {
-//	        		employee.setEmail("testhoon1217@gmail.com");
-//	        		employee.setEmail_pass("ewqdsa556");
-//	        }
-//	        	Properties props = System.getProperties();
-//	        	props.setProperty("mail.store.protocol", "imaps");
-//	        	Session mailSession = Session.getDefaultInstance(props, null);
-//	        	
-//	        	store = mailSession.getStore("imaps");
-//	        	store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
-//	        	folder = (IMAPFolder) store.getFolder("INBOX");
-//	        	if(!folder.isOpen())
-//	       		 folder.open(Folder.READ_ONLY);
-//	        	
-//	        	int cnt = folder.getMessageCount();
-//	        	session.setAttribute("cnt", cnt);
-//	        	
-//	        	session.setAttribute("store", store);
+			IMAPFolder folder = null;
+	        Store store = null;
+	        String subject = null;
+	        Flag flag = null;
+	        
+	        //여기서
+	        //5 , 9, 13, 14, 15
+	        //메일을 못가져온다는 권한오류가 뜨면 Gmail -> 톱니바퀴 -> 설정 -> 전달 및 POP/IMAP -> IMAP 허용만 해주시면됨
+	        //email_pass 넣어줘야함
+	        //email 비밀번호 를 암호화해야함..
+	        if(!(employee.getEmp_id().equals("e0005") || employee.getEmp_id().equals("e0009") || employee.getEmp_id().equals("e0013")
+	        		|| employee.getEmp_id().equals("e0014") || employee.getEmp_id().equals("e0015"))) {
+	        		employee.setEmail("testhoon1217@gmail.com");
+	        		employee.setEmail_pass("ewqdsa556");
+	        }
+	        	Properties props = System.getProperties();
+	        	props.setProperty("mail.store.protocol", "imaps");
+	        	Session mailSession = Session.getDefaultInstance(props, null);
+	        	
+	        	store = mailSession.getStore("imaps");
+	        	store.connect("imap.googlemail.com", employee.getEmail(), employee.getEmail_pass());
+	        	folder = (IMAPFolder) store.getFolder("INBOX");
+	        	if(!folder.isOpen())
+	       		 folder.open(Folder.READ_ONLY);
+	        	
+	        	int cnt = folder.getMessageCount();
+	        	session.setAttribute("cnt", cnt);
+	        	
+	        	session.setAttribute("store", store);
 	        	//여기까지
 	        	session.setAttribute("S_EMPLOYEE", employee);
 	        	return "redirect:/main";
@@ -160,28 +160,28 @@ public class LoginController {
 	@RequestMapping(path = "logout", method = RequestMethod.GET)
 	private String logout(HttpServletResponse response, HttpSession session) throws MessagingException {
 		//여기서
-//		Store store = (Store) session.getAttribute("store");
-//		IMAPFolder imapFolder = null;
-//		IMAPFolder folder = null;
-//		
-//		Folder[] folders1 = store.getDefaultFolder().list("*");
-//          for (Folder folder1 : folders1) {
-//            imapFolder = (IMAPFolder) folder1;
-//            logger.debug("folder1 - {}", folder1);
-//            String folderName = (String) imapFolder.getFullName();
-//            
-//            folder = (IMAPFolder) store.getFolder(folderName);
-//            logger.debug("folder - {}", folder);
-//          }
-//		
-//		{
-//			if (folder != null && folder.isOpen()) { folder.close(true); }
-//			if (store != null) { store.close(); }
-//		}
-//		
-//		session.invalidate();	// 세션에 저장된 모든 속성을 제거
-//		
-//		GmailConnector.getStore();
+		Store store = (Store) session.getAttribute("store");
+		IMAPFolder imapFolder = null;
+		IMAPFolder folder = null;
+		
+		Folder[] folders1 = store.getDefaultFolder().list("*");
+          for (Folder folder1 : folders1) {
+            imapFolder = (IMAPFolder) folder1;
+            logger.debug("folder1 - {}", folder1);
+            String folderName = (String) imapFolder.getFullName();
+            
+            folder = (IMAPFolder) store.getFolder(folderName);
+            logger.debug("folder - {}", folder);
+          }
+		
+		{
+			if (folder != null && folder.isOpen()) { folder.close(true); }
+			if (store != null) { store.close(); }
+		}
+		
+		session.invalidate();	// 세션에 저장된 모든 속성을 제거
+		
+		GmailConnector.getStore();
 		//요기
 		
 		// 로그인 화면으로 이동
