@@ -8,12 +8,10 @@
 
 <style>
 	.weekDiv{
-/* 		height: 327px; */
-		height: 550px;
+ 		height: 500px; 
 	}
 	.todayDiv{
-/* 		height: 300px; */
-		height: 300px;
+ 		height: 300px;
 	}
 	.apprDiv{
 		height: 250px;
@@ -32,7 +30,7 @@
 				<div class="social-graph-wrapper1">
                		<span class="s-icon"><i class="fa fa-clock-o"></i> &nbsp;주간 일정</span>
                 </div>
-				<div id="weekCal" class="card-body">
+				<div id="weekCal" class="card-body" style="overflow:auto;">
 				</div>
 			</div>
 			
@@ -41,7 +39,7 @@
 				<div class="social-graph-wrapper1">
                		<span class="s-icon"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;일간 일정</span>
                 </div>
-				<div id="todayCal" class="card-body">
+				<div id="todayCal" class="card-body" style="overflow:auto;">
                     
                 </div>
 			</div>
@@ -51,7 +49,7 @@
 				<div class="social-graph-wrapper1">
                		<span class="s-icon"><i class="fa fa-tasks"></i> &nbsp;주간 업무</span>
                 </div>
-				<div id="weekTask" class="card-body">
+				<div id="weekTask" class="card-body" style="overflow:auto;">
 				</div>
 			</div>
 
@@ -60,7 +58,7 @@
 				<div class="social-graph-wrapper1">
                		<span class="s-icon"><i class="fa fa-tasks"></i> &nbsp;일간 업무</span>
                 </div>
-				<div id="todayTask" class="card-body">
+				<div id="todayTask" class="card-body" style="overflow:auto;">
 				</div>
 			</div>
 		</div>
