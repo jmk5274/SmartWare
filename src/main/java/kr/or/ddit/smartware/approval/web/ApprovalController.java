@@ -143,6 +143,7 @@ public class ApprovalController {
             if (inputFlashMap != null) {
                 Boolean res = (Boolean) inputFlashMap.get("res");
                 model.addAttribute("res", res);
+                model.addAttribute("emp_id", inputFlashMap.get("emp_id"));
             } else {
                 model.addAttribute("res", false);
             }
@@ -192,6 +193,7 @@ public class ApprovalController {
             }
             if (apprList.size() == num) {
                 redirectAttributes.addFlashAttribute("res", true);
+                redirectAttributes.addFlashAttribute("emp_id", approvalService.sendApplMember((String) param.get("appl_id")));
             }
 
         } else {
