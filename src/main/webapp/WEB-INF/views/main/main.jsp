@@ -196,7 +196,6 @@
 		
 		// 주간 업무
 		$.each(data.weekList, function(index, week) {
-// 			console.log(week);
 			html += '</span><h5 class="mt-3">' + week.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ week.pro_nm.pro_nm + '</span><span class="float-right">' + week.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
 			html += '   <div class="progress-bar ';
@@ -233,7 +232,14 @@
 		$.each(data.todayList, function(idx, today) {
 			html += '</span><h5 class="mt-3">' + today.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ today.pro_nm.pro_nm + '</span><span class="float-right">' + today.per + '%</span></h5>';
 			html += '<div class="progress" style="height: 15px">';
-			html += '   <div class="progress-bar bg-success wow  progress-" style="width: ' + today.per + '%;" role="progressbar">';
+			html += '   <div class="progress-bar ';
+			if(today.per === 100)
+				html += 'bg-success';
+			else if(today.end_dt < new Date() && today.per < 100)
+				html += 'bg-danger';
+			else
+				html += 'bg-info';
+			html += ' wow  progress-" style="width: ' + today.per + '%;" role="progressbar">';
 			html += '   </div>';
 			html += '</div>';
 		});
