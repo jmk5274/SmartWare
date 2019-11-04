@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link href="${cp }/css/weather/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="${cp }/css/weather/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
 <link href="${cp }/bootstrap/icons/weather-icons/css/weather-icons.min.css" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
-
 <style>
 	.weekDiv{
 		height: 327px;
@@ -21,7 +20,7 @@
 		margin-bottom : 20px;
 	}
 </style>
-	<img src="../img/mainimg/voiceware.png">
+	<img src="../img/mainimg/smartware.png">
 	<!-- 게시판 -->
     <div class="row">
         <div class="col-4">
@@ -100,21 +99,21 @@
 				<div class="row">
                     <div class="col-6 border-right">
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1"><c:if test="${sendApplCnt == null}">0</c:if>${sendApplCnt}</h4>
+                            <h4 class="m-1">89k</h4>
                             <p class="m-0">결재문서</p>
                         </div>
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1"><c:if test="${sendApplCompleCnt == null}">0</c:if>${sendApplCompleCnt}</h4>
-                            <p class="m-0">완료문서</p>
+                            <h4 class="m-1">89k</h4>
+                            <p class="m-0">진행문서</p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center border-bottom">
-                            <h4 class="m-1"><c:if test="${confirmApplCnt == null}">0</c:if>${confirmApplCnt}</h4>
+                            <h4 class="m-1">119k</h4>
                             <p class="m-0">수신문서</p>
                         </div>
                         <div class="pt-4 pb-4 pl-0 pr-0 text-center">
-                            <h4 class="m-1"><c:if test="${sendApplReferCnt == null}">0</c:if>${sendApplReferCnt}</h4>
+                            <h4 class="m-1">119k</h4>
                             <p class="m-0">반려문서</p>
                         </div>
                     </div>
@@ -173,15 +172,6 @@
 	function weekTask(data){
 		var html = "";
 		html += '<div class="taskList">';
-		
-		//지연업무
-		$.each(data.weekDelayList, function(idx, delay) {
-			html += '</span><h5 class="mt-3">' + delay.task_cont + ' / <span class="mt-3" style="font-weight: bold;">'+ delay.pro_nm.pro_nm + '</span><span class="float-right">' + delay.per + '%</span></h5>';
-			html += '<div class="progress" style="height: 15px">';
-			html += '   <div class="progress-bar bg-danger wow  progress-" style="width: ' + delay.per + '%;" role="progressbar">';
-			html += '   </div>';
-			html += '</div>';
-		});
 		
 		// 주간 업무
 		$.each(data.weekList, function(index, week) {
@@ -287,14 +277,14 @@
 	          var date = moment(new Date()).format('YYYY-MM-DD');
 	          var weekDay = moment(new Date()).format('dddd');
 	          var location = jsonData.name;
-	          temp = Math.round(jsonData.main.temp-273.15);
-	          condition = jsonData.weather[0].main
+	          var temp = Math.round(jsonData.main.temp-273.15);
+	          var condition = jsonData.weather[0].main
 	          var icon = iconView(jsonData.weather[0].icon);
 	          var bgIcon = jsonData.weather[0].icon;
 	          
 			  if(bgIcon=="01d" || bgIcon=="01n" || bgIcon=="02d" || bgIcon=="02n"){
 			  	  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid');
-			  }else if(bgIcon=="03d" || bgIcon=="03n" || bgIcon=="04d" || bgIcon=="04n" || bgIcon=="50d" || bgIcon=="50n"){
+			  }else if(bgIcon=="03d" || bgIcon=="03n" || bgIcon=="04d" || bgIcon=="04n"){
 				  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid1');
 			  }else if(bgIcon=="09d" || bgIcon=="09n" || bgIcon=="10d" || bgIcon=="10n"){
 				  $("#bg").attr('class','wthree_main_grid agileinfo_main_grid2');
@@ -343,7 +333,7 @@
 			i = "wi-thunderstorm";
 		}else if(icon=="13d" || icon=="13n"){
 			i = "wi-snow";
-		}else if(icon=="50d" || icon=="50n"){
+		}else if(icon=="50d"){
 			i = "wi-fog";
 		}
 		return i;
