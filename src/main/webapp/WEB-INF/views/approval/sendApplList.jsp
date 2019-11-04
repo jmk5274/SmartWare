@@ -10,7 +10,10 @@
 	$(function () {
 		var flag = ${res};
 		if (flag) {
-			<%--socket.send("appl^${emp_id}");--%>
+
+			setTimeout(function() {
+				socket.send("appr^${emp_id}");
+			}, 500);
 			<%--socket.send("refer^${emp_id}");--%>
 			Swal({
 				    title: '전송 성공',

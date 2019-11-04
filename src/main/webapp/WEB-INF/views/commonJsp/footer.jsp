@@ -78,7 +78,7 @@
                                 location.href = "${cp}/approval/send/applCompleList";
                             } else if (final_transcript.indexOf('송신 반려') !== -1 || final_transcript.indexOf('송신반려') !== -1) {
                                 location.href = "${cp}/approval/send/applReferList";
-                            } else if (job_id != null && job_id !== 'job0004') {
+                            } else if (job_id !== null && job_id !== 'job0004') {
                                 if (final_transcript.indexOf('수신함') !== -1 || final_transcript.indexOf('수신 함') !== -1) {
                                     location.href = "${cp}/approval/confirm/applList";
                                 } else if (final_transcript.indexOf('수신완료') !== -1 || final_transcript.indexOf('수신 완료') !== -1 ||

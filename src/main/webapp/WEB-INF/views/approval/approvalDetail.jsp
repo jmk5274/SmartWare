@@ -72,8 +72,9 @@
                             $('#refer_res').val(data);
                         }
                     }).then((result) => {
+                        if (result.value) {
                             $('#frm').attr('action', "${cp}/approval/checkRefer").submit();
-                        // console.log('asdfasdfasdf');
+                        }
                     });
                 }
             });
