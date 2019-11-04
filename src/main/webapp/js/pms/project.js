@@ -52,9 +52,16 @@ $(function() {
 					message += "^" + id;
 				})
 				socket.send(message);
-				console.log("성공");
-			}, error: function() {
-				console.log("실패");
+				$("#projectModal").modal("hide");
+				$(".projectContent").remove();
+				$("hr").remove();
+				initProject();
+				Swal({
+					title: '프로젝트가 생성되었습니다.',
+					type: 'success',
+					timer: 1500,
+					showConfirmButton: false,
+				});
 			}
 		});
 	});
