@@ -5,7 +5,6 @@
 <div class="nk-sidebar">           
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="nav-label">SmartWare</li>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="icon-envelope menu-icon"></i><span class="nav-text">전자메일</span>
@@ -88,12 +87,6 @@
 	                </a>
 	            </li>
             </c:if>
-            
-            <li>
-                <a href="${cp }/useForm" aria-expanded="false">
-                    <i class="icon-grid menu-icon"></i><span class="nav-text">양식 예제</span>
-                </a>
-            </li>
         </ul>
     </div>
 </div>

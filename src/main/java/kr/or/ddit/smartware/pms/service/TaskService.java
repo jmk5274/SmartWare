@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.smartware.pms.model.ProTask;
@@ -244,8 +246,21 @@ public class TaskService implements ITaskService {
 	public int updateTask(Task task, String emp_id) {
 		ProTask proTask = new ProTask(emp_id, task.getPro_id(), task.getTask_id());
 		taskDao.updateProTask(proTask);
-
+		
 		return taskDao.updateTask(task);
+	}
+	
+	/**
+	* Method : updateParentPer
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pa_task_id
+	* @return
+	* Method 설명 : 자식 task가 변경되었을 때 부모 task의 per 갱신
+	*/
+	@Override
+	public int updateParentPer(String pa_task_id) {
+		return taskDao.updateParentPer(pa_task_id);
 	}
 
 	/**

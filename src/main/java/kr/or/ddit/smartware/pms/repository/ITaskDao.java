@@ -158,6 +158,16 @@ public interface ITaskDao {
 	int updateProTask(ProTask proTask);
 	
 	/**
+	* Method : updateParentPer
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param pa_task_id
+	* @return
+	* Method 설명 : 자식 task가 변경되었을 때 부모 task의 per 갱신
+	*/
+	int updateParentPer(String pa_task_id);
+	
+	/**
 	* Method : deleteTask
 	* 작성자 : JO MIN SOO
 	* 변경이력 :
@@ -186,5 +196,6 @@ public interface ITaskDao {
 	* Method 설명 : 일감 히스토리 삭제
 	*/
 	int deleteTaskHistory(String task_id);
+
 
 }

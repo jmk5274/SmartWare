@@ -168,6 +168,14 @@
 		 where task_id = #{task_id}
 	</update>
 	
+	<update id="updateParentPer" parameterType="String">
+		update task
+		   set per = (select round(avg(per))
+		                from task
+		               where pa_task_id = #{pa_task_id})
+		 where task_id = #{pa_task_id}
+	</update>
+	
 	<!-- 일감 삭제 -->
 	<delete id="deleteTask">
 		delete from task

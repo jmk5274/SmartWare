@@ -131,7 +131,11 @@ public class TaskController {
 		task.setEnd_dt(new Date(Long.parseLong(map.get("end") + "")));
 		
 		taskService.updateTask(task, map.get("emp_id") + "");
-
+		
+		if(task.getPa_task_id() != null) {
+			taskService.updateParentPer(task.getPa_task_id());
+		}
+		
 		model.addAttribute("task_id", task.getTask_id());
 		
 		return jsonView;

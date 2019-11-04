@@ -64,6 +64,18 @@
 	display: inline;
 }
 
+.nested_task .gantt_add{
+    display: none !important;
+}
+
+.gantt_link_point {
+	display: none !important;
+}
+
+.gantt_task_drag {
+	cursor: default !important;
+}
+
 </style>
 
 <div class="card">
@@ -75,9 +87,9 @@
 			<button onclick="toggleMode(this)"><i class="fa fa-search-minus"></i> 축소</button>
 			<button type="button" data-toggle="dropdown"><i class="fa fa-download"></i> 다운로드</button>
 			<div class="dropdown-menu">
-				<input class="dropdown-item" onclick="gantt.exportToPDF()" type="button" value="PDF"/>
-				<input class="dropdown-item" onclick="gantt.exportToPNG()" type="button" value="PNG">
-				<input class="dropdown-item" onclick="gantt.exportToExcel()" type="button" value="Excel">
+				<input class="dropdown-item" onclick="gantt.exportToPDF({raw: true})" type="button" value="PDF"/>
+				<input class="dropdown-item" onclick="gantt.exportToPNG({raw: true})" type="button" value="PNG">
+				<input class="dropdown-item" onclick="gantt.exportToExcel({raw: true})" type="button" value="Excel">
 			</div>
 		
 			<span id="ganttFilter" style="float: right">
@@ -155,7 +167,7 @@
 		                    </div>
 	                    </div>
 	                    
-	                    <div class="form-group row">
+	                    <div class="form-group row" id="perDiv">
                 			<div class="col-sm-1"></div>
 		                    <label class="col-sm-2 col-form-label" style="line-height: 3.2;">진척도</label>
 		                    <div class="col-sm-8">
@@ -414,7 +426,6 @@ function getAllTask(pro_id) {
 			var a = [];
 			a.push({data: rtnData});
 			gantt.parse(a[0]);
-			console.log(a[0]);
 		}
 	})
 }
@@ -518,7 +529,7 @@ gantt.collapseAll = function(){
 gantt.expandAll = function(){
 	gantt.eachTask(function(task){
 		task.$open = true;
-	});
+	});M
 	gantt.render();
 }
 
@@ -534,6 +545,14 @@ gantt.showLightbox = function(id) {
  	slider.update({from: task.progress * 100});
  	$("#emp_id").val(task.emp_id);
  	$("#pa_task_id").val(task.parent);
+ 	
+ 	var count = 0;
+ 	$.each(gantt.getTaskByTime(), function(idx, data) {
+ 		if(data.parent === taskId) count += 1;
+ 	});
+ 	
+ 	if(count === 0) $("#perDiv").show();
+ 	else $("#perDiv").hide();
  	
  	if(gantt.getTask(taskId).$new) {
  		$("#insertTask").show();
@@ -600,26 +619,32 @@ $(function() {
 					success: function(data) {
 						$("#task_id").val(data.task.TASK_ID);
 		 				gantt.changeTaskId(taskId, data.task.TASK_ID); // 자동생성된 id를 db에 생성한 id로 교체
-		 				gantt.getTask(data.task.TASK_ID).$new = false;
-		 				gantt.getTask(data.task.TASK_ID).text = data.task.TASK_CONT;
-		 				gantt.getTask(data.task.TASK_ID).start_date = new Date(data.task.ST_DT);
-		 				gantt.getTask(data.task.TASK_ID).end_date = new Date(data.task.END_DT);
-		 				gantt.getTask(data.task.TASK_ID).progress = data.task.PER / 100;
-		 				gantt.getTask(data.task.TASK_ID).parent = data.task.PA_TASK_ID;
-		 				gantt.getTask(data.task.TASK_ID).emp_id = data.task.EMP_ID;
-		 				gantt.getTask(data.task.TASK_ID).emp_nm = data.task.EMP_NM;
+		 				
+						var task = gantt.getTask(data.task.TASK_ID);
+						delete task.$new;
+		 				task.text = data.task.TASK_CONT;
+		 				task.start_date = new Date(data.task.ST_DT);
+		 				task.end_date = new Date(data.task.END_DT);
+		 				task.progress = data.task.PER / 100;
+		 				task.parent = data.task.PA_TASK_ID;
+		 				task.emp_id = data.task.EMP_ID;
+		 				task.emp_nm = data.task.EMP_NM;
 		 				
 		 				if(data.task.PER !== 100 && new Date(data.task.END_DT) < new Date()) { // 지연
-		 					gantt.getTask(data.task.TASK_ID).color = "#ff5e5e"; // red
+		 					task.color = "#ff5e5e"; // red
 		 				} else if(data.task.PER === 100) { // 완료
-		 					gantt.getTask(data.task.TASK_ID).color = "#6fd96f"; // green
+		 					task.color = "#6fd96f"; // green
 		 				} else if(new Date(data.task.ST_DT) > new Date()) { // 시작전
-		 					gantt.getTask(data.task.TASK_ID).color = "#b6b8ba"; // gray
+		 					task.color = "#b6b8ba"; // gray
 		 				} else { // 진행중
-		 					gantt.getTask(data.task.TASK_ID).color = "#4d7cff"; // blue
+		 					task.color = "#4d7cff"; // blue
 		 				}
-		 				console.log(gantt.getTask(data.task.TASK_ID));
+		 				
 						$("#taskModal").modal("hide");
+						
+						console.log(task);
+						gantt.addTask(task, task.parent);
+						
 						taskId = null;
 					}
 				})
@@ -656,7 +681,7 @@ $(function() {
 		}
 	    
 		start = +picker._startpicker.getDate();
-		end = +picker._endpicker.getDate(); // 23시 59분 더해줌
+		end = +picker._endpicker.getDate();
 		$.ajax({
 			url: cp + "/updateTask",
 			type: "post",
@@ -674,28 +699,35 @@ $(function() {
 					type: "post",
 					data: "task_id=" + data.task_id,
 					success: function(data) {
-						console.log(data.task.TASK_ID);
 						$("#task_id").val(data.task.TASK_ID);
-		 				gantt.getTask(data.task.TASK_ID).$new = false;
-		 				gantt.getTask(data.task.TASK_ID).text = data.task.TASK_CONT;
-		 				gantt.getTask(data.task.TASK_ID).start_date = new Date(data.task.ST_DT);
-		 				gantt.getTask(data.task.TASK_ID).end_date = new Date(data.task.END_DT);
-		 				gantt.getTask(data.task.TASK_ID).progress = data.task.PER / 100;
-		 				gantt.getTask(data.task.TASK_ID).parent = data.task.PA_TASK_ID;
-		 				gantt.getTask(data.task.TASK_ID).emp_id = data.task.EMP_ID;
-		 				gantt.getTask(data.task.TASK_ID).emp_nm = data.task.EMP_NM;
+						
+						var task = gantt.getTask(data.task.TASK_ID);
+		 				task.text = data.task.TASK_CONT;
+		 				task.start_date = new Date(data.task.ST_DT);
+		 				task.end_date = new Date(data.task.END_DT);
+		 				task.progress = data.task.PER / 100;
+		 				task.parent = data.task.PA_TASK_ID;
+		 				task.emp_id = data.task.EMP_ID;
+		 				task.emp_nm = data.task.EMP_NM;
 		 				
-		 				if(data.task.PER === 100) { // 완료
-		 					gantt.getTask(data.task.TASK_ID).color = "#6fd96f"; // green
-		 				} else if(data.task.PER !== 100 && new Date(data.task.END_DT) < new Date()) { // 지연
-			 				gantt.getTask(data.task.TASK_ID).color = "#ff5e5e"; // red
-			 			} else if(new Date(data.task.ST_DT) > new Date()) { // 시작전
-		 					gantt.getTask(data.task.TASK_ID).color = "#b6b8ba"; // gray
+		 				if(data.task.PER !== 100 && new Date(data.task.END_DT) < new Date()) { // 지연
+		 					task.color = "#ff5e5e"; // red
+		 				} else if(data.task.PER === 100) { // 완료
+		 					task.color = "#6fd96f"; // green
+		 				} else if(new Date(data.task.ST_DT) > new Date()) { // 시작전
+		 					task.color = "#b6b8ba"; // gray
 		 				} else { // 진행중
-		 					gantt.getTask(data.task.TASK_ID).color = "#4d7cff"; // blue
+		 					task.color = "#4d7cff"; // blue
 		 				}
 		 				
 						$("#taskModal").modal("hide");
+// 						gantt.addTask(task, task.parent);
+// 						gantt.updateTask(task.id);
+// 						gantt.refreshData();
+						gantt.clearAll();	// 위 명령어들이 먹히지 않아 모두 지우고 새로 ajax로 받아오게 만듦.
+						getAllTask(pro_id);
+						
+						taskId = null;
 					}
 				})
 			}
@@ -733,6 +765,16 @@ $(function() {
 	});
 })
 //
+gantt.attachEvent("onBeforeTaskDrag", function(id, mode, e){
+	return false;      //denies dragging
+});
+
+gantt.templates.grid_row_class = function( start, end, task ){
+    if ( task.$level > 0 ){
+        return "nested_task"
+    }
+    return "";
+};
 
 gantt.config.lightbox.sections = [
 	{name: "description", height: 80, map_to: "text", type: "textarea", focus: true},
