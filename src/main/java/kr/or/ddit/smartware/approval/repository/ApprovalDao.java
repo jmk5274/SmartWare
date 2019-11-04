@@ -21,6 +21,11 @@ public class ApprovalDao implements IApprovalDao{
     }
 
     @Override
+    public int applCnt() {
+        return sqlSession.selectOne("appl.applCnt");
+    }
+
+    @Override
     public List<ApprMember> getApprMember(Map data) {
         return sqlSession.selectList("appl.getApprMem", data);
     }

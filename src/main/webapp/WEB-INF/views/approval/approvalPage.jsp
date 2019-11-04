@@ -58,6 +58,7 @@
                     dataType : "json",
                     success : function (data) {
                         $('.note-editable.panel-body').html(data.form_cont);
+                        $("#appl_num").html('appl' + data.applCnt);
                     }
                 });
             } else {
@@ -97,7 +98,7 @@
                             $('#' + data.apprMemInfoList[i].EMP_ID).attr('checked', true);
                         }
                         $("#to").val(res);
-                        applCheckBox(res)
+                        applCheckBox(res);
                     }
                 });
             }

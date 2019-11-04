@@ -21,6 +21,11 @@ public class ApprovalService implements IApprovalService{
     }
 
     @Override
+    public int applCnt() {
+        return approvalDao.applCnt();
+    }
+
+    @Override
     public List<ApprMember> getApprMember(Map data) {
         return approvalDao.getApprMember(data);
     }

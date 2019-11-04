@@ -72,7 +72,8 @@
                 var job_id = '${S_EMPLOYEE.job_id}';
                 if (final_transcript.indexOf('보이스') !== -1) {
                     if (final_transcript.indexOf('이동') !== -1 || final_transcript.indexOf('보여 줘') !== -1 || final_transcript.indexOf('가 줘') !== -1) {
-                        if (final_transcript.indexOf('메인 화면') !== -1 || final_transcript.indexOf('메인화면') !== -1 || final_transcript.indexOf('메인') !== -1) {
+                        if (final_transcript.indexOf('메인 화면') !== -1 || final_transcript.indexOf('메인화면') !== -1 ||
+                                final_transcript.indexOf('메인') !== -1 || final_transcript.indexOf('홈페이지') !== -1 ) {
                             location.href = "${cp}/main";
                         } else if (final_transcript.indexOf('결제') !== -1 || final_transcript.indexOf('결재') !== -1) {
                             if (final_transcript.indexOf('작성') !== -1) {
@@ -125,7 +126,7 @@
                                         });
 
                                         console.log(calendar);
-                                        var msg = new SpeechSynthesisUtterance('오늘 일정으로는' + calendar + '이 있습니다.');
+                                        var msg = new SpeechSynthesisUtterance('오늘 일정으로는' + calendar + '구현이 있습니다.');
                                         window.speechSynthesis.speak(msg);
                                     }
                                 });
@@ -134,9 +135,13 @@
                                 if (condition === 'Clear') whether = '맑음';
                                 else if (condition === 'Cloud') whether = '흐림';
                                 else if (condition === 'Rainy') whether = '비';
-                                var msg = new SpeechSynthesisUtterance('오늘 기온은 ' + temp + '도 이고 날씨는 ' + whether + '입니다');
+                                var msg = new SpeechSynthesisUtterance('현재 기온은 ' + temp + '도 이고 날씨는 ' + whether + '입니다');
                                 window.speechSynthesis.speak(msg);
                             }
+                        }
+                    } else if (final_transcript.indexOf('해 줘') !== -1 ) {
+                        if (final_transcript.indexOf('로그아웃') !== -1 ) {
+                            location.href = "${cp}/logout";
                         }
                     }
                 }

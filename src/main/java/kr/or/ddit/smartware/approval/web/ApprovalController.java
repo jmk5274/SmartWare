@@ -80,6 +80,7 @@ public class ApprovalController {
         Form form = formService.getFormInfo(form_id);
         if (form != null) {
             model.addAttribute("form_cont", form.getForm_cont());
+            model.addAttribute("applCnt", approvalService.applCnt());
         }
         return "jsonView";
     }
@@ -95,6 +96,7 @@ public class ApprovalController {
         data.put("emp_id", employee.getEmp_id());
 
         List<ApprMember> apprMemList = approvalService.getApprMember(data);
+
 
         List<Map> apprMemInfoList = new ArrayList<>();
         for (ApprMember apprMember : apprMemList) {

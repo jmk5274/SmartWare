@@ -19,6 +19,8 @@ public interface IApprovalDao {
      */
     Application getAppl(String appl_id);
 
+    int applCnt();
+
     /**
      * Method : getApprMember
      * 작성자 : Bae Sang Hyun

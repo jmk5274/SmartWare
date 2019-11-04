@@ -8,6 +8,12 @@
         FROM APPLICATION
         WHERE APPL_ID = #{appl_id}
     </select>
+
+    <select id="applCnt" resultType="int">
+        SELECT count(*)+1
+        FROM APPLICATION
+    </select>
+
 	<select id="getApprMem" parameterType="hashMap" resultType="apprMember">
         SELECT *
         FROM APPR_MEMBER
