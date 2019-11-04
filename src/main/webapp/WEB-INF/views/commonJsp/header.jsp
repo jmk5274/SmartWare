@@ -20,17 +20,17 @@
 %>
 
 <%
-	Integer cnt = (Integer) session.getAttribute("cnt");
-	Store store = (Store)session.getAttribute("store");
+// 	Integer cnt = (Integer) session.getAttribute("cnt");
+// 	Store store = (Store)session.getAttribute("store");
 	
-	int real = 0;
-	if(store != null || cnt != null){
-		IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
-		real = folder.getMessageCount() - cnt;
-		real = real < 0 ? 0 : real;
+// 	int real = 0;
+// 	if(store != null || cnt != null){
+// 		IMAPFolder folder = (IMAPFolder)store.getFolder("INBOX");
+// 		real = folder.getMessageCount() - cnt;
+// 		real = real < 0 ? 0 : real;
 		
-		session.setAttribute("real", real);
-	}
+// 		session.setAttribute("real", real);
+// 	}
 	
 	
 %>
@@ -258,12 +258,12 @@
 		
 		getVideoEmpList();
 		
-		setTimeout(function() { 
-				if(<%=real%>!=0){
-					var message = "mail^메일";
-					socket.send(message);
-				}
-			}, 1000);
+// 		setTimeout(function() { 
+<%-- 				if(<%=real%>!=0){ --%>
+// 					var message = "mail^메일";
+// 					socket.send(message);
+// 				}
+// 			}, 1000);
 		
 	});
 	
@@ -383,7 +383,7 @@
                                 </li>
                                 <li>
                                     <a href="javascript:void()">
-                                        <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1"><%=real %></div>
+                                        <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1">0</div>
                                     </a>
                                 </li>
                                 
