@@ -125,6 +125,14 @@ public class ProjectController {
 		String pro_id = projectService.insertProject(project, leader, memberArr);
 		model.addAttribute("pro_id", pro_id);
 		
+		// 카테고리 추가(일정의 카테고리)
+		Category category = new Category();
+		category.setCategory_nm(pro_nm);
+		category.setColor("#FC4BFC");
+		category.setPro_id(pro_id);
+		categoryService.insertCategory(category);
+		
+		// 챗
 		Chat chat = new Chat();
 		chat.setChat_nm(pro_nm);
 		
@@ -137,13 +145,6 @@ public class ProjectController {
 		messengerService.insertChat(chat, allMemberArr);
 		
 		model.addAttribute("allMemberArr", allMemberArr);
-		
-		// 카테고리 추가(일정의 카테고리)
-		Category category = new Category();
-		category.setCategory_nm(pro_nm);
-		category.setColor("#FC4BFC");
-		category.setPro_id(pro_id);
-		categoryService.insertCategory(category);
 		
 		return jsonView;
 	}

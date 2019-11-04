@@ -514,11 +514,11 @@ INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '채팅방 초대
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '채팅 수신 시 알림 기능', trunc(sysdate, 'iw')-10, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', 'task0115', 100);
 
 -- task0120 ~ task0124 ==> 조민수 e0009
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '일정관리', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', null, 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '일정관리', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', null, 95);
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '계정 연동 구글 캘린더 화면 출력', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-12+23/24+59/1440, 'pj0003', 'task0120', 100);
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '캘린더 일정 등록 기능', trunc(sysdate, 'iw')-11, trunc(sysdate, 'iw')-9+23/24+59/1440, 'pj0003', 'task0120', 100);
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '캘린더 조회/삭제/수정 연동 기능', trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-5+23/24+59/1440, 'pj0003', 'task0120', 100);
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '일정 알림 기능 구현', trunc(sysdate, 'iw')-4, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0120', 100);
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '일정 알림 기능 구현', trunc(sysdate, 'iw')-4, trunc(sysdate, 'iw')-2+23/24+59/1440, 'pj0003', 'task0120', 80);
 
 -- task0125 ~ task0129 ==> 배상현 e0005
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '출퇴근 앱', trunc(sysdate, 'iw')-14, trunc(sysdate, 'iw')-6+23/24+59/1440, 'pj0003', null, 100);
@@ -588,7 +588,7 @@ INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'Google Cloud Spe
 -- task0172 ~ task0176 ==> 조민수 e0009
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), 'PMS', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', null, 5);			
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 생성 기능', trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+2+23/24+59/1440, 'pj0003', 'task0172', 20);			
-INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 구성원 등록 및 직책 설정 기능', trunc(sysdate, 'iw')+3, trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', 'task0172', 0);			
+INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 구성원 등록', trunc(sysdate, 'iw')+3, trunc(sysdate, 'iw')+5+23/24+59/1440, 'pj0003', 'task0172', 0);			
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 일감 배분', trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+9+23/24+59/1440, 'pj0003', 'task0172', 0);			
 INSERT INTO TASK VALUES ('task' || LPAD(TASK_SEQ.NEXTVAL,4,0), '프로젝트 일감 수정 및 검색', trunc(sysdate, 'iw')+10, trunc(sysdate, 'iw')+12+23/24+59/1440, 'pj0003', 'task0172', 0);			
 
@@ -1097,12 +1097,6 @@ INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '개발 1팀 회식', null, TO_DATE('201911081800', 'YYYYMMDDHH24MI'), 
       TO_DATE('201911082350', 'YYYYMMDDHH24MI'), 'T', 'de0002', 'e0005', 'cate0003');
 INSERT INTO CALENDAR VALUES
-     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '개발 1팀 등산', null, TO_DATE('201911091000', 'YYYYMMDDHH24MI'), 
-      TO_DATE('201911091600', 'YYYYMMDDHH24MI'), 'T', 'de0002', 'e0005', 'cate0003');
-INSERT INTO CALENDAR VALUES
-     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '개발 1팀 단합대회', null, TO_DATE('201911101000', 'YYYYMMDDHH24MI'), 
-      TO_DATE('201911101600', 'YYYYMMDDHH24MI'), 'T', 'de0002', 'e0005', 'cate0003');
-INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '배상현 생일', null, TO_DATE('201911010000', 'YYYYMMDDHH24MI'), 
       TO_DATE('201911012359', 'YYYYMMDDHH24MI'), 'T', 'de0002', 'e0005', 'cate0004');
 INSERT INTO CALENDAR VALUES
@@ -1137,7 +1131,7 @@ INSERT INTO CALENDAR VALUES
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '근태 사유서 전송 및 확인 기능', null, trunc(sysdate, 'iw')-7, trunc(sysdate, 'iw')-6+23/24+59/1440, 'T', null, 'e0005', 'cate0006');
 INSERT INTO CALENDAR VALUES
-     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '전자결재', null, trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')+3+23/24+59/1440, 'pj0003', 'T', null, 'e0005', 'cate0006');	
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '전자결재', null, trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')+3+23/24+59/1440, 'T', null, 'e0005', 'cate0006');	
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '전자결재 신청서 화면 구현', null, trunc(sysdate, 'iw')-5, trunc(sysdate, 'iw')-4+23/24+59/1440, 'T', null, 'e0005', 'cate0006');		
 INSERT INTO CALENDAR VALUES
@@ -1166,7 +1160,7 @@ INSERT INTO CALENDAR VALUES
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '프로젝트 생성 기능', null, trunc(sysdate, 'iw'), trunc(sysdate, 'iw')+2+23/24+59/1440, 'T', null, 'e0009', 'cate0006');		
 INSERT INTO CALENDAR VALUES
-     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '프로젝트 구성원 등록 및 직책 설정 기능', null, trunc(sysdate, 'iw')+3, trunc(sysdate, 'iw')+5+23/24+59/1440, 'T', null, 'e0009', 'cate0006');				
+     ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '프로젝트 구성원 등록', null, trunc(sysdate, 'iw')+3, trunc(sysdate, 'iw')+5+23/24+59/1440, 'T', null, 'e0009', 'cate0006');				
 INSERT INTO CALENDAR VALUES
      ('cal' || LPAD(CALENDAR_SEQ .NEXTVAL,4,0), '프로젝트 일감 배분', null, trunc(sysdate, 'iw')+7, trunc(sysdate, 'iw')+9+23/24+59/1440, 'T', null, 'e0009', 'cate0006');		
 INSERT INTO CALENDAR VALUES
