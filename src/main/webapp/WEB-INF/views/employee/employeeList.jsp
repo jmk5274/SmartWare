@@ -221,7 +221,7 @@
 								<td><label class="col-sm control-label">비밀번호</label></td>
 								<!-- 비밀번호(pass) -->
 								<td>
-								<input id="newPass" type="text" name="pass" class="form-control" value=""/>
+								<input id="newPass" type="password" name="pass" class="form-control" value=""/>
 								</td>
 								</tr>
 								<tr>

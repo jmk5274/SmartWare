@@ -98,6 +98,10 @@ function btnevent(){
 							}
 							else{
 								data.searchList.forEach(function(ss){
+									if(ss.JOB_NM == undefined){
+										ss.JOB_NM = "(직책없음)";
+									}
+									
 									html += "<tbody>"
 									html += 	"<tr class='empList'>";
 									html += 		"<td>" + ss.DEPART_NM + "</td>";
@@ -106,7 +110,7 @@ function btnevent(){
 									html += 		"<td>" + ss.EMP_ID + "</td>";
 									html += 		"<td>" + ss.EMP_NM + "</td>";
 									html += 		"<td>" + moment(new Date(ss.JOIN_DT)).format('YYYY/MM/DD') + "</td>";
-									html += 		"<td><button type='button' class='btn btn-primary detailEmp' data-id="+ss.EMP_ID+" data-toggle='modal' data-target='.bd-example-modal-lg'>사원 상세보기</button></td>"
+									html += 		"<td><button type='button' class='btn btn-info detailEmp' data-id="+ss.EMP_ID+" data-toggle='modal' data-target='.bd-example-modal-lg'>사원 상세보기</button></td>"
 									html += 	"</tr>";
 									html += "</tbody>"
 									$(".departTable").html(html);
@@ -160,7 +164,9 @@ function btnevent(){
 						else{
 						list.forEach(function(depart){
 								var join = new Date(depart.JOIN_DT);
-							
+								if(depart.JOB_NM == undefined){
+									depart.JOB_NM = "(직책없음)";
+								}
 								html += "<tbody>"
 								html += 	"<tr class='empList'>";
 								html += 		"<td>" + depart.POSI_NM + "</td>";
@@ -253,7 +259,7 @@ function btnevent(){
 														</c:otherwise>
 													</c:choose>
 													<td><fmt:formatDate value="${employee.JOIN_DT }" pattern="yyyy-MM-dd"/></td>
-													<td><button type="button" class="btn btn-primary detailEmp" data-id="${employee.EMP_ID }" data-toggle="modal" data-target=".bd-example-modal-lg">사원 상세보기</button></td>
+													<td><button type="button" class="btn btn-info detailEmp" data-id="${employee.EMP_ID }" data-toggle="modal" data-target=".bd-example-modal-lg">사원 상세보기</button></td>
 												</tr>
 											</c:if>
 										</c:forEach>
