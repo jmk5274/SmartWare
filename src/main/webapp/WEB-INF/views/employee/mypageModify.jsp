@@ -158,7 +158,7 @@
 									<!-- 비밀번호 -->
 									<tr>
 										<td><strong class="text-dark mr-4">비밀번호</strong></td>
-										<td><input type="text" id="pass" name="pass" class="form-control input-default" value="${employee.pass }"></td>
+										<td><input type="password" id="pass" name="pass" class="form-control input-default" value="${employee.pass }"></td>
 									</tr>
 									
 									<!-- 등급 -->
@@ -201,7 +201,7 @@
 									<tr>
 									
 										<td><strong class="text-dark mr-4">이메일 비밀번호</strong></td>
-										<td><input type="text" id="email_pass" name="email_pass" class="form-control input-default" value="${employee.email_pass }"></td>
+										<td><input type="password" id="email_pass" name="email_pass" class="form-control input-default" value="${employee.email_pass }"></td>
 									</tr>
 										
 

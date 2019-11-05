@@ -91,11 +91,11 @@
 									</tr>
 									
 									<!-- 비밀번호 -->
-									<tr>
+									<%--<tr>
 										<td><strong class="text-dark mr-4">비밀번호</strong></td>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.pass }
 											<input type="hidden" id="emp_nm" name="emp_nm" value="${employee.pass }"></td>
-									</tr>
+									</tr>--%>
 									
 									<!-- 등급 -->
 									<tr>
@@ -135,12 +135,12 @@
 									</tr>
 									
 									<!-- 이메일 비밀번호 -->
-									<tr>
+									<%--<tr>
 									
 										<td><strong class="text-dark mr-4">이메일 비밀번호</strong></td>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${employee.email_pass }
 											<input type="hidden" id="email_pass" name="email_pass" value="${employee.email_pass }"></td>
-									</tr>
+									</tr>--%>
 										
 
 									<!-- 전화번호 -->

@@ -5,6 +5,7 @@
 <div class="nk-sidebar">           
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
+            <c:if test="${S_EMPLOYEE.rank != 'ADMIN'}">
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="icon-envelope menu-icon"></i><span class="nav-text">전자메일</span>
@@ -42,12 +43,13 @@
                     </c:if>
                 </ul>
             </li>
+            </c:if>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="fa fa-list-alt menu-icon"></i> <span class="nav-text">사내 게시판</span>
                 </a>
                 <ul aria-expanded="false">
-                <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
+                <c:if test="${S_EMPLOYEE.rank == 'ADMIN'}">
                     <li><a href="${cp }/addBoard">메뉴 관리</a></li>                    
                 </c:if>
                     <c:forEach items="${A_BOARDLIST }" var="list">
@@ -59,6 +61,7 @@
 <%--                     <li><a href="${cp }/bootstrap/email-compose.html">자료실</a></li> --%>
                 </ul>
             </li>
+            <c:if test="${S_EMPLOYEE.rank != 'ADMIN'}">
             <li>
                 <a href="${cp }/calendar" aria-expanded="false">
                     <i class="fa fa-calendar menu-icon"></i><span class="nav-text">일정 관리</span>
@@ -69,18 +72,19 @@
                     <i class="icon-grid menu-icon"></i><span class="nav-text">프로젝트 관리</span>
                 </a>
             </li>
+            </c:if>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="fa fa-sitemap"></i> <span class="nav-text">조직도</span>
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${cp }/employeeSearch">조직도 조회</a></li>
-                    <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
+                    <c:if test="${S_EMPLOYEE.rank == 'ADMIN'}">
                     <li><a href="${cp }/employeeList">사원 관리</a></li>
                     </c:if>
                 </ul>
             </li>
-            <c:if test="${S_EMPLOYEE.emp_id == 'admin'}">
+            <c:if test="${S_EMPLOYEE.rank == 'ADMIN'}">
 	            <li>
 	                <a href="${cp }/popup">
 	                    <i class="fa fa-desktop menu-icon"></i><span class="nav-text">팝업관리</span>
