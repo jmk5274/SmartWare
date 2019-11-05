@@ -9,7 +9,7 @@
 		          from (select a.*
 		                  from popup a
 		                  where pop_use = 'T'
-		                 order by pop_id) a) a
+		                 order by pop_id desc) a) a
 		 where rn between #{pagesize}*(#{page} - 1) + 1 and #{pagesize}*#{page}
 	</select>
 	

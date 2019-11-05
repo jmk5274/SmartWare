@@ -111,9 +111,9 @@
 		var html = "";
 		
 		$("#tBody").empty();
-		popupPageList.forEach(function(popup, i){
+		popupPageList.forEach(function(popup){
 	        html += '<tr class="popupTr" data-pop_id="'+popup.pop_id+'">';
-	        html += 	'<td>'+(i+1)+'</td>';
+	        html += 	'<td>'+popup.pop_id+'</td>';
 	        html += 	'<td>'+popup.pop_title+'</td>';
 	        html += 	'<td>'+moment(new Date(popup.pop_st_dt)).format('YYYY/MM/DD')+'</td>';
 	        html += 	'<td>'+moment(new Date(popup.pop_end_dt)).format('YYYY/MM/DD')+'</td>';
